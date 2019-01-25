@@ -1,0 +1,1 @@
+This project contains a port of my Easy D&D Character Creator to C#/.NET.
