@@ -12,14 +12,18 @@ namespace Easy_DnD_Character_Creator
     {
         public DataManager DBManager { get; }
         public WizardState CurrentState { get; private set; }
+        public bool FirstPage { get; private set; }
+        public bool LastPage { get; private set; }
 
         public WizardManager()
         {
             DBManager = new DataManager();
             CurrentState = WizardState.intro;
+            FirstPage = true;
+            LastPage = true;
         }
 
-        private void createPages()
+        public void nextPage()
         {
 
         }

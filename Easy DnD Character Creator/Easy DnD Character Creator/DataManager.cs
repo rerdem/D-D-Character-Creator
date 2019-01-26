@@ -22,6 +22,9 @@ namespace Easy_DnD_Character_Creator
             DBConnection = new SQLiteConnection(connectionString);
         }
 
+        /// <summary>
+        /// returns a list of all active books
+        /// </summary>
         public List<Book> getActiveBooks()
         {
             List<Book> activeBooks = new List<Book>();
@@ -41,8 +44,6 @@ namespace Easy_DnD_Character_Creator
 
             return activeBooks;
         }
-
-
 
 
         private void ReadData()

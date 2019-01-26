@@ -98,6 +98,7 @@
             this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.contentFlowPanel);
             this.Controls.Add(this.buttonFlowPanel);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "frmMainWindow";
             this.Text = "Easy D&D Character Creator";
             this.buttonFlowPanel.ResumeLayout(false);
