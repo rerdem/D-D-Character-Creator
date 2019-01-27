@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace Easy_DnD_Character_Creator
 {
-    public partial class IntroControl : UserControl
+    public partial class IntroControl : UserControl, IWizardControl
     {
-        private DataManager dm;
+        private WizardManager wm;
 
         private FlowLayoutPanel introPanel;
-        private Label introLabel;
-
+        
         private GroupBox bookBox;
         private List<CheckBox> bookCheckBoxes;
 
@@ -25,58 +24,32 @@ namespace Easy_DnD_Character_Creator
         private RadioButton averageButton;
         private RadioButton puristButton;
 
+        private ToolTip toolTips;
+
         private GroupBox settingsBox;
         private Label levelLabel;
         private NumericUpDown characterLevel;
         private CheckBox moneyCheckbox;
 
-        public IntroControl(DataManager inputDataManager)
+        private bool visited;
+        public bool Visited
         {
-            dm = inputDataManager;
+            get
+            {
+                return visited;
+            }
+            set
+            {
+                visited = value;
+            }
+        }
+
+        public IntroControl(WizardManager inputWizardManager)
+        {
+            wm = inputWizardManager;
             bookCheckBoxes = new List<CheckBox>();
+            visited = false;
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// returns the chosen creation preset: 
-        /// 0 for lenient, 1 for average, 2 for purist
-        /// </summary>
-        public int getPreset()
-        {
-            if (lenientButton.Checked)
-            {
-                return 0;
-            }
-
-            if (averageButton.Checked)
-            {
-                return 1;
-            }
-
-            return 2;
-        }
-
-        /// <summary>
-        /// returns selected books formatted for usage in SQLite queries
-        /// </summary>
-        public string getUsedBooks()
-        {
-            string usedBooks = "";
-            foreach (CheckBox checkBox in bookCheckBoxes)
-            {
-                if (checkBox.Checked)
-                {
-                    if (usedBooks != "")
-                    {
-                        usedBooks += ", ";
-                    }
-
-                    usedBooks += "\"";
-                    usedBooks += checkBox.Text;
-                    usedBooks += "\"";
-                }
-            }
-            return usedBooks;
         }
 
         public void InitializeComponent()
@@ -86,20 +59,12 @@ namespace Easy_DnD_Character_Creator
             introPanel.AutoSize = true;
             introPanel.WrapContents = true;
 
-            introLabel = new Label();
-            introLabel.AutoSize = true;
-            introLabel.Font = new Font(introLabel.Font.FontFamily, 14);
-            introLabel.Text = "Please select the used books, creation preset and character level.";
-            introLabel.Name = "introLabel";
-            introPanel.Controls.Add(introLabel);
-            introPanel.SetFlowBreak(introLabel, true);
-
             //fill book checkboxes
             bookBox = new GroupBox();
             bookBox.AutoSize = true;
             bookBox.Text = "Sourcebooks";
             bookBox.Name = "bookBox";
-            List<Book> activeBooks = dm.getActiveBooks();
+            List<Book> activeBooks = wm.DBManager.getActiveBooks();
 
             int xCoord = 3;
             int yCoord = 23;
@@ -155,6 +120,22 @@ namespace Easy_DnD_Character_Creator
 
             introPanel.Controls.Add(presetBox);
 
+            //set up tooltips
+            toolTips = new ToolTip();
+
+            toolTips.SetToolTip(this.lenientButton, "While values will be determined" + Environment.NewLine +
+                "by dice rolls, below average rolls" + Environment.NewLine +
+                "will be replaced by the average" + Environment.NewLine +
+                "result. Additionally, ability scores" + Environment.NewLine +
+                "lower than 8 can be rerolled.");
+            toolTips.SetToolTip(this.averageButton, "Attributes that normally" + Environment.NewLine +
+                "require dice rolls will be" + Environment.NewLine +
+                "determined by average" + Environment.NewLine + 
+                "values.");
+            toolTips.SetToolTip(this.puristButton, "Unaltered dice" + Environment.NewLine +
+                "results will be" + Environment.NewLine +
+                "used.");
+
             //fill settings box
             settingsBox = new GroupBox();
             settingsBox.AutoSize = true;
@@ -164,13 +145,13 @@ namespace Easy_DnD_Character_Creator
             levelLabel = new Label();
             levelLabel.Location = new Point(3, 25);
             levelLabel.AutoSize = true;
-            levelLabel.Text = "Level:";
+            levelLabel.Text = "Level (1-20):";
             levelLabel.Name = "levelLabel";
             settingsBox.Controls.Add(levelLabel);
 
             characterLevel = new NumericUpDown();
             characterLevel.Location = new Point(3 + levelLabel.Width, 23);
-            //characterLevel.Size = new Size(50, 30);
+            characterLevel.TextAlign = HorizontalAlignment.Center;
             characterLevel.Minimum = 1;
             characterLevel.Maximum = 20;
             characterLevel.Value = 1;
@@ -189,6 +170,84 @@ namespace Easy_DnD_Character_Creator
 
             Controls.Add(introPanel);
             Size = new Size(950, 550);
+        }
+
+        public void populateForm()
+        {
+            foreach (CheckBox checkBox in bookCheckBoxes)
+            {
+                checkBox.Checked = wm.DBManager.UsedBooks.Contains(checkBox.Text);
+            }
+
+            setPreset(wm.Choices.Preset);
+
+            moneyCheckbox.Checked = wm.Choices.AdjustStartingMoney;
+        }
+
+        public void saveContent()
+        {
+            wm.DBManager.UsedBooks = getUsedBooks();
+            wm.Choices.Preset = getPreset();
+            wm.Choices.AdjustStartingMoney = moneyCheckbox.Checked;
+        }
+
+        /// <summary>
+        /// returns selected books formatted for usage in SQLite queries
+        /// </summary>
+        private string getUsedBooks()
+        {
+            string usedBooks = "";
+            foreach (CheckBox checkBox in bookCheckBoxes)
+            {
+                if (checkBox.Checked)
+                {
+                    if (usedBooks != "")
+                    {
+                        usedBooks += ", ";
+                    }
+
+                    usedBooks += "\"";
+                    usedBooks += checkBox.Text;
+                    usedBooks += "\"";
+                }
+            }
+            return usedBooks;
+        }
+
+        /// <summary>
+        /// returns the chosen creation preset: 
+        /// 0 for lenient, 1 for average, 2 for purist
+        /// </summary>
+        private int getPreset()
+        {
+            if (lenientButton.Checked)
+            {
+                return 0;
+            }
+
+            if (averageButton.Checked)
+            {
+                return 1;
+            }
+
+            return 2;
+        }
+
+        /// <summary>
+        /// checks the appropriate radiobuttons: 
+        /// 0 for lenient, 1 for average, 2 for purist
+        /// </summary>
+        private void setPreset(int inputPreset)
+        {
+            switch(inputPreset)
+            {
+                case 0: lenientButton.Checked = true;
+                    break;
+                case 1: averageButton.Checked = true;
+                    break;
+                default: puristButton.Checked = true;
+                    break;
+            }
         }
     }
 }

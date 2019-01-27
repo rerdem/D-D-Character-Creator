@@ -33,6 +33,8 @@
             this.nextButton = new System.Windows.Forms.Button();
             this.quitButton = new System.Windows.Forms.Button();
             this.contentFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.headerLabel = new System.Windows.Forms.Label();
+            this.descriptionLabel = new System.Windows.Forms.Label();
             this.buttonFlowPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +59,7 @@
             this.backButton.TabIndex = 0;
             this.backButton.Text = "< Back";
             this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // nextButton
             // 
@@ -67,6 +70,7 @@
             this.nextButton.TabIndex = 1;
             this.nextButton.Text = "Next >";
             this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // quitButton
             // 
@@ -85,17 +89,38 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.contentFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.contentFlowPanel.Location = new System.Drawing.Point(12, 12);
+            this.contentFlowPanel.Location = new System.Drawing.Point(12, 72);
             this.contentFlowPanel.Name = "contentFlowPanel";
-            this.contentFlowPanel.Size = new System.Drawing.Size(960, 575);
+            this.contentFlowPanel.Size = new System.Drawing.Size(960, 515);
             this.contentFlowPanel.TabIndex = 1;
             this.contentFlowPanel.WrapContents = false;
+            // 
+            // headerLabel
+            // 
+            this.headerLabel.AutoSize = true;
+            this.headerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headerLabel.Location = new System.Drawing.Point(12, 9);
+            this.headerLabel.Name = "headerLabel";
+            this.headerLabel.Size = new System.Drawing.Size(63, 20);
+            this.headerLabel.TabIndex = 2;
+            this.headerLabel.Text = "INTRO";
+            // 
+            // descriptionLabel
+            // 
+            this.descriptionLabel.AutoSize = true;
+            this.descriptionLabel.Location = new System.Drawing.Point(28, 32);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(60, 13);
+            this.descriptionLabel.TabIndex = 3;
+            this.descriptionLabel.Text = "Description";
             // 
             // frmMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 661);
+            this.Controls.Add(this.descriptionLabel);
+            this.Controls.Add(this.headerLabel);
             this.Controls.Add(this.contentFlowPanel);
             this.Controls.Add(this.buttonFlowPanel);
             this.MinimumSize = new System.Drawing.Size(800, 600);
@@ -103,6 +128,7 @@
             this.Text = "Easy D&D Character Creator";
             this.buttonFlowPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -113,6 +139,8 @@
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button quitButton;
+        private System.Windows.Forms.Label headerLabel;
+        private System.Windows.Forms.Label descriptionLabel;
     }
 }
 
