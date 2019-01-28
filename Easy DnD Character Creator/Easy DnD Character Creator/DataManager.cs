@@ -47,6 +47,9 @@ namespace Easy_DnD_Character_Creator
             return activeBooks;
         }
 
+        /// <summary>
+        /// gets a list of all playable races
+        /// </summary>
         public List<string> getRaces()
         {
             List<string> raceList = new List<string>();
@@ -70,6 +73,10 @@ namespace Easy_DnD_Character_Creator
             return raceList;
         }
 
+        /// <summary>
+        /// gets a list of all subrace options for the chosen race
+        /// </summary>
+        /// <param name="raceChoice">race for which to get subraces</param>
         public List<string> getSubraces(string raceChoice)
         {
             List<string> subraceList = new List<string>();
@@ -100,6 +107,10 @@ namespace Easy_DnD_Character_Creator
             return subraceList;
         }
 
+        /// <summary>
+        /// gets the description for the chosen subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
         public string  getSubraceDescription(string subraceChoice)
         {
             string description = "";
@@ -124,6 +135,130 @@ namespace Easy_DnD_Character_Creator
 
             return description;
         }
+
+        /// <summary>
+        /// gets the description for general alignment of chosen subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public string getSubraceAlignmentDescription(string subraceChoice)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT alignmentDescription FROM races " +
+                                  "WHERE subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets description for the chosen alignment
+        /// </summary>
+        /// <param name="law">lawful, neutral or chaotic</param>
+        /// <param name="morality">good, neutral or evil</param>
+        public string getAlignmentDescription(string law, string morality)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM alignment " +
+                                  "WHERE law=\"";
+            dbQuery.CommandText += law;
+            dbQuery.CommandText += "\" AND morality=\"";
+            dbQuery.CommandText += morality;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets the general description about alignment
+        /// </summary>
+        public string getGeneralAlignmentDescription()
+        {
+            return getAlignmentDescription("-", "-");
+        }
+
+        /// <summary>
+        /// gets a list of all alignments towards law
+        /// </summary>
+        /// <returns></returns>
+        public List<string> getLawAlignments()
+        {
+            List<string> lawList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT law FROM alignment WHERE law!=\"-\" GROUP BY law";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                lawList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (lawList.Count == 0)
+            {
+                lawList.Add("---");
+            }
+
+            return lawList;
+        }
+
+        /// <summary>
+        /// gets a list of all alignments towards morality
+        /// </summary>
+        /// <returns></returns>
+        public List<string> getMoralityAlignments()
+        {
+            List<string> moralityList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT morality FROM alignment WHERE morality!=\"-\" GROUP BY morality";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                moralityList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (moralityList.Count == 0)
+            {
+                moralityList.Add("---");
+            }
+
+            return moralityList;
+        }
+
 
 
         

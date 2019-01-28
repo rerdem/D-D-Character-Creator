@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlignmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AlignmentControl.Designer.cs">
+      <DependentUpon>AlignmentControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Book.cs" />
     <Compile Include="ChoiceManager.cs" />
     <Compile Include="DataManager.cs" />
@@ -89,6 +95,9 @@
       <DependentUpon>RaceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardManager.cs" />
+    <EmbeddedResource Include="AlignmentControl.resx">
+      <DependentUpon>AlignmentControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMainWindow.resx">
       <DependentUpon>frmMainWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -15,6 +15,8 @@ namespace Easy_DnD_Character_Creator
         private WizardManager wm;
         private bool visited;
 
+        public event EventHandler SubraceChanged;
+
         public RaceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
@@ -81,11 +83,16 @@ namespace Easy_DnD_Character_Creator
         public void populateForm()
         {
             fillRaceListBox();
+            if (!Visited)
+            {
+                Visited = true;
+            }
         }
 
         public void saveContent()
         {
-            throw new NotImplementedException();
+            wm.Choices.Race = raceListBox.SelectedItem.ToString();
+            wm.Choices.Subrace = subraceListBox.SelectedItem.ToString();
         }
 
         private void raceListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,6 +103,18 @@ namespace Easy_DnD_Character_Creator
         private void subraceListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             descriptionLabel.Text = wm.DBManager.getSubraceDescription(subraceListBox.SelectedItem.ToString());
+            saveContent();
+
+            OnSubraceChanged(null);
+        }
+
+        protected virtual void OnSubraceChanged(EventArgs e)
+        {
+            EventHandler handler = SubraceChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }

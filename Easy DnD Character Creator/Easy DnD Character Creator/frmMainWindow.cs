@@ -13,14 +13,18 @@ namespace Easy_DnD_Character_Creator
     public partial class frmMainWindow : Form
     {
         public WizardManager WM { get; }
-        private IntroControl introPage;
-        private RaceControl racePage;
+        private IntroControl introComponent;
+        private RaceControl raceComponent;
+        private AlignmentControl alignmentComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
             WM = inputWizardManager;
-            introPage = new IntroControl(WM);
-            racePage = new RaceControl(WM);
+            introComponent = new IntroControl(WM);
+            raceComponent = new RaceControl(WM);
+            alignmentComponent = new AlignmentControl(WM);
+            raceComponent.SubraceChanged += new EventHandler(raceComponent_SubraceChanged);
+
             InitializeComponent();
             refreshWindow();
         }
@@ -32,11 +36,14 @@ namespace Easy_DnD_Character_Creator
             switch (WM.CurrentState)
             {
                 case WizardState.race:
-                    contentFlowPanel.Controls.Add(racePage);
                     headerLabel.Text = "Race && Alignment";
                     descriptionLabel.Text = "Please select the race, subrace and alignment of your character.";
-                    racePage.populateForm();
-                    racePage.Visited = true;
+
+                    contentFlowPanel.Controls.Add(raceComponent);
+                    raceComponent.populateForm();
+
+                    contentFlowPanel.Controls.Add(alignmentComponent);
+                    alignmentComponent.populateForm();
                     break;
                 case WizardState.appearance:
                     break;
@@ -59,11 +66,11 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.export:
                     break;
                 default: //WizardState.intro
-                    contentFlowPanel.Controls.Add(introPage);
                     headerLabel.Text = "Introduction";
                     descriptionLabel.Text = "Please select the used books, creation preset and character level.";
-                    introPage.populateForm();
-                    introPage.Visited = true;
+
+                    contentFlowPanel.Controls.Add(introComponent);
+                    introComponent.populateForm();
                     break;
             }
 
@@ -119,7 +126,7 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.export:
                     break;
                 default: //WizardState.intro
-                    introPage.saveContent();
+                    introComponent.saveContent();
                     WM.advanceState();
                     break;
             }
@@ -145,6 +152,15 @@ namespace Easy_DnD_Character_Creator
             //fill in previous page
 
             //refresh panel
+        }
+
+        void raceComponent_SubraceChanged(object sender, EventArgs e)
+        {
+            RaceControl incoming = sender as RaceControl;
+            if (incoming != null)
+            {
+                alignmentComponent.updateRaceAlignmentDescription(WM.DBManager.getSubraceAlignmentDescription(WM.Choices.Subrace));
+            }
         }
     }
 }

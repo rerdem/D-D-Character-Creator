@@ -182,6 +182,11 @@ namespace Easy_DnD_Character_Creator
             setPreset(wm.Choices.Preset);
 
             moneyCheckbox.Checked = wm.Choices.AdjustStartingMoney;
+
+            if (!Visited)
+            {
+                Visited = true;
+            }
         }
 
         public void saveContent()
