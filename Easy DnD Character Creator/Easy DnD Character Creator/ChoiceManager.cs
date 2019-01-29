@@ -21,6 +21,20 @@ namespace Easy_DnD_Character_Creator
         public string LawAlignment { get; set; }
         public string MoralityAlignment { get; set; }
 
+        //AgeControl
+        public int Age { get; set; }
+
+        //BodyControl
+        public int HeightModifier { get; set; }
+        public int WeightModifier { get; set; }
+        public string Height { get; set; }
+        public string Weight { get; set; }
+
+        //AppearanceControl
+        public string EyeColor { get; set; }
+        public string SkinColor { get; set; }
+        public string HairColor { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -30,6 +44,14 @@ namespace Easy_DnD_Character_Creator
             Subrace = "";
             LawAlignment = "";
             MoralityAlignment = "";
+            Age = 1;
+            HeightModifier = 0;
+            WeightModifier = 0;
+            Height = "";
+            Weight = "";
+            EyeColor = "";
+            SkinColor = "";
+            HairColor = "";
         }
     }
 }

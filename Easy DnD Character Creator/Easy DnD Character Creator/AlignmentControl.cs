@@ -82,9 +82,9 @@ namespace Easy_DnD_Character_Creator
             }
         }
 
-        public void updateRaceAlignmentDescription(string inputDescription)
+        public void updateRaceAlignmentDescription(string inputSubrace)
         {
-            raceAlignmentLabel.Text = inputDescription;
+            raceAlignmentLabel.Text = wm.DBManager.getSubraceAlignmentDescription(inputSubrace);
         }
 
         public void saveContent()

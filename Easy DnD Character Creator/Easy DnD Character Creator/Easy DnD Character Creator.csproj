@@ -64,11 +64,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AgeControl.Designer.cs">
+      <DependentUpon>AgeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="AlignmentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AlignmentControl.Designer.cs">
       <DependentUpon>AlignmentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BodyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BodyControl.Designer.cs">
+      <DependentUpon>BodyControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Book.cs" />
     <Compile Include="ChoiceManager.cs" />
@@ -95,8 +107,14 @@
       <DependentUpon>RaceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardManager.cs" />
+    <EmbeddedResource Include="AgeControl.resx">
+      <DependentUpon>AgeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AlignmentControl.resx">
       <DependentUpon>AlignmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BodyControl.resx">
+      <DependentUpon>BodyControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainWindow.resx">
       <DependentUpon>frmMainWindow.cs</DependentUpon>

@@ -259,11 +259,222 @@ namespace Easy_DnD_Character_Creator
             return moralityList;
         }
 
+        /// <summary>
+        /// gets the description of race specific ages
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public string getAgeDescription(string subraceChoice)
+        {
+            string description = "";
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT ageDescription FROM races " +
+                                  "WHERE subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets number of dice used for height modification
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getHeightModifierDiceCount(string subraceChoice)
+        {
+            int heightModifierDiceCount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT heightModDiceCount FROM size " +
+                                  "INNER JOIN races ON size.raceId=races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                heightModifierDiceCount = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return heightModifierDiceCount;
+        }
+
+        /// <summary>
+        /// gets type of dice used for height modification
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getHeightModifierDiceType(string subraceChoice)
+        {
+            int heightModifierDiceType = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT heightModDiceType FROM size " +
+                                  "INNER JOIN races ON size.raceId=races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                heightModifierDiceType = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return heightModifierDiceType;
+        }
+
+        /// <summary>
+        /// gets number of dice used for weight modification
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getWeightModifierDiceCount(string subraceChoice)
+        {
+            int weightModifierDiceCount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT weightModDiceCount FROM size " +
+                                  "INNER JOIN races ON size.raceId=races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                weightModifierDiceCount = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return weightModifierDiceCount;
+        }
+
+        /// <summary>
+        /// gets type of dice used for weight modification
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getWeightModifierDiceType(string subraceChoice)
+        {
+            int weightModifierDiceType = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT weightModDiceType FROM size " +
+                                  "INNER JOIN races ON size.raceId=races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                weightModifierDiceType = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return weightModifierDiceType;
+        }
+
+        /// <summary>
+        /// gets the base height in metric or imperial for the chosen race
+        /// </summary>
+        /// <param name="metric">true for metric, false for imperial</param>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getBaseHeight(bool metric, string subraceChoice)
+        {
+            int baseHeight = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT ";
+            if (metric)
+            {
+                dbQuery.CommandText = "baseHeightCm";
+            }
+            else
+            {
+                dbQuery.CommandText = "baseHeightIn";
+            }
+            dbQuery.CommandText += " FROM size " +
+                "INNER JOIN races ON size.raceId=races.raceid " +
+                "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                baseHeight = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return baseHeight;
+        }
+
+        /// <summary>
+        /// gets the base Weight in metric or imperial for the chosen race
+        /// </summary>
+        /// <param name="metric">true for metric, false for imperial</param>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int getBaseWeight(bool metric, string subraceChoice)
+        {
+            int baseWeight = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT ";
+            if (metric)
+            {
+                dbQuery.CommandText = "baseWeightKg";
+            }
+            else
+            {
+                dbQuery.CommandText = "baseWeightLb";
+            }
+            dbQuery.CommandText += " FROM size " +
+                "INNER JOIN races ON size.raceId=races.raceid " +
+                "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                baseWeight = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return baseWeight;
+        }
 
         
-
-
         //private void ReadData()
         //{
         //    DBConnection.Open();

@@ -25,11 +25,36 @@ namespace Easy_DnD_Character_Creator
             LastPage = false;
         }
 
+        /// <summary>
+        /// determines, if current state is first or last and sets FirstPage and LastPage accordingly
+        /// </summary>
+        private void setFirstOrLastPage()
+        {
+            if (CurrentState == WizardState.intro)
+            {
+                FirstPage = true;
+            }
+            else
+            {
+                FirstPage = false;
+            }
+
+            if (CurrentState == WizardState.appearance)
+            {
+                LastPage = true;
+            }
+            else
+            {
+                LastPage = false;
+            }
+        }
+
         public void advanceState()
         {
             switch (CurrentState)
             {
                 case WizardState.race:
+                    CurrentState = WizardState.appearance;
                     break;
                 case WizardState.appearance:
                     break;
@@ -53,10 +78,42 @@ namespace Easy_DnD_Character_Creator
                     break;
                 default: //WizardState.intro
                     CurrentState = WizardState.race;
-                    FirstPage = false;
-                    LastPage = true;
                     break;
             }
+            setFirstOrLastPage();
+        }
+
+        public void revertState()
+        {
+            switch (CurrentState)
+            {
+                case WizardState.race:
+                    CurrentState = WizardState.intro;
+                    break;
+                case WizardState.appearance:
+                    break;
+                case WizardState.classBackground:
+                    break;
+                case WizardState.stats:
+                    break;
+                case WizardState.languages:
+                    break;
+                case WizardState.skills:
+                    break;
+                case WizardState.equipment:
+                    break;
+                case WizardState.spells:
+                    break;
+                case WizardState.extraChoices:
+                    break;
+                case WizardState.story:
+                    break;
+                case WizardState.export:
+                    break;
+                default: //WizardState.intro
+                    break;
+            }
+            setFirstOrLastPage();
         }
     }
 }

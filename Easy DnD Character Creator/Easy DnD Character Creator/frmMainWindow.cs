@@ -16,6 +16,8 @@ namespace Easy_DnD_Character_Creator
         private IntroControl introComponent;
         private RaceControl raceComponent;
         private AlignmentControl alignmentComponent;
+        private AgeControl ageComponent;
+        private BodyControl bodyComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -24,6 +26,8 @@ namespace Easy_DnD_Character_Creator
             raceComponent = new RaceControl(WM);
             alignmentComponent = new AlignmentControl(WM);
             raceComponent.SubraceChanged += new EventHandler(raceComponent_SubraceChanged);
+            ageComponent = new AgeControl(WM);
+            bodyComponent = new BodyControl(WM);
 
             InitializeComponent();
             refreshWindow();
@@ -46,6 +50,14 @@ namespace Easy_DnD_Character_Creator
                     alignmentComponent.populateForm();
                     break;
                 case WizardState.appearance:
+                    headerLabel.Text = "Physical Appearance";
+                    descriptionLabel.Text = "Please select the physical characteristics of your character.";
+
+                    contentFlowPanel.Controls.Add(ageComponent);
+                    ageComponent.populateForm();
+
+                    contentFlowPanel.Controls.Add(bodyComponent);
+                    bodyComponent.populateForm();
                     break;
                 case WizardState.classBackground:
                     break;
@@ -101,11 +113,16 @@ namespace Easy_DnD_Character_Creator
 
         private void nextButton_Click(object sender, EventArgs e)
         {
+            //save current page values
             switch (WM.CurrentState)
             {
                 case WizardState.race:
+                    raceComponent.saveContent();
+                    alignmentComponent.saveContent();
                     break;
                 case WizardState.appearance:
+                    ageComponent.saveContent();
+                    bodyComponent.saveContent();
                     break;
                 case WizardState.classBackground:
                     break;
@@ -127,20 +144,14 @@ namespace Easy_DnD_Character_Creator
                     break;
                 default: //WizardState.intro
                     introComponent.saveContent();
-                    WM.advanceState();
                     break;
             }
-
-            refreshWindow();
-
-            //save current page values
-
+            
             //advance status in WizardManager
-
-            //if page has been visited, fill in information that did not reset
+            WM.advanceState();
 
             //refresh panel
-
+            refreshWindow();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -148,8 +159,6 @@ namespace Easy_DnD_Character_Creator
             //save current page values
 
             //revert status in WizardManager
-
-            //fill in previous page
 
             //refresh panel
         }
@@ -159,7 +168,9 @@ namespace Easy_DnD_Character_Creator
             RaceControl incoming = sender as RaceControl;
             if (incoming != null)
             {
-                alignmentComponent.updateRaceAlignmentDescription(WM.DBManager.getSubraceAlignmentDescription(WM.Choices.Subrace));
+                alignmentComponent.updateRaceAlignmentDescription(WM.Choices.Subrace);
+                ageComponent.updateRaceAgeDescription(WM.Choices.Subrace);
+                bodyComponent.updateMinMax(WM.Choices.Subrace);
             }
         }
     }
