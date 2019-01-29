@@ -15,6 +15,7 @@ namespace Easy_DnD_Character_Creator
         public WizardState CurrentState { get; private set; }
         public bool FirstPage { get; private set; }
         public bool LastPage { get; private set; }
+        private Random random;
 
         public WizardManager()
         {
@@ -23,30 +24,7 @@ namespace Easy_DnD_Character_Creator
             CurrentState = WizardState.intro;
             FirstPage = true;
             LastPage = false;
-        }
-
-        /// <summary>
-        /// determines, if current state is first or last and sets FirstPage and LastPage accordingly
-        /// </summary>
-        private void setFirstOrLastPage()
-        {
-            if (CurrentState == WizardState.intro)
-            {
-                FirstPage = true;
-            }
-            else
-            {
-                FirstPage = false;
-            }
-
-            if (CurrentState == WizardState.appearance)
-            {
-                LastPage = true;
-            }
-            else
-            {
-                LastPage = false;
-            }
+            random = new Random();
         }
 
         public void advanceState()
@@ -114,6 +92,35 @@ namespace Easy_DnD_Character_Creator
                     break;
             }
             setFirstOrLastPage();
+        }
+
+        public int getRandomNumber(int minimum, int maximum)
+        {
+            return random.Next(minimum, maximum);
+        }
+
+        /// <summary>
+        /// determines, if current state is first or last and sets FirstPage and LastPage accordingly
+        /// </summary>
+        private void setFirstOrLastPage()
+        {
+            if (CurrentState == WizardState.intro)
+            {
+                FirstPage = true;
+            }
+            else
+            {
+                FirstPage = false;
+            }
+
+            if (CurrentState == WizardState.appearance)
+            {
+                LastPage = true;
+            }
+            else
+            {
+                LastPage = false;
+            }
         }
     }
 }

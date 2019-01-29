@@ -128,6 +128,7 @@
             0,
             0,
             0});
+            this.heightModifier.ValueChanged += new System.EventHandler(this.heightModifier_ValueChanged);
             // 
             // weightModifier
             // 
@@ -150,6 +151,7 @@
             0,
             0,
             0});
+            this.weightModifier.ValueChanged += new System.EventHandler(this.weightModifier_ValueChanged);
             // 
             // heightResultLabel
             // 
@@ -177,6 +179,7 @@
             this.randomizeButton.TabIndex = 7;
             this.randomizeButton.Text = "Randomize Height/Weight";
             this.randomizeButton.UseVisualStyleBackColor = true;
+            this.randomizeButton.Click += new System.EventHandler(this.randomizeButton_Click);
             // 
             // BodyControl
             // 

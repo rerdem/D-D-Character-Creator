@@ -65,7 +65,10 @@ namespace Easy_DnD_Character_Creator
 
         public void saveContent()
         {
-            throw new NotImplementedException();
+            wm.Choices.HeightModifier = (int)heightModifier.Value;
+            wm.Choices.WeightModifier = (int)weightModifier.Value;
+            wm.Choices.Height = heightResultLabel.Text;
+            wm.Choices.Weight = weightResultLabel.Text;
         }
 
         public void updateMinMax(string inputSubrace)
@@ -75,6 +78,54 @@ namespace Easy_DnD_Character_Creator
             
             weightModifier.Minimum = wm.DBManager.getWeightModifierDiceCount(inputSubrace);
             weightModifier.Maximum = wm.DBManager.getWeightModifierDiceType(inputSubrace) * weightModifier.Minimum;
+        }
+
+        private void refreshHeightWeight()
+        {
+            //calculate height in imperial
+            int heightImperial = wm.DBManager.getBaseHeight(false, wm.Choices.Subrace);
+            heightImperial += (int)heightModifier.Value;
+
+            //calculate weight in imperial
+            int weightImperial = wm.DBManager.getBaseWeight(false, wm.Choices.Subrace);
+            int weightModifierImperial = (int)heightModifier.Value * (int)weightModifier.Value;
+            weightImperial += weightModifierImperial;
+
+            //convert to metric
+            int heightMetric = (int)Math.Ceiling(heightImperial * 2.5);
+            int weightMetric = (int)Math.Floor(weightImperial / 2.0);
+
+            //construct and set height
+            heightResultLabel.Text = Convert.ToString(heightMetric / 100);
+            heightResultLabel.Text += ",";
+            heightResultLabel.Text += Convert.ToString(heightMetric % 100);
+            heightResultLabel.Text += "m (";
+            heightResultLabel.Text += Convert.ToString(heightImperial / 12);
+            heightResultLabel.Text += "\'";
+            heightResultLabel.Text += Convert.ToString(heightImperial % 12);
+            heightResultLabel.Text += "\")";
+
+            //construct and set weight
+            weightResultLabel.Text = Convert.ToString(weightMetric);
+            weightResultLabel.Text += "kg (";
+            weightResultLabel.Text += Convert.ToString(weightImperial);
+            weightResultLabel.Text += "lbs.)";
+        }
+
+        private void heightModifier_ValueChanged(object sender, EventArgs e)
+        {
+            refreshHeightWeight();
+        }
+
+        private void weightModifier_ValueChanged(object sender, EventArgs e)
+        {
+            refreshHeightWeight();
+        }
+
+        private void randomizeButton_Click(object sender, EventArgs e)
+        {
+            heightModifier.Value = wm.getRandomNumber((int)heightModifier.Minimum, (int)heightModifier.Maximum + 1);
+            weightModifier.Value = wm.getRandomNumber((int)weightModifier.Minimum, (int)weightModifier.Maximum + 1);
         }
     }
 }

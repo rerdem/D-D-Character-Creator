@@ -414,11 +414,11 @@ namespace Easy_DnD_Character_Creator
             dbQuery.CommandText = "SELECT ";
             if (metric)
             {
-                dbQuery.CommandText = "baseHeightCm";
+                dbQuery.CommandText += "baseHeightCm";
             }
             else
             {
-                dbQuery.CommandText = "baseHeightIn";
+                dbQuery.CommandText += "baseHeightIn";
             }
             dbQuery.CommandText += " FROM size " +
                 "INNER JOIN races ON size.raceId=races.raceid " +
@@ -452,11 +452,11 @@ namespace Easy_DnD_Character_Creator
             dbQuery.CommandText = "SELECT ";
             if (metric)
             {
-                dbQuery.CommandText = "baseWeightKg";
+                dbQuery.CommandText += "baseWeightKg";
             }
             else
             {
-                dbQuery.CommandText = "baseWeightLb";
+                dbQuery.CommandText += "baseWeightLb";
             }
             dbQuery.CommandText += " FROM size " +
                 "INNER JOIN races ON size.raceId=races.raceid " +
