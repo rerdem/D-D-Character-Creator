@@ -35,6 +35,13 @@ namespace Easy_DnD_Character_Creator
         public string SkinColor { get; set; }
         public string HairColor { get; set; }
 
+        //ClassControl
+        public string Class { get; set; }
+        public string Subclass { get; set; }
+
+        //BackgroundControl
+        public string Background { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -52,6 +59,9 @@ namespace Easy_DnD_Character_Creator
             EyeColor = "";
             SkinColor = "";
             HairColor = "";
+            Class = "";
+            Subclass = "";
+            Background = "";
         }
     }
 }

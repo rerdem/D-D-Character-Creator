@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.WizardComponents
 {
     public partial class AgeControl : UserControl, IWizardControl
     {
@@ -31,6 +31,11 @@ namespace Easy_DnD_Character_Creator
             {
                 visited = value;
             }
+        }
+
+        public bool isValid()
+        {
+            return (ageValue.Value > 0);
         }
 
         public void populateForm()

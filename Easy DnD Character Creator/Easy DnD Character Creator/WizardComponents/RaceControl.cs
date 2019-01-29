@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.WizardComponents
 {
     public partial class RaceControl : UserControl, IWizardControl
     {
@@ -115,6 +115,11 @@ namespace Easy_DnD_Character_Creator
             {
                 handler(this, e);
             }
+        }
+
+        public bool isValid()
+        {
+            return (subraceListBox.SelectedItems.Count > 0);
         }
     }
 }

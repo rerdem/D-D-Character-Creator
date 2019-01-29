@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.WizardComponents
 {
     public partial class AlignmentControl : UserControl, IWizardControl
     {
@@ -109,6 +109,11 @@ namespace Easy_DnD_Character_Creator
                 chosenAlignmentLabel.Text = wm.DBManager.getAlignmentDescription(lawBox.SelectedItem.ToString(), moralityBox.SelectedItem.ToString());
                 saveContent();
             }
+        }
+
+        public bool isValid()
+        {
+            return ((lawBox.SelectedItems.Count > 0) && (moralityBox.SelectedItems.Count > 0));
         }
     }
 }

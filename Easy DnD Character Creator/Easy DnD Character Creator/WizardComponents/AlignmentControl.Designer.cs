@@ -1,4 +1,4 @@
-﻿namespace Easy_DnD_Character_Creator
+﻿namespace Easy_DnD_Character_Creator.WizardComponents
 {
     partial class AlignmentControl
     {

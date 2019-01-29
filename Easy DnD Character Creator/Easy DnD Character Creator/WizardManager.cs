@@ -35,6 +35,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.appearance;
                     break;
                 case WizardState.appearance:
+                    CurrentState = WizardState.classBackground;
                     break;
                 case WizardState.classBackground:
                     break;
@@ -69,6 +70,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.intro;
                     break;
                 case WizardState.appearance:
+                    CurrentState = WizardState.race;
                     break;
                 case WizardState.classBackground:
                     break;
@@ -100,6 +102,89 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
+        /// gets the headline of the current wizard page
+        /// </summary>
+        public string getCurrentPageHeader()
+        {
+            string headerOutput = "";
+            switch (CurrentState)
+            {
+                case WizardState.race:
+                    headerOutput = "Race && Alignment";
+                    break;
+                case WizardState.appearance:
+                    headerOutput = "Physical Appearance";
+                    break;
+                case WizardState.classBackground:
+                    headerOutput = "Class/Subclass && Background";
+                    break;
+                case WizardState.stats:
+                    break;
+                case WizardState.languages:
+                    break;
+                case WizardState.skills:
+                    break;
+                case WizardState.equipment:
+                    break;
+                case WizardState.spells:
+                    break;
+                case WizardState.extraChoices:
+                    break;
+                case WizardState.story:
+                    break;
+                case WizardState.export:
+                    break;
+                default: //WizardState.intro
+                    headerOutput = "Introduction";
+                    break;
+            }
+
+            return headerOutput;
+        }
+
+        /// <summary>
+        /// gets the description of the current wizard page
+        /// </summary>
+        public string getCurrentPageDescription()
+        {
+            string descriptionOutput = "";
+
+            switch (CurrentState)
+            {
+                case WizardState.race:
+                    descriptionOutput = "Please select the race, subrace and alignment of your character.";
+                    break;
+                case WizardState.appearance:
+                    descriptionOutput = "Please select the physical characteristics of your character.";
+                    break;
+                case WizardState.classBackground:
+                    descriptionOutput = "Please select the Class/Subclass and Background for your character.";
+                    break;
+                case WizardState.stats:
+                    break;
+                case WizardState.languages:
+                    break;
+                case WizardState.skills:
+                    break;
+                case WizardState.equipment:
+                    break;
+                case WizardState.spells:
+                    break;
+                case WizardState.extraChoices:
+                    break;
+                case WizardState.story:
+                    break;
+                case WizardState.export:
+                    break;
+                default: //WizardState.intro
+                    descriptionOutput = "Please select the used books, creation preset and character level.";
+                    break;
+            }
+
+            return descriptionOutput;
+        }
+
+        /// <summary>
         /// determines, if current state is first or last and sets FirstPage and LastPage accordingly
         /// </summary>
         private void setFirstOrLastPage()
@@ -113,7 +198,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.appearance)
+            if (CurrentState == WizardState.classBackground)
             {
                 LastPage = true;
             }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.WizardComponents
 {
     public partial class IntroControl : UserControl, IWizardControl
     {
@@ -253,6 +253,11 @@ namespace Easy_DnD_Character_Creator
                 default: puristButton.Checked = true;
                     break;
             }
+        }
+
+        public bool isValid()
+        {
+            return (characterLevel.Value > 0);
         }
     }
 }

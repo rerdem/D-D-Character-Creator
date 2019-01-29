@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.WizardComponents
 {
     public partial class BodyControl : UserControl, IWizardControl
     {
@@ -126,6 +126,11 @@ namespace Easy_DnD_Character_Creator
         {
             heightModifier.Value = wm.getRandomNumber((int)heightModifier.Minimum, (int)heightModifier.Maximum + 1);
             weightModifier.Value = wm.getRandomNumber((int)weightModifier.Minimum, (int)weightModifier.Maximum + 1);
+        }
+
+        public bool isValid()
+        {
+            return ((heightModifier.Value > 0) && (weightModifier.Value > 0));
         }
     }
 }

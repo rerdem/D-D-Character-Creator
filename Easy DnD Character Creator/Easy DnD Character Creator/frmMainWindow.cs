@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.WizardComponents;
 
 namespace Easy_DnD_Character_Creator
 {
@@ -18,6 +19,7 @@ namespace Easy_DnD_Character_Creator
         private AlignmentControl alignmentComponent;
         private AgeControl ageComponent;
         private BodyControl bodyComponent;
+        private AppearanceControl appearanceComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -28,21 +30,25 @@ namespace Easy_DnD_Character_Creator
             raceComponent.SubraceChanged += new EventHandler(raceComponent_SubraceChanged);
             ageComponent = new AgeControl(WM);
             bodyComponent = new BodyControl(WM);
+            appearanceComponent = new AppearanceControl(WM);
+            appearanceComponent.AppearanceChanged += new EventHandler(appearanceComponent_AppearanceChanged);
 
             InitializeComponent();
             refreshWindow();
+            refreshButtons();
         }
 
         private void refreshWindow()
         {
+            //fill in header and description
+            headerLabel.Text = WM.getCurrentPageHeader();
+            descriptionLabel.Text = WM.getCurrentPageDescription();
+
             //fill content
             contentFlowPanel.Controls.Clear();
             switch (WM.CurrentState)
             {
                 case WizardState.race:
-                    headerLabel.Text = "Race && Alignment";
-                    descriptionLabel.Text = "Please select the race, subrace and alignment of your character.";
-
                     contentFlowPanel.Controls.Add(raceComponent);
                     raceComponent.populateForm();
 
@@ -50,14 +56,14 @@ namespace Easy_DnD_Character_Creator
                     alignmentComponent.populateForm();
                     break;
                 case WizardState.appearance:
-                    headerLabel.Text = "Physical Appearance";
-                    descriptionLabel.Text = "Please select the physical characteristics of your character.";
-
                     contentFlowPanel.Controls.Add(ageComponent);
                     ageComponent.populateForm();
 
                     contentFlowPanel.Controls.Add(bodyComponent);
                     bodyComponent.populateForm();
+
+                    contentFlowPanel.Controls.Add(appearanceComponent);
+                    appearanceComponent.populateForm();
                     break;
                 case WizardState.classBackground:
                     break;
@@ -78,15 +84,15 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.export:
                     break;
                 default: //WizardState.intro
-                    headerLabel.Text = "Introduction";
-                    descriptionLabel.Text = "Please select the used books, creation preset and character level.";
-
                     contentFlowPanel.Controls.Add(introComponent);
                     introComponent.populateForm();
                     break;
             }
+        }
 
-            //check if back or next buttons need to be disabled
+        private void refreshButtons()
+        {
+            //check back button
             if (WM.FirstPage)
             {
                 backButton.Enabled = false;
@@ -96,13 +102,47 @@ namespace Easy_DnD_Character_Creator
                 backButton.Enabled = true;
             }
 
+            //check if last page reached or page invalid
             if (WM.LastPage)
             {
                 nextButton.Enabled = false;
             }
             else
             {
-                nextButton.Enabled = true;
+                switch (WM.CurrentState)
+                {
+                    //case WizardState.race:
+                    //    raceComponent.isValid();
+                    //    alignmentComponent.isValid();
+                    //    break;
+                    case WizardState.appearance:
+                        //ageComponent.isValid();
+                        //bodyComponent.isValid();
+                        nextButton.Enabled = appearanceComponent.isValid();
+                        break;
+                    case WizardState.classBackground:
+                        break;
+                    case WizardState.stats:
+                        break;
+                    case WizardState.languages:
+                        break;
+                    case WizardState.skills:
+                        break;
+                    case WizardState.equipment:
+                        break;
+                    case WizardState.spells:
+                        break;
+                    case WizardState.extraChoices:
+                        break;
+                    case WizardState.story:
+                        break;
+                    case WizardState.export:
+                        break;
+                    default: //WizardState.intro
+                        //introComponent.isValid();
+                        nextButton.Enabled = true;
+                        break;
+                }
             }
         }
 
@@ -123,6 +163,7 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.appearance:
                     ageComponent.saveContent();
                     bodyComponent.saveContent();
+                    appearanceComponent.saveContent();
                     break;
                 case WizardState.classBackground:
                     break;
@@ -150,8 +191,9 @@ namespace Easy_DnD_Character_Creator
             //advance status in WizardManager
             WM.advanceState();
 
-            //refresh panel
+            //refresh panel and buttons
             refreshWindow();
+            refreshButtons();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -171,6 +213,15 @@ namespace Easy_DnD_Character_Creator
                 alignmentComponent.updateRaceAlignmentDescription(WM.Choices.Subrace);
                 ageComponent.updateRaceAgeDescription(WM.Choices.Subrace);
                 bodyComponent.updateMinMax(WM.Choices.Subrace);
+            }
+        }
+
+        void appearanceComponent_AppearanceChanged(object sender, EventArgs e)
+        {
+            AppearanceControl incoming = sender as AppearanceControl;
+            if (incoming != null)
+            {
+                refreshButtons();
             }
         }
     }
