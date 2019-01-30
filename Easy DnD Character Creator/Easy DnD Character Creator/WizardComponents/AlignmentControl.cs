@@ -115,5 +115,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             return ((lawBox.SelectedItems.Count > 0) && (moralityBox.SelectedItems.Count > 0));
         }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if ((lawBox.SelectedItems.Count == 0) || (moralityBox.SelectedItems.Count == 0))
+            {
+                output += alignmentBox.Text;
+            }
+
+            return output;
+        }
     }
 }

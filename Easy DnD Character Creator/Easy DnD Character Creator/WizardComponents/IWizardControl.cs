@@ -13,5 +13,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         void populateForm();
         void saveContent();
         bool isValid();
+        string getInvalidElements();
     }
 }

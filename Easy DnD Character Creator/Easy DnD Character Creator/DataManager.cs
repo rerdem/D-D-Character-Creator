@@ -474,7 +474,131 @@ namespace Easy_DnD_Character_Creator
             return baseWeight;
         }
 
+        /// <summary>
+        /// gets a list of all playable classes
+        /// </summary>
+        public List<string> getClasses()
+        {
+            List<string> classList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM classes INNER JOIN books ON classes.book=books.bookid " +
+                                  "WHERE books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                classList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return classList;
+        }
+
+        /// <summary>
+        /// gets a list of all subclass options for the chosen class
+        /// </summary>
+        /// <param name="classChoice">class for which to get subclasses</param>
+        /// <param name="level">player level</param>
+        public List<string> getSubclasses(string classChoice, int level)
+        {
+            List<string> subclassList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT subclasses.name FROM subclasses " + 
+                                  "INNER JOIN books ON subclasses.book=books.bookid " + 
+                                  "INNER JOIN classes ON subclasses.parentclass=classes.classid " + 
+                                  "WHERE  books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ") AND classes.name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\" AND classes.subclasslevel<=";
+            dbQuery.CommandText += level.ToString();
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                subclassList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (subclassList.Count == 0)
+            {
+                subclassList.Add("---");
+            }
+
+            return subclassList;
+        }
+
+        /// <summary>
+        /// gets the description for the chosen class
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        /// <returns></returns>
+        public string getClassDescription(string classChoice)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM classes INNER JOIN books ON classes.book=books.bookid WHERE books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ") AND name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets the description for the chosen subclass
+        /// </summary>
+        /// <param name="subclassChoice">chosen subclass</param>
+        /// <returns></returns>
+        public string getSubclassDescription(string subclassChoice)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM subclasses INNER JOIN books ON subclasses.book=books.bookid WHERE books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ") AND name=\"";
+            dbQuery.CommandText += subclassChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+
         
+
         //private void ReadData()
         //{
         //    DBConnection.Open();

@@ -181,6 +181,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             setPreset(wm.Choices.Preset);
 
+            characterLevel.Value = wm.Choices.Level;
+
             moneyCheckbox.Checked = wm.Choices.AdjustStartingMoney;
 
             if (!Visited)
@@ -193,6 +195,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm.DBManager.UsedBooks = getUsedBooks();
             wm.Choices.Preset = getPreset();
+            wm.Choices.Level = (int)characterLevel.Value;
             wm.Choices.AdjustStartingMoney = moneyCheckbox.Checked;
         }
 
@@ -258,6 +261,18 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public bool isValid()
         {
             return (characterLevel.Value > 0);
+        }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (characterLevel.Value <= 0)
+            {
+                output += "character level";
+            }
+
+            return output;
         }
     }
 }

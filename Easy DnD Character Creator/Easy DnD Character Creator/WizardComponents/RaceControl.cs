@@ -121,5 +121,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             return (subraceListBox.SelectedItems.Count > 0);
         }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (subraceListBox.SelectedItems.Count == 0)
+            {
+                output += raceBox.Text;
+            }
+
+            return output;
+        }
     }
 }

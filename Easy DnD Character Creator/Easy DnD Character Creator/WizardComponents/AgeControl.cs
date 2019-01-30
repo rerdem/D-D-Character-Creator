@@ -33,6 +33,18 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (ageValue.Value < 0)
+            {
+                output += ageBox.Text;
+            }
+
+            return output;
+        }
+
         public bool isValid()
         {
             return (ageValue.Value > 0);

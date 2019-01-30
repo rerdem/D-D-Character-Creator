@@ -82,6 +82,12 @@
     <Compile Include="WizardComponents\AppearanceControl.Designer.cs">
       <DependentUpon>AppearanceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\BackgroundControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\BackgroundControl.Designer.cs">
+      <DependentUpon>BackgroundControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\BodyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,6 +102,12 @@
     </Compile>
     <Compile Include="frmMainWindow.Designer.cs">
       <DependentUpon>frmMainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ClassControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ClassControl.Designer.cs">
+      <DependentUpon>ClassControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\IWizardControl.cs" />
     <Compile Include="WizardComponents\IntroControl.cs">
@@ -122,6 +134,9 @@
     <EmbeddedResource Include="WizardComponents\AppearanceControl.resx">
       <DependentUpon>AppearanceControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\BackgroundControl.resx">
+      <DependentUpon>BackgroundControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\BodyControl.resx">
       <DependentUpon>BodyControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -137,6 +152,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WizardComponents\ClassControl.resx">
+      <DependentUpon>ClassControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\RaceControl.resx">
       <DependentUpon>RaceControl.cs</DependentUpon>
     </EmbeddedResource>

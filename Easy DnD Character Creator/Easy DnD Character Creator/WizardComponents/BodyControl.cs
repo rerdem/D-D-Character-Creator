@@ -132,5 +132,26 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             return ((heightModifier.Value > 0) && (weightModifier.Value > 0));
         }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (heightModifier.Value <= 0)
+            {
+                output += "height modifier";
+            }
+
+            if (weightModifier.Value <= 0)
+            {
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+                output += "weight modifiert";
+            }
+
+            return output;
+        }
     }
 }

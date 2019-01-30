@@ -20,6 +20,7 @@ namespace Easy_DnD_Character_Creator
         private AgeControl ageComponent;
         private BodyControl bodyComponent;
         private AppearanceControl appearanceComponent;
+        private ClassControl classComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -32,13 +33,21 @@ namespace Easy_DnD_Character_Creator
             bodyComponent = new BodyControl(WM);
             appearanceComponent = new AppearanceControl(WM);
             appearanceComponent.AppearanceChanged += new EventHandler(appearanceComponent_AppearanceChanged);
+            classComponent = new ClassControl(WM);
+
 
             InitializeComponent();
             refreshWindow();
-            refreshButtons();
         }
 
         private void refreshWindow()
+        {
+            refreshContentPanel();
+            refreshButtons();
+            refreshStatusText();
+        }
+
+        private void refreshContentPanel()
         {
             //fill in header and description
             headerLabel.Text = WM.getCurrentPageHeader();
@@ -66,6 +75,8 @@ namespace Easy_DnD_Character_Creator
                     appearanceComponent.populateForm();
                     break;
                 case WizardState.classBackground:
+                    contentFlowPanel.Controls.Add(classComponent);
+                    classComponent.populateForm();
                     break;
                 case WizardState.stats:
                     break;
@@ -109,18 +120,37 @@ namespace Easy_DnD_Character_Creator
             }
             else
             {
+                nextButton.Enabled = isCurrentPageValid();
+            }
+        }
+
+        private void refreshStatusText()
+        {
+            if (!isCurrentPageValid())
+            {
+                missingElementsLabel.Text = "The following properties need to be filled out to continue: ";
+                string missingElements = "";
+
                 switch (WM.CurrentState)
                 {
-                    //case WizardState.race:
-                    //    raceComponent.isValid();
-                    //    alignmentComponent.isValid();
-                    //    break;
+                    case WizardState.race:
+                        missingElements = string.Join(", ", new string[] {
+                            raceComponent.getInvalidElements(), 
+                            alignmentComponent.getInvalidElements()
+                                }.Where(s => !string.IsNullOrEmpty(s)));
+                        break;
                     case WizardState.appearance:
-                        //ageComponent.isValid();
-                        //bodyComponent.isValid();
-                        nextButton.Enabled = appearanceComponent.isValid();
+                        missingElements = string.Join(", ", new string[] {
+                            ageComponent.getInvalidElements(),
+                            bodyComponent.getInvalidElements(),
+                            appearanceComponent.getInvalidElements()
+                                }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.classBackground:
+                        missingElements = string.Join(", ", new string[] {
+                            classComponent.getInvalidElements(),
+                            //backgroundComponent.getInvalidElements()
+                                }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.stats:
                         break;
@@ -139,11 +169,55 @@ namespace Easy_DnD_Character_Creator
                     case WizardState.export:
                         break;
                     default: //WizardState.intro
-                        //introComponent.isValid();
-                        nextButton.Enabled = true;
+                        missingElements = introComponent.getInvalidElements();
                         break;
                 }
+
+                missingElementsLabel.Text += missingElements;
             }
+            else
+            {
+                missingElementsLabel.Text = "Page is correctly filled out.";
+            }
+        }
+
+        private bool isCurrentPageValid()
+        {
+            bool isValid = false;
+
+            switch (WM.CurrentState)
+            {
+                case WizardState.race:
+                    isValid = raceComponent.isValid() && alignmentComponent.isValid();
+                    break;
+                case WizardState.appearance:
+                    isValid = ageComponent.isValid() && bodyComponent.isValid() && appearanceComponent.isValid();
+                    break;
+                case WizardState.classBackground:
+                    isValid = classComponent.isValid();
+                    break;
+                case WizardState.stats:
+                    break;
+                case WizardState.languages:
+                    break;
+                case WizardState.skills:
+                    break;
+                case WizardState.equipment:
+                    break;
+                case WizardState.spells:
+                    break;
+                case WizardState.extraChoices:
+                    break;
+                case WizardState.story:
+                    break;
+                case WizardState.export:
+                    break;
+                default: //WizardState.intro
+                    isValid = introComponent.isValid();
+                    break;
+            }
+
+            return isValid;
         }
 
         private void quitButton_Click(object sender, EventArgs e)
@@ -166,6 +240,7 @@ namespace Easy_DnD_Character_Creator
                     appearanceComponent.saveContent();
                     break;
                 case WizardState.classBackground:
+                    classComponent.saveContent();
                     break;
                 case WizardState.stats:
                     break;
@@ -193,7 +268,6 @@ namespace Easy_DnD_Character_Creator
 
             //refresh panel and buttons
             refreshWindow();
-            refreshButtons();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -222,6 +296,7 @@ namespace Easy_DnD_Character_Creator
             if (incoming != null)
             {
                 refreshButtons();
+                refreshStatusText();
             }
         }
     }

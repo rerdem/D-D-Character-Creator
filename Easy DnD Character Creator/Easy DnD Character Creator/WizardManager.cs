@@ -198,7 +198,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.classBackground)
+            if (CurrentState == WizardState.stats)
             {
                 LastPage = true;
             }

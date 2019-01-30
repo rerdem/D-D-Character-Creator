@@ -38,23 +38,46 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            bool valid = true;
+            bool valid = false;
+
+            if ((!string.IsNullOrEmpty(eyeColorBox.Text)) && (!string.IsNullOrEmpty(skinColorBox.Text)) && (!string.IsNullOrEmpty(hairColorBox.Text)))
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
+
+        public string getInvalidElements()
+        {
+            string output = "";
 
             if (string.IsNullOrEmpty(eyeColorBox.Text))
             {
-                valid = false;
+                output += "eye color";
             }
 
             if (string.IsNullOrEmpty(skinColorBox.Text))
             {
-                valid = false;
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+
+                output += "skin color";
             }
 
             if (string.IsNullOrEmpty(hairColorBox.Text))
             {
-                valid = false;
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+
+                output += "hair color";
             }
-            return valid;
+
+            return output;
         }
 
         public void populateForm()
@@ -98,6 +121,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void hairColorBox_TextChanged(object sender, EventArgs e)
         {
             OnAppearanceChanged(null);
-        }
+        }       
     }
 }

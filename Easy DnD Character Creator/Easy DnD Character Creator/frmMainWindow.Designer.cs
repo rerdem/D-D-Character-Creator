@@ -35,7 +35,10 @@
             this.contentFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.headerLabel = new System.Windows.Forms.Label();
             this.descriptionLabel = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.missingElementsLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonFlowPanel.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonFlowPanel
@@ -44,7 +47,7 @@
             this.buttonFlowPanel.Controls.Add(this.backButton);
             this.buttonFlowPanel.Controls.Add(this.nextButton);
             this.buttonFlowPanel.Controls.Add(this.quitButton);
-            this.buttonFlowPanel.Location = new System.Drawing.Point(502, 593);
+            this.buttonFlowPanel.Location = new System.Drawing.Point(502, 580);
             this.buttonFlowPanel.Name = "buttonFlowPanel";
             this.buttonFlowPanel.Size = new System.Drawing.Size(470, 56);
             this.buttonFlowPanel.TabIndex = 0;
@@ -91,7 +94,7 @@
             this.contentFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.contentFlowPanel.Location = new System.Drawing.Point(12, 72);
             this.contentFlowPanel.Name = "contentFlowPanel";
-            this.contentFlowPanel.Size = new System.Drawing.Size(960, 515);
+            this.contentFlowPanel.Size = new System.Drawing.Size(960, 502);
             this.contentFlowPanel.TabIndex = 1;
             this.contentFlowPanel.WrapContents = false;
             // 
@@ -114,11 +117,28 @@
             this.descriptionLabel.TabIndex = 3;
             this.descriptionLabel.Text = "Description";
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.missingElementsLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 639);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(984, 22);
+            this.statusStrip.TabIndex = 4;
+            this.statusStrip.Text = "Status Bar";
+            // 
+            // missingElementsLabel
+            // 
+            this.missingElementsLabel.Name = "missingElementsLabel";
+            this.missingElementsLabel.Size = new System.Drawing.Size(154, 17);
+            this.missingElementsLabel.Text = "Please fill out X to continue.";
+            // 
             // frmMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 661);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.headerLabel);
             this.Controls.Add(this.contentFlowPanel);
@@ -127,6 +147,8 @@
             this.Name = "frmMainWindow";
             this.Text = "Easy D&D Character Creator";
             this.buttonFlowPanel.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +163,8 @@
         private System.Windows.Forms.Button quitButton;
         private System.Windows.Forms.Label headerLabel;
         private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel missingElementsLabel;
     }
 }
 
