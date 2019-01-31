@@ -16,6 +16,7 @@ namespace Easy_DnD_Character_Creator
         //RaceControl
         public string Race { get; set; }
         public string Subrace { get; set; }
+        public string RaceProficiency { get; set; }
 
         //AlignmentControl
         public string LawAlignment { get; set; }
@@ -48,20 +49,28 @@ namespace Easy_DnD_Character_Creator
             Preset = 0;
             Level = 1;
             AdjustStartingMoney = true;
+
             Race = "";
             Subrace = "";
+            RaceProficiency = "";
+
             LawAlignment = "";
             MoralityAlignment = "";
+
             Age = 1;
+
             HeightModifier = 0;
             WeightModifier = 0;
             Height = "";
             Weight = "";
+
             EyeColor = "";
             SkinColor = "";
             HairColor = "";
+
             Class = "";
             Subclass = "";
+
             Background = "";
             BackgroundChoice = "";
         }

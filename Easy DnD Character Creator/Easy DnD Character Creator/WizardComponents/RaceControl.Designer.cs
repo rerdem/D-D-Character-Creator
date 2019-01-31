@@ -30,10 +30,14 @@
         {
             this.sqLiteCommand1 = new System.Data.SQLite.SQLiteCommand();
             this.raceBox = new System.Windows.Forms.GroupBox();
+            this.extraChoiceLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.extraChoiceLabel = new System.Windows.Forms.Label();
+            this.extraChoiceBox = new System.Windows.Forms.ListBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.subraceListBox = new System.Windows.Forms.ListBox();
             this.raceListBox = new System.Windows.Forms.ListBox();
             this.raceBox.SuspendLayout();
+            this.extraChoiceLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // sqLiteCommand1
@@ -42,6 +46,7 @@
             // 
             // raceBox
             // 
+            this.raceBox.Controls.Add(this.extraChoiceLayout);
             this.raceBox.Controls.Add(this.descriptionLabel);
             this.raceBox.Controls.Add(this.subraceListBox);
             this.raceBox.Controls.Add(this.raceListBox);
@@ -52,11 +57,41 @@
             this.raceBox.TabStop = false;
             this.raceBox.Text = "Race/Subrace";
             // 
+            // extraChoiceLayout
+            // 
+            this.extraChoiceLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.extraChoiceLayout.Controls.Add(this.extraChoiceLabel);
+            this.extraChoiceLayout.Controls.Add(this.extraChoiceBox);
+            this.extraChoiceLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.extraChoiceLayout.Location = new System.Drawing.Point(813, 19);
+            this.extraChoiceLayout.Name = "extraChoiceLayout";
+            this.extraChoiceLayout.Size = new System.Drawing.Size(125, 163);
+            this.extraChoiceLayout.TabIndex = 3;
+            this.extraChoiceLayout.Visible = false;
+            // 
+            // extraChoiceLabel
+            // 
+            this.extraChoiceLabel.AutoSize = true;
+            this.extraChoiceLabel.Location = new System.Drawing.Point(3, 3);
+            this.extraChoiceLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.extraChoiceLabel.Name = "extraChoiceLabel";
+            this.extraChoiceLabel.Size = new System.Drawing.Size(118, 39);
+            this.extraChoiceLabel.TabIndex = 0;
+            this.extraChoiceLabel.Text = "Please choose one of the following tools to be proficient in:";
+            // 
+            // extraChoiceBox
+            // 
+            this.extraChoiceBox.FormattingEnabled = true;
+            this.extraChoiceBox.Location = new System.Drawing.Point(3, 48);
+            this.extraChoiceBox.Name = "extraChoiceBox";
+            this.extraChoiceBox.Size = new System.Drawing.Size(114, 108);
+            this.extraChoiceBox.TabIndex = 1;
+            // 
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Location = new System.Drawing.Point(260, 19);
-            this.descriptionLabel.MaximumSize = new System.Drawing.Size(670, 160);
+            this.descriptionLabel.MaximumSize = new System.Drawing.Size(650, 160);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(58, 13);
             this.descriptionLabel.TabIndex = 2;
@@ -89,6 +124,8 @@
             this.Size = new System.Drawing.Size(950, 200);
             this.raceBox.ResumeLayout(false);
             this.raceBox.PerformLayout();
+            this.extraChoiceLayout.ResumeLayout(false);
+            this.extraChoiceLayout.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -100,5 +137,8 @@
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.ListBox subraceListBox;
         private System.Windows.Forms.ListBox raceListBox;
+        private System.Windows.Forms.FlowLayoutPanel extraChoiceLayout;
+        private System.Windows.Forms.Label extraChoiceLabel;
+        private System.Windows.Forms.ListBox extraChoiceBox;
     }
 }

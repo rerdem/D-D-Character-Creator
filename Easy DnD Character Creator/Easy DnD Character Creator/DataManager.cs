@@ -137,6 +137,66 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
+        /// checks, if the chosen race has an extra choice attached to it
+        /// </summary>
+        /// <param name="subraceChoice">the race to be checked</param>
+        public bool subraceHasExtraChoice(string subraceChoice)
+        {
+            bool hasChoice = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraToolProficiencies FROM races WHERE subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                hasChoice = dbReader.GetBoolean(0);
+            }
+            DBConnection.Close();
+
+            return hasChoice;
+        }
+
+        /// <summary>
+        /// gets a list of proficiencies for the chosen subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public List<string> getExtraRaceProficiencies(string subraceChoice)
+        {
+            List<string> proficiencyList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT tools.name FROM tools " +
+                                  "INNER JOIN extraRaceToolProficiencyChoices ON extraRaceToolProficiencyChoices.name=tools.name " +
+                                  "INNER JOIN races ON extraRaceToolProficiencyChoices.raceId=races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                proficiencyList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (proficiencyList.Count == 0)
+            {
+                proficiencyList.Add("---");
+            }
+
+            return proficiencyList;
+        }
+
+        /// <summary>
         /// gets the description for general alignment of chosen subrace
         /// </summary>
         /// <param name="subraceChoice">chosen subrace</param>
