@@ -596,8 +596,172 @@ namespace Easy_DnD_Character_Creator
             return description;
         }
 
+        /// <summary>
+        /// gets all available backgrounds
+        /// </summary>
+        public List<string> getBackgrounds()
+        {
+            List<string> backgroundList = new List<string>();
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM backgrounds INNER JOIN books ON backgrounds.book=books.bookid WHERE books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                backgroundList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return backgroundList;
+        }
+
+        /// <summary>
+        /// gets the description of the chosen background
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public string getBackgroundDescription(string backgroundChoice)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM backgrounds INNER JOIN books ON backgrounds.book=books.bookid WHERE books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ") AND name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
         
+        /// <summary>
+        /// checks, if the chosen background has an extra choice attached to it
+        /// </summary>
+        /// <param name="backgroundChoice">the background to be checked</param>
+        public bool backgroundHasExtraChoice(string backgroundChoice)
+        {
+            bool hasChoice = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraFeatureChoice FROM backgrounds WHERE name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                hasChoice = dbReader.GetBoolean(0);
+            }
+            DBConnection.Close();
+
+            return hasChoice;
+        }
+
+        /// <summary>
+        /// gets the title of the extra background choice to make
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public string getBackgroundChoiceTitle(string backgroundChoice)
+        {
+            string title = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT title FROM extraBackgroundChoices " +
+                                  "INNER JOIN backgrounds ON extraBackgroundChoices.backgroundId=backgrounds.backgroundId " +
+                                  "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                title = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return title;
+        }
+
+        /// <summary>
+        /// gets a description of the extra background choice
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public string getBackgroundChoiceDescription(string backgroundChoice)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraBackgroundChoices.description FROM extraBackgroundChoices " +
+                                  "INNER JOIN backgrounds ON extraBackgroundChoices.backgroundId=backgrounds.backgroundId " +
+                                  "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets a list of the options for the extra background choice
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public List<string> getBackgroundChoiceOptions(string backgroundChoice)
+        {
+            List<string> backgroundChoicesList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT text FROM extraBackgroundChoiceOptions " +
+                                  "INNER JOIN extraBackgroundChoices ON extraBackgroundChoiceOptions.extraChoiceId=extraBackgroundChoices.extraChoiceId " +
+                                  "INNER JOIN backgrounds ON extraBackgroundChoices.backgroundId=backgrounds.backgroundId " +
+                                  "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\" ORDER BY extraBackgroundChoiceOptions.diceValue ASC";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                backgroundChoicesList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return backgroundChoicesList;
+        }
+
+
+
 
         //private void ReadData()
         //{

@@ -41,6 +41,7 @@ namespace Easy_DnD_Character_Creator
 
         //BackgroundControl
         public string Background { get; set; }
+        public string BackgroundChoice { get; set; }
 
         public ChoiceManager()
         {
@@ -62,6 +63,7 @@ namespace Easy_DnD_Character_Creator
             Class = "";
             Subclass = "";
             Background = "";
+            BackgroundChoice = "";
         }
     }
 }

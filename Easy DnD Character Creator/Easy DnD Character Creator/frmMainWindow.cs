@@ -21,6 +21,7 @@ namespace Easy_DnD_Character_Creator
         private BodyControl bodyComponent;
         private AppearanceControl appearanceComponent;
         private ClassControl classComponent;
+        private BackgroundControl backgroundComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -34,6 +35,7 @@ namespace Easy_DnD_Character_Creator
             appearanceComponent = new AppearanceControl(WM);
             appearanceComponent.AppearanceChanged += new EventHandler(appearanceComponent_AppearanceChanged);
             classComponent = new ClassControl(WM);
+            backgroundComponent = new BackgroundControl(WM);
 
 
             InitializeComponent();
@@ -77,6 +79,9 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.classBackground:
                     contentFlowPanel.Controls.Add(classComponent);
                     classComponent.populateForm();
+
+                    contentFlowPanel.Controls.Add(backgroundComponent);
+                    backgroundComponent.populateForm();
                     break;
                 case WizardState.stats:
                     break;
@@ -149,7 +154,7 @@ namespace Easy_DnD_Character_Creator
                     case WizardState.classBackground:
                         missingElements = string.Join(", ", new string[] {
                             classComponent.getInvalidElements(),
-                            //backgroundComponent.getInvalidElements()
+                            backgroundComponent.getInvalidElements()
                                 }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.stats:
@@ -194,7 +199,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = ageComponent.isValid() && bodyComponent.isValid() && appearanceComponent.isValid();
                     break;
                 case WizardState.classBackground:
-                    isValid = classComponent.isValid();
+                    isValid = classComponent.isValid() && backgroundComponent.isValid();
                     break;
                 case WizardState.stats:
                     break;
@@ -241,6 +246,7 @@ namespace Easy_DnD_Character_Creator
                     break;
                 case WizardState.classBackground:
                     classComponent.saveContent();
+                    backgroundComponent.saveContent();
                     break;
                 case WizardState.stats:
                     break;
