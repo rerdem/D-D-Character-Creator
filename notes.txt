@@ -1,0 +1,6 @@
+Subclass choices to separate page:
+
+Barbarian Totem Warrior -> spirit animal
+
+Bard College
+	Lore -> Skills

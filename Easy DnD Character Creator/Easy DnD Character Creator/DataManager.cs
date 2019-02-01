@@ -796,12 +796,72 @@ namespace Easy_DnD_Character_Creator
 
             return description;
         }
-        
+
         /// <summary>
-        /// checks, if the chosen background has an extra choice attached to it
+        /// checks, if the chosen background has extra tool proficiency choices
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public bool backgroundHasExtraChoice(string backgroundChoice)
+        {
+            bool hasChoice = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraToolProficiencies FROM backgrounds WHERE name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                hasChoice = dbReader.GetBoolean(0);
+            }
+            DBConnection.Close();
+
+            return hasChoice;
+        }
+
+        /// <summary>
+        /// gets a list of proficiency choices for the chosen background
+        /// </summary>
+        /// <param name="backgroundChoice">chosen background</param>
+        public List<string> getExtraBackgroundProficiencies(string backgroundChoice)
+        {
+            List<string> proficiencyList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT tools.name FROM tools " +
+                                  "INNER JOIN extraBackgroundToolProficiencyChoices ON extraBackgroundToolProficiencyChoices.type=tools.type " +
+                                  "INNER JOIN backgrounds ON extraBackgroundToolProficiencyChoices.backgroundId=backgrounds.backgroundId " +
+                                  "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += backgroundChoice;
+            dbQuery.CommandText += "\" ORDER BY tools.name";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                proficiencyList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (proficiencyList.Count == 0)
+            {
+                proficiencyList.Add("---");
+            }
+
+            return proficiencyList;
+        }
+
+        /// <summary>
+        /// checks, if the chosen background has an extra feature choice attached to it
         /// </summary>
         /// <param name="backgroundChoice">the background to be checked</param>
-        public bool backgroundHasExtraChoice(string backgroundChoice)
+        public bool backgroundHasExtraFeatureChoice(string backgroundChoice)
         {
             bool hasChoice = false;
 
@@ -824,10 +884,10 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// gets the title of the extra background choice to make
+        /// gets the title of the extra background feature choice to make
         /// </summary>
         /// <param name="backgroundChoice">chosen background</param>
-        public string getBackgroundChoiceTitle(string backgroundChoice)
+        public string getBackgroundFeatureChoiceTitle(string backgroundChoice)
         {
             string title = "";
 
@@ -852,10 +912,10 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// gets a description of the extra background choice
+        /// gets a description of the extra background feature choice
         /// </summary>
         /// <param name="backgroundChoice">chosen background</param>
-        public string getBackgroundChoiceDescription(string backgroundChoice)
+        public string getBackgroundFeatureChoiceDescription(string backgroundChoice)
         {
             string description = "";
 
@@ -880,10 +940,10 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// gets a list of the options for the extra background choice
+        /// gets a list of the options for the extra background feature choice
         /// </summary>
         /// <param name="backgroundChoice">chosen background</param>
-        public List<string> getBackgroundChoiceOptions(string backgroundChoice)
+        public List<string> getBackgroundFeatureChoiceOptions(string backgroundChoice)
         {
             List<string> backgroundChoicesList = new List<string>();
 

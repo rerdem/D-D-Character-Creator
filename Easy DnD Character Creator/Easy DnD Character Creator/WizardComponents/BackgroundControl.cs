@@ -38,9 +38,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             string output = "";
 
-            if (backgroundListBox.SelectedItems.Count != 1)
+            if ((backgroundListBox.SelectedItem == null) || (backgroundListBox.SelectedItems.Count != 1))
             {
                 output += backgroundBox.Text;
+            }
+            else
+            {
+                if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                {
+                    if (!string.IsNullOrEmpty(output))
+                    {
+                        output += ", ";
+                    }
+                    output += "extra background tool proficiency";
+                }
             }
 
             return output;
@@ -48,7 +59,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            return (backgroundListBox.SelectedItems.Count == 1);
+            if (backgroundListBox.SelectedItem != null)
+            {
+                if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                {
+                    return ((backgroundListBox.SelectedItems.Count == 1) && (extraProficiencyBox.SelectedItems.Count == 1));
+                }
+
+                return (backgroundListBox.SelectedItems.Count == 1);
+            }
+
+            return false;
         }
 
         public void populateForm()
@@ -64,6 +85,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void saveContent()
         {
             wm.Choices.Background = backgroundListBox.SelectedItem.ToString();
+
+            if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+            {
+                wm.Choices.BackgroundProficiency = extraProficiencyBox.SelectedItem.ToString();
+            }
+            else
+            {
+                wm.Choices.BackgroundProficiency = "";
+            }
         }
 
         private void fillBackgroundList()
@@ -88,9 +118,44 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
+        private void fillExtraChoiceListBox(string backgroundChoice)
+        {
+            List<string> choiceList = wm.DBManager.getExtraBackgroundProficiencies(backgroundListBox.SelectedItem.ToString());
+
+            extraProficiencyBox.BeginUpdate();
+            extraProficiencyBox.Items.Clear();
+            foreach (string entry in choiceList)
+            {
+                extraProficiencyBox.Items.Add(entry);
+            }
+            extraProficiencyBox.EndUpdate();
+
+            if (extraProficiencyBox.Items.Contains(wm.Choices.BackgroundProficiency))
+            {
+                extraProficiencyBox.SetSelected(extraProficiencyBox.Items.IndexOf(wm.Choices.BackgroundProficiency), true);
+            }
+            else
+            {
+                extraProficiencyBox.SetSelected(0, true);
+            }
+        }
+
         private void backgroundListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             backgroundDescription.Text = wm.DBManager.getBackgroundDescription(backgroundListBox.SelectedItem.ToString());
+            
+            if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+            {
+                backgroundDescription.MaximumSize = new Size(520, backgroundDescription.MaximumSize.Height);
+                extraProficiencyLayout.Visible = true;
+                fillExtraChoiceListBox(backgroundListBox.SelectedItem.ToString());
+            }
+            else
+            {
+                backgroundDescription.MaximumSize = new Size(650, backgroundDescription.MaximumSize.Height);
+                extraProficiencyLayout.Visible = false;
+            }
+
             saveContent();
         }
     }

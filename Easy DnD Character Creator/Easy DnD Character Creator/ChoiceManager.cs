@@ -43,7 +43,7 @@ namespace Easy_DnD_Character_Creator
 
         //BackgroundControl
         public string Background { get; set; }
-        public string BackgroundChoice { get; set; }
+        public string BackgroundProficiency { get; set; }
 
         public ChoiceManager()
         {
@@ -74,7 +74,7 @@ namespace Easy_DnD_Character_Creator
             ClassProficiency = "";
 
             Background = "";
-            BackgroundChoice = "";
+            BackgroundProficiency = "";
         }
     }
 }
