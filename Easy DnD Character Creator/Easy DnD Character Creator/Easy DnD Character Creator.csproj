@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WizardComponents\AbilityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\AbilityControl.Designer.cs">
+      <DependentUpon>AbilityControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\AgeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,6 +131,9 @@
       <DependentUpon>RaceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardManager.cs" />
+    <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
+      <DependentUpon>AbilityControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\AgeControl.resx">
       <DependentUpon>AgeControl.cs</DependentUpon>
     </EmbeddedResource>

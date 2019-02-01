@@ -22,6 +22,7 @@ namespace Easy_DnD_Character_Creator
         private AppearanceControl appearanceComponent;
         private ClassControl classComponent;
         private BackgroundControl backgroundComponent;
+        private AbilityControl abilityComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -38,6 +39,7 @@ namespace Easy_DnD_Character_Creator
             classComponent.ClassChanged += new EventHandler(classComponent_ClassChanged);
             classComponent.ClassChoiceChanged += new EventHandler(classComponent_ClassChoiceChanged);
             backgroundComponent = new BackgroundControl(WM);
+            abilityComponent = new AbilityControl(WM);
 
 
             InitializeComponent();
@@ -86,6 +88,8 @@ namespace Easy_DnD_Character_Creator
                     backgroundComponent.populateForm();
                     break;
                 case WizardState.stats:
+                    contentFlowPanel.Controls.Add(abilityComponent);
+                    abilityComponent.populateForm();
                     break;
                 case WizardState.languages:
                     break;
@@ -160,6 +164,7 @@ namespace Easy_DnD_Character_Creator
                                 }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.stats:
+                        missingElements = abilityComponent.getInvalidElements();
                         break;
                     case WizardState.languages:
                         break;
@@ -204,6 +209,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = classComponent.isValid() && backgroundComponent.isValid();
                     break;
                 case WizardState.stats:
+                    isValid = abilityComponent.isValid();
                     break;
                 case WizardState.languages:
                     break;
@@ -251,6 +257,7 @@ namespace Easy_DnD_Character_Creator
                     backgroundComponent.saveContent();
                     break;
                 case WizardState.stats:
+                    abilityComponent.saveContent();
                     break;
                 case WizardState.languages:
                     break;

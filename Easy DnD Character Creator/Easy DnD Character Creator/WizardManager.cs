@@ -38,6 +38,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.classBackground;
                     break;
                 case WizardState.classBackground:
+                    CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
                     break;
@@ -73,6 +74,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.race;
                     break;
                 case WizardState.classBackground:
+                    CurrentState = WizardState.appearance;
                     break;
                 case WizardState.stats:
                     break;
@@ -119,6 +121,7 @@ namespace Easy_DnD_Character_Creator
                     headerOutput = "Class/Subclass && Background";
                     break;
                 case WizardState.stats:
+                    headerOutput = "Abilities";
                     break;
                 case WizardState.languages:
                     break;
@@ -161,6 +164,7 @@ namespace Easy_DnD_Character_Creator
                     descriptionOutput = "Please select the Class/Subclass and Background for your character.";
                     break;
                 case WizardState.stats:
+                    descriptionOutput = "Please assign the ability values that define your character.";
                     break;
                 case WizardState.languages:
                     break;
@@ -198,7 +202,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.stats)
+            if (CurrentState == WizardState.languages)
             {
                 LastPage = true;
             }
