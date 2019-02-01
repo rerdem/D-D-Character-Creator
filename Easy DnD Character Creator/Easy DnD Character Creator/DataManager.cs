@@ -657,6 +657,94 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
+        /// checks, if the chosen class has extra tool proficiencies
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public bool classHasExtraChoice(string classChoice)
+        {
+            bool hasChoice = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraToolProficiencies FROM classes WHERE name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                hasChoice = dbReader.GetBoolean(0);
+            }
+            DBConnection.Close();
+
+            return hasChoice;
+        }
+
+        /// <summary>
+        /// gets a list of the extra proficiencies the class can choose from
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public List<string> getExtraClassProficiencies(string classChoice)
+        {
+            List<string> proficiencyList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT tools.name FROM tools " +
+                                  "INNER JOIN extraClassToolProficiencyChoices ON extraClassToolProficiencyChoices.type=tools.type " +
+                                  "INNER JOIN classes ON extraClassToolProficiencyChoices.classId=classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\" ORDER BY tools.name";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                proficiencyList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            if (proficiencyList.Count == 0)
+            {
+                proficiencyList.Add("---");
+            }
+
+            return proficiencyList;
+        }
+
+        /// <summary>
+        /// gets the amount of proficiencies the class is allowed to choose
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public int getExtraClassProficiencyAmount(string classChoice)
+        {
+            int amount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT amount FROM extraClassToolProficiencyAmount " +
+                                  "INNER JOIN classes ON extraClassToolProficiencyAmount.classId=classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                amount = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return amount;
+        }
+
+        /// <summary>
         /// gets all available backgrounds
         /// </summary>
         public List<string> getBackgrounds()

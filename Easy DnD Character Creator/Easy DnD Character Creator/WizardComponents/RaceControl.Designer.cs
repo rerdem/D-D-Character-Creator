@@ -75,9 +75,9 @@
             this.extraChoiceLabel.Location = new System.Drawing.Point(3, 3);
             this.extraChoiceLabel.Margin = new System.Windows.Forms.Padding(3);
             this.extraChoiceLabel.Name = "extraChoiceLabel";
-            this.extraChoiceLabel.Size = new System.Drawing.Size(118, 39);
+            this.extraChoiceLabel.Size = new System.Drawing.Size(119, 39);
             this.extraChoiceLabel.TabIndex = 0;
-            this.extraChoiceLabel.Text = "Please choose one of the following tools to be proficient in:";
+            this.extraChoiceLabel.Text = "Please choose 1 of the following tools to be proficient in:";
             // 
             // extraChoiceBox
             // 
@@ -121,7 +121,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.raceBox);
             this.Name = "RaceControl";
-            this.Size = new System.Drawing.Size(950, 200);
+            this.Size = new System.Drawing.Size(960, 200);
             this.raceBox.ResumeLayout(false);
             this.raceBox.PerformLayout();
             this.extraChoiceLayout.ResumeLayout(false);

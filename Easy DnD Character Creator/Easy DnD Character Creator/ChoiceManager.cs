@@ -39,6 +39,7 @@ namespace Easy_DnD_Character_Creator
         //ClassControl
         public string Class { get; set; }
         public string Subclass { get; set; }
+        public string ClassProficiency { get; set; }
 
         //BackgroundControl
         public string Background { get; set; }
@@ -70,6 +71,7 @@ namespace Easy_DnD_Character_Creator
 
             Class = "";
             Subclass = "";
+            ClassProficiency = "";
 
             Background = "";
             BackgroundChoice = "";

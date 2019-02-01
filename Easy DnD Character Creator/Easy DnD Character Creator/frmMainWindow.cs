@@ -35,6 +35,8 @@ namespace Easy_DnD_Character_Creator
             appearanceComponent = new AppearanceControl(WM);
             appearanceComponent.AppearanceChanged += new EventHandler(appearanceComponent_AppearanceChanged);
             classComponent = new ClassControl(WM);
+            classComponent.ClassChanged += new EventHandler(classComponent_ClassChanged);
+            classComponent.ClassChoiceChanged += new EventHandler(classComponent_ClassChoiceChanged);
             backgroundComponent = new BackgroundControl(WM);
 
 
@@ -299,6 +301,26 @@ namespace Easy_DnD_Character_Creator
         void appearanceComponent_AppearanceChanged(object sender, EventArgs e)
         {
             AppearanceControl incoming = sender as AppearanceControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void classComponent_ClassChanged(object sender, EventArgs e)
+        {
+            ClassControl incoming = sender as ClassControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void classComponent_ClassChoiceChanged(object sender, EventArgs e)
+        {
+            ClassControl incoming = sender as ClassControl;
             if (incoming != null)
             {
                 refreshButtons();

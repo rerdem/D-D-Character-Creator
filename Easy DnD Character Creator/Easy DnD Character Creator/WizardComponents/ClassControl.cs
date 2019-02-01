@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -15,10 +16,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        public event EventHandler ClassChanged;
+        public event EventHandler ClassChoiceChanged;
+
+        private int ChoiceAmount { get; set; }
+
         public ClassControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             visited = false;
+            ChoiceAmount = 0;
             InitializeComponent();
         }
 
@@ -43,11 +50,30 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += classBox.Text;
             }
 
+            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            {
+                if (extraChoiceBox.SelectedItems.Count != ChoiceAmount)
+                {
+                    if (!string.IsNullOrEmpty(output))
+                    {
+                        output += ", ";
+                    }
+
+                    output += "class tool proficiency amount";
+                }
+            }
+
             return output;
         }
 
         public bool isValid()
         {
+            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            {
+                return (classListBox.SelectedItems.Count > 0) 
+                    && (subclassListBox.SelectedItems.Count > 0)
+                    && (extraChoiceBox.SelectedItems.Count == ChoiceAmount);
+            }
             return (classListBox.SelectedItems.Count > 0) && (subclassListBox.SelectedItems.Count > 0);
         }
 
@@ -64,6 +90,24 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm.Choices.Class = classListBox.SelectedItem.ToString();
             wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
+
+            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            {
+                string proficiencyString = "";
+                foreach (object obj in extraChoiceBox.SelectedItems)
+                {
+                    if (!string.IsNullOrEmpty(proficiencyString))
+                    {
+                        proficiencyString += ", ";
+                    }
+                    proficiencyString += obj.ToString();
+                }
+                wm.Choices.ClassProficiency = proficiencyString;
+            }
+            else
+            {
+                wm.Choices.ClassProficiency = "";
+            }
         }
 
         private void fillClassListBox()
@@ -110,9 +154,61 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
+        private void fillExtraChoiceBox(string classChoice)
+        {
+            List<string> choiceList = wm.DBManager.getExtraClassProficiencies(classChoice);
+
+            extraChoiceBox.BeginUpdate();
+            extraChoiceBox.Items.Clear();
+            foreach (string entry in choiceList)
+            {
+                extraChoiceBox.Items.Add(entry);
+            }
+            extraChoiceBox.EndUpdate();
+
+            if (!string.IsNullOrEmpty(wm.Choices.ClassProficiency))
+            {
+                string[] savedProficiencies = wm.Choices.ClassProficiency.Split(',');
+                foreach (string entry in savedProficiencies)
+                {
+                    if (extraChoiceBox.Items.Contains(entry.Trim()))
+                    {
+                        extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(entry.Trim()), true);
+                    }
+                }
+            }
+        }
+
         private void classListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillSubclassListBox(classListBox.SelectedItem.ToString());
+
+            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            {
+                descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
+                extraChoiceLayout.Visible = true;
+
+                ChoiceAmount = wm.DBManager.getExtraClassProficiencyAmount(classListBox.SelectedItem.ToString());
+                extraChoiceLabel.Text = extraChoiceLabel.Text.ToString().Replace(Regex.Match(extraChoiceLabel.Text, @"\d+").Value, ChoiceAmount.ToString());
+                if (ChoiceAmount > 1)
+                {
+                    extraChoiceBox.SelectionMode = SelectionMode.MultiSimple;
+                }
+                else
+                {
+                    extraChoiceBox.SelectionMode = SelectionMode.One;
+                }
+
+                fillExtraChoiceBox(classListBox.SelectedItem.ToString());
+            }
+            else
+            {
+                descriptionLabel.MaximumSize = new Size(650, descriptionLabel.MaximumSize.Height);
+                extraChoiceLayout.Visible = false;
+                ChoiceAmount = 0;
+            }
+
+            OnClassChanged(null);
         }
 
         private void subclassListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,17 +218,35 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             descriptionLabel.Text += wm.DBManager.getSubclassDescription(subclassListBox.SelectedItem.ToString());
 
             saveContent();
-
-            //OnSubraceChanged(null);
         }
 
-        //protected virtual void OnSubraceChanged(EventArgs e)
-        //{
-        //    EventHandler handler = SubraceChanged;
-        //    if (handler != null)
-        //    {
-        //        handler(this, e);
-        //    }
-        //}
+        private void extraChoiceBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (extraChoiceBox.SelectedItems.Count > ChoiceAmount)
+            {
+                extraChoiceBox.SelectedItems.Remove(extraChoiceBox.SelectedItems[ChoiceAmount]);
+            }
+            saveContent();
+
+            OnClassChoiceChanged(null);
+        }
+
+        protected virtual void OnClassChanged(EventArgs e)
+        {
+            EventHandler handler = ClassChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnClassChoiceChanged(EventArgs e)
+        {
+            EventHandler handler = ClassChoiceChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }
