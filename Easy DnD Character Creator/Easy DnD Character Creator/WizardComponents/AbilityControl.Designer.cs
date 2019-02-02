@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AbilityControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tutorialLabel = new System.Windows.Forms.Label();
             this.strLabel = new System.Windows.Forms.Label();
@@ -39,7 +38,7 @@
             this.chaLabel = new System.Windows.Forms.Label();
             this.strDropzone = new System.Windows.Forms.FlowLayoutPanel();
             this.dexDropzone = new System.Windows.Forms.FlowLayoutPanel();
-            this.conDropZone = new System.Windows.Forms.FlowLayoutPanel();
+            this.conDropzone = new System.Windows.Forms.FlowLayoutPanel();
             this.intDropzone = new System.Windows.Forms.FlowLayoutPanel();
             this.wisDropzone = new System.Windows.Forms.FlowLayoutPanel();
             this.chaDropzone = new System.Windows.Forms.FlowLayoutPanel();
@@ -103,7 +102,7 @@
             this.tableLayoutPanel1.Controls.Add(this.chaLabel, 5, 3);
             this.tableLayoutPanel1.Controls.Add(this.strDropzone, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.dexDropzone, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.conDropZone, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.conDropzone, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.intDropzone, 3, 4);
             this.tableLayoutPanel1.Controls.Add(this.wisDropzone, 4, 4);
             this.tableLayoutPanel1.Controls.Add(this.chaDropzone, 5, 4);
@@ -159,9 +158,9 @@
             this.tutorialLabel.Location = new System.Drawing.Point(3, 3);
             this.tutorialLabel.Margin = new System.Windows.Forms.Padding(3);
             this.tutorialLabel.Name = "tutorialLabel";
-            this.tutorialLabel.Size = new System.Drawing.Size(947, 39);
+            this.tutorialLabel.Size = new System.Drawing.Size(87, 13);
             this.tutorialLabel.TabIndex = 0;
-            this.tutorialLabel.Text = resources.GetString("tutorialLabel.Text");
+            this.tutorialLabel.Text = "ability tutorial text";
             // 
             // strLabel
             // 
@@ -251,16 +250,16 @@
             this.dexDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.dexDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
             // 
-            // conDropZone
+            // conDropzone
             // 
-            this.conDropZone.AllowDrop = true;
-            this.conDropZone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.conDropZone.Location = new System.Drawing.Point(319, 190);
-            this.conDropZone.Name = "conDropZone";
-            this.conDropZone.Size = new System.Drawing.Size(152, 63);
-            this.conDropZone.TabIndex = 12;
-            this.conDropZone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
-            this.conDropZone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
+            this.conDropzone.AllowDrop = true;
+            this.conDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.conDropzone.Location = new System.Drawing.Point(319, 190);
+            this.conDropzone.Name = "conDropzone";
+            this.conDropzone.Size = new System.Drawing.Size(152, 63);
+            this.conDropzone.TabIndex = 12;
+            this.conDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
+            this.conDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
             // 
             // intDropzone
             // 
@@ -386,6 +385,7 @@
             this.strBonusCheck.TabIndex = 24;
             this.strBonusCheck.Text = "Strength";
             this.strBonusCheck.UseVisualStyleBackColor = true;
+            this.strBonusCheck.CheckedChanged += new System.EventHandler(this.strBonusCheck_CheckedChanged);
             // 
             // dexBonusCheck
             // 
@@ -396,6 +396,7 @@
             this.dexBonusCheck.TabIndex = 25;
             this.dexBonusCheck.Text = "Dexterity";
             this.dexBonusCheck.UseVisualStyleBackColor = true;
+            this.dexBonusCheck.CheckedChanged += new System.EventHandler(this.dexBonusCheck_CheckedChanged);
             // 
             // conBonusCheck
             // 
@@ -406,6 +407,7 @@
             this.conBonusCheck.TabIndex = 26;
             this.conBonusCheck.Text = "Constitution";
             this.conBonusCheck.UseVisualStyleBackColor = true;
+            this.conBonusCheck.CheckedChanged += new System.EventHandler(this.conBonusCheck_CheckedChanged);
             // 
             // intBonusCheck
             // 
@@ -416,6 +418,7 @@
             this.intBonusCheck.TabIndex = 27;
             this.intBonusCheck.Text = "Intelligence";
             this.intBonusCheck.UseVisualStyleBackColor = true;
+            this.intBonusCheck.CheckedChanged += new System.EventHandler(this.intBonusCheck_CheckedChanged);
             // 
             // wisBonusCheck
             // 
@@ -426,6 +429,7 @@
             this.wisBonusCheck.TabIndex = 28;
             this.wisBonusCheck.Text = "Wisdom";
             this.wisBonusCheck.UseVisualStyleBackColor = true;
+            this.wisBonusCheck.CheckedChanged += new System.EventHandler(this.wisBonusCheck_CheckedChanged);
             // 
             // chaBonusCheck
             // 
@@ -436,6 +440,7 @@
             this.chaBonusCheck.TabIndex = 29;
             this.chaBonusCheck.Text = "Charisma";
             this.chaBonusCheck.UseVisualStyleBackColor = true;
+            this.chaBonusCheck.CheckedChanged += new System.EventHandler(this.chaBonusCheck_CheckedChanged);
             // 
             // resultSeparatorLabel
             // 
@@ -515,6 +520,7 @@
             this.resetButton.TabIndex = 37;
             this.resetButton.Text = "Reset all values";
             this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // healthLayout
             // 
@@ -682,6 +688,7 @@
             this.rerollButton.TabIndex = 38;
             this.rerollButton.Text = "Reroll low values";
             this.rerollButton.UseVisualStyleBackColor = true;
+            this.rerollButton.Click += new System.EventHandler(this.rerollButton_Click);
             // 
             // AbilityControl
             // 
@@ -722,7 +729,7 @@
         private System.Windows.Forms.Label chaLabel;
         private System.Windows.Forms.FlowLayoutPanel strDropzone;
         private System.Windows.Forms.FlowLayoutPanel dexDropzone;
-        private System.Windows.Forms.FlowLayoutPanel conDropZone;
+        private System.Windows.Forms.FlowLayoutPanel conDropzone;
         private System.Windows.Forms.FlowLayoutPanel intDropzone;
         private System.Windows.Forms.FlowLayoutPanel wisDropzone;
         private System.Windows.Forms.FlowLayoutPanel chaDropzone;

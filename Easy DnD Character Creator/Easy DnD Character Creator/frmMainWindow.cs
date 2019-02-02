@@ -40,6 +40,8 @@ namespace Easy_DnD_Character_Creator
             classComponent.ClassChoiceChanged += new EventHandler(classComponent_ClassChoiceChanged);
             backgroundComponent = new BackgroundControl(WM);
             abilityComponent = new AbilityControl(WM);
+            abilityComponent.AbilityAssigned += new EventHandler(abilityComponent_AbilityAssigned);
+            abilityComponent.AbilityBonusAssigned += new EventHandler(abilityComponent_AbilityBonusAssigned);
 
 
             InitializeComponent();
@@ -241,6 +243,29 @@ namespace Easy_DnD_Character_Creator
         private void nextButton_Click(object sender, EventArgs e)
         {
             //save current page values
+            saveCurrentPage();
+            
+            //advance status in WizardManager
+            WM.advanceState();
+
+            //refresh panel and buttons
+            refreshWindow();
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            //save current page values
+            saveCurrentPage();
+
+            //revert status in WizardManager
+            WM.revertState();
+
+            //refresh panel and buttons
+            refreshWindow();
+        }
+
+        private void saveCurrentPage()
+        {
             switch (WM.CurrentState)
             {
                 case WizardState.race:
@@ -277,21 +302,6 @@ namespace Easy_DnD_Character_Creator
                     introComponent.saveContent();
                     break;
             }
-            
-            //advance status in WizardManager
-            WM.advanceState();
-
-            //refresh panel and buttons
-            refreshWindow();
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            //save current page values
-
-            //revert status in WizardManager
-
-            //refresh panel
         }
 
         void raceComponent_SubraceChanged(object sender, EventArgs e)
@@ -328,6 +338,26 @@ namespace Easy_DnD_Character_Creator
         void classComponent_ClassChoiceChanged(object sender, EventArgs e)
         {
             ClassControl incoming = sender as ClassControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void abilityComponent_AbilityAssigned(object sender, EventArgs e)
+        {
+            AbilityControl incoming = sender as AbilityControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void abilityComponent_AbilityBonusAssigned(object sender, EventArgs e)
+        {
+            AbilityControl incoming = sender as AbilityControl;
             if (incoming != null)
             {
                 refreshButtons();

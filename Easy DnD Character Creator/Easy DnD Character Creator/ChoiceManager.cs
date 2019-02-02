@@ -45,6 +45,14 @@ namespace Easy_DnD_Character_Creator
         public string Background { get; set; }
         public string BackgroundProficiency { get; set; }
 
+        //AbilityControl
+        public AbilityScore Strength { get; set; }
+        public AbilityScore Dexterity { get; set; }
+        public AbilityScore Constitution { get; set; }
+        public AbilityScore Intelligence { get; set; }
+        public AbilityScore Wisdom { get; set; }
+        public AbilityScore Charisma { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -75,6 +83,13 @@ namespace Easy_DnD_Character_Creator
 
             Background = "";
             BackgroundProficiency = "";
+
+            Strength = new AbilityScore();
+            Dexterity = new AbilityScore();
+            Constitution = new AbilityScore();
+            Intelligence = new AbilityScore();
+            Wisdom = new AbilityScore();
+            Charisma = new AbilityScore();
         }
     }
 }

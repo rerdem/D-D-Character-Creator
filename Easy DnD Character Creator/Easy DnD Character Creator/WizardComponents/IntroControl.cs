@@ -123,16 +123,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             //set up tooltips
             toolTips = new ToolTip();
 
-            toolTips.SetToolTip(this.lenientButton, "While values will be determined" + Environment.NewLine +
+            toolTips.SetToolTip(lenientButton, "While values will be determined" + Environment.NewLine +
                 "by dice rolls, below average rolls" + Environment.NewLine +
                 "will be replaced by the average" + Environment.NewLine +
                 "result. Additionally, ability scores" + Environment.NewLine +
                 "lower than 8 can be rerolled.");
-            toolTips.SetToolTip(this.averageButton, "Attributes that normally" + Environment.NewLine +
+            toolTips.SetToolTip(averageButton, "Attributes that normally" + Environment.NewLine +
                 "require dice rolls will be" + Environment.NewLine +
                 "determined by average" + Environment.NewLine + 
                 "values.");
-            toolTips.SetToolTip(this.puristButton, "Unaltered dice" + Environment.NewLine +
+            toolTips.SetToolTip(puristButton, "Unaltered dice" + Environment.NewLine +
                 "results will be" + Environment.NewLine +
                 "used.");
 

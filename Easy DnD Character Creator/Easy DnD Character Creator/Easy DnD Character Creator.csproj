@@ -115,6 +115,7 @@
     <Compile Include="WizardComponents\ClassControl.Designer.cs">
       <DependentUpon>ClassControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbilityScore.cs" />
     <Compile Include="WizardComponents\IWizardControl.cs" />
     <Compile Include="WizardComponents\IntroControl.cs">
       <SubType>UserControl</SubType>

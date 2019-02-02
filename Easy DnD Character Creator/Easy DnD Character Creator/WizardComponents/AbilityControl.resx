@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="tutorialLabel.Text" xml:space="preserve">
-    <value>You can assign each value to an ability via drag &amp; drop. Each value can only be assigned once. Hovering above each ability name will show you a short description of it. Below each ability are any score increases granted by your choice of race. At the bottom you can see a preview of what your final score (and modifier that is added to your rolls) will be. Additionally, you will see the health value of your character, which is dependent on your character's level and constitution.</value>
-  </data>
 </root>

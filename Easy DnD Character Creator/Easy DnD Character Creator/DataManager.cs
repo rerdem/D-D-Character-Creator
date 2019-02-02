@@ -968,8 +968,213 @@ namespace Easy_DnD_Character_Creator
             return backgroundChoicesList;
         }
 
+        /// <summary>
+        /// gets the recommended abilities for the chosen class
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public string getAbilityRecommendation(string classChoice)
+        {
+            string recommendation = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT recommendation FROM preferredAbilities " +
+                                  "INNER JOIN classes ON preferredAbilities.classid=classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                recommendation = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return recommendation;
+        }
+
+        /// <summary>
+        /// gets the description of an ability
+        /// </summary>
+        /// <param name="abilityName">specified ability</param>
+        public string getAbilityDescription(string abilityName)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM abilities " +
+                                  "WHERE UPPER(name)=\"";
+            dbQuery.CommandText += abilityName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+
+        /// <summary>
+        /// gets the value of the ability score bonus received from the chosen subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        /// <param name="abilityName">ability name</param>
+        /// <returns></returns>
+        public int getAbilityScoreBonus(string subraceChoice, string abilityName)
+        {
+            int bonus = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT ";
+            dbQuery.CommandText += abilityName.ToLower();
+            dbQuery.CommandText += " FROM raceAbilityScoreAdditions " +
+                                   "INNER JOIN races ON raceAbilityScoreAdditions.raceid=races.raceid " +
+                                   "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                bonus = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return bonus;
+        }
+
+        /// <summary>
+        /// checks, if the character can choose ability increases because of their subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public bool subraceHasAbilityChoice(string subraceChoice)
+        {
+            return (subraceChoice == "Half-Elf");
+        }
+
+        /// <summary>
+        /// checks, how many abilities can be increased because of the subrace
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public int subraceAbilityChoiceAmount(string subraceChoice)
+        {
+            if (subraceChoice=="Half-Elf")
+            {
+                return 2;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// gets a list of the average ability scores
+        /// </summary>
+        public List<string> getAverageAbilityScores()
+        {
+            List<string> averageScores = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM averageAbilityScores";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                averageScores.Add(dbReader.GetInt32(0).ToString());
+            }
+            DBConnection.Close();
+
+            return averageScores;
+        }
+
+        /// <summary>
+        /// checks, if the subrace gains +1 hp per level
+        /// </summary>
+        /// <param name="subraceChoice">chosen subrace</param>
+        public bool subraceHasBonusHP(string subraceChoice)
+        {
+            return (subraceChoice == "Hill Dwarf");
+        }
+
+        /// <summary>
+        /// checks, if the subclass gains +1 hp per level
+        /// </summary>
+        /// <param name="subclassChoice">chosen subclass</param>
+        public bool subclassHasBonusHP(string subclassChoice)
+        {
+            return (subclassChoice == "Draconic Bloodline");
+        }
+
+        /// <summary>
+        /// gets the maximum result of the hit die of the chosen class
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public int getMaximumHitDieResult(string classChoice)
+        {
+            int result = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT maximumResult FROM hitDice " +
+                                  "INNER JOIN classes ON hitDice.classId=classes.classid " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                result = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return result;
+        }
+
+        /// <summary>
+        /// gets the average result of the hit die of the chosen class
+        /// </summary>
+        /// <param name="classChoice">chosen class</param>
+        public int getAverageHitDieResult(string classChoice)
+        {
+            int result = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT averageResult FROM hitDice INNER JOIN classes ON hitDice.classId=classes.classid WHERE name=\"";
+            dbQuery.CommandText += classChoice;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                result = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return result;
+        }
 
 
+        
 
         //private void ReadData()
         //{

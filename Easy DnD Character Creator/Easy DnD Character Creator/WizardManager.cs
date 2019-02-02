@@ -77,6 +77,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.appearance;
                     break;
                 case WizardState.stats:
+                    CurrentState = WizardState.classBackground;
                     break;
                 case WizardState.languages:
                     break;
@@ -98,6 +99,13 @@ namespace Easy_DnD_Character_Creator
             setFirstOrLastPage();
         }
 
+        /// <summary>
+        /// generates a random number between min (incl.) and max (excl.)
+        /// wrapper for random.Next to make sure random only gets seeded once
+        /// </summary>
+        /// <param name="minimum">lower inclusive threshhold</param>
+        /// <param name="maximum">upper exclusive threshhold</param>
+        /// <returns></returns>
         public int getRandomNumber(int minimum, int maximum)
         {
             return random.Next(minimum, maximum);
