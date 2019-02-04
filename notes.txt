@@ -1,11 +1,148 @@
 Subclass choices to separate page:
 
-Barbarian Totem Warrior -> spirit animal
 
-Bard College
-	Lore -> Skills
+Barbarian:
+	Level 2:
+		Features: Reckless Attack, Danger Sense
+
+	Level 3:
+		Subclass:
+		Berserker Feature: Frenzy
+		!!Totem Warrior: Bonus Spells: Beast Sense, Speak with animals as rituals only
+							Totem Spirit Choice: Bear Eagle Wolf
+					
+Bard:
+	Level 2:
+		Features: Jack of all trades, Song of Rest
 	
+	Level 3:
+		!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
+		Subclass:
+		!!Lore: 3 extra skill proficiencies
+			cutting words
+		Valor: medium armor, shields, martial weapons, Combat Inspiration
+
+Cleric:
+	Level 2:
+		Channel Divinity -> Turn Undead + Domain specific
 	
+	Level 3:
+		Domain spells
+
+Druid:
+	Level 2:
+	!Wild Shape
 	
+	Subclass:
+	!!!Land: +1 Cantrip
+		Natural Recovery
+		Choose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
+	Moon: Combat Wild Shape
+		Circle Forms
 	
-You can assign each value to an ability via drag & drop. Each value can only be assigned once. Hovering above each ability name will show you a short description of it. Below each ability are any score increases granted by your choice of race. At the bottom you can see a preview of what your final score (and modifier that is added to your rolls) will be. Additionally, you will see the health value of your character, which is dependent on your character's level and constitution.
+Fighter:
+	Level 2:
+		Feature: Action Surge
+	
+	Level 3:
+		Subclass:
+		Chamption:
+			Improved Critical
+		!!Battlemaster:
+			+1 artisan's tool proficiency (student of War)
+			combat maneuvers
+		!!Eldritch Knight:
+			weapon bond
+			Spellcasting: -> wizard list, intelligence
+				2 cantrips (+1 lvl 10)
+				3 spells (davon 2 abjuration oder evocation)
+					alle zusätzlichen spells müssen abj oder evo sein außer lvl 8, 14, 20
+
+Monk:
+	Level 2:
+		Ki, 3 ki features, Unarmored Movement
+	
+	Level 3:
+		Deflect Missiles
+		Subclass:
+		Open Hand:
+			Open Hand Technique
+		Shadow:
+			!Shadow Arts -> bonus spells
+		4 Elements:
+			Elemental Attunement
+			!! 1 extra discipline (some are spells)
+			
+Paladin:
+	Level 2:
+		!!Fighting style
+		!!Spellcasting:
+			spells known: cha mod + half pala level rounded down
+			spell ability cha: 8 + prof + cha mod
+		Divine Smite
+		
+	Level 3:
+		Divine Health
+		Subclass:
+		!Oath spells
+		!Channel Divinity oath-specific
+
+Ranger:
+	Level 2:
+		!!Fighting Style
+		!!Spellcasting:
+			spells known table
+			spell ability wis
+			
+	Level 3:
+		Primeval Awareness
+		Subclass:
+			!!Hunter: Hunter's Prey
+			!!Beast Master: Ranger's Companion
+
+Rogue:
+	Level 2:
+		Cunning Action
+		
+	Level 3:
+		Subclass:
+		Thief:
+			Fast Hands, Second-Story Work
+		Assassin:
+			extra proficiency: disguise kit, poisoner's kit
+			Assassinate
+		Arcane Trickster:
+			!!Spellcasting -> Wizard list
+				2 cantrips (+1 lvl 10) + mage hand
+				3 spells (davon 2 enchantment oder illusion)
+					alle zusätzlichen spells müssen ench oder illu sein außer lvl 8, 14, 20
+				ability: intelligence
+			Mage Hand Legerdemain
+				
+Sorcerer:
+	!!Draconic Ancestry
+	Level 2:
+		!Font of Magic -> Sorcery Points
+		
+	Level 3:
+		!!Metamagic:
+			choose 2
+
+Warlock:
+	!expanded pact spells each level
+	Level 2:
+		!!Eldritch Invocations: choose 2
+		
+	Level 3:
+		!!Pact Boon: choose 1
+
+Wizard:
+	Level 2:
+		Subclass:
+		each Savant
+		each has extra feature
+		!!Illusion:
+			minor illusion (if already learned, different cantrip), doesn't count to cantrips known, does more stuff
+			
+	Level 3:
+	
