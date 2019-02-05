@@ -1173,8 +1173,297 @@ namespace Easy_DnD_Character_Creator
             return result;
         }
 
+        /// <summary>
+        /// gets a list of all available languages
+        /// </summary>
+        public List<string> getLanguages()
+        {
+            List<string> languages = new List<string>();
 
-        
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM languages";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                languages.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return languages;
+        }
+
+        /// <summary>
+        /// gets a list of languages of the specified type
+        /// </summary>
+        /// <param name="type">language type (Standard, Exotic, Class)</param>
+        public List<string> getLanguages(string type)
+        {
+            List<string> languages = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM languages " +
+                                  "WHERE type=\"";
+            dbQuery.CommandText += type;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                languages.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return languages;
+        }
+
+        /// <summary>
+        /// gets a list of default languages known by the chosen race
+        /// </summary>
+        /// <param name="subraceName">chosen subrace</param>
+        public List<string> getDefaultRaceLanguages(string subraceName)
+        {
+            List<string> languages = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT languages.name FROM languages " +
+                                  "INNER JOIN languageRaceDefaults ON languageRaceDefaults.languageId = languages.id " +
+                                  "INNER JOIN races ON languageRaceDefaults.raceId = races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subraceName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                languages.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return languages;
+        }
+
+        /// <summary>
+        /// gets a list of default languages known by the chosen class
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public List<string> getDefaultClassLanguages(string className)
+        {
+            List<string> languages = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT languages.name FROM languages " +
+                                  "INNER JOIN languageClassDefaults ON languageClassDefaults.languageId = languages.id " +
+                                  "INNER JOIN classes ON languageClassDefaults.classId = classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                languages.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return languages;
+        }
+
+        /// <summary>
+        /// gets a list of default languages known by the chosen subclass
+        /// </summary>
+        /// <param name="subclassName">chosen subclass</param>
+        public List<string> getDefaultSubclassLanguages(string subclassName)
+        {
+            List<string> languages = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT languages.name FROM languages " +
+                                  "INNER JOIN languageSubclassDefaults ON languageSubclassDefaults.languageId = languages.id " +
+                                  "INNER JOIN subclasses ON languageSubclassDefaults.subclassId = subclasses.subclassId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclassName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                languages.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return languages;
+        }
+
+        /// <summary>
+        /// gets information about the speakers of the chosen language
+        /// </summary>
+        /// <param name="languageName">chosen language</param>
+        public string getLanguageSpeakers(string languageName)
+        {
+            string languageSpeakers = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT speakers FROM languages " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += languageName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                languageSpeakers = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return languageSpeakers;
+        }
+
+        /// <summary>
+        /// gets information about the script of the chosen language
+        /// </summary>
+        /// <param name="languageName">chosen language</param>
+        public string getLanguageScript(string languageName)
+        {
+            string languageScript = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT script FROM languages " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += languageName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                languageScript = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return languageScript;
+        }
+
+        /// <summary>
+        /// gets the number of default languages gained from race, class and subclass
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        public int getDefaultLanguageCount(string subrace, string className, string subclass)
+        {
+            int count = getDefaultRaceLanguages(subrace).Count;
+            count += getDefaultClassLanguages(className).Count;
+            count += getDefaultSubclassLanguages(subclass).Count;
+            return count;
+        }
+
+        /// <summary>
+        /// gets the number of extra languages gained through the chosen class
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        //public int getExtraClassLanguageCount(string className)
+        //{
+        //    int languageCount = 0;
+
+        //    DBConnection.Open();
+        //    SQLiteDataReader dbReader;
+        //    SQLiteCommand dbQuery;
+        //    dbQuery = DBConnection.CreateCommand();
+        //    dbQuery.CommandText = "SELECT extraLanguages FROM extraClassLanguages " +
+        //                          "INNER JOIN classes ON extraClassLanguages.classId=classes.classid " +
+        //                          "WHERE classes.name=\"";
+        //    dbQuery.CommandText += className;
+        //    dbQuery.CommandText += "\"";
+
+        //    dbReader = dbQuery.ExecuteReader();
+        //    if (dbReader.Read())
+        //    {
+        //        languageCount = dbReader.GetInt32(0);
+        //    }
+        //    DBConnection.Close();
+
+        //    return languageCount;
+        //}
+
+        /// <summary>
+        /// gets the number of extra languages gained through race, class, subclass and background chocies
+        /// </summary>
+        /// <param name="race">chosen race</param>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="background">chosen background</param>
+        public int getExtraLanguageCount(string race, string subclass, string background)
+        {
+            int languageCount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            //extra race languages
+            dbQuery.CommandText = "SELECT sum(extraLanguages) FROM (" +
+                                  "SELECT extraLanguages FROM extraRaceLanguages " +
+                                  "INNER JOIN races ON extraRaceLanguages.raceId = races.raceid " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += race;
+            //extra class languages
+            //dbQuery.CommandText += "\" " +
+            //                       "UNION ALL " +
+            //                       "SELECT extraLanguages FROM extraClassLanguages " +
+            //                       "INNER JOIN classes ON extraClassLanguages.classId = classes.classid " +
+            //                       "WHERE classes.name=\"";
+            //dbQuery.CommandText += className;
+            //extra subclass languages
+            if (subclass!= "---")
+            {
+                dbQuery.CommandText += "\" " +
+                                   "UNION ALL " +
+                                   "SELECT extraLanguages FROM extraSubclassLanguages " +
+                                   "INNER JOIN subclasses ON extraSubclassLanguages.subclassId = subclasses.subclassId " +
+                                   "WHERE subclasses.name=\"";
+                dbQuery.CommandText += subclass;
+            }
+            //extra background languages
+            dbQuery.CommandText += "\" " +
+                                   "UNION ALL " +
+                                   "SELECT extraLanguages FROM extraBackgroundLanguages " +
+                                   "INNER JOIN backgrounds ON extraBackgroundLanguages.backgroundId = backgrounds.backgroundId " +
+                                   "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += background;
+            dbQuery.CommandText += "\")";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                languageCount = dbReader.GetInt32(0);
+            }
+            DBConnection.Close();
+
+            return languageCount;
+        }
+
+     
 
         //private void ReadData()
         //{

@@ -1,0 +1,135 @@
+﻿namespace Easy_DnD_Character_Creator.WizardComponents
+{
+    partial class LanguageControl
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.standardLanguageBox = new System.Windows.Forms.GroupBox();
+            this.classLanguageBox = new System.Windows.Forms.GroupBox();
+            this.exoticLanguageBox = new System.Windows.Forms.GroupBox();
+            this.standardLanguageLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.exoticLanguageLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.classLanguageLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.standardLanguageBox.SuspendLayout();
+            this.classLanguageBox.SuspendLayout();
+            this.exoticLanguageBox.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // standardLanguageBox
+            // 
+            this.standardLanguageBox.Controls.Add(this.standardLanguageLayout);
+            this.standardLanguageBox.Location = new System.Drawing.Point(4, 4);
+            this.standardLanguageBox.Name = "standardLanguageBox";
+            this.standardLanguageBox.Size = new System.Drawing.Size(380, 138);
+            this.standardLanguageBox.TabIndex = 0;
+            this.standardLanguageBox.TabStop = false;
+            this.standardLanguageBox.Text = "Standard Languages";
+            // 
+            // classLanguageBox
+            // 
+            this.classLanguageBox.Controls.Add(this.classLanguageLayout);
+            this.classLanguageBox.Location = new System.Drawing.Point(776, 4);
+            this.classLanguageBox.Name = "classLanguageBox";
+            this.classLanguageBox.Size = new System.Drawing.Size(180, 138);
+            this.classLanguageBox.TabIndex = 1;
+            this.classLanguageBox.TabStop = false;
+            this.classLanguageBox.Text = "Class-specific Languages";
+            // 
+            // exoticLanguageBox
+            // 
+            this.exoticLanguageBox.Controls.Add(this.exoticLanguageLayout);
+            this.exoticLanguageBox.Location = new System.Drawing.Point(390, 4);
+            this.exoticLanguageBox.Name = "exoticLanguageBox";
+            this.exoticLanguageBox.Size = new System.Drawing.Size(380, 138);
+            this.exoticLanguageBox.TabIndex = 2;
+            this.exoticLanguageBox.TabStop = false;
+            this.exoticLanguageBox.Text = "Exotic Languages";
+            // 
+            // standardLanguageLayout
+            // 
+            this.standardLanguageLayout.ColumnCount = 2;
+            this.standardLanguageLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.standardLanguageLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.standardLanguageLayout.Location = new System.Drawing.Point(7, 20);
+            this.standardLanguageLayout.Name = "standardLanguageLayout";
+            this.standardLanguageLayout.RowCount = 4;
+            this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.standardLanguageLayout.Size = new System.Drawing.Size(367, 112);
+            this.standardLanguageLayout.TabIndex = 0;
+            // 
+            // exoticLanguageLayout
+            // 
+            this.exoticLanguageLayout.ColumnCount = 2;
+            this.exoticLanguageLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.exoticLanguageLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.exoticLanguageLayout.Location = new System.Drawing.Point(7, 20);
+            this.exoticLanguageLayout.Name = "exoticLanguageLayout";
+            this.exoticLanguageLayout.RowCount = 4;
+            this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.exoticLanguageLayout.Size = new System.Drawing.Size(367, 112);
+            this.exoticLanguageLayout.TabIndex = 0;
+            // 
+            // classLanguageLayout
+            // 
+            this.classLanguageLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.classLanguageLayout.Location = new System.Drawing.Point(7, 20);
+            this.classLanguageLayout.Name = "classLanguageLayout";
+            this.classLanguageLayout.Size = new System.Drawing.Size(167, 112);
+            this.classLanguageLayout.TabIndex = 0;
+            // 
+            // LanguageControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.exoticLanguageBox);
+            this.Controls.Add(this.classLanguageBox);
+            this.Controls.Add(this.standardLanguageBox);
+            this.Name = "LanguageControl";
+            this.Size = new System.Drawing.Size(960, 150);
+            this.standardLanguageBox.ResumeLayout(false);
+            this.classLanguageBox.ResumeLayout(false);
+            this.exoticLanguageBox.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox standardLanguageBox;
+        private System.Windows.Forms.TableLayoutPanel standardLanguageLayout;
+        private System.Windows.Forms.GroupBox classLanguageBox;
+        private System.Windows.Forms.FlowLayoutPanel classLanguageLayout;
+        private System.Windows.Forms.GroupBox exoticLanguageBox;
+        private System.Windows.Forms.TableLayoutPanel exoticLanguageLayout;
+    }
+}

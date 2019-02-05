@@ -53,6 +53,9 @@ namespace Easy_DnD_Character_Creator
         public AbilityScore Wisdom { get; set; }
         public AbilityScore Charisma { get; set; }
 
+        //LanguageControl
+        public List<string> Languages { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -90,6 +93,8 @@ namespace Easy_DnD_Character_Creator
             Intelligence = new AbilityScore();
             Wisdom = new AbilityScore();
             Charisma = new AbilityScore();
+
+            Languages = new List<string>();
         }
     }
 }

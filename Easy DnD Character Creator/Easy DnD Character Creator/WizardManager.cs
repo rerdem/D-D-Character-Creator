@@ -41,6 +41,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
+                    CurrentState = WizardState.languages;
                     break;
                 case WizardState.languages:
                     break;
@@ -80,6 +81,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.classBackground;
                     break;
                 case WizardState.languages:
+                    CurrentState = WizardState.stats;
                     break;
                 case WizardState.skills:
                     break;
@@ -132,6 +134,7 @@ namespace Easy_DnD_Character_Creator
                     headerOutput = "Abilities";
                     break;
                 case WizardState.languages:
+                    headerOutput = "Languages";
                     break;
                 case WizardState.skills:
                     break;
@@ -175,6 +178,7 @@ namespace Easy_DnD_Character_Creator
                     descriptionOutput = "Please assign the ability values that define your character.";
                     break;
                 case WizardState.languages:
+                    descriptionOutput = "Please choose which languages your character can speak, read and write.";
                     break;
                 case WizardState.skills:
                     break;
@@ -210,7 +214,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.languages)
+            if (CurrentState == WizardState.skills)
             {
                 LastPage = true;
             }
