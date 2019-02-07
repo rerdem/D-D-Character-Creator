@@ -137,6 +137,12 @@
     <Compile Include="WizardComponents\RaceControl.Designer.cs">
       <DependentUpon>RaceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\SkillControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SkillControl.Designer.cs">
+      <DependentUpon>SkillControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -176,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\RaceControl.resx">
       <DependentUpon>RaceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SkillControl.resx">
+      <DependentUpon>SkillControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -1379,34 +1379,6 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// gets the number of extra languages gained through the chosen class
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        //public int getExtraClassLanguageCount(string className)
-        //{
-        //    int languageCount = 0;
-
-        //    DBConnection.Open();
-        //    SQLiteDataReader dbReader;
-        //    SQLiteCommand dbQuery;
-        //    dbQuery = DBConnection.CreateCommand();
-        //    dbQuery.CommandText = "SELECT extraLanguages FROM extraClassLanguages " +
-        //                          "INNER JOIN classes ON extraClassLanguages.classId=classes.classid " +
-        //                          "WHERE classes.name=\"";
-        //    dbQuery.CommandText += className;
-        //    dbQuery.CommandText += "\"";
-
-        //    dbReader = dbQuery.ExecuteReader();
-        //    if (dbReader.Read())
-        //    {
-        //        languageCount = dbReader.GetInt32(0);
-        //    }
-        //    DBConnection.Close();
-
-        //    return languageCount;
-        //}
-
-        /// <summary>
         /// gets the number of extra languages gained through race, class, subclass and background chocies
         /// </summary>
         /// <param name="race">chosen race</param>
@@ -1427,13 +1399,6 @@ namespace Easy_DnD_Character_Creator
                                   "INNER JOIN races ON extraRaceLanguages.raceId = races.raceid " +
                                   "WHERE races.subrace=\"";
             dbQuery.CommandText += race;
-            //extra class languages
-            //dbQuery.CommandText += "\" " +
-            //                       "UNION ALL " +
-            //                       "SELECT extraLanguages FROM extraClassLanguages " +
-            //                       "INNER JOIN classes ON extraClassLanguages.classId = classes.classid " +
-            //                       "WHERE classes.name=\"";
-            //dbQuery.CommandText += className;
             //extra subclass languages
             if (subclass!= "---")
             {
@@ -1456,14 +1421,112 @@ namespace Easy_DnD_Character_Creator
             dbReader = dbQuery.ExecuteReader();
             if (dbReader.Read())
             {
-                languageCount = dbReader.GetInt32(0);
+                if (!dbReader.IsDBNull(0))
+                {
+                    languageCount = dbReader.GetInt32(0);
+                }
             }
             DBConnection.Close();
 
             return languageCount;
         }
 
-     
+        /// <summary>
+        /// gets a list of known skills from subrace and background choices
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="background">chosen background</param>
+        public List<string> getKnownSkills(string subrace, string background)
+        {
+            List<string> knownSkills = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT skills.name FROM skills " +
+                                  "INNER JOIN backgroundSkills ON backgroundSkills.skillId=skills.skillId " +
+                                  "INNER JOIN backgrounds ON backgroundSkills.backgroundId=backgrounds.backgroundId " +
+                                  "WHERE backgrounds.name=\"";
+            dbQuery.CommandText += background;
+            dbQuery.CommandText += "\" " +
+                                   "UNION " +
+                                   "SELECT skills.name FROM skills " +
+                                   "INNER JOIN raceSkills ON raceSkills.skillId=skills.skillId " +
+                                   "INNER JOIN races ON raceSkills.raceId=races.raceid " +
+                                   "WHERE races.subrace=\"";
+            dbQuery.CommandText += subrace;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                knownSkills.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return knownSkills;
+        }
+
+        /// <summary>
+        /// gets the list of skills the chosen class can choose from
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public List<string> getClassSkillOptions(string className)
+        {
+            List<string> skillOptions = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT skills.name FROM skills " +
+                                  "INNER JOIN classSkillChoiceOptions ON classSkillChoiceOptions.skillId=skills.skillId " +
+                                  "INNER JOIN classes ON classSkillChoiceOptions.classId=classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                skillOptions.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return skillOptions;
+        }
+
+        /// <summary>
+        /// gets the number of skills the class can select
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public int getClassSkillCount(string className)
+        {
+            int skillCount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT extraSkills FROM classes " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    skillCount = dbReader.GetInt32(0);
+                }
+            }
+            DBConnection.Close();
+
+            return skillCount;
+        }
+        
 
         //private void ReadData()
         //{

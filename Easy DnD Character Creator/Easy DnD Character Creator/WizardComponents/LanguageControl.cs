@@ -14,6 +14,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
     {
         private WizardManager wm;
         private bool visited;
+
+        private string lastCharacterInfo;
         
         private ToolTip toolTips;
 
@@ -21,9 +23,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private List<CheckBox> uncheckedDisabledBoxes;
         private List<CheckBox> classBoxes;
 
+        public event EventHandler LanguageSelectionChanged;
+
         public LanguageControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
+            visited = false;
             InitializeComponent();
             initializeCheckboxes();
             initializeToolTips();
@@ -44,7 +49,46 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public string getInvalidElements()
         {
-            return "";
+            string output = "";
+
+            //number of currently selected languages
+            int currentlySelectedLanguages = 0;
+            foreach (CheckBox box in standardExoticBoxes)
+            {
+                if (box.Checked)
+                {
+                    currentlySelectedLanguages++;
+                }
+            }
+            foreach (CheckBox box in classBoxes)
+            {
+                if (box.Checked)
+                {
+                    currentlySelectedLanguages++;
+                }
+            }
+
+            //number of maximum possible selected languages
+            int maximumLanguages = wm.DBManager.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
+            maximumLanguages += wm.DBManager.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
+
+            if (currentlySelectedLanguages != maximumLanguages)
+            {
+                int missingLanguages = maximumLanguages - currentlySelectedLanguages;
+                output = "select ";
+                output += missingLanguages.ToString();
+                output += " more ";
+                if (missingLanguages < 2)
+                {
+                    output += "language";
+                }
+                else
+                {
+                    output += "languages";
+                }
+            }
+
+            return output;
         }
 
         public bool isValid()
@@ -77,11 +121,48 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             resetAllBoxes();
             setDefaultLanguages();
+
+            if ((visited) && !hasCharacterInfoChanged())
+            {
+                foreach (CheckBox box in standardExoticBoxes)
+                {
+                    if (wm.Choices.Languages.Contains(box.Text))
+                    {
+                        box.Checked = true;
+                    }
+                }
+            }
+
+            setCharacterInfo();
+
+            if (!visited)
+            {
+                visited = true;
+            }
         }
 
         public void saveContent()
         {
-            
+            wm.Choices.Languages.Clear();
+
+            foreach (CheckBox box in standardExoticBoxes)
+            {
+                if (box.Checked)
+                {
+                    wm.Choices.Languages.Add(box.Text);
+                }
+            }
+        }
+
+        private void setCharacterInfo()
+        {
+            lastCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+        }
+
+        private bool hasCharacterInfoChanged()
+        {
+            string currentCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+            return (currentCharacterInfo != lastCharacterInfo);
         }
 
         private void validateCheckboxes()
@@ -247,6 +328,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void languageCheck_CheckedChanged(object sender, EventArgs e)
         {
             validateCheckboxes();
+
+            OnLanguageSelectionChanged(null);
+        }
+
+        protected virtual void OnLanguageSelectionChanged(EventArgs e)
+        {
+            EventHandler handler = LanguageSelectionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }

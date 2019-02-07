@@ -44,6 +44,7 @@ namespace Easy_DnD_Character_Creator
             abilityComponent.AbilityAssigned += new EventHandler(abilityComponent_AbilityAssigned);
             abilityComponent.AbilityBonusAssigned += new EventHandler(abilityComponent_AbilityBonusAssigned);
             languageComponent = new LanguageControl(WM);
+            languageComponent.LanguageSelectionChanged += new EventHandler(languageComponent_LanguageSelectionChanged);
 
 
             InitializeComponent();
@@ -365,6 +366,16 @@ namespace Easy_DnD_Character_Creator
         void abilityComponent_AbilityBonusAssigned(object sender, EventArgs e)
         {
             AbilityControl incoming = sender as AbilityControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void languageComponent_LanguageSelectionChanged(object sender, EventArgs e)
+        {
+            LanguageControl incoming = sender as LanguageControl;
             if (incoming != null)
             {
                 refreshButtons();

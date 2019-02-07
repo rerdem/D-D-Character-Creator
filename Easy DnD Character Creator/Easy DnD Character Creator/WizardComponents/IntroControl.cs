@@ -199,6 +199,23 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.AdjustStartingMoney = moneyCheckbox.Checked;
         }
 
+        public bool isValid()
+        {
+            return (characterLevel.Value > 0);
+        }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (characterLevel.Value <= 0)
+            {
+                output += "character level";
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// returns selected books formatted for usage in SQLite queries
         /// </summary>
@@ -256,23 +273,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 default: puristButton.Checked = true;
                     break;
             }
-        }
-
-        public bool isValid()
-        {
-            return (characterLevel.Value > 0);
-        }
-
-        public string getInvalidElements()
-        {
-            string output = "";
-
-            if (characterLevel.Value <= 0)
-            {
-                output += "character level";
-            }
-
-            return output;
         }
     }
 }

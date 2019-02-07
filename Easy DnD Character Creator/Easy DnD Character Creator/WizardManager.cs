@@ -41,9 +41,17 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    CurrentState = WizardState.languages;
+                    if (DBManager.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    {
+                        CurrentState = WizardState.languages;
+                    }
+                    else
+                    {
+                        CurrentState = WizardState.skills;
+                    }
                     break;
                 case WizardState.languages:
+                    CurrentState = WizardState.skills;
                     break;
                 case WizardState.skills:
                     break;
@@ -84,6 +92,14 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skills:
+                    if (DBManager.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    {
+                        CurrentState = WizardState.languages;
+                    }
+                    else
+                    {
+                        CurrentState = WizardState.stats;
+                    }
                     break;
                 case WizardState.equipment:
                     break;
@@ -214,7 +230,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.skills)
+            if (CurrentState == WizardState.equipment)
             {
                 LastPage = true;
             }
