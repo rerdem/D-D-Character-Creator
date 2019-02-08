@@ -1432,6 +1432,56 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
+        /// gets a list of all available skills
+        /// </summary>
+        public List<string> getSkills()
+        {
+            List<string> skills = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM skills";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                skills.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return skills;
+        }
+
+        /// <summary>
+        /// gets the description of the chosen skill
+        /// </summary>
+        /// <param name="skill">name of the chosen skill</param>
+        public string getSkillDescription(string skill)
+        {
+            string description = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT description FROM skills " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += skill;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                description = dbReader.GetString(0);
+            }
+            DBConnection.Close();
+
+            return description;
+        }
+        
+        /// <summary>
         /// gets a list of known skills from subrace and background choices
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
@@ -1526,7 +1576,30 @@ namespace Easy_DnD_Character_Creator
 
             return skillCount;
         }
-        
+
+        /// <summary>
+        /// checks, if the chosen subrace gets to choose additional skills
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        public bool hasExtraSkillChoice(string subrace)
+        {
+            return (subrace == "Half-Elf");
+        }
+
+        /// <summary>
+        /// gets the number of extra skills the chosen subrace can choose
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        public int getExtraSkillChoiceAmount(string subrace)
+        {
+            if (subrace == "Half-Elf")
+            {
+                return 2;
+            }
+
+            return 0;
+        }
+
 
         //private void ReadData()
         //{

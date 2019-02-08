@@ -75,17 +75,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             if (currentlySelectedLanguages != maximumLanguages)
             {
                 int missingLanguages = maximumLanguages - currentlySelectedLanguages;
-                output = "select ";
-                output += missingLanguages.ToString();
-                output += " more ";
-                if (missingLanguages < 2)
-                {
-                    output += "language";
-                }
-                else
-                {
-                    output += "languages";
-                }
+                output = $"select {missingLanguages} more language(s)";
             }
 
             return output;

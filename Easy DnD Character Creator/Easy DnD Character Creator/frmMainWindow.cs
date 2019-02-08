@@ -24,6 +24,7 @@ namespace Easy_DnD_Character_Creator
         private BackgroundControl backgroundComponent;
         private AbilityControl abilityComponent;
         private LanguageControl languageComponent;
+        private SkillControl skillComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -45,7 +46,8 @@ namespace Easy_DnD_Character_Creator
             abilityComponent.AbilityBonusAssigned += new EventHandler(abilityComponent_AbilityBonusAssigned);
             languageComponent = new LanguageControl(WM);
             languageComponent.LanguageSelectionChanged += new EventHandler(languageComponent_LanguageSelectionChanged);
-
+            skillComponent = new SkillControl(WM);
+            skillComponent.SkillChosen += new EventHandler(skillComponent_SkillChosen);
 
             InitializeComponent();
             refreshWindow();
@@ -101,6 +103,8 @@ namespace Easy_DnD_Character_Creator
                     languageComponent.populateForm();
                     break;
                 case WizardState.skills:
+                    contentFlowPanel.Controls.Add(skillComponent);
+                    skillComponent.populateForm();
                     break;
                 case WizardState.equipment:
                     break;
@@ -177,6 +181,7 @@ namespace Easy_DnD_Character_Creator
                         missingElements = languageComponent.getInvalidElements();
                         break;
                     case WizardState.skills:
+                        missingElements = skillComponent.getInvalidElements();
                         break;
                     case WizardState.equipment:
                         break;
@@ -197,7 +202,7 @@ namespace Easy_DnD_Character_Creator
             }
             else
             {
-                missingElementsLabel.Text = "Page is correctly filled out.";
+                missingElementsLabel.Text = "Page is filled out correctly.";
             }
         }
 
@@ -223,6 +228,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = languageComponent.isValid();
                     break;
                 case WizardState.skills:
+                    isValid = skillComponent.isValid();
                     break;
                 case WizardState.equipment:
                     break;
@@ -295,6 +301,7 @@ namespace Easy_DnD_Character_Creator
                     languageComponent.saveContent();
                     break;
                 case WizardState.skills:
+                    skillComponent.saveContent();
                     break;
                 case WizardState.equipment:
                     break;
@@ -376,6 +383,16 @@ namespace Easy_DnD_Character_Creator
         void languageComponent_LanguageSelectionChanged(object sender, EventArgs e)
         {
             LanguageControl incoming = sender as LanguageControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void skillComponent_SkillChosen(object sender, EventArgs e)
+        {
+            SkillControl incoming = sender as SkillControl;
             if (incoming != null)
             {
                 refreshButtons();
