@@ -19,5 +19,10 @@
             SubraceAdd = inputSubraceAdd;
             SubraceBonus = inputSubraceBonus;
         }
+
+        public int getTotalValue()
+        {
+            return BaseValue + SubraceAdd + SubraceBonus;
+        }
     }
 }

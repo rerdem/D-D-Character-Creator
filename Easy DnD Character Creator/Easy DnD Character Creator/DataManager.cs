@@ -1600,6 +1600,679 @@ namespace Easy_DnD_Character_Creator
             return 0;
         }
 
+        /// <summary>
+        /// gets the number of equipment choices the specified class must make
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public int getEquipmentChoiceAmount(string className)
+        {
+            int choiceAmount = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT choices FROM equipmentChoices " +
+                                  "INNER JOIN classes ON classes.classid = equipmentChoices.classId " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    choiceAmount = dbReader.GetInt32(0);
+                }
+            }
+            DBConnection.Close();
+
+            return choiceAmount;
+        }
+
+        public List<string> getEquipmentChoices(string subrace, string className, string subclass, int choice, int strength)
+        {
+            List<string> outputList = new List<string>();
+
+            //Barbarian
+            if (className == "Barbarian")
+            {
+                if (choice == 1)
+                {
+                    outputList.AddRange(getWeaponList("martial", "melee").ToArray());
+                }
+
+                if (choice == 2)
+                {
+                    outputList.AddRange(getWeaponList("simple", "*").ToArray());
+                    outputList[outputList.FindIndex(index => index.Equals("handaxe"))] = "handaxe (2)";
+                }
+            }
+
+            //Bard
+            if (className == "Bard")
+            {
+                if (choice == 1)
+                {
+                    outputList.AddRange(getWeaponList("rapier").ToArray());
+                    outputList.AddRange(getWeaponList("longsword").ToArray());
+                    outputList.AddRange(getWeaponList("simple", "*").ToArray());
+                }
+
+                if (choice == 2)
+                {
+                    outputList.AddRange(getPackChoices(className));
+                }
+
+                if (choice == 3)
+                {
+                    outputList.AddRange(getToolList("musical instrument").ToArray());
+                }
+            }
+
+            //Cleric
+            if (className == "Cleric")
+            {
+                if (choice == 1)
+                {
+                    outputList.AddRange(getWeaponList("mace").ToArray());
+                    
+                    if ((subrace == "Hill Dwarf") || (subrace == "Mountain Dwarf") 
+                        || (subclass == "Tempest Domain") || (subclass == "War Domain"))
+                    {
+                        outputList.AddRange(getWeaponList("warhammer").ToArray());
+                    }
+                }
+
+                if (choice == 2)
+                {
+                    outputList.AddRange(getArmorList("scale mail armor", "*").ToArray());
+                    outputList.AddRange(getArmorList("leather armor", "*").ToArray());
+
+                    if (strength > getArmorStrengthRequirement("chain mail armor"))
+                    {
+                        if ((subclass == "Life Domain") || (subclass == "Nature Domain")
+                         || (subclass == "Tempest Domain") || (subclass == "War Domain"))
+                        {
+                            outputList.AddRange(getArmorList("chain mail armor", "*").ToArray());
+                        }
+                    }
+                }
+
+                if (choice == 3)
+                {
+                    outputList.AddRange(getWeaponList("light crossbow").ToArray());
+                    outputList.AddRange(getWeaponList("simple", "*").ToArray());
+                }
+
+                if (choice == 4)
+                {
+                    outputList.AddRange(getPackChoices(className).ToArray());
+                }
+            }
+
+            //Druid
+            if (className == "Druid")
+            {
+                if (choice == 1)
+                {
+                    outputList.AddRange(getWeaponList("simple", "*").ToArray());
+                    outputList.AddRange(getArmorList("shield", "*").ToArray());
+                }
+
+                if (choice == 2)
+                {
+                    outputList.AddRange(getWeaponList("scimitar").ToArray());
+                    outputList.AddRange(getWeaponList("simple", "melee").ToArray());
+                }
+            }
+
+            //Druid
+            if (className == "Fighter")
+            {
+                if (choice == 1)
+                {
+                    if (strength > getArmorStrengthRequirement("chain mail armor"))
+                    {
+                        outputList.AddRange(getArmorList("chain mail armor", "*").ToArray());
+                    }
+
+                    List<string> multiItemList = getArmorList("leather armor", "*");
+                    multiItemList.AddRange(getWeaponList("longbow").ToArray());
+                    outputList.Add(string.Join(", ", multiItemList.ToArray()));
+
+                }
+
+                if (choice == 2)
+                {
+                    outputList.AddRange(getWeaponList("martial", "*").ToArray());
+                    outputList.AddRange(getArmorList("shield", "*").ToArray());
+                }
+
+                if (choice == 3)
+                {
+                    outputList.AddRange(getWeaponList("light crossbow").ToArray());
+                    outputList.AddRange(getWeaponList("handaxe").ToArray();
+                    outputList[outputList.FindIndex(index => index.Equals("handaxe"))] = "handaxe (2)";
+                }
+
+                if (choice == 4)
+                {
+                    outputList.AddRange(getPackChoices(className).ToArray());
+                }
+            }
+
+
+
+            //####################################################################
+
+            if (field("class").toString() == "Monk")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("shortsword", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("*", "simple", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    secondChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Paladin")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("javelin", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i) + " (5)");
+                }
+
+                weapons = dm->getWeaponList("*", "simple", "melee");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* mixed = dm->getWeaponList("*", "martial", "*");
+                for (int i = 0; i < mixed->size(); i++)
+                {
+                    secondChoiceBox->addItem(mixed->at(i));
+                    additionalSecondChoiceBox->addItem(mixed->at(i));
+                }
+
+                mixed = dm->getArmorList("shield", "*");
+                for (int i = 0; i < mixed->size(); i++)
+                {
+                    additionalSecondChoiceBox->addItem(mixed->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Ranger")
+            {
+                //choice 1
+                QVector<QString>* armor = dm->getArmorList("scale mail armor", "*");
+                for (int i = 0; i < armor->size(); i++)
+                {
+                    firstChoiceBox->addItem(armor->at(i));
+                }
+
+                armor = dm->getArmorList("leather armor", "*");
+                for (int i = 0; i < armor->size(); i++)
+                {
+                    firstChoiceBox->addItem(armor->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* weapons = dm->getWeaponList("shortsword", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    secondChoiceBox->addItem(weapons->at(i));
+                    additionalSecondChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("*", "simple", "melee");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    secondChoiceBox->addItem(weapons->at(i));
+                    additionalSecondChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Rogue")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("rapier", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("shortsword", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                weapons = dm->getWeaponList("shortbow", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    secondChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("shortsword", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    secondChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Sorcerer")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("light crossbow", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("*", "simple", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* tools = dm->getToolList("arcane tool");
+                for (int i = 0; i < tools->size(); i++)
+                {
+                    secondChoiceBox->addItem(tools->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Warlock")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("light crossbow", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("*", "simple", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* tools = dm->getToolList("arcane tool");
+                for (int i = 0; i < tools->size(); i++)
+                {
+                    secondChoiceBox->addItem(tools->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+
+            if (field("class").toString() == "Wizard")
+            {
+                //choice 1
+                QVector<QString>* weapons = dm->getWeaponList("quarterstaff", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                weapons = dm->getWeaponList("dagger", "*", "*");
+                for (int i = 0; i < weapons->size(); i++)
+                {
+                    firstChoiceBox->addItem(weapons->at(i));
+                }
+
+                //choice 2
+                QVector<QString>* tools = dm->getToolList("arcane tool");
+                for (int i = 0; i < tools->size(); i++)
+                {
+                    secondChoiceBox->addItem(tools->at(i));
+                }
+
+                //choice 3
+                QVector<QString>* packs = dm->getPackChoices(field("class").toString());
+                for (int i = 0; i < packs->size(); i++)
+                {
+                    thirdChoiceBox->addItem(packs->at(i));
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// gets a list of weapons with the specified type and range
+        /// </summary>
+        /// <param name="type">type: simple, martial or wildcard *</param>
+        /// <param name="range">range: melee, ranged or wildcard *</param>
+        public List<string> getWeaponList(string type, string range)
+        {
+            //replace * with % for sqlite wildcard
+            if (type == "*")
+            {
+                type = "%";
+            }
+            if (range == "*")
+            {
+                range = "%";
+            }
+
+            List<string> weapons = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM weapons " +
+                                  "INNER JOIN books ON weapons.book = books.bookid " +
+                                  "WHERE type LIKE \"";
+            dbQuery.CommandText += type;
+            dbQuery.CommandText += "\" AND range LIKE \"";
+            dbQuery.CommandText += range;
+            dbQuery.CommandText += "\" AND books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                weapons.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return weapons;
+        }
+
+        /// <summary>
+        /// gets a list of weapons with the spedified name
+        /// </summary>
+        /// <param name="name">name</param>
+        public List<string> getWeaponList(string name)
+        {
+            //replace * with % for sqlite wildcard
+            if (name == "*")
+            {
+                name = "%";
+            }
+
+            List<string> weapons = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM weapons " +
+                                  "INNER JOIN books ON weapons.book = books.bookid " +
+                                  "WHERE name LIKE \"";
+            dbQuery.CommandText += name;
+            dbQuery.CommandText += "\" AND books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                weapons.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return weapons;
+        }
+
+        /// <summary>
+        /// gets a list of armors with the specified name or of of the specified type
+        /// </summary>
+        /// <param name="name">chosen name or wildcard *</param>
+        /// <param name="type">chosen type or wildcard *</param>
+        public List<string> getArmorList(string name, string type)
+        {
+            //replace * with % for sqlite wildcard
+            if (name == "*")
+            {
+                name = "%";
+            }
+            if (type == "*")
+            {
+                type = "%";
+            }
+
+            List<string> armor = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM armor " +
+                                  "INNER JOIN books ON armor.book = books.bookid " +
+                                  "WHERE name LIKE \"";
+            dbQuery.CommandText += name;
+            dbQuery.CommandText += "\" AND type LIKE \"";
+            dbQuery.CommandText += type;
+            dbQuery.CommandText += "\" AND books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                armor.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return armor;
+        }
+
+        /// <summary>
+        /// gets the strength requirement for the specified armore
+        /// </summary>
+        /// <param name="armorName">chosen armor</param>
+        /// <returns>the strength requirement or 99 when armor not found in database</returns>
+        public int getArmorStrengthRequirement(string armorName)
+        {
+            //high value to prevent usage of armor that is not in database
+            int strengthReq = 99;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT strength FROM armor " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += armorName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    strengthReq = dbReader.GetInt32(0);
+                }
+            }
+            DBConnection.Close();
+
+            return strengthReq;
+        }
+
+        /// <summary>
+        /// gets a list of tools of the specified type
+        /// </summary>
+        /// <param name="type">type of tools to return</param>
+        public List<string> getToolList(string type)
+        {
+            List<string> tools = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM tools " +
+                                  "WHERE type=\"";
+            dbQuery.CommandText += type;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                tools.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return tools;
+        }
+
+        /// <summary>
+        /// gets a list of packs the specified class can choose from
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public List<string> getPackChoices(string className)
+        {
+            List<string> packs = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT equipmentPacks.name FROM equipmentPacks " +
+                                  "INNER JOIN equipmentPackChoices ON equipmentPacks.packId=equipmentPackChoices.packId " +
+                                  "INNER JOIN classes ON equipmentPackChoices.classId=classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                packs.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return packs;
+        }
+
+        /// <summary>
+        /// gets the content of the specified equipment pack
+        /// </summary>
+        /// <param name="packName">chosen equipment pack</param>
+        public string getPackContent(string packName)
+        {
+            string content = "";
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT content FROM equipmentPacks " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += packName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    content = dbReader.GetString(0);
+                }
+            }
+            DBConnection.Close();
+
+            return content;
+        }
+
+        /// <summary>
+        /// checks, if a given item is an equipment pack
+        /// </summary>
+        /// <param name="packName">item to check</param>
+        public bool isPack(string packName)
+        {
+            bool isPack = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM equipmentPacks " +
+                                  "WHERE name=\"";
+            dbQuery.CommandText += packName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                isPack = dbReader.IsDBNull(0);
+            }
+            DBConnection.Close();
+
+            return isPack;
+        }
+
+
+
 
         //private void ReadData()
         //{

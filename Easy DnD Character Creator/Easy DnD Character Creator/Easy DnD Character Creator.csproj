@@ -116,6 +116,12 @@
       <DependentUpon>ClassControl.cs</DependentUpon>
     </Compile>
     <Compile Include="AbilityScore.cs" />
+    <Compile Include="WizardComponents\EquipmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\EquipmentControl.Designer.cs">
+      <DependentUpon>EquipmentControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\IWizardControl.cs" />
     <Compile Include="WizardComponents\IntroControl.cs">
       <SubType>UserControl</SubType>
@@ -176,6 +182,9 @@
     </Compile>
     <EmbeddedResource Include="WizardComponents\ClassControl.resx">
       <DependentUpon>ClassControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\EquipmentControl.resx">
+      <DependentUpon>EquipmentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\LanguageControl.resx">
       <DependentUpon>LanguageControl.cs</DependentUpon>
