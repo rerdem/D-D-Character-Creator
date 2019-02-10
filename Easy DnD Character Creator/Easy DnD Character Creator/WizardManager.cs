@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator
 {
-    public enum WizardState { intro, race, appearance, classBackground, stats, languages, skills, equipment, spells, extraChoices, story, export };
+    public enum WizardState { intro, race, appearance, classBackground, stats, languages, skillEquipment, spells, extraChoices, story, export };
 
     public class WizardManager
     {
@@ -47,15 +47,13 @@ namespace Easy_DnD_Character_Creator
                     }
                     else
                     {
-                        CurrentState = WizardState.skills;
+                        CurrentState = WizardState.skillEquipment;
                     }
                     break;
                 case WizardState.languages:
-                    CurrentState = WizardState.skills;
+                    CurrentState = WizardState.skillEquipment;
                     break;
-                case WizardState.skills:
-                    break;
-                case WizardState.equipment:
+                case WizardState.skillEquipment:
                     break;
                 case WizardState.spells:
                     break;
@@ -91,7 +89,7 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.languages:
                     CurrentState = WizardState.stats;
                     break;
-                case WizardState.skills:
+                case WizardState.skillEquipment:
                     if (DBManager.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
                     {
                         CurrentState = WizardState.languages;
@@ -100,8 +98,6 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.stats;
                     }
-                    break;
-                case WizardState.equipment:
                     break;
                 case WizardState.spells:
                     break;
@@ -152,9 +148,8 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.languages:
                     headerOutput = "Languages";
                     break;
-                case WizardState.skills:
-                    break;
-                case WizardState.equipment:
+                case WizardState.skillEquipment:
+                    headerOutput = "Skills && Equipment";
                     break;
                 case WizardState.spells:
                     break;
@@ -196,9 +191,8 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.languages:
                     descriptionOutput = "Please choose which languages your character can speak, read and write.";
                     break;
-                case WizardState.skills:
-                    break;
-                case WizardState.equipment:
+                case WizardState.skillEquipment:
+                    descriptionOutput = "Please choose your starting equipment and which skills your character is proficient in.";
                     break;
                 case WizardState.spells:
                     break;
@@ -230,7 +224,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.equipment)
+            if (CurrentState == WizardState.spells)
             {
                 LastPage = true;
             }

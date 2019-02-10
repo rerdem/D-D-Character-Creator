@@ -25,6 +25,7 @@ namespace Easy_DnD_Character_Creator
         private AbilityControl abilityComponent;
         private LanguageControl languageComponent;
         private SkillControl skillComponent;
+        private EquipmentControl equipmentComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -48,6 +49,7 @@ namespace Easy_DnD_Character_Creator
             languageComponent.LanguageSelectionChanged += new EventHandler(languageComponent_LanguageSelectionChanged);
             skillComponent = new SkillControl(WM);
             skillComponent.SkillChosen += new EventHandler(skillComponent_SkillChosen);
+            equipmentComponent = new EquipmentControl(WM);
 
             InitializeComponent();
             refreshWindow();
@@ -102,11 +104,12 @@ namespace Easy_DnD_Character_Creator
                     contentFlowPanel.Controls.Add(languageComponent);
                     languageComponent.populateForm();
                     break;
-                case WizardState.skills:
+                case WizardState.skillEquipment:
                     contentFlowPanel.Controls.Add(skillComponent);
                     skillComponent.populateForm();
-                    break;
-                case WizardState.equipment:
+
+                    contentFlowPanel.Controls.Add(equipmentComponent);
+                    equipmentComponent.populateForm();
                     break;
                 case WizardState.spells:
                     break;
@@ -180,10 +183,11 @@ namespace Easy_DnD_Character_Creator
                     case WizardState.languages:
                         missingElements = languageComponent.getInvalidElements();
                         break;
-                    case WizardState.skills:
-                        missingElements = skillComponent.getInvalidElements();
-                        break;
-                    case WizardState.equipment:
+                    case WizardState.skillEquipment:
+                        missingElements = string.Join(", ", new string[] {
+                            skillComponent.getInvalidElements(),
+                            equipmentComponent.getInvalidElements()
+                                }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.spells:
                         break;
@@ -227,10 +231,8 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.languages:
                     isValid = languageComponent.isValid();
                     break;
-                case WizardState.skills:
-                    isValid = skillComponent.isValid();
-                    break;
-                case WizardState.equipment:
+                case WizardState.skillEquipment:
+                    isValid = skillComponent.isValid() && equipmentComponent.isValid();
                     break;
                 case WizardState.spells:
                     break;
@@ -300,10 +302,9 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.languages:
                     languageComponent.saveContent();
                     break;
-                case WizardState.skills:
+                case WizardState.skillEquipment:
                     skillComponent.saveContent();
-                    break;
-                case WizardState.equipment:
+                    equipmentComponent.saveContent();
                     break;
                 case WizardState.spells:
                     break;

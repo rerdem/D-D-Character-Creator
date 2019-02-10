@@ -122,9 +122,9 @@
             this.equipmentLabel1.Location = new System.Drawing.Point(3, 3);
             this.equipmentLabel1.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel1.Name = "equipmentLabel1";
-            this.equipmentLabel1.Size = new System.Drawing.Size(54, 13);
+            this.equipmentLabel1.Size = new System.Drawing.Size(55, 13);
             this.equipmentLabel1.TabIndex = 0;
-            this.equipmentLabel1.Text = "Choose x:";
+            this.equipmentLabel1.Text = "Choose 1:";
             // 
             // equipmentLabel2
             // 
@@ -142,9 +142,9 @@
             this.equipmentLabel3.Location = new System.Drawing.Point(379, 3);
             this.equipmentLabel3.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel3.Name = "equipmentLabel3";
-            this.equipmentLabel3.Size = new System.Drawing.Size(54, 13);
+            this.equipmentLabel3.Size = new System.Drawing.Size(55, 13);
             this.equipmentLabel3.TabIndex = 2;
-            this.equipmentLabel3.Text = "Choose x:";
+            this.equipmentLabel3.Text = "Choose 1:";
             // 
             // equipmentLabel4
             // 
@@ -152,9 +152,9 @@
             this.equipmentLabel4.Location = new System.Drawing.Point(567, 3);
             this.equipmentLabel4.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel4.Name = "equipmentLabel4";
-            this.equipmentLabel4.Size = new System.Drawing.Size(54, 13);
+            this.equipmentLabel4.Size = new System.Drawing.Size(55, 13);
             this.equipmentLabel4.TabIndex = 3;
-            this.equipmentLabel4.Text = "Choose x:";
+            this.equipmentLabel4.Text = "Choose 1:";
             // 
             // inventoryLabel
             // 
@@ -175,6 +175,7 @@
             this.equipmentList1.Name = "equipmentList1";
             this.equipmentList1.Size = new System.Drawing.Size(120, 82);
             this.equipmentList1.TabIndex = 5;
+            this.equipmentList1.SelectedIndexChanged += new System.EventHandler(this.equipmentList1_SelectedIndexChanged);
             // 
             // equipmentList2
             // 
@@ -183,6 +184,7 @@
             this.equipmentList2.Name = "equipmentList2";
             this.equipmentList2.Size = new System.Drawing.Size(120, 82);
             this.equipmentList2.TabIndex = 6;
+            this.equipmentList2.SelectedIndexChanged += new System.EventHandler(this.equipmentList2_SelectedIndexChanged);
             // 
             // equipmentList3
             // 
@@ -191,6 +193,7 @@
             this.equipmentList3.Name = "equipmentList3";
             this.equipmentList3.Size = new System.Drawing.Size(120, 82);
             this.equipmentList3.TabIndex = 7;
+            this.equipmentList3.SelectedIndexChanged += new System.EventHandler(this.equipmentList3_SelectedIndexChanged);
             // 
             // equipmentList4
             // 
@@ -199,6 +202,7 @@
             this.equipmentList4.Name = "equipmentList4";
             this.equipmentList4.Size = new System.Drawing.Size(120, 82);
             this.equipmentList4.TabIndex = 8;
+            this.equipmentList4.SelectedIndexChanged += new System.EventHandler(this.equipmentList4_SelectedIndexChanged);
             // 
             // descriptionLabel1
             // 

@@ -233,7 +233,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     box.Checked = false;
                 }
 
-                if (skillOptions.Contains(box.Text))
+                if ((skillOptions.Contains(box.Text)) && (!box.Checked))
                 {
                     box.Enabled = true;
                     choiceBoxes.Add(box);
