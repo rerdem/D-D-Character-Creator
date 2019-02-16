@@ -20,13 +20,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private List<Label> choiceLabels;
         private List<Label> descriptionLabels;
 
+        private List<int> equipmentList2Selection;
+
         public EquipmentControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             visited = false;
+
             choiceBoxes = new List<ListBox>();
             choiceLabels = new List<Label>();
             descriptionLabels = new List<Label>();
+
+            equipmentList2Selection = new List<int>();
+
             InitializeComponent();
             initializeCarrierLists();
         }
@@ -45,12 +51,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public string getInvalidElements()
         {
-            return "";
+            string output = "";
+
+            if (wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class) != equipmentList2.SelectedItems.Count)
+            {
+                int missingChoices = wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class) - equipmentList2.SelectedItems.Count;
+                output = $"select {missingChoices} more option(s) in the second equipment box";
+            }
+
+            return output;
         }
 
         public bool isValid()
         {
-            return true;
+            return (wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class) == equipmentList2.SelectedItems.Count);
         }
 
         public void populateForm()
@@ -77,7 +91,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
                 foreach (string item in items)
                 {
-                    output += wm.DBManager.getEquipmentStats(item);
+                    output += wm.DBManager.getEquipmentStats(item.Trim());
                     output += Environment.NewLine;
                     output += Environment.NewLine;
                 }
@@ -121,6 +135,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             equipmentLabel2.Text = $"Choose {wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class)}:";
+
+            if (wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class) > 1)
+            {
+                equipmentList2.SelectionMode = SelectionMode.MultiSimple;
+            }
+            else
+            {
+                equipmentList2.SelectionMode = SelectionMode.One;
+            }
+
             inventoryLabel.Text = wm.DBManager.getExtraEquipment(wm.Choices.Class);
         }
 
@@ -142,6 +166,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             descriptionLabels.Add(descriptionLabel4);
         }
 
+        private void syncEquipmentList2Selection()
+        {
+            //add new selected items
+            foreach (int index in equipmentList2.SelectedIndices)
+            {
+                if (!equipmentList2Selection.Contains(index))
+                {
+                    equipmentList2Selection.Add(index);
+                }
+            }
+
+            //remove deselected items
+            equipmentList2Selection.RemoveAll(index => !equipmentList2.SelectedIndices.Contains(index));
+        }
+
         private void equipmentList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             descriptionLabel1.Text = getDescription(equipmentList1.SelectedItem.ToString());
@@ -149,7 +188,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void equipmentList2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            syncEquipmentList2Selection();
+            if (equipmentList2.SelectedIndices.Count > 0)
+            {
+                if (equipmentList2.SelectedIndices.Count <= wm.DBManager.getEquipment2ndSelectionAmount(wm.Choices.Class))
+                {
+                    int lastSelectedIndex = equipmentList2Selection.ElementAt(equipmentList2Selection.Count - 1);
+                    descriptionLabel2.Text = getDescription(equipmentList2.Items[lastSelectedIndex].ToString());
+                }
+                else
+                {
+                    int lastSelectedIndex = equipmentList2Selection.ElementAt(equipmentList2Selection.Count - 1);
+                    equipmentList2.SelectedIndices.Remove(lastSelectedIndex);
+                }
+            }
         }
 
         private void equipmentList3_SelectedIndexChanged(object sender, EventArgs e)
