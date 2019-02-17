@@ -16,6 +16,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        public event EventHandler EquipmentSelectionChanged;
+
         private List<ListBox> choiceBoxes;
         private List<Label> choiceLabels;
         private List<Label> descriptionLabels;
@@ -70,11 +72,30 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             resetEquipment();
+
+            //TO DO: repopulate from previous choices, if class hasn't changed
         }
 
         public void saveContent()
         {
-            
+            wm.Choices.Equipment = "";
+
+            int lastActiveBox = wm.DBManager.getEquipmentChoiceAmount(wm.Choices.Class) - 1;
+
+            for (int i = 0; i < lastActiveBox; i++)
+            {
+                foreach (string item in choiceBoxes[i].SelectedItems)
+                {
+                    if (!string.IsNullOrEmpty(wm.Choices.Equipment))
+                    {
+                        wm.Choices.Equipment += ", ";
+                    }
+                    wm.Choices.Equipment += item;
+                }
+            }
+
+            wm.Choices.Equipment += ", ";
+            wm.Choices.Equipment += wm.DBManager.getExtraEquipment(wm.Choices.Class);
         }
 
         private string getDescription(string input)
@@ -184,6 +205,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void equipmentList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             descriptionLabel1.Text = getDescription(equipmentList1.SelectedItem.ToString());
+
+            OnEquipmentSelectionChanged(null);
         }
 
         private void equipmentList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,16 +225,31 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     equipmentList2.SelectedIndices.Remove(lastSelectedIndex);
                 }
             }
+
+            OnEquipmentSelectionChanged(null);
         }
 
         private void equipmentList3_SelectedIndexChanged(object sender, EventArgs e)
         {
             descriptionLabel3.Text = getDescription(equipmentList3.SelectedItem.ToString());
+
+            OnEquipmentSelectionChanged(null);
         }
 
         private void equipmentList4_SelectedIndexChanged(object sender, EventArgs e)
         {
             descriptionLabel4.Text = getDescription(equipmentList4.SelectedItem.ToString());
+
+            OnEquipmentSelectionChanged(null);
+        }
+
+        protected virtual void OnEquipmentSelectionChanged(EventArgs e)
+        {
+            EventHandler handler = EquipmentSelectionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }

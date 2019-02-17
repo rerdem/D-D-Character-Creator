@@ -54,6 +54,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.skillEquipment:
+                    CurrentState = WizardState.spells;
                     break;
                 case WizardState.spells:
                     break;
@@ -100,6 +101,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.spells:
+                    CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.extraChoices:
                     break;

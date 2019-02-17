@@ -26,6 +26,7 @@ namespace Easy_DnD_Character_Creator
         private LanguageControl languageComponent;
         private SkillControl skillComponent;
         private EquipmentControl equipmentComponent;
+        private SpellControl spellComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -50,6 +51,8 @@ namespace Easy_DnD_Character_Creator
             skillComponent = new SkillControl(WM);
             skillComponent.SkillChosen += new EventHandler(skillComponent_SkillChosen);
             equipmentComponent = new EquipmentControl(WM);
+            equipmentComponent.EquipmentSelectionChanged += new EventHandler(equipmentComponent_EquipmentSelectionChanged);
+            spellComponent = new SpellControl();
 
             InitializeComponent();
             refreshWindow();
@@ -112,6 +115,7 @@ namespace Easy_DnD_Character_Creator
                     equipmentComponent.populateForm();
                     break;
                 case WizardState.spells:
+                    contentFlowPanel.Controls.Add(spellComponent);
                     break;
                 case WizardState.extraChoices:
                     break;
@@ -394,6 +398,16 @@ namespace Easy_DnD_Character_Creator
         void skillComponent_SkillChosen(object sender, EventArgs e)
         {
             SkillControl incoming = sender as SkillControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        void equipmentComponent_EquipmentSelectionChanged(object sender, EventArgs e)
+        {
+            EquipmentControl incoming = sender as EquipmentControl;
             if (incoming != null)
             {
                 refreshButtons();

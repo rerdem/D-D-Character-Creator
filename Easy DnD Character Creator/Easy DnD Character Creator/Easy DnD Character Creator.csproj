@@ -149,6 +149,12 @@
     <Compile Include="WizardComponents\SkillControl.Designer.cs">
       <DependentUpon>SkillControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\SpellControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SpellControl.Designer.cs">
+      <DependentUpon>SpellControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -194,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\SkillControl.resx">
       <DependentUpon>SkillControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SpellControl.resx">
+      <DependentUpon>SpellControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
