@@ -61,7 +61,11 @@ namespace Easy_DnD_Character_Creator
         public List<string> ExtraSkills { get; set; }
 
         //EquipmentControl
-        public string Equipment { get; set; }
+        public string Equipment1 { get; set; }
+        public string Equipment2 { get; set; }
+        public string Equipment3 { get; set; }
+        public string Equipment4 { get; set; }
+        public string Equipment5 { get; set; }
 
         public ChoiceManager()
         {
@@ -106,7 +110,11 @@ namespace Easy_DnD_Character_Creator
             Skills = new List<string>();
             ExtraSkills = new List<string>();
 
-            Equipment = "";
+            Equipment1 = "";
+            Equipment2 = "";
+            Equipment3 = "";
+            Equipment4 = "";
+            Equipment5 = "";
         }
     }
 }

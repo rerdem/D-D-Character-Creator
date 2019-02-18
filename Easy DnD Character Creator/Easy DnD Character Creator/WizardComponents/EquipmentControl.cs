@@ -15,19 +15,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
     {
         private WizardManager wm;
         private bool visited;
+        private string LastClass;
 
         public event EventHandler EquipmentSelectionChanged;
 
         private List<ListBox> choiceBoxes;
         private List<Label> choiceLabels;
         private List<Label> descriptionLabels;
-
+        
         private List<int> equipmentList2Selection;
 
         public EquipmentControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             visited = false;
+            LastClass = "";
 
             choiceBoxes = new List<ListBox>();
             choiceLabels = new List<Label>();
@@ -73,29 +75,104 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             resetEquipment();
 
-            //TO DO: repopulate from previous choices, if class hasn't changed
+            if ((visited) && (!hasClassChanged()))
+            {
+                //list 1
+                if (equipmentList1.Visible)
+                {
+                    if (equipmentList1.Items.IndexOf(wm.Choices.Equipment1) >= 0)
+                    {
+                        equipmentList1.SetSelected(equipmentList1.Items.IndexOf(wm.Choices.Equipment1), true);
+                    }
+                }
+
+                //list 2
+                if (equipmentList2.Visible)
+                {
+                    equipmentList2.SetSelected(0, false);
+                    foreach (string item in wm.Choices.Equipment2.Split(','))
+                    {
+                        if (equipmentList2.Items.IndexOf(item.Trim()) >= 0)
+                        {
+                            equipmentList2.SetSelected(equipmentList2.Items.IndexOf(item.Trim()), true);
+                        }
+                    }
+                }
+
+                //list 3
+                if (equipmentList3.Visible)
+                {
+                    if (equipmentList3.Items.IndexOf(wm.Choices.Equipment3) >= 0)
+                    {
+                        equipmentList3.SetSelected(equipmentList3.Items.IndexOf(wm.Choices.Equipment3), true);
+                    }
+                }
+
+                //list 4
+                if (equipmentList4.Visible)
+                {
+                    if (equipmentList4.Items.IndexOf(wm.Choices.Equipment4) >= 0)
+                    {
+                        equipmentList4.SetSelected(equipmentList4.Items.IndexOf(wm.Choices.Equipment4), true);
+                    }
+                }
+            }
+
+            //set LastClass
+            LastClass = wm.Choices.Class;
+
+            if (!visited)
+            {
+                visited = true;
+            }
         }
 
         public void saveContent()
         {
-            wm.Choices.Equipment = "";
+            wm.Choices.Equipment1 = "";
+            wm.Choices.Equipment2 = "";
+            wm.Choices.Equipment3 = "";
+            wm.Choices.Equipment4 = "";
+            wm.Choices.Equipment5 = "";
 
-            int lastActiveBox = wm.DBManager.getEquipmentChoiceAmount(wm.Choices.Class) - 1;
-
-            for (int i = 0; i < lastActiveBox; i++)
+            //list 1
+            if (equipmentList1.Visible)
             {
-                foreach (string item in choiceBoxes[i].SelectedItems)
+                wm.Choices.Equipment1 = equipmentList1.SelectedItem.ToString();
+            }
+
+            //list 2
+            if (equipmentList2.Visible)
+            {
+                foreach (string item in equipmentList2.SelectedItems)
                 {
-                    if (!string.IsNullOrEmpty(wm.Choices.Equipment))
+                    if (!string.IsNullOrEmpty(wm.Choices.Equipment2))
                     {
-                        wm.Choices.Equipment += ", ";
+                        wm.Choices.Equipment2 += ", ";
                     }
-                    wm.Choices.Equipment += item;
+                    wm.Choices.Equipment2 += item;
                 }
             }
 
-            wm.Choices.Equipment += ", ";
-            wm.Choices.Equipment += wm.DBManager.getExtraEquipment(wm.Choices.Class);
+            //list 3
+            if (equipmentList3.Visible)
+            {
+                wm.Choices.Equipment3 = equipmentList3.SelectedItem.ToString();
+            }
+            
+            //list 4
+            if (equipmentList4.Visible)
+            {
+                wm.Choices.Equipment4 = equipmentList4.SelectedItem.ToString();
+            }
+
+            //extra equipment
+            wm.Choices.Equipment5 = wm.DBManager.getExtraEquipment(wm.Choices.Class);
+        }
+
+        private bool hasClassChanged()
+        {
+            return (wm.Choices.Class != LastClass);
         }
 
         private string getDescription(string input)
