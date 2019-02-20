@@ -2580,7 +2580,7 @@ namespace Easy_DnD_Character_Creator
                                   "INNER JOIN classes ON cantripsKnown.classId = classes.classid " +
                                   "WHERE classes.name=\"";
             dbQuery.CommandText += className;
-            dbQuery.CommandText += "\"  AND cantripsKnown.level BETWEEN 1 AND ";
+            dbQuery.CommandText += "\" AND cantripsKnown.level BETWEEN 1 AND ";
             dbQuery.CommandText += level.ToString();
             dbQuery.CommandText += " ORDER BY cantripsKnown.level DESC LIMIT 1";
 
@@ -2599,7 +2599,7 @@ namespace Easy_DnD_Character_Creator
                                       "INNER JOIN subclasses ON cantripsKnownSubclass.subclassId = subclasses.subclassId " +
                                       "WHERE subclasses.name=\"";
                 dbQuery.CommandText += subclass;
-                dbQuery.CommandText += "\"AND cantripsKnownSubclass.level BETWEEN 1 AND ";
+                dbQuery.CommandText += "\" AND cantripsKnownSubclass.level BETWEEN 1 AND ";
                 dbQuery.CommandText += level.ToString();
                 dbQuery.CommandText += " ORDER BY cantripsKnownSubclass.level DESC LIMIT 1";
 
@@ -2618,6 +2618,206 @@ namespace Easy_DnD_Character_Creator
             return cantripsKnown;
         }
 
+        public bool areSpellsKnownStatic(string className, string subclass)
+        {
+            bool classSpellsKnownStatic = false;
+            bool subclassSpellsKnownStatic = false;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT MAX(static) FROM spellsKnown " +
+                                  "INNER JOIN classes ON spellsKnown.classId = classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                classSpellsKnownStatic = dbReader.GetBoolean(0);
+            }
+
+            if (subclass != "---")
+            {
+                dbQuery.CommandText = "SELECT MAX(static) FROM spellsKnownSubclass " +
+                                      "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
+                                      "WHERE subclasses.name=\"";
+                dbQuery.CommandText += subclass;
+                dbQuery.CommandText += "\"";
+
+                dbReader = dbQuery.ExecuteReader();
+                if (dbReader.Read())
+                {
+                    if (!dbReader.IsDBNull(0))
+                    {
+                        subclassSpellsKnownStatic = dbReader.GetBoolean(0);
+                    }
+                }
+            }
+
+            DBConnection.Close();
+
+            return classSpellsKnownStatic || subclassSpellsKnownStatic;
+        }
+
+        public int getSpellsKnown(string className, string subclass, int level)
+        {
+            int spellsKnown = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT spellsKnown FROM spellsKnown " +
+                                  "INNER JOIN classes ON spellsKnown.classId = classes.classid " +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\" AND spellsKnown.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+            dbQuery.CommandText += " ORDER BY spellsKnown.level DESC LIMIT 1";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    spellsKnown += dbReader.GetInt32(0);
+                }
+            }
+
+            if (subclass != "---")
+            {
+                dbQuery.CommandText = "SELECT spellsKnown FROM spellsKnownSubclass " +
+                                      "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
+                                      "WHERE subclasses.name=\"";
+                dbQuery.CommandText += subclass;
+                dbQuery.CommandText += "\"AND spellsKnownSubclass.level BETWEEN 1 AND ";
+                dbQuery.CommandText += level.ToString();
+                dbQuery.CommandText += " ORDER BY spellsKnownSubclass.level DESC LIMIT 1";
+
+                dbReader = dbQuery.ExecuteReader();
+                if (dbReader.Read())
+                {
+                    if (!dbReader.IsDBNull(0))
+                    {
+                        spellsKnown += dbReader.GetInt32(0);
+                    }
+                }
+            }
+
+            DBConnection.Close();
+
+            return spellsKnown;
+        }
+
+        public List<string> getCantripOptions(string className, string subclass)
+        {
+            List<string> cantripList = new List<string>();
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM spells " +
+                                  "INNER JOIN books ON spells.book=books.bookid " +
+                                  "WHERE spells.level=0 " +
+                                  "AND spells.classes LIKE \"%";
+            if ((subclass == "Arcane Trickster") || (subclass == "Eldritch Knight"))
+            {
+                dbQuery.CommandText += subclass;
+            }
+            else
+            {
+                dbQuery.CommandText += className;
+            }
+            dbQuery.CommandText += "%\" AND books.title IN (";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += ")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                cantripList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return cantripList;
+        }
+
+        public List<string> getSpellOptions(string className, string subclass, int level)
+        {
+            List<string> spellList = new List<string>();
+            
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT name FROM spells " +
+                                  "INNER JOIN books ON spells.book=books.bookid " +
+                                  "WHERE spells.level = " +
+                                  "(SELECT maxSpellLevel FROM maxSpellLevel " +
+                                  "INNER JOIN classes ON maxSpellLevel.classId = classes.classid" +
+                                  "WHERE classes.name=\"";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "\" AND maxSpellLevel.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+            dbQuery.CommandText += " UNION" +
+                                   "SELECT maxSpellLevel FROM maxSpellLevelSubclass " +
+                                   "INNER JOIN subclasses ON maxSpellLevelSubclass.subclassId = subclasses.subclassId " +
+                                   "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\" AND maxSpellLevelSubclass.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+            dbQuery.CommandText += " ORDER BY maxSpellLevel DESC LIMIT 1)" +
+                                   "AND(spells.classes LIKE \"%";
+            dbQuery.CommandText += className;
+            dbQuery.CommandText += "%\" OR spells.classes LIKE \"%";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "%\") AND books.title IN (\"";
+            dbQuery.CommandText += UsedBooks;
+            dbQuery.CommandText += "\")";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                spellList.Add(dbReader.GetString(0));
+            }
+            DBConnection.Close();
+
+            return spellList;
+        }
+
+        public Spell getSpell(string spellName)
+        {
+            Spell outputSpell;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM spells " +
+                                  "WHERE name = \"";
+            dbQuery.CommandText += spellName;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    outputSpell = new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10));
+                }
+            }
+
+            DBConnection.Close();
+
+            outputSpell = new Spell();
+            return outputSpell;
+        }
+
+
 
 
 
@@ -2633,299 +2833,180 @@ namespace Easy_DnD_Character_Creator
 
 
         
-        //bool DataManager::spellsKnownStatic(QString className)
-        //{
-        //    bool spellsKnownStatic = false;
 
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT MAX(static) FROM spellsKnown "
-        
-        //                  "INNER JOIN classes ON spellsKnown.classId = classes.classid "
-        
-        //                  "WHERE classes.name=\"";
-        //    querystring += className;
-        //    querystring += "\"";
-
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            spellsKnownStatic = query.value(0).toBool();
-        //        }
-        //    }
-
-        //    return spellsKnownStatic;
-        //}
-
-        //int DataManager::getSpellsKnown(QString className, int level)
-        //{
-        //    int spellsKnown = 0;
-
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT spellsKnown FROM spellsKnown "
-        
-        //                  "INNER JOIN classes ON spellsKnown.classId = classes.classid "
-        
-        //                  "WHERE classes.name=\"";
-        //    querystring += className;
-        //    querystring += "\"  AND spellsKnown.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
-        //    querystring += " ORDER BY spellsKnown.level DESC LIMIT 1";
-
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            spellsKnown = query.value(0).toInt();
-        //        }
-        //    }
-
-        //    return spellsKnown;
-        //}
-
-        //QVector<QString>* DataManager::getCantripOptions(QString className)
-        //{
-        //    QVector<QString>* cantripList = new QVector<QString>();
-
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT name FROM spells "
-        
-        //                  "INNER JOIN books ON spells.book=books.bookid "
-        
-        //                  "WHERE spells.level=0 "
-        
-        //                  "AND spells.classes LIKE \"%";
-        //    querystring += className;
-        //    querystring += "%\" AND books.title IN (";
-        //    querystring += usedBooks;
-        //    querystring += ")";
+        bool DataManager::hasExtraRaceSpells(QString subrace, int level)
+        {
+            QSqlQuery query(db);
+            QString querystring = "SELECT * FROM extraRaceSpells "
 
 
-        //    if (query.exec(querystring))
-        //    {
-        //        while (query.next())
-        //        {
-        //            cantripList->append(query.value(0).toString());
-        //        }
-        //    }
-        //    return cantripList;
-        //}
-
-        //QVector<QString>* DataManager::getSpellOptions(QString className, QString subclassName, int level)
-        //{
-        //    QVector<QString>* spellList = new QVector<QString>();
-
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT name FROM spells "
-        
-        //                  "INNER JOIN books ON spells.book=books.bookid "
-        
-        //                  "WHERE spells.level = "
-        
-        //                  "(SELECT maxSpellLevel FROM maxSpellLevel "
-        
-        //                  "INNER JOIN classes ON maxSpellLevel.classId = classes.classid "
-        
-        //                  "WHERE classes.name=\"";
-        //    querystring += className;
-        //    querystring += "\" AND maxSpellLevel.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
-        //    querystring += " ORDER BY maxSpellLevel DESC LIMIT 1) ";
-        //    querystring += "AND (spells.classes LIKE \"%";
-        //    querystring += className;
-        //    querystring += "%\" OR spells.classes LIKE \"%";
-        //    querystring += subclassName;
-        //    querystring += "%\") AND books.title IN (";
-        //    querystring += usedBooks;
-        //    querystring += ")";
+                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
 
 
-        //    if (query.exec(querystring))
-        //    {
-        //        while (query.next())
-        //        {
-        //            spellList->append(query.value(0).toString());
-        //        }
-        //    }
-        //    return spellList;
-        //}
+                          "WHERE races.subrace=\"";
+            querystring += subrace;
+            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
 
-        //Spell* DataManager::getSpell(QString spellName)
-        //{
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT * FROM spells "
-        
-        //                  "WHERE name = \"";
-        //    querystring += spellName;
-        //    querystring += "\"";
+            if (query.exec(querystring))
+            {
+                if (query.next())
+                {
+                    return true;
+                }
+            }
 
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            return new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString());
-        //        }
-        //    }
-        //    return new Spell();
-        //}
+            return false;
+        }
 
-        //bool DataManager::hasExtraRaceSpells(QString subrace, int level)
-        //{
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT * FROM extraRaceSpells "
-        
-        //                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-        
-        //                  "WHERE races.subrace=\"";
-        //    querystring += subrace;
-        //    querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
+        bool DataManager::hasExtraSubclassSpells(QString subclassName, int level)
+        {
+            QSqlQuery query(db);
+            QString querystring = "SELECT * FROM extraSubclassSpells "
 
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            return true;
-        //        }
-        //    }
 
-        //    return false;
-        //}
+                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
 
-        //bool DataManager::hasExtraSubclassSpells(QString subclassName, int level)
-        //{
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT * FROM extraSubclassSpells "
-        
-        //                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-        
-        //                  "WHERE subclasses.name=\"";
-        //    querystring += subclassName;
-        //    querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
 
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            return true;
-        //        }
-        //    }
+                          "WHERE subclasses.name=\"";
+            querystring += subclassName;
+            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
 
-        //    return false;
-        //}
+            if (query.exec(querystring))
+            {
+                if (query.next())
+                {
+                    return true;
+                }
+            }
 
-        //QVector<Spell>* DataManager::getExtraRaceSpells(QString subrace, int level)
-        //{
-        //    QVector<Spell>* extraRaceSpells = new QVector<Spell>();
+            return false;
+        }
 
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT spells.* FROM extraRaceSpells "
-        
-        //                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-        
-        //                  "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
-        
-        //                  "WHERE races.subrace=\"";
-        //    querystring += subrace;
-        //    querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
+        QVector<Spell>* DataManager::getExtraRaceSpells(QString subrace, int level)
+        {
+            QVector<Spell>* extraRaceSpells = new QVector<Spell>();
 
-        //    if (query.exec(querystring))
-        //    {
-        //        while (query.next())
-        //        {
-        //            extraRaceSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
-        //        }
-        //    }
+            QSqlQuery query(db);
+            QString querystring = "SELECT spells.* FROM extraRaceSpells "
 
-        //    return extraRaceSpells;
-        //}
 
-        //QVector<Spell>* DataManager::getExtraSubclassSpells(QString subclassName, int level)
-        //{
-        //    QVector<Spell>* extraSubclassSpells = new QVector<Spell>();
+                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
 
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT spells.* FROM extraSubclassSpells "
-        
-        //                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-        
-        //                  "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
-        
-        //                  "WHERE subclasses.name=\"";
-        //    querystring += subclassName;
-        //    querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
 
-        //    if (query.exec(querystring))
-        //    {
-        //        while (query.next())
-        //        {
-        //            extraSubclassSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
-        //        }
-        //    }
+                          "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
 
-        //    return extraSubclassSpells;
-        //}
 
-        //bool DataManager::isExtraRaceSpell(QString subrace, int level, QString spell)
-        //{
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT spells.name FROM extraRaceSpells "
-        
-        //                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-        
-        //                  "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
-        
-        //                  "WHERE races.subrace=\"";
-        //    querystring += subrace;
-        //    querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
-        //    querystring += " AND spells.name=\"";
-        //    querystring += spell;
-        //    querystring += "\"";
+                          "WHERE races.subrace=\"";
+            querystring += subrace;
+            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
 
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            return true;
-        //        }
-        //    }
+            if (query.exec(querystring))
+            {
+                while (query.next())
+                {
+                    extraRaceSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
+                }
+            }
 
-        //    return false;
+            return extraRaceSpells;
+        }
 
-        //}
+        QVector<Spell>* DataManager::getExtraSubclassSpells(QString subclassName, int level)
+        {
+            QVector<Spell>* extraSubclassSpells = new QVector<Spell>();
 
-        //bool DataManager::isExtraSubclassSpell(QString subclassName, int level, QString spell)
-        //{
-        //    QSqlQuery query(db);
-        //    QString querystring = "SELECT spells.* FROM extraSubclassSpells "
-        
-        //                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-        
-        //                  "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
-        
-        //                  "WHERE subclasses.name=\"";
-        //    querystring += subclassName;
-        //    querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-        //    querystring += QString::number(level);
-        //    querystring += " AND spells.name=\"";
-        //    querystring += spell;
-        //    querystring += "\"";
+            QSqlQuery query(db);
+            QString querystring = "SELECT spells.* FROM extraSubclassSpells "
 
-        //    if (query.exec(querystring))
-        //    {
-        //        if (query.next())
-        //        {
-        //            return true;
-        //        }
-        //    }
 
-        //    return false;
+                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
 
-        //}
+
+                          "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
+
+
+                          "WHERE subclasses.name=\"";
+            querystring += subclassName;
+            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
+
+            if (query.exec(querystring))
+            {
+                while (query.next())
+                {
+                    extraSubclassSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
+                }
+            }
+
+            return extraSubclassSpells;
+        }
+
+        bool DataManager::isExtraRaceSpell(QString subrace, int level, QString spell)
+        {
+            QSqlQuery query(db);
+            QString querystring = "SELECT spells.name FROM extraRaceSpells "
+
+
+                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
+
+
+                          "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
+
+
+                          "WHERE races.subrace=\"";
+            querystring += subrace;
+            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
+            querystring += " AND spells.name=\"";
+            querystring += spell;
+            querystring += "\"";
+
+            if (query.exec(querystring))
+            {
+                if (query.next())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
+        bool DataManager::isExtraSubclassSpell(QString subclassName, int level, QString spell)
+        {
+            QSqlQuery query(db);
+            QString querystring = "SELECT spells.* FROM extraSubclassSpells "
+
+
+                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
+
+
+                          "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
+
+
+                          "WHERE subclasses.name=\"";
+            querystring += subclassName;
+            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            querystring += QString::number(level);
+            querystring += " AND spells.name=\"";
+            querystring += spell;
+            querystring += "\"";
+
+            if (query.exec(querystring))
+            {
+                if (query.next())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
 
 
 
