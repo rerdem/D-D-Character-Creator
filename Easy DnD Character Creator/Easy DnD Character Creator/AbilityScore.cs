@@ -1,4 +1,6 @@
-﻿namespace Easy_DnD_Character_Creator
+﻿using System;
+
+namespace Easy_DnD_Character_Creator
 {
     public class AbilityScore
     {
@@ -23,6 +25,11 @@
         public int getTotalValue()
         {
             return BaseValue + SubraceAdd + SubraceBonus;
+        }
+
+        public int getModifier()
+        {
+            return (int)Math.Floor((getTotalValue() - 10.0) / 2.0);
         }
     }
 }

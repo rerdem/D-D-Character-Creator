@@ -2528,6 +2528,12 @@ namespace Easy_DnD_Character_Creator
             return "";
         }
 
+        /// <summary>
+        /// checks whether a given class/subclass has the ability to cast spells
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
         public bool hasSpellcasting(string className, string subclass, int level)
         {
             bool classHasSpellcasting = false;
@@ -2546,11 +2552,15 @@ namespace Easy_DnD_Character_Creator
             dbReader = dbQuery.ExecuteReader();
             if (dbReader.Read())
             {
-                classHasSpellcasting = dbReader.GetBoolean(0);
+                if (!dbReader.IsDBNull(0))
+                {
+                    classHasSpellcasting = dbReader.GetBoolean(0);
+                }
             }
 
             if (subclass != "---")
             {
+                dbQuery = DBConnection.CreateCommand();
                 dbQuery.CommandText = "SELECT hasSpellcasting FROM subclasses " +
                                       "WHERE name=\"";
                 dbQuery.CommandText += subclass;
@@ -2559,7 +2569,10 @@ namespace Easy_DnD_Character_Creator
                 dbReader = dbQuery.ExecuteReader();
                 if (dbReader.Read())
                 {
-                    subclassHasSpellcasting = dbReader.GetBoolean(0);
+                    if (!dbReader.IsDBNull(0))
+                    {
+                        subclassHasSpellcasting = dbReader.GetBoolean(0);
+                    }
                 }
             }
 
@@ -2568,6 +2581,23 @@ namespace Easy_DnD_Character_Creator
             return classHasSpellcasting || subclassHasSpellcasting;
         }
 
+        /// <summary>
+        /// checks whether a given class/subclass has spellcasting and chooses spells to learn
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
+        public bool choosesSpells(string className, string subclass, int level)
+        {
+            return (hasSpellcasting(className, subclass, level) && (className != "Paladin"));
+        }
+
+        /// <summary>
+        /// gets the amount of cantrips the character can know at the current level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
         public int getCantripsKnown(string className, string subclass, int level)
         {
             int cantripsKnown = 0;
@@ -2595,6 +2625,7 @@ namespace Easy_DnD_Character_Creator
 
             if (subclass != "---")
             {
+                dbQuery = DBConnection.CreateCommand();
                 dbQuery.CommandText = "SELECT cantripsKnown FROM cantripsKnownSubclass " +
                                       "INNER JOIN subclasses ON cantripsKnownSubclass.subclassId = subclasses.subclassId " +
                                       "WHERE subclasses.name=\"";
@@ -2618,6 +2649,11 @@ namespace Easy_DnD_Character_Creator
             return cantripsKnown;
         }
 
+        /// <summary>
+        /// checks, of the number of known spells is static with level or dependent on other modifiers
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
         public bool areSpellsKnownStatic(string className, string subclass)
         {
             bool classSpellsKnownStatic = false;
@@ -2641,6 +2677,7 @@ namespace Easy_DnD_Character_Creator
 
             if (subclass != "---")
             {
+                dbQuery = DBConnection.CreateCommand();
                 dbQuery.CommandText = "SELECT MAX(static) FROM spellsKnownSubclass " +
                                       "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
                                       "WHERE subclasses.name=\"";
@@ -2662,6 +2699,12 @@ namespace Easy_DnD_Character_Creator
             return classSpellsKnownStatic || subclassSpellsKnownStatic;
         }
 
+        /// <summary>
+        /// gets the amount of spells the character can know at the current level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
         public int getSpellsKnown(string className, string subclass, int level)
         {
             int spellsKnown = 0;
@@ -2689,6 +2732,7 @@ namespace Easy_DnD_Character_Creator
 
             if (subclass != "---")
             {
+                dbQuery = DBConnection.CreateCommand();
                 dbQuery.CommandText = "SELECT spellsKnown FROM spellsKnownSubclass " +
                                       "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
                                       "WHERE subclasses.name=\"";
@@ -2712,6 +2756,11 @@ namespace Easy_DnD_Character_Creator
             return spellsKnown;
         }
 
+        /// <summary>
+        /// gets a list of cantrips the character can choose from
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
         public List<string> getCantripOptions(string className, string subclass)
         {
             List<string> cantripList = new List<string>();
@@ -2746,6 +2795,12 @@ namespace Easy_DnD_Character_Creator
             return cantripList;
         }
 
+        /// <summary>
+        /// gets a list of spells the character can choose from
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
         public List<string> getSpellOptions(string className, string subclass, int level)
         {
             List<string> spellList = new List<string>();
@@ -2758,12 +2813,12 @@ namespace Easy_DnD_Character_Creator
                                   "INNER JOIN books ON spells.book=books.bookid " +
                                   "WHERE spells.level = " +
                                   "(SELECT maxSpellLevel FROM maxSpellLevel " +
-                                  "INNER JOIN classes ON maxSpellLevel.classId = classes.classid" +
+                                  "INNER JOIN classes ON maxSpellLevel.classId = classes.classid " +
                                   "WHERE classes.name=\"";
             dbQuery.CommandText += className;
             dbQuery.CommandText += "\" AND maxSpellLevel.level BETWEEN 1 AND ";
             dbQuery.CommandText += level.ToString();
-            dbQuery.CommandText += " UNION" +
+            dbQuery.CommandText += " UNION " +
                                    "SELECT maxSpellLevel FROM maxSpellLevelSubclass " +
                                    "INNER JOIN subclasses ON maxSpellLevelSubclass.subclassId = subclasses.subclassId " +
                                    "WHERE subclasses.name=\"";
@@ -2775,9 +2830,9 @@ namespace Easy_DnD_Character_Creator
             dbQuery.CommandText += className;
             dbQuery.CommandText += "%\" OR spells.classes LIKE \"%";
             dbQuery.CommandText += subclass;
-            dbQuery.CommandText += "%\") AND books.title IN (\"";
+            dbQuery.CommandText += "%\") AND books.title IN (";
             dbQuery.CommandText += UsedBooks;
-            dbQuery.CommandText += "\")";
+            dbQuery.CommandText += ")";
 
             dbReader = dbQuery.ExecuteReader();
             while (dbReader.Read())
@@ -2789,9 +2844,13 @@ namespace Easy_DnD_Character_Creator
             return spellList;
         }
 
+        /// <summary>
+        /// gets all information for a spell given its name
+        /// </summary>
+        /// <param name="spellName">name of the spell to look up</param>
         public Spell getSpell(string spellName)
         {
-            Spell outputSpell;
+            Spell outputSpell = new Spell(); ;
 
             DBConnection.Open();
             SQLiteDataReader dbReader;
@@ -2813,200 +2872,226 @@ namespace Easy_DnD_Character_Creator
 
             DBConnection.Close();
 
-            outputSpell = new Spell();
             return outputSpell;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        bool DataManager::hasExtraRaceSpells(QString subrace, int level)
+        /// <summary>
+        /// checks, if the selected subrace gains extra spells
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="level">current level</param>
+        public bool hasExtraRaceSpells(string subrace, int level)
         {
-            QSqlQuery query(db);
-            QString querystring = "SELECT * FROM extraRaceSpells "
+            bool hasExtraRaceSpells = false;
+            
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM extraRaceSpells " +
+                                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
+                                  "WHERE races.subrace =\"";
+            dbQuery.CommandText += subrace;
+            dbQuery.CommandText += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
 
-
-                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-
-
-                          "WHERE races.subrace=\"";
-            querystring += subrace;
-            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
             {
-                if (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    return true;
+                    hasExtraRaceSpells = true;
                 }
             }
 
-            return false;
+            DBConnection.Close();
+
+            return hasExtraRaceSpells;
         }
 
-        bool DataManager::hasExtraSubclassSpells(QString subclassName, int level)
+        /// <summary>
+        /// checks, if the selected subrace gains extra spells
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
+        public bool hasExtraSubclassSpells(string subclass, int level)
         {
-            QSqlQuery query(db);
-            QString querystring = "SELECT * FROM extraSubclassSpells "
+            bool hasExtraSubclassSpells = false;
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM extraSubclassSpells " +
+                                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
 
-                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-
-
-                          "WHERE subclasses.name=\"";
-            querystring += subclassName;
-            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
             {
-                if (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    return true;
+                    hasExtraSubclassSpells = true;
                 }
             }
 
-            return false;
+            DBConnection.Close();
+
+            return hasExtraSubclassSpells;
         }
 
-        QVector<Spell>* DataManager::getExtraRaceSpells(QString subrace, int level)
+        /// <summary>
+        /// gets a list of spells that are gained through the chosen subrace
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="level">current level</param>
+        public List<Spell> getExtraRaceSpells(string subrace, int level)
         {
-            QVector<Spell>* extraRaceSpells = new QVector<Spell>();
+            List<Spell> extraRaceSpells = new List<Spell>();
 
-            QSqlQuery query(db);
-            QString querystring = "SELECT spells.* FROM extraRaceSpells "
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT spells.* FROM extraRaceSpells " +
+                                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
+                                  "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId " +
+                                  "WHERE races.subrace =\"";
+            dbQuery.CommandText += subrace;
+            dbQuery.CommandText += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
 
-
-                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-
-
-                          "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
-
-
-                          "WHERE races.subrace=\"";
-            querystring += subrace;
-            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
             {
-                while (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    extraRaceSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
+                    extraRaceSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10)));
                 }
             }
+
+            DBConnection.Close();
 
             return extraRaceSpells;
         }
 
-        QVector<Spell>* DataManager::getExtraSubclassSpells(QString subclassName, int level)
+        /// <summary>
+        /// gets a list of spells that are gained through the chosen subclass
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
+        public List<Spell> getExtraSubclassSpells(string subclass, int level)
         {
-            QVector<Spell>* extraSubclassSpells = new QVector<Spell>();
+            List<Spell> extraSubclassSpells = new List<Spell>();
 
-            QSqlQuery query(db);
-            QString querystring = "SELECT spells.* FROM extraSubclassSpells "
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT spells.* FROM extraSubclassSpells " +
+                                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
+                                  "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
 
-
-                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-
-
-                          "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
-
-
-                          "WHERE subclasses.name=\"";
-            querystring += subclassName;
-            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
             {
-                while (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    extraSubclassSpells->append(*new Spell(query.value(1).toString(), query.value(2).toBool(), query.value(3).toInt(), query.value(4).toString(), query.value(5).toString(), query.value(6).toString(), query.value(7).toString(), query.value(8).toString(), query.value(9).toString(), query.value(10).toString()));
+                    extraSubclassSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10)));
                 }
             }
+
+            DBConnection.Close();
 
             return extraSubclassSpells;
         }
 
-        bool DataManager::isExtraRaceSpell(QString subrace, int level, QString spell)
+        /// <summary>
+        /// checks, if a given spell was gained through choice of subrace
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="level">current level</param>
+        /// <param name="spellName">name of the spell to checl</param>
+        public bool isExtraRaceSpell(string subrace, int level, string spellName)
         {
-            QSqlQuery query(db);
-            QString querystring = "SELECT spells.name FROM extraRaceSpells "
+            bool isExtraRaceSpell = false;
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT spells.name FROM extraRaceSpells " +
+                                  "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
+                                  "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId " +
+                                  "WHERE races.subrace=\"";
+            dbQuery.CommandText += subrace;
+            dbQuery.CommandText += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+            dbQuery.CommandText += " AND spells.name=\"";
+            dbQuery.CommandText += spellName;
+            dbQuery.CommandText += "\"";
 
-                          "INNER JOIN races ON extraRaceSpells.raceId=races.raceid "
-
-
-                          "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId "
-
-
-                          "WHERE races.subrace=\"";
-            querystring += subrace;
-            querystring += "\" AND extraRaceSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-            querystring += " AND spells.name=\"";
-            querystring += spell;
-            querystring += "\"";
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
             {
-                if (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    return true;
+                    isExtraRaceSpell = true;
                 }
             }
 
-            return false;
+            DBConnection.Close();
 
+            return isExtraRaceSpell;
         }
 
-        bool DataManager::isExtraSubclassSpell(QString subclassName, int level, QString spell)
+        /// <summary>
+        /// checks, if a given spell was gained through the choice of subclass
+        /// </summary>
+        /// <param name="subclass">given subclass</param>
+        /// <param name="level">current level</param>
+        /// <param name="spellName">name of spell to check</param>
+        public bool isExtraSubclassSpell(string subclass, int level, string spellName)
         {
-            QSqlQuery query(db);
-            QString querystring = "SELECT spells.* FROM extraSubclassSpells "
+            bool isExtraSubclassSpell = false;
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT spells.* FROM extraSubclassSpells " +
+                                  "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
+                                  "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+            dbQuery.CommandText += " AND spells.name=\"";
+            dbQuery.CommandText += spellName;
+            dbQuery.CommandText += "\"";
 
-                          "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId "
-
-
-                          "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId "
-
-
-                          "WHERE subclasses.name=\"";
-            querystring += subclassName;
-            querystring += "\" AND extraSubclassSpells.level BETWEEN 1 AND ";
-            querystring += QString::number(level);
-            querystring += " AND spells.name=\"";
-            querystring += spell;
-            querystring += "\"";
-
-            if (query.exec(querystring))
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
             {
-                if (query.next())
+                if (!dbReader.IsDBNull(0))
                 {
-                    return true;
+                    isExtraSubclassSpell = true;
                 }
             }
 
-            return false;
+            DBConnection.Close();
 
+            return isExtraSubclassSpell;
         }
+
+
 
 
 

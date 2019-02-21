@@ -54,7 +54,14 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.skillEquipment:
-                    CurrentState = WizardState.spells;
+                    if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    {
+                        CurrentState = WizardState.spells;
+                    }
+                    else
+                    {
+                        //TO DO
+                    }
                     break;
                 case WizardState.spells:
                     break;
@@ -154,6 +161,7 @@ namespace Easy_DnD_Character_Creator
                     headerOutput = "Skills && Equipment";
                     break;
                 case WizardState.spells:
+                    headerOutput = "Spells";
                     break;
                 case WizardState.extraChoices:
                     break;
@@ -197,6 +205,7 @@ namespace Easy_DnD_Character_Creator
                     descriptionOutput = "Please choose your starting equipment and which skills your character is proficient in.";
                     break;
                 case WizardState.spells:
+                    descriptionOutput = "Please choose your spells.";
                     break;
                 case WizardState.extraChoices:
                     break;
@@ -226,7 +235,7 @@ namespace Easy_DnD_Character_Creator
                 FirstPage = false;
             }
 
-            if (CurrentState == WizardState.spells)
+            if (CurrentState == WizardState.story)
             {
                 LastPage = true;
             }

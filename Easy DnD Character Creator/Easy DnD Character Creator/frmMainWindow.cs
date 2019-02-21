@@ -52,7 +52,7 @@ namespace Easy_DnD_Character_Creator
             skillComponent.SkillChosen += new EventHandler(skillComponent_SkillChosen);
             equipmentComponent = new EquipmentControl(WM);
             equipmentComponent.EquipmentSelectionChanged += new EventHandler(equipmentComponent_EquipmentSelectionChanged);
-            spellComponent = new SpellControl();
+            spellComponent = new SpellControl(WM);
 
             InitializeComponent();
             refreshWindow();
@@ -116,6 +116,7 @@ namespace Easy_DnD_Character_Creator
                     break;
                 case WizardState.spells:
                     contentFlowPanel.Controls.Add(spellComponent);
+                    spellComponent.populateForm();
                     break;
                 case WizardState.extraChoices:
                     break;
@@ -194,6 +195,7 @@ namespace Easy_DnD_Character_Creator
                                 }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.spells:
+                        missingElements = spellComponent.getInvalidElements();
                         break;
                     case WizardState.extraChoices:
                         break;
@@ -239,6 +241,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = skillComponent.isValid() && equipmentComponent.isValid();
                     break;
                 case WizardState.spells:
+                    isValid = spellComponent.isValid();
                     break;
                 case WizardState.extraChoices:
                     break;
@@ -311,6 +314,7 @@ namespace Easy_DnD_Character_Creator
                     equipmentComponent.saveContent();
                     break;
                 case WizardState.spells:
+                    spellComponent.saveContent();
                     break;
                 case WizardState.extraChoices:
                     break;
