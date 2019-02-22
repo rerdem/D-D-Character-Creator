@@ -53,6 +53,7 @@ namespace Easy_DnD_Character_Creator
             equipmentComponent = new EquipmentControl(WM);
             equipmentComponent.EquipmentSelectionChanged += new EventHandler(equipmentComponent_EquipmentSelectionChanged);
             spellComponent = new SpellControl(WM);
+            spellComponent.SpellChosen += new EventHandler(spellComponent_SpellChosen);
 
             InitializeComponent();
             refreshWindow();
@@ -412,6 +413,16 @@ namespace Easy_DnD_Character_Creator
         void equipmentComponent_EquipmentSelectionChanged(object sender, EventArgs e)
         {
             EquipmentControl incoming = sender as EquipmentControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        private void spellComponent_SpellChosen(object sender, EventArgs e)
+        {
+            SpellControl incoming = sender as SpellControl;
             if (incoming != null)
             {
                 refreshButtons();

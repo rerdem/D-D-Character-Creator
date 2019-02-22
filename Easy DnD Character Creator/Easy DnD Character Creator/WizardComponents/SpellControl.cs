@@ -15,13 +15,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private string lastCharacterInfo; //subrace, class, subclass, level
+        private int lastWisdom;
+
         private int CantripsKnown { get; set; }
         private int SpellsKnown { get; set; }
+
+        public event EventHandler SpellChosen;
 
         public SpellControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             visited = false;
+
+            lastCharacterInfo = "";
+            lastWisdom = 0;
 
             CantripsKnown = 0;
             SpellsKnown = 0;
@@ -43,7 +51,23 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public string getInvalidElements()
         {
-            return "";
+            string output = "";
+
+            if (chosenCantrips.Items.Count != CantripsKnown)
+            {
+                output += $"select {CantripsKnown - chosenCantrips.Items.Count} more cantrip(s)";
+            }
+
+            if (chosenSpells.Items.Count != SpellsKnown)
+            {
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+                output += $"select {SpellsKnown - chosenSpells.Items.Count} more spell(s)";
+            }
+
+            return output;
         }
 
         public bool isValid()
@@ -55,6 +79,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             resetSpells();
 
+            if ((visited) && (!hasCharacterInfoChanged()) && (!hasWisdomChanged()))
+            {
+                loadChosenSpells();
+            }
+
+            setCharacterInfo();
+            setLastWisdom();
 
             if (!visited)
             {
@@ -64,7 +95,27 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            
+            wm.Choices.Spells = "";
+
+            //save cantrips
+            foreach (var spell in chosenCantrips.Items)
+            {
+                if (!string.IsNullOrEmpty(wm.Choices.Spells))
+                {
+                    wm.Choices.Spells += ",";
+                }
+                wm.Choices.Spells += spell.ToString(); ;
+            }
+
+            //save spells
+            foreach (var spell in chosenSpells.Items)
+            {
+                if (!string.IsNullOrEmpty(wm.Choices.Spells))
+                {
+                    wm.Choices.Spells += ",";
+                }
+                wm.Choices.Spells += spell.ToString(); ;
+            }
         }
 
         private void resetSpells()
@@ -168,9 +219,66 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             manageButtonClickability();
         }
 
+        private void loadChosenSpells()
+        {
+            //populate lists
+            //begin updates
+            availableCantrips.BeginUpdate();
+            chosenCantrips.BeginUpdate();
+
+            availableSpells.BeginUpdate();
+            chosenSpells.BeginUpdate();
+
+            //load cantrips
+            for (int i = availableCantrips.Items.Count - 1; i >= 0; i--)
+            {
+                if (wm.Choices.Spells.Contains(availableCantrips.Items[i].ToString()))
+                {
+                    chosenCantrips.Items.Add(availableCantrips.Items[i].ToString());
+                    availableCantrips.Items.RemoveAt(i);
+                }
+            }
+
+            //load spells
+            for (int i = availableSpells.Items.Count - 1; i >= 0; i--)
+            {
+                if (wm.Choices.Spells.Contains(availableSpells.Items[i].ToString()))
+                {
+                    chosenSpells.Items.Add(availableSpells.Items[i].ToString());
+                    availableSpells.Items.RemoveAt(i);
+                }
+            }
+
+            //end updates
+            availableCantrips.EndUpdate();
+            chosenCantrips.EndUpdate();
+
+            availableSpells.EndUpdate();
+            chosenSpells.EndUpdate();
+
+            //reset arrow buttons
+            manageButtonClickability();
+        }
+
         private void manageButtonClickability()
         {
+            if (chosenCantrips.Items.Count < CantripsKnown)
+            {
+                cantripAddButton.Enabled = true;
+            }
+            else
+            {
+                cantripAddButton.Enabled = false;
+            }
 
+            if (chosenSpells.Items.Count < SpellsKnown)
+            {
+                spellAddButton.Enabled = true;
+            }
+            else
+            {
+                spellAddButton.Enabled = false;
+            }
         }
 
         private string formatSpellDescription(Spell spell)
@@ -215,44 +323,128 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             return output;
         }
 
+        private void setCharacterInfo()
+        {
+            lastCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+        }
+
+        private bool hasCharacterInfoChanged()
+        {
+            string currentCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+            return (currentCharacterInfo != lastCharacterInfo);
+        }
+
+        private void setLastWisdom()
+        {
+            lastWisdom = wm.Choices.Wisdom.getTotalValue();
+        }
+
+        private bool hasWisdomChanged()
+        {
+            return (wm.Choices.Wisdom.getTotalValue() != lastWisdom);
+        }
+
         private void cantripAddButton_Click(object sender, EventArgs e)
         {
+            if (chosenCantrips.Items.Count < CantripsKnown)
+            {
+                if (availableCantrips.SelectedItems.Count > 0)
+                {
+                    chosenCantrips.Items.Add(availableCantrips.SelectedItem);
+                    availableCantrips.Items.Remove(availableCantrips.SelectedItem);
 
+                    OnSpellChosen(null);
+                }
+            }
+            manageButtonClickability();
         }
 
         private void cantripRemoveButton_Click(object sender, EventArgs e)
         {
+            if (chosenCantrips.SelectedItems.Count > 0)
+            {
+                if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())) 
+                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())))
+                {
+                    availableCantrips.Items.Add(chosenCantrips.SelectedItem);
+                    chosenCantrips.Items.Remove(chosenCantrips.SelectedItem);
 
+                    OnSpellChosen(null);
+                }
+            }
+            manageButtonClickability();
         }
 
         private void spellAddButton_Click(object sender, EventArgs e)
         {
+            if (chosenSpells.Items.Count < SpellsKnown)
+            {
+                if (availableSpells.SelectedItems.Count > 0)
+                {
+                    chosenSpells.Items.Add(availableSpells.SelectedItem);
+                    availableSpells.Items.Remove(availableSpells.SelectedItem);
 
+                    OnSpellChosen(null);
+                }
+            }
+            manageButtonClickability();
         }
 
         private void spellRemoveButton_Click(object sender, EventArgs e)
         {
+            if (chosenSpells.SelectedItems.Count > 0)
+            {
+                if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenSpells.SelectedItem.ToString()))
+                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenSpells.SelectedItem.ToString())))
+                {
+                    availableSpells.Items.Add(chosenSpells.SelectedItem);
+                    chosenSpells.Items.Remove(chosenSpells.SelectedItem);
 
+                    OnSpellChosen(null);
+                }
+            }
+            manageButtonClickability();
         }
 
         private void availableCantrips_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableCantrips.SelectedItem.ToString()));
+            if (availableCantrips.SelectedItems.Count > 0)
+            {
+                cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableCantrips.SelectedItem.ToString()));
+            }
         }
 
         private void chosenCantrips_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenCantrips.SelectedItem.ToString()));
+            if (chosenCantrips.SelectedItems.Count > 0)
+            {
+                cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenCantrips.SelectedItem.ToString()));
+            }
         }
 
         private void availableSpells_SelectedIndexChanged(object sender, EventArgs e)
         {
-            spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableSpells.SelectedItem.ToString()));
+            if (availableSpells.SelectedItems.Count > 0)
+            {
+                spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableSpells.SelectedItem.ToString()));
+            }
         }
 
         private void chosenSpells_SelectedIndexChanged(object sender, EventArgs e)
         {
-            spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenSpells.SelectedItem.ToString()));
+            if (chosenSpells.SelectedItems.Count > 0)
+            {
+                spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenSpells.SelectedItem.ToString()));
+            }
+        }
+
+        protected virtual void OnSpellChosen(EventArgs e)
+        {
+            EventHandler handler = SpellChosen;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }

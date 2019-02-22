@@ -67,6 +67,9 @@ namespace Easy_DnD_Character_Creator
         public string Equipment4 { get; set; }
         public string Equipment5 { get; set; }
 
+        //SpellControl
+        public string Spells { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -115,6 +118,8 @@ namespace Easy_DnD_Character_Creator
             Equipment3 = "";
             Equipment4 = "";
             Equipment5 = "";
+
+            Spells = "";
         }
     }
 }

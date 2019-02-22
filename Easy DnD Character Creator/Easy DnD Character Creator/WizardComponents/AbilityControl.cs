@@ -22,6 +22,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private Label[] abilityScores;
 
         private int LastPreset { get; set; }
+        private int LastLevel { get; set; }
         private int SubraceBonusCounter { get; set; }
 
         public event EventHandler AbilityAssigned;
@@ -35,6 +36,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             toolTips = new ToolTip();
             
             LastPreset = 0;
+            LastLevel = 0;
             SubraceBonusCounter = 0;
 
             InitializeComponent();
@@ -252,6 +254,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     if ((score.Text == wm.Choices.Constitution.BaseValue.ToString()) && (score.Parent == abilityScoreHoldingLayout))
                     {
                         score.Parent = conDropzone;
+                        if (hasLevelChanged())
+                        {
+                            calculateHealth();
+                            LastLevel = wm.Choices.Level;
+                        }
                         break;
                     }
                 }
@@ -801,6 +808,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             return (wm.Choices.Preset != LastPreset);
         }
 
+        private bool hasLevelChanged()
+        {
+            return (wm.Choices.Level != LastLevel);
+        }
+
         private void toggleScoreBonusChoices()
         {
             if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
@@ -1119,6 +1131,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void rerollButton_Click(object sender, EventArgs e)
         {
             rerollLowAbilityScores();
+            refreshResults();
+            calculateHealth();
         }        
     }
 }

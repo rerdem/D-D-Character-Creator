@@ -16,7 +16,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
-        private string lastCharacterInfo;
+        private string lastCharacterInfo; //subrace, class, subclass, background
 
         private ToolTip toolTips;
         private List<CheckBox> skillBoxes;
