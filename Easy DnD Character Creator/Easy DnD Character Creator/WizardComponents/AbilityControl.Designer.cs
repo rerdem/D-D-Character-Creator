@@ -613,6 +613,7 @@
             this.abilityScore1.TabIndex = 1;
             this.abilityScore1.Text = "11";
             this.abilityScore1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore1.DoubleClick += new System.EventHandler(this.abilityScore1_DoubleClick);
             this.abilityScore1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore1_MouseDown);
             // 
             // abilityScore2
@@ -626,6 +627,7 @@
             this.abilityScore2.TabIndex = 2;
             this.abilityScore2.Text = "22";
             this.abilityScore2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore2.DoubleClick += new System.EventHandler(this.abilityScore2_DoubleClick);
             this.abilityScore2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore2_MouseDown);
             // 
             // abilityScore3
@@ -639,6 +641,7 @@
             this.abilityScore3.TabIndex = 3;
             this.abilityScore3.Text = "33";
             this.abilityScore3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore3.DoubleClick += new System.EventHandler(this.abilityScore3_DoubleClick);
             this.abilityScore3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore3_MouseDown);
             // 
             // abilityScore4
@@ -652,6 +655,7 @@
             this.abilityScore4.TabIndex = 4;
             this.abilityScore4.Text = "44";
             this.abilityScore4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore4.DoubleClick += new System.EventHandler(this.abilityScore4_DoubleClick);
             this.abilityScore4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore4_MouseDown);
             // 
             // abilityScore5
@@ -665,6 +669,7 @@
             this.abilityScore5.TabIndex = 5;
             this.abilityScore5.Text = "55";
             this.abilityScore5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore5.DoubleClick += new System.EventHandler(this.abilityScore5_DoubleClick);
             this.abilityScore5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore5_MouseDown);
             // 
             // abilityScore6
@@ -678,6 +683,7 @@
             this.abilityScore6.TabIndex = 6;
             this.abilityScore6.Text = "66";
             this.abilityScore6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.abilityScore6.DoubleClick += new System.EventHandler(this.abilityScore6_DoubleClick);
             this.abilityScore6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.abilityScore6_MouseDown);
             // 
             // rerollButton

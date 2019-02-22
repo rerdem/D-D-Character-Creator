@@ -20,6 +20,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private CheckBox[] bonusCheckBoxes;
         private Label[] abilityScores;
+        private FlowLayoutPanel[] dropzones;
 
         private int LastPreset { get; set; }
         private int LastLevel { get; set; }
@@ -903,6 +904,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             abilityScores[3] = abilityScore4;
             abilityScores[4] = abilityScore5;
             abilityScores[5] = abilityScore6;
+
+            dropzones = new FlowLayoutPanel[6];
+            dropzones[0] = strDropzone;
+            dropzones[1] = dexDropzone;
+            dropzones[2] = conDropzone;
+            dropzones[3] = intDropzone;
+            dropzones[4] = wisDropzone;
+            dropzones[5] = chaDropzone;
         }
 
         private void resetAbilityAssignments()
@@ -968,32 +977,50 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void abilityScore1_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore1.DoDragDrop(abilityScore1, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore1.DoDragDrop(abilityScore1, DragDropEffects.Move);
+            }
         }
 
         private void abilityScore2_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore2.DoDragDrop(abilityScore2, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore2.DoDragDrop(abilityScore2, DragDropEffects.Move);
+            }
         }
 
         private void abilityScore3_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore3.DoDragDrop(abilityScore3, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore3.DoDragDrop(abilityScore3, DragDropEffects.Move);
+            }
         }
 
         private void abilityScore4_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore4.DoDragDrop(abilityScore4, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore4.DoDragDrop(abilityScore4, DragDropEffects.Move);
+            }
         }
 
         private void abilityScore5_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore5.DoDragDrop(abilityScore5, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore5.DoDragDrop(abilityScore5, DragDropEffects.Move);
+            }
         }
 
         private void abilityScore6_MouseDown(object sender, MouseEventArgs e)
         {
-            abilityScore6.DoDragDrop(abilityScore6, DragDropEffects.Move);
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                abilityScore6.DoDragDrop(abilityScore6, DragDropEffects.Move);
+            }
         }
 
         protected virtual void OnAbilityAssigned(EventArgs e)
@@ -1133,6 +1160,240 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             rerollLowAbilityScores();
             refreshResults();
             calculateHealth();
-        }        
+        }
+
+        private void abilityScore1_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore1.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore1.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore1.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void abilityScore2_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore2.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore2.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore2.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void abilityScore3_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore3.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore3.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore3.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void abilityScore4_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore4.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore4.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore4.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void abilityScore5_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore5.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore5.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore5.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void abilityScore6_DoubleClick(object sender, EventArgs e)
+        {
+            if (abilityScore6.Parent != abilityScoreHoldingLayout)
+            {
+                abilityScore6.Parent = abilityScoreHoldingLayout;
+            }
+            else
+            {
+                foreach (FlowLayoutPanel dropzone in dropzones)
+                {
+                    bool isEmpty = true;
+
+                    foreach (Control control in dropzone.Controls)
+                    {
+                        if (control is Label)
+                        {
+                            isEmpty = false;
+                            break;
+                        }
+                    }
+
+                    if (isEmpty)
+                    {
+                        abilityScore6.Parent = dropzone;
+
+                        refreshResults();
+
+                        if (dropzone.Name == "conDropzone")
+                        {
+                            calculateHealth();
+                        }
+
+                        OnAbilityAssigned(null);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
