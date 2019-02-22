@@ -1,19 +1,26 @@
+High Elf bonus Cantrip
+Fighter Fighting Style
+Ranger Favored Enemy/Terrain
+Rogue Expertise
+Draconic Bloodline Ancestry
+Knowledge Domain Double Proficiency
+Nature Domain extra skills
+
 Subclass choices to separate page:
 
-
 Barbarian:
-	Level 2:
+	XLevel 2:
 		Features: Reckless Attack, Danger Sense
 
 	Level 3:
 		Subclass:
-		Berserker Feature: Frenzy
+		XBerserker Feature: Frenzy
 		!!Totem Warrior: Bonus Spells: Beast Sense, Speak with animals as rituals only
 							Totem Spirit Choice: Bear Eagle Wolf
 					
 Bard:
-	Level 2:
-		Features: Jack of all trades, Song of Rest
+	XLevel 2:
+		Features: (!)Jack of all trades, Song of Rest
 	
 	Level 3:
 		!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
@@ -22,11 +29,11 @@ Bard:
 			cutting words
 		Valor: medium armor, shields, martial weapons, Combat Inspiration
 
-Cleric:
-	Level 2:
+XCleric:
+	XLevel 2:
 		Channel Divinity -> Turn Undead + Domain specific
 	
-	Level 3:
+	XLevel 3:
 		Domain spells
 
 Druid:
@@ -37,21 +44,21 @@ Druid:
 	!!!Land: +1 Cantrip
 		Natural Recovery
 		Choose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
-	Moon: Combat Wild Shape
+	XMoon: Combat Wild Shape
 		Circle Forms
 	
 Fighter:
-	Level 2:
+	XLevel 2:
 		Feature: Action Surge
 	
 	Level 3:
 		Subclass:
-		Chamption:
+		XChamption:
 			Improved Critical
 		!!Battlemaster:
 			+1 artisan's tool proficiency (student of War)
 			combat maneuvers
-		!!Eldritch Knight:
+		X!!Eldritch Knight:
 			weapon bond
 			Spellcasting: -> wizard list, intelligence
 				2 cantrips (+1 lvl 10)
@@ -59,7 +66,7 @@ Fighter:
 					alle zusätzlichen spells müssen abj oder evo sein außer lvl 8, 14, 20
 
 Monk:
-	Level 2:
+	XLevel 2:
 		Ki, 3 ki features, Unarmored Movement
 	
 	Level 3:
@@ -76,16 +83,16 @@ Monk:
 Paladin:
 	Level 2:
 		!!Fighting style
-		!!Spellcasting:
-			spells known: cha mod + half pala level rounded down
+		X!!Spellcasting:
+			spells known all
 			spell ability cha: 8 + prof + cha mod
-		Divine Smite
+		XDivine Smite
 		
-	Level 3:
-		Divine Health
+	XLevel 3:
+		XDivine Health
 		Subclass:
-		!Oath spells
-		!Channel Divinity oath-specific
+		XOath spells
+		XChannel Divinity oath-specific
 
 Ranger:
 	Level 2:
@@ -95,7 +102,7 @@ Ranger:
 			spell ability wis
 			
 	Level 3:
-		Primeval Awareness
+		XPrimeval Awareness
 		Subclass:
 			!!Hunter: Hunter's Prey
 			!!Beast Master: Ranger's Companion
@@ -106,12 +113,12 @@ Rogue:
 		
 	Level 3:
 		Subclass:
-		Thief:
+		XThief:
 			Fast Hands, Second-Story Work
 		Assassin:
 			extra proficiency: disguise kit, poisoner's kit
 			Assassinate
-		Arcane Trickster:
+		XArcane Trickster:
 			!!Spellcasting -> Wizard list
 				2 cantrips (+1 lvl 10) + mage hand
 				3 spells (davon 2 enchantment oder illusion)

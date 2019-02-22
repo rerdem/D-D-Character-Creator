@@ -2672,7 +2672,10 @@ namespace Easy_DnD_Character_Creator
             dbReader = dbQuery.ExecuteReader();
             if (dbReader.Read())
             {
-                classSpellsKnownStatic = dbReader.GetBoolean(0);
+                if (!dbReader.IsDBNull(0))
+                {
+                    classSpellsKnownStatic = dbReader.GetBoolean(0);
+                }
             }
 
             if (subclass != "---")
@@ -3091,7 +3094,103 @@ namespace Easy_DnD_Character_Creator
             return isExtraSubclassSpell;
         }
 
+        /// <summary>
+        /// checks, if the given subclass has limitations on which spell school to choose from
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        public bool hasSubclassSpellSchoolLimitations(string subclass)
+        {
+            bool hasSubclassSpellSchoolLimitations = false;
 
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT school FROM subclassSpellSchoolLimitations " +
+                                  "INNER JOIN subclasses ON subclasses.subclassId = subclassSpellSchoolLimitations.subclassId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            if (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    hasSubclassSpellSchoolLimitations = true;
+                }
+            }
+
+            DBConnection.Close();
+
+            return hasSubclassSpellSchoolLimitations;
+        }
+
+        /// <summary>
+        /// gets a list of spell schools the given subclass is restricted to
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        public List<string> getSubclassSpellSchoolLimitations(string subclass)
+        {
+            List<string> subclassSpellSchoolLimitations = new List<string>();
+            
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT school FROM subclassSpellSchoolLimitations " +
+                                  "INNER JOIN subclasses ON subclasses.subclassId = subclassSpellSchoolLimitations.subclassId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\"";
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    subclassSpellSchoolLimitations.Add(dbReader.GetString(0));
+                }
+            }
+
+            DBConnection.Close();
+
+            return subclassSpellSchoolLimitations;
+        }
+
+        /// <summary>
+        /// gets the number of exceptions from the spell school limitations dependend on level
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="level">current level</param>
+        public int getSubclassSpellSchoolLimitationExceptions(string subclass, int level)
+        {
+            int exceptions = 0;
+
+            DBConnection.Open();
+            SQLiteDataReader dbReader;
+            SQLiteCommand dbQuery;
+            dbQuery = DBConnection.CreateCommand();
+            dbQuery.CommandText = "SELECT * FROM subclassSpellSchoolLimitationExceptions " +
+                                  "INNER JOIN subclasses ON subclasses.subclassId=subclassSpellSchoolLimitationExceptions.subclassId " +
+                                  "WHERE subclasses.name=\"";
+            dbQuery.CommandText += subclass;
+            dbQuery.CommandText += "\" AND subclassSpellSchoolLimitationExceptions.level BETWEEN 1 AND ";
+            dbQuery.CommandText += level.ToString();
+
+            dbReader = dbQuery.ExecuteReader();
+            while (dbReader.Read())
+            {
+                if (!dbReader.IsDBNull(0))
+                {
+                    exceptions++;
+                }
+            }
+
+            DBConnection.Close();
+
+            return exceptions;
+        }
 
 
 

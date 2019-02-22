@@ -67,12 +67,61 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += $"select {SpellsKnown - chosenSpells.Items.Count} more spell(s)";
             }
 
+            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            {
+                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+                int exceptionCounter = 0;
+
+                foreach (string item in chosenSpells.Items)
+                {
+                    Spell spell = wm.DBManager.getSpell(item);
+                    if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
+                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
+                    && (!limitations.Contains(spell.School)))
+                    {
+                        exceptionCounter++;
+                    }
+                }
+
+                if (exceptions < exceptionCounter)
+                {
+                    if (!string.IsNullOrEmpty(output))
+                    {
+                        output += ", ";
+                    }
+                    output += $"select {exceptionCounter - exceptions} fewer spell(s) outside of your spell school limitations";
+                }
+            }
+
             return output;
         }
 
         public bool isValid()
         {
-            return ((chosenCantrips.Items.Count == CantripsKnown) && (chosenSpells.Items.Count == SpellsKnown));
+            bool isValid = ((chosenCantrips.Items.Count == CantripsKnown) && (chosenSpells.Items.Count == SpellsKnown));
+
+            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            {
+                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+                int exceptionCounter = 0;
+
+                foreach (string item in chosenSpells.Items)
+                {
+                    Spell spell = wm.DBManager.getSpell(item);
+                    if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
+                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
+                    && (!limitations.Contains(spell.School)))
+                    {
+                        exceptionCounter++;
+                    }
+                }
+
+                isValid = isValid && (exceptions >= exceptionCounter);
+            }
+
+            return isValid;
         }
 
         public void populateForm()
@@ -141,6 +190,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             introLabel.Text = $"You have chosen a class that has the ability to cast spells. Please choose {CantripsKnown} cantrips and {SpellsKnown} spells " +
                               $"with the help of the arrow buttons below. You may have also gained spells from your choice of race or class. These spells " +
                               $"cannot be unlearned and do not count against the limits.";
+
+            //get possible spell school limitations and add to introLabel text
+            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            {
+                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+
+                introLabel.Text += $" With the exception of {exceptions} spell(s), you are limited to spells from these schools: {string.Join(", ", limitations.ToArray())}.";
+            }
 
             //clear and populate lists
             //populate extra race and class spells

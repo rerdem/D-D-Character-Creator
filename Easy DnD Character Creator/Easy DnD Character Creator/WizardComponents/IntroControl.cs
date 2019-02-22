@@ -153,7 +153,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             characterLevel.Location = new Point(3 + levelLabel.Width, 23);
             characterLevel.TextAlign = HorizontalAlignment.Center;
             characterLevel.Minimum = 1;
-            characterLevel.Maximum = 20;
+            characterLevel.Maximum = 3;
+            //characterLevel.Maximum = 20;
             characterLevel.Value = 1;
             characterLevel.ReadOnly = true;
             settingsBox.Controls.Add(characterLevel);

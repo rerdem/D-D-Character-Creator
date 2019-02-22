@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.spellBox = new System.Windows.Forms.GroupBox();
+            this.introLabel = new System.Windows.Forms.Label();
             this.spellLayout = new System.Windows.Forms.TableLayoutPanel();
             this.spellLabel = new System.Windows.Forms.Label();
             this.availableSpells = new System.Windows.Forms.ListBox();
@@ -43,7 +44,6 @@
             this.cantripAddButton = new System.Windows.Forms.Button();
             this.cantripRemoveButton = new System.Windows.Forms.Button();
             this.cantripDescriptionLabel = new System.Windows.Forms.Label();
-            this.introLabel = new System.Windows.Forms.Label();
             this.spellBox.SuspendLayout();
             this.spellLayout.SuspendLayout();
             this.cantripLayout.SuspendLayout();
@@ -60,6 +60,16 @@
             this.spellBox.TabIndex = 0;
             this.spellBox.TabStop = false;
             this.spellBox.Text = "Spells";
+            // 
+            // introLabel
+            // 
+            this.introLabel.AutoSize = true;
+            this.introLabel.Location = new System.Drawing.Point(6, 28);
+            this.introLabel.MaximumSize = new System.Drawing.Size(939, 40);
+            this.introLabel.Name = "introLabel";
+            this.introLabel.Size = new System.Drawing.Size(47, 13);
+            this.introLabel.TabIndex = 2;
+            this.introLabel.Text = "intro text";
             // 
             // spellLayout
             // 
@@ -101,6 +111,7 @@
             this.availableSpells.Name = "availableSpells";
             this.spellLayout.SetRowSpan(this.availableSpells, 2);
             this.availableSpells.Size = new System.Drawing.Size(145, 160);
+            this.availableSpells.Sorted = true;
             this.availableSpells.TabIndex = 1;
             this.availableSpells.SelectedIndexChanged += new System.EventHandler(this.availableSpells_SelectedIndexChanged);
             // 
@@ -111,6 +122,7 @@
             this.chosenSpells.Name = "chosenSpells";
             this.spellLayout.SetRowSpan(this.chosenSpells, 2);
             this.chosenSpells.Size = new System.Drawing.Size(145, 160);
+            this.chosenSpells.Sorted = true;
             this.chosenSpells.TabIndex = 2;
             this.chosenSpells.SelectedIndexChanged += new System.EventHandler(this.chosenSpells_SelectedIndexChanged);
             // 
@@ -190,6 +202,7 @@
             this.availableCantrips.Name = "availableCantrips";
             this.cantripLayout.SetRowSpan(this.availableCantrips, 2);
             this.availableCantrips.Size = new System.Drawing.Size(145, 160);
+            this.availableCantrips.Sorted = true;
             this.availableCantrips.TabIndex = 1;
             this.availableCantrips.SelectedIndexChanged += new System.EventHandler(this.availableCantrips_SelectedIndexChanged);
             // 
@@ -200,6 +213,7 @@
             this.chosenCantrips.Name = "chosenCantrips";
             this.cantripLayout.SetRowSpan(this.chosenCantrips, 2);
             this.chosenCantrips.Size = new System.Drawing.Size(145, 160);
+            this.chosenCantrips.Sorted = true;
             this.chosenCantrips.TabIndex = 2;
             this.chosenCantrips.SelectedIndexChanged += new System.EventHandler(this.chosenCantrips_SelectedIndexChanged);
             // 
@@ -238,16 +252,6 @@
             this.cantripDescriptionLabel.Size = new System.Drawing.Size(93, 13);
             this.cantripDescriptionLabel.TabIndex = 5;
             this.cantripDescriptionLabel.Text = "cantrip description";
-            // 
-            // introLabel
-            // 
-            this.introLabel.AutoSize = true;
-            this.introLabel.Location = new System.Drawing.Point(6, 28);
-            this.introLabel.MaximumSize = new System.Drawing.Size(939, 40);
-            this.introLabel.Name = "introLabel";
-            this.introLabel.Size = new System.Drawing.Size(47, 13);
-            this.introLabel.TabIndex = 2;
-            this.introLabel.Text = "intro text";
             // 
             // SpellControl
             // 
