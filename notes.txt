@@ -108,7 +108,7 @@ Ranger:
 			!!Beast Master: Ranger's Companion
 
 Rogue:
-	Level 2:
+	XLevel 2:
 		Cunning Action
 		
 	Level 3:
@@ -136,20 +136,20 @@ Sorcerer:
 			choose 2
 
 Warlock:
-	!expanded pact spells each level
+	X!expanded pact spells each level
 	Level 2:
 		!!Eldritch Invocations: choose 2
 		
 	Level 3:
 		!!Pact Boon: choose 1
 
-Wizard:
-	Level 2:
+XWizard:
+	XLevel 2:
 		Subclass:
 		each Savant
 		each has extra feature
 		!!Illusion:
 			minor illusion (if already learned, different cantrip), doesn't count to cantrips known, does more stuff
 			
-	Level 3:
+	XLevel 3:
 	
