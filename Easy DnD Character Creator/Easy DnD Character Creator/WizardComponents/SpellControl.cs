@@ -339,48 +339,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
-        private string formatSpellDescription(Spell spell)
-        {
-            //title
-            string output = spell.Name;
-            output += Environment.NewLine;
-
-            //level, school, ritual
-            output += "(Level ";
-            output += spell.Level.ToString();
-            output += " ";
-            output += spell.School;
-
-            if (spell.Ritual)
-            {
-                output += ", Ritual";
-            }
-
-            output += ")";
-            output += Environment.NewLine;
-
-            //casting time, range
-            output += "Casting Time: ";
-            output += spell.CastTime;
-            output += " | Range: ";
-            output += spell.Range;
-            output += Environment.NewLine;
-
-            //components, duration
-            output += "Components: ";
-            output += spell.Components;
-            output += " | Duration: ";
-            output += spell.Duration;
-            output += Environment.NewLine;
-
-            output += Environment.NewLine;
-
-            //description
-            output += spell.Description;
-
-            return output;
-        }
-
         private void setCharacterInfo()
         {
             lastCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
@@ -468,7 +426,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (availableCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(availableCantrips.SelectedItem.ToString()));
             }
         }
 
@@ -476,7 +434,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(chosenCantrips.SelectedItem.ToString()));
             }
         }
 
@@ -484,7 +442,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (availableSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(availableSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(availableSpells.SelectedItem.ToString()));
             }
         }
 
@@ -492,7 +450,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = formatSpellDescription(wm.DBManager.getSpell(chosenSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(chosenSpells.SelectedItem.ToString()));
             }
         }
 

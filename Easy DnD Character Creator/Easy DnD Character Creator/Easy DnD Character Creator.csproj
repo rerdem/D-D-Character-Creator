@@ -123,6 +123,12 @@
     <Compile Include="WizardComponents\EquipmentControl.Designer.cs">
       <DependentUpon>EquipmentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\ExtraRaceChoiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraRaceChoiceControl.Designer.cs">
+      <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\IWizardControl.cs" />
     <Compile Include="WizardComponents\IntroControl.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +162,7 @@
     <Compile Include="WizardComponents\SpellControl.Designer.cs">
       <DependentUpon>SpellControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\SpellFormatter.cs" />
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -192,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\EquipmentControl.resx">
       <DependentUpon>EquipmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraRaceChoiceControl.resx">
+      <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\LanguageControl.resx">
       <DependentUpon>LanguageControl.cs</DependentUpon>

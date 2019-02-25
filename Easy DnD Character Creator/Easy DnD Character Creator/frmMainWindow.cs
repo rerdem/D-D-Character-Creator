@@ -27,6 +27,7 @@ namespace Easy_DnD_Character_Creator
         private SkillControl skillComponent;
         private EquipmentControl equipmentComponent;
         private SpellControl spellComponent;
+        private ExtraRaceChoiceControl extraRaceChoiceComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -54,6 +55,7 @@ namespace Easy_DnD_Character_Creator
             equipmentComponent.EquipmentSelectionChanged += new EventHandler(equipmentComponent_EquipmentSelectionChanged);
             spellComponent = new SpellControl(WM);
             spellComponent.SpellChosen += new EventHandler(spellComponent_SpellChosen);
+            extraRaceChoiceComponent = new ExtraRaceChoiceControl(WM);
 
             InitializeComponent();
             refreshWindow();
@@ -119,7 +121,13 @@ namespace Easy_DnD_Character_Creator
                     contentFlowPanel.Controls.Add(spellComponent);
                     spellComponent.populateForm();
                     break;
-                case WizardState.extraChoices:
+                case WizardState.extraRaceChoices:
+                    contentFlowPanel.Controls.Add(extraRaceChoiceComponent);
+                    extraRaceChoiceComponent.populateForm();
+                    break;
+                case WizardState.extraClassChoices:
+                    break;
+                case WizardState.extraSubclassChoices:
                     break;
                 case WizardState.story:
                     break;
@@ -198,7 +206,12 @@ namespace Easy_DnD_Character_Creator
                     case WizardState.spells:
                         missingElements = spellComponent.getInvalidElements();
                         break;
-                    case WizardState.extraChoices:
+                    case WizardState.extraRaceChoices:
+                        missingElements = extraRaceChoiceComponent.getInvalidElements();
+                        break;
+                    case WizardState.extraClassChoices:
+                        break;
+                    case WizardState.extraSubclassChoices:
                         break;
                     case WizardState.story:
                         break;
@@ -244,7 +257,12 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.spells:
                     isValid = spellComponent.isValid();
                     break;
-                case WizardState.extraChoices:
+                case WizardState.extraRaceChoices:
+                    isValid = extraRaceChoiceComponent.isValid();
+                    break;
+                case WizardState.extraClassChoices:
+                    break;
+                case WizardState.extraSubclassChoices:
                     break;
                 case WizardState.story:
                     break;
@@ -317,7 +335,12 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.spells:
                     spellComponent.saveContent();
                     break;
-                case WizardState.extraChoices:
+                case WizardState.extraRaceChoices:
+                    extraRaceChoiceComponent.saveContent();
+                    break;
+                case WizardState.extraClassChoices:
+                    break;
+                case WizardState.extraSubclassChoices:
                     break;
                 case WizardState.story:
                     break;

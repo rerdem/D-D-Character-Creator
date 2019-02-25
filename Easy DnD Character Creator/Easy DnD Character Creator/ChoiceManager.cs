@@ -70,6 +70,9 @@ namespace Easy_DnD_Character_Creator
         //SpellControl
         public string Spells { get; set; }
 
+        //ExtraRaceChoiceControl
+        public string extraRaceChoice { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -120,6 +123,8 @@ namespace Easy_DnD_Character_Creator
             Equipment5 = "";
 
             Spells = "";
+
+            extraRaceChoice = "";
         }
     }
 }

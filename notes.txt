@@ -1,3 +1,10 @@
+sql params
+using blocks
+sql bib mit c' statt direkten statements
+virtual
+
+
+
 High Elf bonus Cantrip
 Fighter Fighting Style
 Ranger Favored Enemy/Terrain

@@ -3582,7 +3582,7 @@ namespace Easy_DnD_Character_Creator
         /// checks, if a given subrace may choose additional cantrips
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
-        public bool hasExtraCantripChoice(string subrace)
+        public bool hasExtraRaceCantripChoice(string subrace)
         {
             bool hasExtraCantripChoice = false;
 
@@ -3614,7 +3614,7 @@ namespace Easy_DnD_Character_Creator
         /// gets a list of the additional cantrips the given subrace may choose from
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
-        public List<string> getExtraCantripChoiceOptions(string subrace)
+        public List<string> getExtraRaceCantripChoiceOptions(string subrace)
         {
             List<string> cantripList = new List<string>();
 
@@ -3645,9 +3645,26 @@ namespace Easy_DnD_Character_Creator
             return cantripList;
         }
 
+        public string getExtraRaceChoiceIntroText(string subrace)
+        {
+            if (subrace == "High Elf")
+            {
+                return "As a High Elf, please choose a cantrip you know:";
+            }
+            
+            return "";
+        }
+        
+        
+        
+        /// <summary>
+        /// checks, if a given subrace has any additional choices to make
+        /// </summary>
+        /// <param name="subrace">given subrace</param>
         public bool hasExtraRaceChoices(string subrace)
         {
-            return hasExtraCantripChoice(subrace);
+            //currently the only possible race choice is an extra cantrip for High Elves
+            return hasExtraRaceCantripChoice(subrace);
         }
 
         public bool hasExtraClassChoices(string className, int level)
@@ -3655,9 +3672,14 @@ namespace Easy_DnD_Character_Creator
             return hasFavoredEnemy(className, level) || hasFavoredTerrain(className, level);
         }
 
+        public bool hasExtraSubclassChoices(string subclass, int level)
+        {
+            return true;
+        }
+
         public bool hasExtraChoices(string subrace, string className, string subclass, int level)
         {
-            return hasExtraRaceChoices(subrace) || hasExtraClassChoices(className, level);
+            return hasExtraRaceChoices(subrace) || hasExtraClassChoices(className, level) || hasExtraSubclassChoices(subclass, level);
         }
 
         //private void ReadData()
