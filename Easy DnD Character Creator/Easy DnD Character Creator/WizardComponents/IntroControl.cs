@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -194,7 +195,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            wm.DBManager.UsedBooks = getUsedBooks();
+            wm.DBManager.setUsedBooks(getUsedBooks());
             wm.Choices.Preset = getPreset();
             wm.Choices.Level = (int)characterLevel.Value;
             wm.Choices.AdjustStartingMoney = moneyCheckbox.Checked;
@@ -220,23 +221,39 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         /// <summary>
         /// returns selected books formatted for usage in SQLite queries
         /// </summary>
-        private string getUsedBooks()
+        //private string getUsedBooks()
+        //{
+        //    string usedBooks = "";
+        //    foreach (CheckBox checkBox in bookCheckBoxes)
+        //    {
+        //        if (checkBox.Checked)
+        //        {
+        //            if (usedBooks != "")
+        //            {
+        //                usedBooks += ", ";
+        //            }
+
+        //            usedBooks += "\"";
+        //            usedBooks += checkBox.Text;
+        //            usedBooks += "\"";
+        //        }
+        //    }
+
+        //    Console.WriteLine(usedBooks);
+        //    return usedBooks;
+        //}
+
+        private List<string> getUsedBooks()
         {
-            string usedBooks = "";
+            List<string> usedBooks = new List<string>();
             foreach (CheckBox checkBox in bookCheckBoxes)
             {
                 if (checkBox.Checked)
                 {
-                    if (usedBooks != "")
-                    {
-                        usedBooks += ", ";
-                    }
-
-                    usedBooks += "\"";
-                    usedBooks += checkBox.Text;
-                    usedBooks += "\"";
+                    usedBooks.Add(checkBox.Text);
                 }
             }
+
             return usedBooks;
         }
 

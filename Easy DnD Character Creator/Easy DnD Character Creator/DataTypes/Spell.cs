@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.DataTypes
 {
     public class Spell
     {

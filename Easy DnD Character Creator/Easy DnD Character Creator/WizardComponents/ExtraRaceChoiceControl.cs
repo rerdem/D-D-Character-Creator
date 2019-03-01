@@ -88,7 +88,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             //will need refactoring, when implementing other races with different choices
             if (wm.DBManager.hasExtraRaceCantripChoice(wm.Choices.Subrace))
             {
-                descriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(choiceList.SelectedItem.ToString()));
+                descriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(choiceList.SelectedItem.ToString()));
             }
         }
     }

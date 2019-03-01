@@ -64,7 +64,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Spell.cs" />
+    <Compile Include="DataManagement\SpellDataManager.cs" />
+    <Compile Include="DataTypes\Armor.cs" />
+    <Compile Include="DataManagement\AbilityDataManager.cs" />
+    <Compile Include="DataManagement\AppearanceDataManager.cs" />
+    <Compile Include="DataManagement\BackgroundDataManager.cs" />
+    <Compile Include="DataManagement\ClassDataManager.cs" />
+    <Compile Include="DataManagement\EquipmentDataManager.cs" />
+    <Compile Include="DataManagement\LanguageDataManager.cs" />
+    <Compile Include="DataManagement\RaceDataManager.cs" />
+    <Compile Include="DataManagement\SkillDataManager.cs" />
+    <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
+    <Compile Include="DataTypes\EquipmentItem.cs" />
+    <Compile Include="DataTypes\MultiItem.cs" />
+    <Compile Include="DataTypes\Pack.cs" />
+    <Compile Include="DataTypes\Spell.cs" />
+    <Compile Include="DataTypes\Tool.cs" />
+    <Compile Include="DataTypes\Weapon.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,7 +117,7 @@
     <Compile Include="WizardComponents\BodyControl.Designer.cs">
       <DependentUpon>BodyControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Book.cs" />
+    <Compile Include="DataTypes\Book.cs" />
     <Compile Include="ChoiceManager.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="frmMainWindow.cs">
@@ -116,13 +132,14 @@
     <Compile Include="WizardComponents\ClassControl.Designer.cs">
       <DependentUpon>ClassControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbilityScore.cs" />
+    <Compile Include="DataTypes\AbilityScore.cs" />
     <Compile Include="WizardComponents\EquipmentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="WizardComponents\EquipmentControl.Designer.cs">
       <DependentUpon>EquipmentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\EquipmentFormatter.cs" />
     <Compile Include="WizardComponents\ExtraRaceChoiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

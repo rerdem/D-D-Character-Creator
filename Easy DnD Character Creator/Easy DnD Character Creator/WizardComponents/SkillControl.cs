@@ -27,7 +27,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public SkillControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             toolTips = new ToolTip();
             skillBoxes = new List<CheckBox>();
             choiceBoxes = new List<CheckBox>();
@@ -64,21 +64,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (selectedBoxes != wm.DBManager.getClassSkillCount(wm.Choices.Class))
+            if (selectedBoxes != wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class))
             {
-                int missingSkills = wm.DBManager.getClassSkillCount(wm.Choices.Class) - selectedBoxes;
+                int missingSkills = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class) - selectedBoxes;
                 output += $"select {missingSkills} more skill(s)";
             }
 
-            if (wm.DBManager.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
             {
-                if (extraSkillBox.SelectedItems.Count != wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
                         output += ", ";
                     }
-                    int missingChoices = wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace) - extraSkillBox.SelectedItems.Count;
+                    int missingChoices = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace) - extraSkillBox.SelectedItems.Count;
                     output += $"select {missingChoices} more skill(s) from the list on the right side";
                 }
             }
@@ -98,23 +98,26 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
             {
-                if (extraSkillBox.SelectedItems.Count != wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
                 {
                     return false;
                 }
             }
 
-            return (selectedBoxes == wm.DBManager.getClassSkillCount(wm.Choices.Class));
+            return (selectedBoxes == wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class));
         }
 
         public void populateForm()
         {
-            //reset to default
-            resetSkillBoxes();
+            if ((!Visited) || hasCharacterInfoChanged())
+            {
+                //reset to default
+                resetSkillBoxes();
+            }
 
-            if ((visited) && !hasCharacterInfoChanged())
+            if ((Visited) && !hasCharacterInfoChanged())
             {
                 //fill in checkboxes
                 foreach (CheckBox box in skillBoxes)
@@ -131,7 +134,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 toggleChoiceBoxes();
 
                 // if applicable, fill in listbox
-                if (wm.DBManager.hasExtraSkillChoice(wm.Choices.Subrace))
+                if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
                 {
                     foreach (string skill in wm.Choices.ExtraSkills)
                     {
@@ -142,10 +145,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             setCharacterInfo();
 
-            if (!visited)
-            {
-                visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -161,7 +161,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
             {
                 foreach (object obj in extraSkillBox.SelectedItems)
                 {
@@ -195,7 +195,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (selectedBoxes >= wm.DBManager.getClassSkillCount(wm.Choices.Class))
+            if (selectedBoxes >= wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class))
             {
                 foreach (CheckBox box in choiceBoxes)
                 {
@@ -217,8 +217,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void resetSkillBoxes()
         {
             choiceBoxes.Clear();
-            List<string> knownSkills = wm.DBManager.getKnownSkills(wm.Choices.Subrace, wm.Choices.Background);
-            List<string> skillOptions = wm.DBManager.getClassSkillOptions(wm.Choices.Class);
+            List<string> knownSkills = wm.DBManager.SkillData.getKnownSkills(wm.Choices.Subrace, wm.Choices.Background);
+            List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.Class);
 
             foreach (CheckBox box in skillBoxes)
             {
@@ -240,9 +240,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
             {
-                int choiceAmount = wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace);
+                int choiceAmount = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace);
                 extraSkillLabel.Text= $"Please choose {choiceAmount} additional skill(s):";
                 extraSkillLayout.Visible = true;
             }
@@ -254,7 +254,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillSkillLayout()
         {
-            List<string> skills = wm.DBManager.getSkills();
+            List<string> skills = wm.DBManager.SkillData.getSkills();
             
             //create Checkboxes
             foreach (string skill in skills)
@@ -263,7 +263,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 box.Name = skill + "Box";
                 box.Text = skill;
                 box.CheckedChanged += skillBoxes_CheckedChanged;
-                string toolTipFormat = wm.DBManager.getSkillDescription(skill);
+                string toolTipFormat = wm.DBManager.SkillData.getSkillDescription(skill);
                 toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
                 toolTips.SetToolTip(box, toolTipFormat);
                 skillBoxes.Add(box);
@@ -306,9 +306,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void extraSkillBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (extraSkillBox.SelectedItems.Count > wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+            if (extraSkillBox.SelectedItems.Count > wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
             {
-                extraSkillBox.SelectedItems.Remove(extraSkillBox.SelectedItems[wm.DBManager.getExtraSkillChoiceAmount(wm.Choices.Subrace)]);
+                extraSkillBox.SelectedItems.Remove(extraSkillBox.SelectedItems[wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace)]);
             }
 
             OnSkillChosen(null);
@@ -322,7 +322,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             int itemIndex = extraSkillBox.IndexFromPoint(e.Location);
             if ((itemIndex >= 0) && (itemIndex < extraSkillBox.Items.Count))
             {
-                tooltip = wm.DBManager.getSkillDescription(extraSkillBox.Items[itemIndex].ToString());
+                tooltip = wm.DBManager.SkillData.getSkillDescription(extraSkillBox.Items[itemIndex].ToString());
                 tooltip = Regex.Replace(tooltip, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             }
 

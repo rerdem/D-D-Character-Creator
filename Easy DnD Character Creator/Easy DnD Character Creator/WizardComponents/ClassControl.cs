@@ -24,7 +24,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public ClassControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             ChoiceAmount = 0;
             InitializeComponent();
         }
@@ -50,7 +50,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += classBox.Text;
             }
 
-            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 if (extraChoiceBox.SelectedItems.Count != ChoiceAmount)
                 {
@@ -68,7 +68,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 return (classListBox.SelectedItems.Count > 0) 
                     && (subclassListBox.SelectedItems.Count > 0)
@@ -80,10 +80,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             fillClassListBox();
-            if (!Visited)
-            {
-                Visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -91,7 +88,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.Class = classListBox.SelectedItem.ToString();
             wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
 
-            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 string proficiencyString = "";
                 foreach (object obj in extraChoiceBox.SelectedItems)
@@ -112,7 +109,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillClassListBox()
         {
-            List<string> classList = wm.DBManager.getClasses();
+            List<string> classList = wm.DBManager.ClassData.getClasses();
 
             classListBox.BeginUpdate();
             classListBox.Items.Clear();
@@ -134,7 +131,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillSubclassListBox(string inputClass)
         {
-            List<string> subclassList = wm.DBManager.getSubclasses(inputClass, wm.Choices.Level);
+            List<string> subclassList = wm.DBManager.ClassData.getSubclasses(inputClass, wm.Choices.Level);
 
             subclassListBox.BeginUpdate();
             subclassListBox.Items.Clear();
@@ -156,7 +153,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillExtraChoiceBox(string classChoice)
         {
-            List<string> choiceList = wm.DBManager.getExtraClassProficiencies(classChoice);
+            List<string> choiceList = wm.DBManager.ClassData.getExtraClassProficiencies(classChoice);
 
             extraChoiceBox.BeginUpdate();
             extraChoiceBox.Items.Clear();
@@ -183,12 +180,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             fillSubclassListBox(classListBox.SelectedItem.ToString());
 
-            if (wm.DBManager.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
                 extraChoiceLayout.Visible = true;
 
-                ChoiceAmount = wm.DBManager.getExtraClassProficiencyAmount(classListBox.SelectedItem.ToString());
+                ChoiceAmount = wm.DBManager.ClassData.getExtraClassProficiencyAmount(classListBox.SelectedItem.ToString());
                 extraChoiceLabel.Text = extraChoiceLabel.Text.ToString().Replace(Regex.Match(extraChoiceLabel.Text, @"\d+").Value, ChoiceAmount.ToString());
                 if (ChoiceAmount > 1)
                 {
@@ -213,9 +210,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void subclassListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            descriptionLabel.Text = wm.DBManager.getClassDescription(classListBox.SelectedItem.ToString());
+            descriptionLabel.Text = wm.DBManager.ClassData.getClassDescription(classListBox.SelectedItem.ToString());
             descriptionLabel.Text += Environment.NewLine;
-            descriptionLabel.Text += wm.DBManager.getSubclassDescription(subclassListBox.SelectedItem.ToString());
+            descriptionLabel.Text += wm.DBManager.ClassData.getSubclassDescription(subclassListBox.SelectedItem.ToString());
 
             saveContent();
         }

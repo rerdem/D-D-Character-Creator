@@ -28,7 +28,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public LanguageControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
             initializeCheckboxes();
             initializeToolTips();
@@ -45,7 +45,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 visited = value;
             }
         }
-
 
         public string getInvalidElements()
         {
@@ -69,8 +68,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //number of maximum possible selected languages
-            int maximumLanguages = wm.DBManager.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
+            int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
 
             if (currentlySelectedLanguages != maximumLanguages)
             {
@@ -101,8 +100,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //number of maximum possible selected languages
-            int maximumLanguages = wm.DBManager.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
+            int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
 
             return (currentlySelectedLanguages == maximumLanguages);
         }
@@ -112,7 +111,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             resetAllBoxes();
             setDefaultLanguages();
 
-            if ((visited) && !hasCharacterInfoChanged())
+            if ((Visited) && !hasCharacterInfoChanged())
             {
                 foreach (CheckBox box in standardExoticBoxes)
                 {
@@ -125,10 +124,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             setCharacterInfo();
 
-            if (!visited)
-            {
-                visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -175,8 +171,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             
             //number of maximum possible selected languages
-            int maximumLanguages = wm.DBManager.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
+            int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.Subrace, wm.Choices.Class, wm.Choices.Subclass);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.Subrace, wm.Choices.Subclass, wm.Choices.Background);
             
             //change box status
             if (currentlySelectedLanguages >= maximumLanguages)
@@ -213,9 +209,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setDefaultLanguages()
         {
-            List<string> defaultLanguages = wm.DBManager.getDefaultRaceLanguages(wm.Choices.Subrace);
-            defaultLanguages.AddRange(wm.DBManager.getDefaultClassLanguages(wm.Choices.Class));
-            defaultLanguages.AddRange(wm.DBManager.getDefaultSubclassLanguages(wm.Choices.Subclass));
+            List<string> defaultLanguages = wm.DBManager.LanguageData.getDefaultRaceLanguages(wm.Choices.Subrace);
+            defaultLanguages.AddRange(wm.DBManager.LanguageData.getDefaultClassLanguages(wm.Choices.Class));
+            defaultLanguages.AddRange(wm.DBManager.LanguageData.getDefaultSubclassLanguages(wm.Choices.Subclass));
 
             foreach (CheckBox box in standardExoticBoxes)
             {
@@ -256,7 +252,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             classBoxes = new List<CheckBox>();
 
             //standard languages
-            List<string> standardLanguages = wm.DBManager.getLanguages("Standard");
+            List<string> standardLanguages = wm.DBManager.LanguageData.getLanguages("Standard");
 
             foreach (string language in standardLanguages)
             {
@@ -269,7 +265,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //exotic languages
-            List<string> exoticLanguages = wm.DBManager.getLanguages("Exotic");
+            List<string> exoticLanguages = wm.DBManager.LanguageData.getLanguages("Exotic");
 
             foreach (string language in exoticLanguages)
             {
@@ -282,7 +278,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //class langauges
-            List<string> classLanguages = wm.DBManager.getLanguages("Class");
+            List<string> classLanguages = wm.DBManager.LanguageData.getLanguages("Class");
 
             foreach (string language in classLanguages)
             {
@@ -302,15 +298,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             foreach (CheckBox box in standardExoticBoxes)
             {
-                string tipText = "Typical Speakers: " + wm.DBManager.getLanguageSpeakers(box.Text) + Environment.NewLine;
-                tipText += "Script: " + wm.DBManager.getLanguageScript(box.Text);
+                string tipText = "Typical Speakers: " + wm.DBManager.LanguageData.getLanguageSpeakers(box.Text) + Environment.NewLine;
+                tipText += "Script: " + wm.DBManager.LanguageData.getLanguageScript(box.Text);
                 toolTips.SetToolTip(box, tipText);
             }
 
             foreach (CheckBox box in classBoxes)
             {
-                string tipText = "Typical Speakers: " + wm.DBManager.getLanguageSpeakers(box.Text) + Environment.NewLine;
-                tipText += "Script: " + wm.DBManager.getLanguageScript(box.Text);
+                string tipText = "Typical Speakers: " + wm.DBManager.LanguageData.getLanguageSpeakers(box.Text) + Environment.NewLine;
+                tipText += "Script: " + wm.DBManager.LanguageData.getLanguageScript(box.Text);
                 toolTips.SetToolTip(box, tipText);
             }
         }

@@ -77,9 +77,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
             {
-                if (SubraceBonusCounter != wm.DBManager.subraceAbilityChoiceAmount(wm.Choices.Subrace))
+                if (SubraceBonusCounter != wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace))
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
@@ -106,9 +106,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //check, if subrace bonus choices have been chosen
-            if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
             {
-                return (SubraceBonusCounter == wm.DBManager.subraceAbilityChoiceAmount(wm.Choices.Subrace));
+                return (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace));
             }
 
             return true;
@@ -121,7 +121,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 if (wm.Choices.Preset == 1)
                 {
-                    List<string> scoreList = wm.DBManager.getAverageAbilityScores();
+                    List<string> scoreList = wm.DBManager.AbilityData.getAverageAbilityScores();
                     for (int i = 0; i < abilityScores.Length; i++)
                     {
                         abilityScores[i].Text = scoreList.ElementAt(i).ToString();
@@ -145,15 +145,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             importSavedAbilityScores();
 
             //fill ability recommendation
-            recommendationLabel.Text = wm.DBManager.getAbilityRecommendation(wm.Choices.Class);
+            recommendationLabel.Text = wm.DBManager.AbilityData.getAbilityRecommendation(wm.Choices.Class);
 
             //populate ability score bonus from subrace
-            strBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Strength");
-            dexBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Dexterity");
-            conBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Constitution");
-            intBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Intelligence");
-            wisBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Wisdom");
-            chaBonusLabel.Text = "+" + wm.DBManager.getAbilityScoreBonus(wm.Choices.Subrace, "Charisma");
+            strBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Strength");
+            dexBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Dexterity");
+            conBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Constitution");
+            intBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Intelligence");
+            wisBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Wisdom");
+            chaBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Charisma");
 
             //populate ability choices from subrace
             toggleScoreBonusChoices();
@@ -169,17 +169,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 rerollButton.Visible = false;
             }
 
-            if (!visited)
-            {
-                visited = true;
-            }
+            Visited = true;
         }
 
         private void importSavedBonusChoices()
         {
             SubraceBonusCounter = 0;
 
-            if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
             {
                 //strength
                 if (wm.Choices.Strength.SubraceBonus > 0)
@@ -379,7 +376,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.Charisma.SubraceAdd = int.Parse(chaBonusLabel.Text.Substring(1));
 
             //subrace choices
-            if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
             {
                 //strength
                 if (strBonusCheck.Checked)
@@ -470,7 +467,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 strength += int.Parse(strBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (strBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (strBonusCheck.Checked))
                 {
                     strength++;
                 }
@@ -507,7 +504,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 dexterity += int.Parse(dexBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (dexBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (dexBonusCheck.Checked))
                 {
                     dexterity++;
                 }
@@ -544,7 +541,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 constitution += int.Parse(conBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
                 {
                     constitution++;
                 }
@@ -581,7 +578,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 intelligence += int.Parse(intBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (intBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (intBonusCheck.Checked))
                 {
                     intelligence++;
                 }
@@ -618,7 +615,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wisdom += int.Parse(wisBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (wisBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (wisBonusCheck.Checked))
                 {
                     wisdom++;
                 }
@@ -655,7 +652,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 charisma += int.Parse(chaBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (chaBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (chaBonusCheck.Checked))
                 {
                     charisma++;
                 }
@@ -694,7 +691,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 constitution += int.Parse(conBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
                 {
                     constitution++;
                 }
@@ -702,15 +699,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 int conModifier = calculateAbilityModifier(constitution);
 
                 //hp at level 1
-                health = wm.DBManager.getMaximumHitDieResult(wm.Choices.Class) + conModifier;
+                health = wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.Class) + conModifier;
 
                 //separate check for subrace and subclass because bonus stacks
-                if (wm.DBManager.subraceHasBonusHP(wm.Choices.Subrace))
+                if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.Subrace))
                 {
                     health++;
                 }
 
-                if (wm.DBManager.subclassHasBonusHP(wm.Choices.Subclass))
+                if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.Subclass))
                 {
                     health++;
                 }
@@ -723,14 +720,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 {
                     if (wm.Choices.Preset == 1)
                     {
-                        health += wm.DBManager.getAverageHitDieResult(wm.Choices.Class);
+                        health += wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class);
                     }
                     else
                     {
-                        int dieRoll = wm.getRandomNumber(1, wm.DBManager.getMaximumHitDieResult(wm.Choices.Class) + 1);
-                        if ((wm.Choices.Preset == 0) && (dieRoll < wm.DBManager.getAverageHitDieResult(wm.Choices.Class)))
+                        int dieRoll = wm.getRandomNumber(1, wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.Class) + 1);
+                        if ((wm.Choices.Preset == 0) && (dieRoll < wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class)))
                         {
-                            dieRoll = wm.DBManager.getAverageHitDieResult(wm.Choices.Class);
+                            dieRoll = wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class);
                         }
                         health += dieRoll;
                     }
@@ -738,12 +735,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     health += conModifier;
 
                     //separate check for subrace and subclass because bonus stacks
-                    if (wm.DBManager.subraceHasBonusHP(wm.Choices.Subrace))
+                    if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.Subrace))
                     {
                         health++;
                     }
 
-                    if (wm.DBManager.subclassHasBonusHP(wm.Choices.Subclass))
+                    if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.Subclass))
                     {
                         health++;
                     }
@@ -816,7 +813,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void toggleScoreBonusChoices()
         {
-            if (wm.DBManager.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
             {
                 raceAbilityBonusSeparatorLabel.Visible = true;
                 raceAbilityBonusLabel.Visible = true;
@@ -840,7 +837,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void toggleScoreBonusSelectability()
         {
-            if (SubraceBonusCounter == wm.DBManager.subraceAbilityChoiceAmount(wm.Choices.Subrace))
+            if (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace))
             {
                 foreach (CheckBox box in bonusCheckBoxes)
                 {
@@ -862,27 +859,27 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void initializeToolTips()
         {
             //get ability score description and replace every 4th space with a new line
-            string toolTipFormat = wm.DBManager.getAbilityDescription("Strength");
+            string toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Strength");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(strLabel, toolTipFormat);
 
-            toolTipFormat = wm.DBManager.getAbilityDescription("Dexterity");
+            toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Dexterity");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(dexLabel, toolTipFormat);
 
-            toolTipFormat = wm.DBManager.getAbilityDescription("Constitution");
+            toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Constitution");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(conLabel, toolTipFormat);
 
-            toolTipFormat = wm.DBManager.getAbilityDescription("Intelligence");
+            toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Intelligence");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(intLabel, toolTipFormat);
 
-            toolTipFormat = wm.DBManager.getAbilityDescription("Wisdom");
+            toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Wisdom");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(wisLabel, toolTipFormat);
 
-            toolTipFormat = wm.DBManager.getAbilityDescription("Charisma");
+            toolTipFormat = wm.DBManager.AbilityData.getAbilityDescription("Charisma");
             toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
             toolTips.SetToolTip(chaLabel, toolTipFormat);
         }

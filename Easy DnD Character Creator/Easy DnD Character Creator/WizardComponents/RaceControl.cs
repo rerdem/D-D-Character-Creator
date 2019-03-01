@@ -20,7 +20,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public RaceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -38,7 +38,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillRaceListBox()
         {
-            List<string> raceList = wm.DBManager.getRaces();
+            List<string> raceList = wm.DBManager.RaceData.getRaces();
 
             raceListBox.BeginUpdate();
             raceListBox.Items.Clear();
@@ -54,13 +54,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                raceListBox.SetSelected(0, true);
+                if (raceListBox.Items.Count > 0)
+                {
+                    raceListBox.SetSelected(0, true);
+                }
             }
         }
 
         private void fillSubraceListBox(string inputRace)
         {
-            List<string> subraceList = wm.DBManager.getSubraces(inputRace);
+            List<string> subraceList = wm.DBManager.RaceData.getSubraces(inputRace);
 
             subraceListBox.BeginUpdate();
             subraceListBox.Items.Clear();
@@ -82,7 +85,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillExtraChoiceListBox(string inputSubrace)
         {
-            List<string> choiceList = wm.DBManager.getExtraRaceProficiencies(subraceListBox.SelectedItem.ToString());
+            List<string> choiceList = wm.DBManager.RaceData.getExtraRaceProficiencies(subraceListBox.SelectedItem.ToString());
 
             extraChoiceBox.BeginUpdate();
             extraChoiceBox.Items.Clear();
@@ -105,10 +108,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             fillRaceListBox();
-            if (!Visited)
-            {
-                Visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -116,7 +116,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.Race = raceListBox.SelectedItem.ToString();
             wm.Choices.Subrace = subraceListBox.SelectedItem.ToString();
 
-            if (wm.DBManager.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
+            if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
             {
                 wm.Choices.RaceProficiency = extraChoiceBox.SelectedItem.ToString();
             }
@@ -133,9 +133,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void subraceListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            descriptionLabel.Text = wm.DBManager.getSubraceDescription(subraceListBox.SelectedItem.ToString());
+            descriptionLabel.Text = wm.DBManager.RaceData.getSubraceDescription(subraceListBox.SelectedItem.ToString());
 
-            if (wm.DBManager.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
+            if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
             {
                 descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
                 extraChoiceLayout.Visible = true;
@@ -163,9 +163,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            if (wm.DBManager.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
+            if (subraceListBox.SelectedItems.Count > 0)
             {
-                return ((subraceListBox.SelectedItems.Count > 0) && (extraChoiceBox.SelectedItems.Count > 0));
+                if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
+                {
+                    return ((subraceListBox.SelectedItems.Count > 0) && (extraChoiceBox.SelectedItems.Count > 0));
+                }
             }
 
             return (subraceListBox.SelectedItems.Count > 0);

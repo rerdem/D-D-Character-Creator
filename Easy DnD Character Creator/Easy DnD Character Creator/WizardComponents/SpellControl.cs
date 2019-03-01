@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -26,7 +27,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public SpellControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
 
             lastCharacterInfo = "";
             lastWisdom = 0;
@@ -67,17 +68,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += $"select {SpellsKnown - chosenSpells.Items.Count} more spell(s)";
             }
 
-            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
             {
-                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
                 int exceptionCounter = 0;
 
                 foreach (string item in chosenSpells.Items)
                 {
-                    Spell spell = wm.DBManager.getSpell(item);
-                    if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
-                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
+                    Spell spell = wm.DBManager.SpellData.getSpell(item);
+                    if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
+                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
                     && (!limitations.Contains(spell.School)))
                     {
                         exceptionCounter++;
@@ -101,17 +102,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             bool isValid = ((chosenCantrips.Items.Count == CantripsKnown) && (chosenSpells.Items.Count == SpellsKnown));
 
-            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
             {
-                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
                 int exceptionCounter = 0;
 
                 foreach (string item in chosenSpells.Items)
                 {
-                    Spell spell = wm.DBManager.getSpell(item);
-                    if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
-                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
+                    Spell spell = wm.DBManager.SpellData.getSpell(item);
+                    if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
+                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
                     && (!limitations.Contains(spell.School)))
                     {
                         exceptionCounter++;
@@ -128,7 +129,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             resetSpells();
 
-            if ((visited) && (!hasCharacterInfoChanged()) && (!hasWisdomChanged()))
+            if ((Visited) && (!hasCharacterInfoChanged()) && (!hasWisdomChanged()))
             {
                 loadChosenSpells();
             }
@@ -136,10 +137,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             setCharacterInfo();
             setLastWisdom();
 
-            if (!visited)
-            {
-                visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -170,11 +168,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void resetSpells()
         {
             //set number of cantrips and spells known
-            CantripsKnown = wm.DBManager.getCantripsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
+            CantripsKnown = wm.DBManager.SpellData.getCantripsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
 
-            if (wm.DBManager.areSpellsKnownStatic(wm.Choices.Class, wm.Choices.Subclass))
+            if (wm.DBManager.SpellData.areSpellsKnownStatic(wm.Choices.Class, wm.Choices.Subclass))
             {
-                SpellsKnown = wm.DBManager.getSpellsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
+                SpellsKnown = wm.DBManager.SpellData.getSpellsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
             }
             else
             {
@@ -192,10 +190,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                               $"cannot be unlearned and do not count against the limits.";
 
             //get possible spell school limitations and add to introLabel text
-            if (wm.DBManager.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
             {
-                int exceptions = wm.DBManager.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
 
                 introLabel.Text += $" With the exception of {exceptions} spell(s), you are limited to spells from these schools: {string.Join(", ", limitations.ToArray())}.";
             }
@@ -208,10 +206,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             chosenSpells.BeginUpdate();
             chosenSpells.Items.Clear();
 
-            if ((wm.DBManager.hasExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level)) || (wm.DBManager.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
+            if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
             {
-                List<Spell> raceClassSpells = wm.DBManager.getExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level);
-                raceClassSpells.AddRange(wm.DBManager.getExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level));
+                List<Spell> raceClassSpells = wm.DBManager.SpellData.getExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level);
+                raceClassSpells.AddRange(wm.DBManager.SpellData.getExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level));
 
                 foreach (Spell spell in raceClassSpells)
                 {
@@ -235,7 +233,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             availableCantrips.BeginUpdate();
             availableCantrips.Items.Clear();
 
-            List<string> cantrips = wm.DBManager.getCantripOptions(wm.Choices.Class, wm.Choices.Subclass);
+            List<string> cantrips = wm.DBManager.SpellData.getCantripOptions(wm.Choices.Class, wm.Choices.Subclass);
 
             foreach (string spell in cantrips)
             {
@@ -256,7 +254,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             availableSpells.BeginUpdate();
             availableSpells.Items.Clear();
 
-            List<string> spells = wm.DBManager.getSpellOptions(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
+            List<string> spells = wm.DBManager.SpellData.getSpellOptions(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
 
             foreach (string spell in spells)
             {
@@ -379,8 +377,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenCantrips.SelectedItems.Count > 0)
             {
-                if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())) 
-                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())))
+                if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())) 
+                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())))
                 {
                     availableCantrips.Items.Add(chosenCantrips.SelectedItem);
                     chosenCantrips.Items.Remove(chosenCantrips.SelectedItem);
@@ -410,8 +408,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenSpells.SelectedItems.Count > 0)
             {
-                if ((!wm.DBManager.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenSpells.SelectedItem.ToString()))
-                    && (!wm.DBManager.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenSpells.SelectedItem.ToString())))
+                if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenSpells.SelectedItem.ToString()))
+                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenSpells.SelectedItem.ToString())))
                 {
                     availableSpells.Items.Add(chosenSpells.SelectedItem);
                     chosenSpells.Items.Remove(chosenSpells.SelectedItem);
@@ -426,7 +424,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (availableCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(availableCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(availableCantrips.SelectedItem.ToString()));
             }
         }
 
@@ -434,7 +432,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(chosenCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(chosenCantrips.SelectedItem.ToString()));
             }
         }
 
@@ -442,7 +440,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (availableSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(availableSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(availableSpells.SelectedItem.ToString()));
             }
         }
 
@@ -450,7 +448,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.getSpell(chosenSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(chosenSpells.SelectedItem.ToString()));
             }
         }
 

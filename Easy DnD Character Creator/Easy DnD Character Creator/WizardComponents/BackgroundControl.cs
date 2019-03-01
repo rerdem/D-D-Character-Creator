@@ -18,7 +18,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public BackgroundControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -44,7 +44,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
@@ -61,7 +61,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (backgroundListBox.SelectedItem != null)
             {
-                if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
                 {
                     return ((backgroundListBox.SelectedItems.Count == 1) && (extraProficiencyBox.SelectedItems.Count == 1));
                 }
@@ -76,17 +76,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             fillBackgroundList();
 
-            if (!Visited)
-            {
-                Visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
         {
             wm.Choices.Background = backgroundListBox.SelectedItem.ToString();
 
-            if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+            if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
             {
                 wm.Choices.BackgroundProficiency = extraProficiencyBox.SelectedItem.ToString();
             }
@@ -98,7 +95,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillBackgroundList()
         {
-            List<string> backgrounds = wm.DBManager.getBackgrounds();
+            List<string> backgrounds = wm.DBManager.BackgroundData.getBackgrounds();
 
             backgroundListBox.BeginUpdate();
             backgroundListBox.Items.Clear();
@@ -120,7 +117,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillExtraChoiceListBox(string backgroundChoice)
         {
-            List<string> choiceList = wm.DBManager.getExtraBackgroundProficiencies(backgroundListBox.SelectedItem.ToString());
+            List<string> choiceList = wm.DBManager.BackgroundData.getExtraBackgroundProficiencies(backgroundListBox.SelectedItem.ToString());
 
             extraProficiencyBox.BeginUpdate();
             extraProficiencyBox.Items.Clear();
@@ -142,9 +139,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void backgroundListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            backgroundDescription.Text = wm.DBManager.getBackgroundDescription(backgroundListBox.SelectedItem.ToString());
+            backgroundDescription.Text = wm.DBManager.BackgroundData.getBackgroundDescription(backgroundListBox.SelectedItem.ToString());
             
-            if (wm.DBManager.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+            if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
             {
                 backgroundDescription.MaximumSize = new Size(520, backgroundDescription.MaximumSize.Height);
                 extraProficiencyLayout.Visible = true;

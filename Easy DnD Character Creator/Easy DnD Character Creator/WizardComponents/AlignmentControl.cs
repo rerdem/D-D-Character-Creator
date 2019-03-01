@@ -18,7 +18,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public AlignmentControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -36,13 +36,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            generalAlignmentLabel.Text = wm.DBManager.getGeneralAlignmentDescription();
-            raceAlignmentLabel.Text = wm.DBManager.getSubraceAlignmentDescription(wm.Choices.Subrace);
+            generalAlignmentLabel.Text = wm.DBManager.RaceData.getGeneralAlignmentDescription();
+            raceAlignmentLabel.Text = wm.DBManager.RaceData.getSubraceAlignmentDescription(wm.Choices.Subrace);
 
             //fill alignment listBoxes
             lawBox.BeginUpdate();
             lawBox.Items.Clear();
-            foreach (string entry in wm.DBManager.getLawAlignments())
+            foreach (string entry in wm.DBManager.RaceData.getLawAlignments())
             {
                 lawBox.Items.Add(entry);
             }
@@ -50,7 +50,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             moralityBox.BeginUpdate();
             moralityBox.Items.Clear();
-            foreach (string entry in wm.DBManager.getMoralityAlignments())
+            foreach (string entry in wm.DBManager.RaceData.getMoralityAlignments())
             {
                 moralityBox.Items.Add(entry);
             }
@@ -76,15 +76,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             
 
-            if (!Visited)
-            {
-                Visited = true;
-            }
+            Visited = true;
         }
 
         public void updateRaceAlignmentDescription(string inputSubrace)
         {
-            raceAlignmentLabel.Text = wm.DBManager.getSubraceAlignmentDescription(inputSubrace);
+            raceAlignmentLabel.Text = wm.DBManager.RaceData.getSubraceAlignmentDescription(inputSubrace);
         }
 
         public void saveContent()
@@ -97,7 +94,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if ((lawBox.SelectedItem != null) && (moralityBox.SelectedItem != null))
             {
-                chosenAlignmentLabel.Text = wm.DBManager.getAlignmentDescription(lawBox.SelectedItem.ToString(), moralityBox.SelectedItem.ToString());
+                chosenAlignmentLabel.Text = wm.DBManager.RaceData.getAlignmentDescription(lawBox.SelectedItem.ToString(), moralityBox.SelectedItem.ToString());
                 saveContent();
             }
         }
@@ -106,7 +103,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if ((lawBox.SelectedItem != null) && (moralityBox.SelectedItem != null))
             {
-                chosenAlignmentLabel.Text = wm.DBManager.getAlignmentDescription(lawBox.SelectedItem.ToString(), moralityBox.SelectedItem.ToString());
+                chosenAlignmentLabel.Text = wm.DBManager.RaceData.getAlignmentDescription(lawBox.SelectedItem.ToString(), moralityBox.SelectedItem.ToString());
                 saveContent();
             }
         }

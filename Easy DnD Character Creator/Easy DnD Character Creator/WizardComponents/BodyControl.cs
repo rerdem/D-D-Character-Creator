@@ -13,13 +13,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
     public partial class BodyControl : UserControl, IWizardControl
     {
         private WizardManager wm;
-
         private bool visited;
 
         public BodyControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -57,10 +56,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 weightModifier.Value = weightModifier.Minimum;
             }
 
-            if (!visited)
-            {
-                visited = true;
-            }
+            Visited = true;
         }
 
         public void saveContent()
@@ -73,21 +69,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void updateMinMax(string inputSubrace)
         {
-            heightModifier.Minimum = wm.DBManager.getHeightModifierDiceCount(inputSubrace);
-            heightModifier.Maximum = wm.DBManager.getHeightModifierDiceType(inputSubrace) * heightModifier.Minimum;
+            heightModifier.Minimum = wm.DBManager.AppearanceData.getHeightModifierDiceCount(inputSubrace);
+            heightModifier.Maximum = wm.DBManager.AppearanceData.getHeightModifierDiceType(inputSubrace) * heightModifier.Minimum;
             
-            weightModifier.Minimum = wm.DBManager.getWeightModifierDiceCount(inputSubrace);
-            weightModifier.Maximum = wm.DBManager.getWeightModifierDiceType(inputSubrace) * weightModifier.Minimum;
+            weightModifier.Minimum = wm.DBManager.AppearanceData.getWeightModifierDiceCount(inputSubrace);
+            weightModifier.Maximum = wm.DBManager.AppearanceData.getWeightModifierDiceType(inputSubrace) * weightModifier.Minimum;
         }
 
         private void refreshHeightWeight()
         {
             //calculate height in imperial
-            int heightImperial = wm.DBManager.getBaseHeight(false, wm.Choices.Subrace);
+            int heightImperial = wm.DBManager.AppearanceData.getBaseHeight(false, wm.Choices.Subrace);
             heightImperial += (int)heightModifier.Value;
 
             //calculate weight in imperial
-            int weightImperial = wm.DBManager.getBaseWeight(false, wm.Choices.Subrace);
+            int weightImperial = wm.DBManager.AppearanceData.getBaseWeight(false, wm.Choices.Subrace);
             int weightModifierImperial = (int)heightModifier.Value * (int)weightModifier.Value;
             weightImperial += weightModifierImperial;
 

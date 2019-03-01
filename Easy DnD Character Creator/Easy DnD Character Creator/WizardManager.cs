@@ -41,7 +41,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    if (DBManager.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    if (DBManager.LanguageData.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -54,7 +54,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.skillEquipment:
-                    if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -155,7 +155,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skillEquipment:
-                    if (DBManager.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    if (DBManager.LanguageData.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -168,7 +168,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.extraRaceChoices:
-                    if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -182,7 +182,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -200,7 +200,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -222,7 +222,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }

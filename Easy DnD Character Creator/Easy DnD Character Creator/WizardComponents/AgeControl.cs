@@ -18,7 +18,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public AgeControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -53,10 +53,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             ageValue.Value = wm.Choices.Age;
-            if (!Visited)
-            {
-                Visited = true;
-            }
+
+            Visited = true;
         }
 
         public void saveContent()
@@ -66,7 +64,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void updateRaceAgeDescription(string inputSubrace)
         {
-            ageLabel.Text = wm.DBManager.getAgeDescription(inputSubrace);
+            ageLabel.Text = wm.DBManager.AppearanceData.getAgeDescription(inputSubrace);
         }
     }
 }

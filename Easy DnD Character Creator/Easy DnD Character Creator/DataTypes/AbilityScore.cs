@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Easy_DnD_Character_Creator
+namespace Easy_DnD_Character_Creator.DataTypes
 {
     public class AbilityScore
     {

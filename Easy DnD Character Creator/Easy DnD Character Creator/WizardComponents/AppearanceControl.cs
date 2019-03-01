@@ -20,7 +20,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public AppearanceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
             InitializeComponent();
         }
 
@@ -82,14 +82,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            eyeColorBox.Text = wm.Choices.EyeColor;
-            skinColorBox.Text = wm.Choices.SkinColor;
-            hairColorBox.Text = wm.Choices.HairColor;
-
-            if (!visited)
+            if (Visited)
             {
-                visited = true;
+                eyeColorBox.Text = wm.Choices.EyeColor;
+                skinColorBox.Text = wm.Choices.SkinColor;
+                hairColorBox.Text = wm.Choices.HairColor;
             }
+
+            Visited = true;
         }
 
         public void saveContent()

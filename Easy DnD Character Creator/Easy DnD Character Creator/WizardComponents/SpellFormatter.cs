@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_DnD_Character_Creator.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
