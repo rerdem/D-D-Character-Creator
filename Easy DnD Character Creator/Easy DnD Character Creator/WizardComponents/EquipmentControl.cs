@@ -17,6 +17,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
         private string LastClass;
+        private int Equipment2ndSelectionAmount;
+        private int EquipmentChoiceAmount;
 
         public event EventHandler EquipmentSelectionChanged;
 
@@ -37,6 +39,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm = inputWizardManager;
             Visited = false;
             LastClass = "";
+            Equipment2ndSelectionAmount = 0;
+            EquipmentChoiceAmount = 0;
 
             choiceBoxes = new List<ListBox>();
             choiceLabels = new List<Label>();
@@ -70,9 +74,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             string output = "";
 
-            if (wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class) != equipmentList2.SelectedItems.Count)
+            if (Equipment2ndSelectionAmount != equipmentList2.SelectedItems.Count)
             {
-                int missingChoices = wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class) - equipmentList2.SelectedItems.Count;
+                int missingChoices = Equipment2ndSelectionAmount - equipmentList2.SelectedItems.Count;
                 output = $"select {missingChoices} more option(s) in the second equipment box";
             }
 
@@ -81,7 +85,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            return (wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class) == equipmentList2.SelectedItems.Count);
+            return (Equipment2ndSelectionAmount == equipmentList2.SelectedItems.Count);
         }
 
         public void populateForm()
@@ -96,9 +100,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 //list 1
                 if (equipmentList1.Visible)
                 {
-                    if (equipmentList1.Items.IndexOf(wm.Choices.Equipment1) >= 0)
+                    foreach (EquipmentItem item in wm.Choices.Equipment1)
                     {
-                        equipmentList1.SetSelected(equipmentList1.Items.IndexOf(wm.Choices.Equipment1), true);
+                        if (equipmentList1.Items.IndexOf(item) >= 0)
+                        {
+                            equipmentList1.SetSelected(equipmentList1.Items.IndexOf(item), true);
+                        }
                     }
                 }
 
@@ -106,11 +113,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 if (equipmentList2.Visible)
                 {
                     equipmentList2.SetSelected(0, false);
-                    foreach (string item in wm.Choices.Equipment2.Split(','))
+                    foreach (EquipmentItem item in wm.Choices.Equipment2)
                     {
-                        if (equipmentList2.Items.IndexOf(item.Trim()) >= 0)
+                        if (equipmentList2.Items.IndexOf(item) >= 0)
                         {
-                            equipmentList2.SetSelected(equipmentList2.Items.IndexOf(item.Trim()), true);
+                            equipmentList2.SetSelected(equipmentList2.Items.IndexOf(item), true);
                         }
                     }
                 }
@@ -118,18 +125,24 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 //list 3
                 if (equipmentList3.Visible)
                 {
-                    if (equipmentList3.Items.IndexOf(wm.Choices.Equipment3) >= 0)
+                    foreach (EquipmentItem item in wm.Choices.Equipment3)
                     {
-                        equipmentList3.SetSelected(equipmentList3.Items.IndexOf(wm.Choices.Equipment3), true);
+                        if (equipmentList3.Items.IndexOf(item) >= 0)
+                        {
+                            equipmentList3.SetSelected(equipmentList3.Items.IndexOf(item), true);
+                        }
                     }
                 }
 
                 //list 4
                 if (equipmentList4.Visible)
                 {
-                    if (equipmentList4.Items.IndexOf(wm.Choices.Equipment4) >= 0)
+                    foreach (EquipmentItem item in wm.Choices.Equipment4)
                     {
-                        equipmentList4.SetSelected(equipmentList4.Items.IndexOf(wm.Choices.Equipment4), true);
+                        if (equipmentList4.Items.IndexOf(item) >= 0)
+                        {
+                            equipmentList4.SetSelected(equipmentList4.Items.IndexOf(item), true);
+                        }
                     }
                 }
             }
@@ -142,45 +155,41 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            wm.Choices.Equipment1 = "";
-            wm.Choices.Equipment2 = "";
-            wm.Choices.Equipment3 = "";
-            wm.Choices.Equipment4 = "";
-            wm.Choices.Equipment5 = "";
+            wm.Choices.Equipment1.Clear();
+            wm.Choices.Equipment2.Clear();
+            wm.Choices.Equipment3.Clear();
+            wm.Choices.Equipment4.Clear();
+            wm.Choices.ExtraEquipment = "";
 
             //list 1
             if (equipmentList1.Visible)
             {
-                wm.Choices.Equipment1 = equipmentList1.SelectedItem.ToString();
+                wm.Choices.Equipment1.Add((EquipmentItem)equipmentList1.SelectedItem);
             }
 
             //list 2
             if (equipmentList2.Visible)
             {
-                foreach (string item in equipmentList2.SelectedItems)
+                foreach (EquipmentItem item in equipmentList2.SelectedItems)
                 {
-                    if (!string.IsNullOrEmpty(wm.Choices.Equipment2))
-                    {
-                        wm.Choices.Equipment2 += ", ";
-                    }
-                    wm.Choices.Equipment2 += item;
+                    wm.Choices.Equipment2.Add(item);
                 }
             }
 
             //list 3
             if (equipmentList3.Visible)
             {
-                wm.Choices.Equipment3 = equipmentList3.SelectedItem.ToString();
+                wm.Choices.Equipment3.Add((EquipmentItem)equipmentList3.SelectedItem);
             }
             
             //list 4
             if (equipmentList4.Visible)
             {
-                wm.Choices.Equipment4 = equipmentList4.SelectedItem.ToString();
+                wm.Choices.Equipment4.Add((EquipmentItem)equipmentList4.SelectedItem);
             }
 
             //extra equipment
-            wm.Choices.Equipment5 = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.Class);
+            wm.Choices.ExtraEquipment = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.Class);
         }
 
         private bool hasClassChanged()
@@ -224,10 +233,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void resetEquipment()
         {
+            EquipmentChoiceAmount = wm.DBManager.EquipmentData.getEquipmentChoiceAmount(wm.Choices.Class);
+            Equipment2ndSelectionAmount = wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class);
+            
             int currentChoice = 1;
             for (int i = 0; i < choiceBoxes.Count; i++)
             {
-                if (i >= wm.DBManager.EquipmentData.getEquipmentChoiceAmount(wm.Choices.Class))
+                if (i >= EquipmentChoiceAmount)
                 {
                     choiceBoxes[i].Visible = false;
                     choiceLabels[i].Visible = false;
@@ -239,17 +251,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     choiceLabels[i].Visible = true;
                     descriptionLabels[i].Visible = true;
                     choiceBoxes[i].BeginUpdate();
-                    choiceBoxes[i].Items.Clear();
+                    //choiceBoxes[i].Items.Clear();
                     equipmentOptions[i].Clear();
                     equipmentOptions[i].AddRange(wm.DBManager.EquipmentData.getEquipmentChoices(wm.Choices.Subrace,
                                                                                                  wm.Choices.Class,
                                                                                                  wm.Choices.Subclass,
                                                                                                  currentChoice,
                                                                                                  wm.Choices.Strength.getTotalValue()).ToArray());
-                    foreach (EquipmentItem item in equipmentOptions[i])
-                    {
-                        choiceBoxes[i].Items.Add(item.Name);
-                    }
+                    choiceBoxes[i].DataSource = null;
+                    choiceBoxes[i].DataSource = equipmentOptions[i];
+                    choiceBoxes[i].DisplayMember = "Name";
+                    //foreach (EquipmentItem item in equipmentOptions[i])
+                    //{
+                    //    choiceBoxes[i].Items.Add(item.Name);
+                    //}
 
                     choiceBoxes[i].EndUpdate();
                     choiceBoxes[i].SetSelected(0, true);
@@ -258,9 +273,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 currentChoice++;
             }
 
-            equipmentLabel2.Text = $"Choose {wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class)}:";
+            equipmentLabel2.Text = $"Choose {Equipment2ndSelectionAmount}:";
 
-            if (wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class) > 1)
+            if (Equipment2ndSelectionAmount > 1)
             {
                 equipmentList2.SelectionMode = SelectionMode.MultiSimple;
             }
@@ -312,8 +327,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void equipmentList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EquipmentItem currentSelectedItem = equipmentOptions1[equipmentOptions1.FindIndex(item => item.Name.Equals(equipmentList1.SelectedItem.ToString()))];
-            descriptionLabel1.Text = constructEquipmentDescription(currentSelectedItem);
+            descriptionLabel1.Text = constructEquipmentDescription((EquipmentItem)equipmentList1.SelectedItem);
 
             OnEquipmentSelectionChanged(null);
         }
@@ -323,11 +337,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             syncEquipmentList2Selection();
             if (equipmentList2.SelectedIndices.Count > 0)
             {
-                if (equipmentList2.SelectedIndices.Count <= wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class))
+                if (equipmentList2.SelectedIndices.Count <= Equipment2ndSelectionAmount)
                 {
                     int lastSelectedIndex = equipmentList2Selection.ElementAt(equipmentList2Selection.Count - 1);
-                    EquipmentItem currentSelectedItem = equipmentOptions2[equipmentOptions2.FindIndex(item => item.Name.Equals(equipmentList2.Items[lastSelectedIndex].ToString()))];
-                    descriptionLabel2.Text = constructEquipmentDescription(currentSelectedItem);
+                    descriptionLabel2.Text = constructEquipmentDescription((EquipmentItem)equipmentList2.Items[lastSelectedIndex]);
                 }
                 else
                 {
@@ -341,16 +354,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void equipmentList3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EquipmentItem currentSelectedItem = equipmentOptions3[equipmentOptions3.FindIndex(item => item.Name.Equals(equipmentList3.SelectedItem.ToString()))];
-            descriptionLabel3.Text = constructEquipmentDescription(currentSelectedItem);
+            descriptionLabel3.Text = constructEquipmentDescription((EquipmentItem)equipmentList3.SelectedItem);
 
             OnEquipmentSelectionChanged(null);
         }
 
         private void equipmentList4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EquipmentItem currentSelectedItem = equipmentOptions4[equipmentOptions4.FindIndex(item => item.Name.Equals(equipmentList4.SelectedItem.ToString()))];
-            descriptionLabel4.Text = constructEquipmentDescription(currentSelectedItem);
+            descriptionLabel4.Text = constructEquipmentDescription((EquipmentItem)equipmentList4.SelectedItem);
 
             OnEquipmentSelectionChanged(null);
         }

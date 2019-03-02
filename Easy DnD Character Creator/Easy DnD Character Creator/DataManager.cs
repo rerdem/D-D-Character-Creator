@@ -207,7 +207,7 @@ namespace Easy_DnD_Character_Creator
             dbQuery.CommandText += className;
             dbQuery.CommandText += "\" AND favoredEnemyAmount.level BETWEEN 1 AND ";
             dbQuery.CommandText += level.ToString();
-            dbQuery.CommandText += "ORDER BY amount DESC LIMIT 1";
+            dbQuery.CommandText += " ORDER BY amount DESC LIMIT 1";
 
             dbReader = dbQuery.ExecuteReader();
             if (dbReader.Read())
@@ -242,7 +242,7 @@ namespace Easy_DnD_Character_Creator
             dbQuery.CommandText += className;
             dbQuery.CommandText += "\" AND favoredEnemyAmount.level BETWEEN 1 AND ";
             dbQuery.CommandText += level.ToString();
-            dbQuery.CommandText += "ORDER BY amount DESC LIMIT 1";
+            dbQuery.CommandText += " ORDER BY amount DESC LIMIT 1";
 
             dbReader = dbQuery.ExecuteReader();
             if (dbReader.Read())

@@ -62,11 +62,11 @@ namespace Easy_DnD_Character_Creator
         public List<string> ExtraSkills { get; set; }
 
         //EquipmentControl
-        public string Equipment1 { get; set; }
-        public string Equipment2 { get; set; }
-        public string Equipment3 { get; set; }
-        public string Equipment4 { get; set; }
-        public string Equipment5 { get; set; }
+        public List<EquipmentItem> Equipment1 { get; set; }
+        public List<EquipmentItem> Equipment2 { get; set; }
+        public List<EquipmentItem> Equipment3 { get; set; }
+        public List<EquipmentItem> Equipment4 { get; set; }
+        public string ExtraEquipment { get; set; }
 
         //SpellControl
         public string Spells { get; set; }
@@ -117,11 +117,11 @@ namespace Easy_DnD_Character_Creator
             Skills = new List<string>();
             ExtraSkills = new List<string>();
 
-            Equipment1 = "";
-            Equipment2 = "";
-            Equipment3 = "";
-            Equipment4 = "";
-            Equipment5 = "";
+            Equipment1 = new List<EquipmentItem>();
+            Equipment2 = new List<EquipmentItem>();
+            Equipment3 = new List<EquipmentItem>();
+            Equipment4 = new List<EquipmentItem>();
+            ExtraEquipment = "";
 
             Spells = "";
 
