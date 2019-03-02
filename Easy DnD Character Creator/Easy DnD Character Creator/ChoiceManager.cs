@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator
         public string ExtraEquipment { get; set; }
 
         //SpellControl
-        public string Spells { get; set; }
+        public List<Spell> Spells { get; set; }
 
         //ExtraRaceChoiceControl
         public string extraRaceChoice { get; set; }
@@ -123,7 +123,7 @@ namespace Easy_DnD_Character_Creator
             Equipment4 = new List<EquipmentItem>();
             ExtraEquipment = "";
 
-            Spells = "";
+            Spells = new List<Spell>();
 
             extraRaceChoice = "";
         }

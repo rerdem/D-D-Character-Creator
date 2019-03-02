@@ -81,9 +81,9 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
+                connection.Open();
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    connection.Open();
                     command.CommandText = "SELECT cantripsKnown FROM cantripsKnown " +
                                           "INNER JOIN classes ON cantripsKnown.classId = classes.classid " +
                                           "WHERE classes.name=@Class AND cantripsKnown.level BETWEEN 1 AND @Level " +
@@ -106,7 +106,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
                 { 
                     using (SQLiteCommand command = new SQLiteCommand(connection))
                     {
-                        connection.Open();
                         command.CommandText = "SELECT cantripsKnown FROM cantripsKnownSubclass " +
                                               "INNER JOIN subclasses ON cantripsKnownSubclass.subclassId = subclasses.subclassId " +
                                               "WHERE subclasses.name=@Subclass AND cantripsKnownSubclass.level BETWEEN 1 AND @Level " +
@@ -143,9 +142,9 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
+                connection.Open();
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    connection.Open();
                     command.CommandText = "SELECT MAX(static) FROM spellsKnown " +
                                           "INNER JOIN classes ON spellsKnown.classId = classes.classid " +
                                           "WHERE classes.name=@Class";
@@ -166,7 +165,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
                 {
                     using (SQLiteCommand command = new SQLiteCommand(connection))
                     {
-                        connection.Open();
                         command.CommandText = "SELECT MAX(static) FROM spellsKnownSubclass " +
                                               "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
                                               "WHERE subclasses.name=@Subclass";
@@ -201,9 +199,9 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
+                connection.Open();
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    connection.Open();
                     command.CommandText = "SELECT spellsKnown FROM spellsKnown " +
                                           "INNER JOIN classes ON spellsKnown.classId = classes.classid " +
                                           "WHERE classes.name=@Class AND spellsKnown.level BETWEEN 1 AND @Level " +
@@ -226,7 +224,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
                 {
                     using (SQLiteCommand command = new SQLiteCommand(connection))
                     {
-                        connection.Open();
                         command.CommandText = "SELECT spellsKnown FROM spellsKnownSubclass " +
                                               "INNER JOIN subclasses ON spellsKnownSubclass.subclassId = subclasses.subclassId " +
                                               "WHERE subclasses.name=@Subclass AND spellsKnownSubclass.level BETWEEN 1 AND @Level " +
@@ -256,19 +253,19 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// </summary>
         /// <param name="className">chosen class</param>
         /// <param name="subclass">chosen subclass</param>
-        public List<string> getCantripOptions(string className, string subclass)
+        public List<Spell> getCantripOptions(string className, string subclass)
         {
-            List<string> cantripList = new List<string>();
+            List<Spell> cantripList = new List<Spell>();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name FROM spells " +
-                                      "INNER JOIN books ON spells.book=books.bookid " +
+                command.CommandText = "SELECT * FROM spells " +
+                                      "INNER JOIN books ON books.bookid=spells.book " +
                                       "WHERE spells.level=0 " +
-                                      "AND spells.classes LIKE @Class" +
-                                      "books.title IN (@UsedBooks)";
+                                      "AND spells.classes LIKE @Class " +
+                                      "AND books.title IN (@UsedBooks)";
                 if ((subclass == "Arcane Trickster") || (subclass == "Eldritch Knight"))
                 {
                     command.Parameters.AddWithValue("@Class", "%" + subclass + "%");
@@ -285,7 +282,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            cantripList.Add(dbReader.GetString(0));
+                            cantripList.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), false));
                         }
                     }
                 }
@@ -300,16 +297,16 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// <param name="className">chosen class</param>
         /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public List<string> getSpellOptions(string className, string subclass, int level)
+        public List<Spell> getSpellOptions(string className, string subclass, int level)
         {
-            List<string> spellList = new List<string>();
+            List<Spell> spellList = new List<Spell>();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name FROM spells " +
-                                      "INNER JOIN books ON spells.book=books.bookid " +
+                command.CommandText = "SELECT * FROM spells " +
+                                      "INNER JOIN books ON books.bookid=spells.book " +
                                       "WHERE spells.level = " +
                                       "(SELECT maxSpellLevel FROM maxSpellLevel " +
                                       "INNER JOIN classes ON maxSpellLevel.classId = classes.classid " +
@@ -335,7 +332,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            spellList.Add(dbReader.GetString(0));
+                            spellList.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), false));
                         }
                     }
                 }
@@ -366,7 +363,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            outputSpell = new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10));
+                            outputSpell = new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), false);
                         }
                     }
                 }
@@ -463,7 +460,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            extraRaceSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10)));
+                            extraRaceSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), true));
                         }
                     }
                 }
@@ -488,7 +485,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                 command.CommandText = "SELECT spells.* FROM extraSubclassSpells " +
                                       "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
                                       "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId " +
-                                      "WHERE subclasses.name=@Subclass AND extraRaceSpells.level BETWEEN 1 AND @Level";
+                                      "WHERE subclasses.name=@Subclass AND extraSubclassSpells.level BETWEEN 1 AND @Level";
                 command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
@@ -498,7 +495,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            extraSubclassSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10)));
+                            extraSubclassSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), true));
                         }
                     }
                 }

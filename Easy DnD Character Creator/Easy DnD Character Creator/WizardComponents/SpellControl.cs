@@ -19,8 +19,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private string lastCharacterInfo; //subrace, class, subclass, level
         private int lastWisdom;
 
+        private bool HasSubclassSpellSchoolLimitations;
+        private int SubclassSpellSchoolLimitationExceptions;
+        private List<string> SubclassSpellSchoolLimitations;
+
         private int CantripsKnown { get; set; }
         private int SpellsKnown { get; set; }
+
+        private List<Spell> availableCantripsSource { get; set; }
+        private List<Spell> chosenCantripsSource { get; set; }
+        private List<Spell> availableSpellsSource { get; set; }
+        private List<Spell> chosenSpellsSource { get; set; }
 
         public event EventHandler SpellChosen;
 
@@ -32,8 +41,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             lastCharacterInfo = "";
             lastWisdom = 0;
 
+            HasSubclassSpellSchoolLimitations = false;
+            SubclassSpellSchoolLimitationExceptions = 0;
+            SubclassSpellSchoolLimitations = new List<string>();
+
             CantripsKnown = 0;
             SpellsKnown = 0;
+
+            availableCantripsSource = new List<Spell>();
+            chosenCantripsSource = new List<Spell>();
+            availableSpellsSource = new List<Spell>();
+            chosenSpellsSource = new List<Spell>();
 
             InitializeComponent();
         }
@@ -68,30 +86,26 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += $"select {SpellsKnown - chosenSpells.Items.Count} more spell(s)";
             }
 
-            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (HasSubclassSpellSchoolLimitations)
             {
-                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
                 int exceptionCounter = 0;
 
-                foreach (string item in chosenSpells.Items)
+                foreach (Spell spell in chosenSpells.Items)
                 {
-                    Spell spell = wm.DBManager.SpellData.getSpell(item);
-                    if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
-                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
-                    && (!limitations.Contains(spell.School)))
+                    if ((!spell.NotDeselectable)
+                    && (!SubclassSpellSchoolLimitations.Contains(spell.School)))
                     {
                         exceptionCounter++;
                     }
                 }
 
-                if (exceptions < exceptionCounter)
+                if (SubclassSpellSchoolLimitationExceptions < exceptionCounter)
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
                         output += ", ";
                     }
-                    output += $"select {exceptionCounter - exceptions} fewer spell(s) outside of your spell school limitations";
+                    output += $"select {exceptionCounter - SubclassSpellSchoolLimitationExceptions} fewer spell(s) outside of your spell school limitations";
                 }
             }
 
@@ -102,24 +116,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             bool isValid = ((chosenCantrips.Items.Count == CantripsKnown) && (chosenSpells.Items.Count == SpellsKnown));
 
-            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (HasSubclassSpellSchoolLimitations)
             {
-                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
                 int exceptionCounter = 0;
 
-                foreach (string item in chosenSpells.Items)
+                foreach (Spell spell in chosenSpells.Items)
                 {
-                    Spell spell = wm.DBManager.SpellData.getSpell(item);
-                    if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, spell.Name))
-                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, spell.Name))
-                    && (!limitations.Contains(spell.School)))
+                    if ((!spell.NotDeselectable)
+                    && (!SubclassSpellSchoolLimitations.Contains(spell.School)))
                     {
                         exceptionCounter++;
                     }
                 }
 
-                isValid = isValid && (exceptions >= exceptionCounter);
+                isValid = isValid && (SubclassSpellSchoolLimitationExceptions >= exceptionCounter);
             }
 
             return isValid;
@@ -142,31 +152,28 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            wm.Choices.Spells = "";
+            wm.Choices.Spells.Clear();
 
             //save cantrips
-            foreach (var spell in chosenCantrips.Items)
+            foreach (Spell spell in chosenCantripsSource)
             {
-                if (!string.IsNullOrEmpty(wm.Choices.Spells))
-                {
-                    wm.Choices.Spells += ",";
-                }
-                wm.Choices.Spells += spell.ToString(); ;
+                wm.Choices.Spells.Add(spell);
             }
 
             //save spells
-            foreach (var spell in chosenSpells.Items)
+            foreach (Spell spell in chosenSpellsSource)
             {
-                if (!string.IsNullOrEmpty(wm.Choices.Spells))
-                {
-                    wm.Choices.Spells += ",";
-                }
-                wm.Choices.Spells += spell.ToString(); ;
+                wm.Choices.Spells.Add(spell);
             }
         }
 
         private void resetSpells()
         {
+            //reset variables
+            HasSubclassSpellSchoolLimitations = wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+            SubclassSpellSchoolLimitationExceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
+            SubclassSpellSchoolLimitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+
             //set number of cantrips and spells known
             CantripsKnown = wm.DBManager.SpellData.getCantripsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
 
@@ -190,22 +197,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                               $"cannot be unlearned and do not count against the limits.";
 
             //get possible spell school limitations and add to introLabel text
-            if (wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass))
+            if (HasSubclassSpellSchoolLimitations)
             {
-                int exceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-                List<string> limitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
-
-                introLabel.Text += $" With the exception of {exceptions} spell(s), you are limited to spells from these schools: {string.Join(", ", limitations.ToArray())}.";
+                introLabel.Text += $" With the exception of {SubclassSpellSchoolLimitationExceptions} spell(s), you are limited to spells from these schools: {string.Join(", ", SubclassSpellSchoolLimitations.ToArray())}.";
             }
 
-            //clear and populate lists
+            //clear and populate source lists
+            chosenCantripsSource.Clear();
+            chosenSpellsSource.Clear();
+
             //populate extra race and class spells
-            chosenCantrips.BeginUpdate();
-            chosenCantrips.Items.Clear();
-
-            chosenSpells.BeginUpdate();
-            chosenSpells.Items.Clear();
-
             if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
             {
                 List<Spell> raceClassSpells = wm.DBManager.SpellData.getExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level);
@@ -215,56 +216,31 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 {
                     if (spell.Level == 0)
                     {
-                        chosenCantrips.Items.Add(spell.Name);
+                        chosenCantripsSource.Add(spell);
                         CantripsKnown++; //to prevent interference with page validation
                     }
                     else
                     {
-                        chosenSpells.Items.Add(spell.Name);
+                        chosenSpellsSource.Add(spell);
                         SpellsKnown++; //to prevent interference with page validation
                     }
                 }
             }
-
-            chosenCantrips.EndUpdate();
-            chosenSpells.EndUpdate();
-
+            
             //populate cantrips without extra race or class spells
-            availableCantrips.BeginUpdate();
-            availableCantrips.Items.Clear();
+            availableCantripsSource = wm.DBManager.SpellData.getCantripOptions(wm.Choices.Class, wm.Choices.Subclass).Except(chosenCantripsSource).ToList();
 
-            List<string> cantrips = wm.DBManager.SpellData.getCantripOptions(wm.Choices.Class, wm.Choices.Subclass);
+            //populate spells without extra race or class spells
+            availableSpellsSource = wm.DBManager.SpellData.getSpellOptions(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level).Except(chosenSpellsSource).ToList();
 
-            foreach (string spell in cantrips)
-            {
-                if (!chosenCantrips.Items.Contains(spell))
-                {
-                    availableCantrips.Items.Add(spell);
-                }
-            }
+            //refresh list boxes from source lists
+            refreshListBoxes();
 
-            availableCantrips.EndUpdate();
-
+            //set default selections
             if (availableCantrips.Items.Count > 0)
             {
                 availableCantrips.SetSelected(0, true);
             }
-
-            //populate spells without extra race or class spells
-            availableSpells.BeginUpdate();
-            availableSpells.Items.Clear();
-
-            List<string> spells = wm.DBManager.SpellData.getSpellOptions(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
-
-            foreach (string spell in spells)
-            {
-                if (!chosenSpells.Items.Contains(spell))
-                {
-                    availableSpells.Items.Add(spell);
-                }
-            }
-
-            availableSpells.EndUpdate();
 
             if (availableSpells.Items.Count > 0)
             {
@@ -277,40 +253,28 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void loadChosenSpells()
         {
-            //populate lists
-            //begin updates
-            availableCantrips.BeginUpdate();
-            chosenCantrips.BeginUpdate();
-
-            availableSpells.BeginUpdate();
-            chosenSpells.BeginUpdate();
-
             //load cantrips
-            for (int i = availableCantrips.Items.Count - 1; i >= 0; i--)
+            for (int i = availableCantripsSource.Count - 1; i >= 0; i--)
             {
-                if (wm.Choices.Spells.Contains(availableCantrips.Items[i].ToString()))
+                if (wm.Choices.Spells.Contains(availableCantripsSource[i]))
                 {
-                    chosenCantrips.Items.Add(availableCantrips.Items[i].ToString());
-                    availableCantrips.Items.RemoveAt(i);
+                    chosenCantripsSource.Add(availableCantripsSource[i]);
+                    availableCantripsSource.RemoveAt(i);
                 }
             }
 
             //load spells
-            for (int i = availableSpells.Items.Count - 1; i >= 0; i--)
+            for (int i = availableSpellsSource.Count - 1; i >= 0; i--)
             {
-                if (wm.Choices.Spells.Contains(availableSpells.Items[i].ToString()))
+                if (wm.Choices.Spells.Contains(availableSpellsSource[i]))
                 {
-                    chosenSpells.Items.Add(availableSpells.Items[i].ToString());
-                    availableSpells.Items.RemoveAt(i);
+                    chosenSpellsSource.Add(availableSpellsSource[i]);
+                    availableSpellsSource.RemoveAt(i);
                 }
             }
 
-            //end updates
-            availableCantrips.EndUpdate();
-            chosenCantrips.EndUpdate();
-
-            availableSpells.EndUpdate();
-            chosenSpells.EndUpdate();
+            //refresh data sources
+            refreshListBoxes();
 
             //reset arrow buttons
             manageButtonClickability();
@@ -318,7 +282,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void manageButtonClickability()
         {
-            if (chosenCantrips.Items.Count < CantripsKnown)
+            if (chosenCantripsSource.Count < CantripsKnown)
             {
                 cantripAddButton.Enabled = true;
             }
@@ -327,7 +291,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 cantripAddButton.Enabled = false;
             }
 
-            if (chosenSpells.Items.Count < SpellsKnown)
+            if (chosenSpellsSource.Count < SpellsKnown)
             {
                 spellAddButton.Enabled = true;
             }
@@ -335,6 +299,37 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 spellAddButton.Enabled = false;
             }
+        }
+
+        private void refreshListBoxes()
+        {
+            //begin updates
+            availableCantrips.BeginUpdate();
+            chosenCantrips.BeginUpdate();
+
+            availableSpells.BeginUpdate();
+            chosenSpells.BeginUpdate();
+
+            //refresh data sources
+            availableCantrips.DataSource = null;
+            availableCantrips.DataSource = availableCantripsSource;
+            availableCantrips.DisplayMember = "Name";
+            chosenCantrips.DataSource = null;
+            chosenCantrips.DataSource = chosenCantripsSource;
+            chosenCantrips.DisplayMember = "Name";
+            availableSpells.DataSource = null;
+            availableSpells.DataSource = availableSpellsSource;
+            availableSpells.DisplayMember = "Name";
+            chosenSpells.DataSource = null;
+            chosenSpells.DataSource = chosenSpellsSource;
+            chosenSpells.DisplayMember = "Name";
+
+            //end updates
+            availableCantrips.EndUpdate();
+            chosenCantrips.EndUpdate();
+
+            availableSpells.EndUpdate();
+            chosenSpells.EndUpdate();
         }
 
         private void setCharacterInfo()
@@ -360,71 +355,75 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void cantripAddButton_Click(object sender, EventArgs e)
         {
-            if (chosenCantrips.Items.Count < CantripsKnown)
+            if (chosenCantripsSource.Count < CantripsKnown)
             {
                 if (availableCantrips.SelectedItems.Count > 0)
                 {
-                    chosenCantrips.Items.Add(availableCantrips.SelectedItem);
-                    availableCantrips.Items.Remove(availableCantrips.SelectedItem);
+                    chosenCantripsSource.Add((Spell)availableCantrips.SelectedItem);
+                    availableCantripsSource.Remove((Spell)availableCantrips.SelectedItem);
+                    refreshListBoxes();
+                    manageButtonClickability();
 
                     OnSpellChosen(null);
                 }
             }
-            manageButtonClickability();
         }
 
         private void cantripRemoveButton_Click(object sender, EventArgs e)
         {
             if (chosenCantrips.SelectedItems.Count > 0)
             {
-                if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())) 
-                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenCantrips.SelectedItem.ToString())))
+                Spell currentSelectedItem = (Spell)chosenCantrips.SelectedItem;
+                if (!currentSelectedItem.NotDeselectable)
                 {
-                    availableCantrips.Items.Add(chosenCantrips.SelectedItem);
-                    chosenCantrips.Items.Remove(chosenCantrips.SelectedItem);
+                    availableCantripsSource.Add(currentSelectedItem);
+                    chosenCantripsSource.Remove(currentSelectedItem);
+                    refreshListBoxes();
+                    manageButtonClickability();
 
                     OnSpellChosen(null);
                 }
             }
-            manageButtonClickability();
         }
 
         private void spellAddButton_Click(object sender, EventArgs e)
         {
-            if (chosenSpells.Items.Count < SpellsKnown)
+            if (chosenSpellsSource.Count < SpellsKnown)
             {
                 if (availableSpells.SelectedItems.Count > 0)
                 {
-                    chosenSpells.Items.Add(availableSpells.SelectedItem);
-                    availableSpells.Items.Remove(availableSpells.SelectedItem);
+                    chosenSpellsSource.Add((Spell)availableSpells.SelectedItem);
+                    availableSpellsSource.Remove((Spell)availableSpells.SelectedItem);
+                    refreshListBoxes();
+                    manageButtonClickability();
 
                     OnSpellChosen(null);
                 }
             }
-            manageButtonClickability();
         }
 
         private void spellRemoveButton_Click(object sender, EventArgs e)
         {
             if (chosenSpells.SelectedItems.Count > 0)
             {
-                if ((!wm.DBManager.SpellData.isExtraRaceSpell(wm.Choices.Subrace, wm.Choices.Level, chosenSpells.SelectedItem.ToString()))
-                    && (!wm.DBManager.SpellData.isExtraSubclassSpell(wm.Choices.Subclass, wm.Choices.Level, chosenSpells.SelectedItem.ToString())))
+                Spell currentSelectedItem = (Spell)chosenSpells.SelectedItem;
+                if (!currentSelectedItem.NotDeselectable)
                 {
-                    availableSpells.Items.Add(chosenSpells.SelectedItem);
-                    chosenSpells.Items.Remove(chosenSpells.SelectedItem);
+                    availableSpellsSource.Add(currentSelectedItem);
+                    chosenSpellsSource.Remove(currentSelectedItem);
+                    refreshListBoxes();
+                    manageButtonClickability();
 
                     OnSpellChosen(null);
                 }
             }
-            manageButtonClickability();
         }
 
         private void availableCantrips_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (availableCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(availableCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)availableCantrips.SelectedItem);
             }
         }
 
@@ -432,7 +431,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenCantrips.SelectedItems.Count > 0)
             {
-                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(chosenCantrips.SelectedItem.ToString()));
+                cantripDescriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)chosenCantrips.SelectedItem);
             }
         }
 
@@ -440,7 +439,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (availableSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(availableSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)availableSpells.SelectedItem);
             }
         }
 
@@ -448,7 +447,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (chosenSpells.SelectedItems.Count > 0)
             {
-                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(chosenSpells.SelectedItem.ToString()));
+                spellDescriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)chosenSpells.SelectedItem);
             }
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class Spell
+    public class Spell : IEquatable<Spell>
     {
         public string Name { get; }
         public bool Ritual { get; }
@@ -18,6 +18,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
         public string Components { get; }
         public string Materials { get; }
         public string Description { get; }
+        public bool NotDeselectable { get; }
 
         public Spell()
         {
@@ -31,9 +32,10 @@ namespace Easy_DnD_Character_Creator.DataTypes
             Components = "";
             Materials = "";
             Description = "";
+            NotDeselectable = false;
         }
 
-        public Spell(string inputName, bool inputRitual, int inputLevel, string inputSchool, string inputCastTime, string inputRange, string inputDuration, string inputComponents, string inputMaterials, string inputDescription)
+        public Spell(string inputName, bool inputRitual, int inputLevel, string inputSchool, string inputCastTime, string inputRange, string inputDuration, string inputComponents, string inputMaterials, string inputDescription, bool inputNotDeselectable)
         {
             Name = inputName;
             Ritual = inputRitual;
@@ -45,6 +47,43 @@ namespace Easy_DnD_Character_Creator.DataTypes
             Components = inputComponents;
             Materials = inputMaterials;
             Description = inputDescription;
+            NotDeselectable = inputNotDeselectable;
+        }
+
+        public bool Equals(Spell other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Name == other.Name &&
+                   Ritual == other.Ritual &&
+                   Level == other.Level &&
+                   School == other.School &&
+                   CastTime == other.CastTime &&
+                   Range == other.Range &&
+                   Duration == other.Duration &&
+                   Components == other.Components &&
+                   Materials == other.Materials &&
+                   Description == other.Description &&
+                   NotDeselectable == other.NotDeselectable;
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            Spell otherSpell = other as Spell;
+            if (otherSpell == null)
+            {
+                return false;
+            }
+                
+            return Equals(otherSpell);
         }
     }
 }

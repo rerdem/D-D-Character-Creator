@@ -52,7 +52,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             choiceList.BeginUpdate();
             choiceList.Items.Clear();
             List<string> choices = wm.DBManager.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace);
-            choices.RemoveAll(option => wm.Choices.Spells.Contains(option));
+            //choices.RemoveAll(option => wm.Choices.Spells.Contains(option));
             choiceList.Items.AddRange(choices.ToArray());
             choiceList.EndUpdate();
 
