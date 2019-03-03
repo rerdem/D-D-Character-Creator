@@ -70,20 +70,20 @@ namespace Easy_DnD_Character_Creator.DataTypes
                    NotDeselectable == other.NotDeselectable;
         }
 
-        public override bool Equals(Object other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
+        //public override bool Equals(Object other)
+        //{
+        //    if (other == null)
+        //    {
+        //        return false;
+        //    }
 
-            Spell otherSpell = other as Spell;
-            if (otherSpell == null)
-            {
-                return false;
-            }
+        //    Spell otherSpell = other as Spell;
+        //    if (otherSpell == null)
+        //    {
+        //        return false;
+        //    }
                 
-            return Equals(otherSpell);
-        }
+        //    return Equals(otherSpell);
+        //}
     }
 }

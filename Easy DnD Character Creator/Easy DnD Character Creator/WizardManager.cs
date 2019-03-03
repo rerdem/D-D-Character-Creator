@@ -54,7 +54,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.skillEquipment:
-                    if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    if (Choices.HasSpellcasting && Choices.ChoosesSpells)
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -168,7 +168,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.extraRaceChoices:
-                    if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    if (Choices.HasSpellcasting && Choices.ChoosesSpells)
                     {
                         CurrentState = WizardState.spells;
                     }

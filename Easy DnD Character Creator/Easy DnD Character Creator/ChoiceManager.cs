@@ -41,6 +41,8 @@ namespace Easy_DnD_Character_Creator
         public string Class { get; set; }
         public string Subclass { get; set; }
         public string ClassProficiency { get; set; }
+        public bool HasSpellcasting { get; set; }
+        public bool ChoosesSpells { get; set; }
 
         //BackgroundControl
         public string Background { get; set; }
@@ -101,6 +103,8 @@ namespace Easy_DnD_Character_Creator
             Class = "";
             Subclass = "";
             ClassProficiency = "";
+            HasSpellcasting = false;
+            ChoosesSpells = false;
 
             Background = "";
             BackgroundProficiency = "";
