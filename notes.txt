@@ -1,19 +1,16 @@
-sql params
-using blocks
-sql bib mit c' statt direkten statements
-virtual
+XHigh Elf bonus Cantrip
 
-
-
-High Elf bonus Cantrip
 Fighter Fighting Style
 Ranger Favored Enemy/Terrain
 Rogue Expertise
+
 Draconic Bloodline Ancestry
 Knowledge Domain Double Proficiency
 Nature Domain extra skills
 
-Subclass choices to separate page:
+
+
+Class/Subclass choices to separate page:
 
 Barbarian:
 	XLevel 2:
@@ -37,6 +34,9 @@ Bard:
 		Valor: medium armor, shields, martial weapons, Combat Inspiration
 
 XCleric:
+	Level 1:
+		Knowledge Domain Double Proficiency
+		Nature Domain extra skills
 	XLevel 2:
 		Channel Divinity -> Turn Undead + Domain specific
 	

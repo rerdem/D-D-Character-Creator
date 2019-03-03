@@ -7,18 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
+    //this entire UserControl will need refactoring, if there is another race that has additional choices
     public partial class ExtraRaceChoiceControl : UserControl, IWizardControl
     {
         private WizardManager wm;
         private bool visited;
 
+        private List<Spell> spellOptions;
+
+        public event EventHandler ExtraRaceChoiceChanged;
+
         public ExtraRaceChoiceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
+
+            spellOptions = new List<Spell>();
+
             InitializeComponent();
         }
 
@@ -36,7 +45,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public string getInvalidElements()
         {
-            return "select an option";
+            string output = "";
+
+            if (choiceList.SelectedItems.Count <= 0)
+            {
+                output = "select an option";
+            }
+
+            return output;
         }
 
         public bool isValid()
@@ -46,19 +62,28 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            //will need refactoring, when implementing other races with different choices
-            introLabel.Text = wm.DBManager.getExtraRaceChoiceIntroText(wm.Choices.Subrace);
+            //set intro text
+            introLabel.Text = wm.DBManager.ExtraRaceChoiceData.getExtraRaceChoiceIntroText(wm.Choices.Subrace);
 
+            //fill choice lsit
             choiceList.BeginUpdate();
-            choiceList.Items.Clear();
-            List<string> choices = wm.DBManager.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace);
-            //choices.RemoveAll(option => wm.Choices.Spells.Contains(option));
-            choiceList.Items.AddRange(choices.ToArray());
+            spellOptions = wm.DBManager.ExtraRaceChoiceData.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace).Except(wm.Choices.Spells).ToList();
+            choiceList.DataSource = null;
+            choiceList.DataSource = spellOptions;
+            choiceList.DisplayMember = "Name";
             choiceList.EndUpdate();
 
-            if (choiceList.Items.Contains(wm.Choices.extraRaceChoice))
+            //if there was a previous choice, load it
+            if (wm.Choices.extraRaceChoices.Count > 0)
             {
-                choiceList.SetSelected(choiceList.Items.IndexOf(wm.Choices.extraRaceChoice), true);
+                List<Spell> choiceToLoad = wm.Choices.extraRaceChoices.OfType<Spell>().ToList();
+                for (int i = 0; i < choiceList.Items.Count; i++)
+                {
+                    if (choiceToLoad.Contains(choiceList.Items[i]))
+                    {
+                        choiceList.SetSelected(i, true);
+                    }
+                }
             }
             else
             {
@@ -68,27 +93,50 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            visited = true;
+            Visited = true;
         }
 
         public void saveContent()
         {
-            if (choiceList.Items.Count > 0)
+            if (choiceList.SelectedItems.Count > 0)
             {
-                wm.Choices.extraRaceChoice = choiceList.SelectedItem.ToString();
+                wm.Choices.extraRaceChoices.Clear();
+
+                //needs refactor, once more than High Elves have additional choices
+                foreach (Spell spell in choiceList.SelectedItems)
+                {
+                    if (spell != null)
+                    {
+                        wm.Choices.extraRaceChoices.Add(spell);
+                    }
+                }
             }
             else
             {
-                wm.Choices.extraRaceChoice = "";
+                wm.Choices.extraRaceChoices.Clear();
             }
         }
 
         private void choiceList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //will need refactoring, when implementing other races with different choices
-            if (wm.DBManager.hasExtraRaceCantripChoice(wm.Choices.Subrace))
+            if (choiceList.SelectedItems.Count > 0)
             {
-                descriptionLabel.Text = SpellFormatter.formatSpellDescription(wm.DBManager.SpellData.getSpell(choiceList.SelectedItem.ToString()));
+                //will need refactoring, when implementing other races with different choices
+                if ((Spell)choiceList.SelectedItem != null)
+                {
+                    descriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)choiceList.SelectedItem);
+
+                    OnExtraRaceChoiceChanged(null);
+                }
+            }
+        }
+
+        protected virtual void OnExtraRaceChoiceChanged(EventArgs e)
+        {
+            EventHandler handler = ExtraRaceChoiceChanged;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
     }

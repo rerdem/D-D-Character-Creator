@@ -60,15 +60,15 @@ namespace Easy_DnD_Character_Creator
                     }
                     else
                     {
-                        if (DBManager.hasExtraRaceChoices(Choices.Subrace))
+                        if (DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(Choices.Subrace))
                         {
                             CurrentState = WizardState.extraRaceChoices;
                         }
-                        else if (DBManager.hasExtraClassChoices(Choices.Class, Choices.Level))
+                        else if (DBManager.ExtraClassChoiceData.hasExtraClassChoices(Choices.Class, Choices.Level))
                         {
                             CurrentState = WizardState.extraClassChoices;
                         }
-                        else if (DBManager.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
+                        else if (DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
                         {
                             CurrentState = WizardState.extraSubclassChoices;
                         }
@@ -79,15 +79,15 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.spells:
-                    if (DBManager.hasExtraRaceChoices(Choices.Subrace))
+                    if (DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(Choices.Subrace))
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if (DBManager.hasExtraClassChoices(Choices.Class, Choices.Level))
+                    else if (DBManager.ExtraClassChoiceData.hasExtraClassChoices(Choices.Class, Choices.Level))
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (DBManager.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
+                    else if (DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -97,11 +97,11 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraRaceChoices:
-                    if (DBManager.hasExtraClassChoices(Choices.Class, Choices.Level))
+                    if (DBManager.ExtraClassChoiceData.hasExtraClassChoices(Choices.Class, Choices.Level))
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (DBManager.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
+                    else if (DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -111,7 +111,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraClassChoices:
-                    if (DBManager.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
+                    if (DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -178,7 +178,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraClassChoices:
-                    if (DBManager.hasExtraRaceChoices(Choices.Subrace))
+                    if (DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(Choices.Subrace))
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -192,11 +192,11 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraSubclassChoices:
-                    if (DBManager.hasExtraClassChoices(Choices.Class, Choices.Level))
+                    if (DBManager.ExtraClassChoiceData.hasExtraClassChoices(Choices.Class, Choices.Level))
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (DBManager.hasExtraRaceChoices(Choices.Subrace))
+                    else if (DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(Choices.Subrace))
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -210,15 +210,15 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.story:
-                    if (DBManager.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
+                    if (DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(Choices.Subclass, Choices.Level))
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
-                    else if (DBManager.hasExtraClassChoices(Choices.Class, Choices.Level))
+                    else if (DBManager.ExtraClassChoiceData.hasExtraClassChoices(Choices.Class, Choices.Level))
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (DBManager.hasExtraRaceChoices(Choices.Subrace))
+                    else if (DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(Choices.Subrace))
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }

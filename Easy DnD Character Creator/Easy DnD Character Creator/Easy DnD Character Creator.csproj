@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManagement\ExtraClassChoiceDataManager.cs" />
+    <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataTypes\Armor.cs" />
     <Compile Include="DataManagement\AbilityDataManager.cs" />
@@ -75,7 +78,9 @@
     <Compile Include="DataManagement\RaceDataManager.cs" />
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
+    <Compile Include="DataTypes\Dragon.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
+    <Compile Include="DataTypes\FightingStyle.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
     <Compile Include="DataTypes\Pack.cs" />
     <Compile Include="DataTypes\Spell.cs" />
@@ -140,6 +145,12 @@
       <DependentUpon>EquipmentControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\EquipmentFormatter.cs" />
+    <Compile Include="WizardComponents\ExtraClassChoiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraClassChoiceControl.Designer.cs">
+      <DependentUpon>ExtraClassChoiceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\ExtraRaceChoiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -56,6 +56,7 @@ namespace Easy_DnD_Character_Creator
             spellComponent = new SpellControl(WM);
             spellComponent.SpellChosen += new EventHandler(spellComponent_SpellChosen);
             extraRaceChoiceComponent = new ExtraRaceChoiceControl(WM);
+            extraRaceChoiceComponent.ExtraRaceChoiceChanged += new EventHandler(extraRaceChoiceComponent_ExtraRaceChoiceChanged);
 
             InitializeComponent();
             refreshWindow();
@@ -452,5 +453,17 @@ namespace Easy_DnD_Character_Creator
                 refreshStatusText();
             }
         }
+
+        private void extraRaceChoiceComponent_ExtraRaceChoiceChanged(object sender, EventArgs e)
+        {
+            ExtraRaceChoiceControl incoming = sender as ExtraRaceChoiceControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+
     }
 }

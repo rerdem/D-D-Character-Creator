@@ -57,33 +57,38 @@ namespace Easy_DnD_Character_Creator.DataTypes
                 return false;
             }
 
-            return Name == other.Name &&
-                   Ritual == other.Ritual &&
-                   Level == other.Level &&
-                   School == other.School &&
-                   CastTime == other.CastTime &&
-                   Range == other.Range &&
-                   Duration == other.Duration &&
-                   Components == other.Components &&
-                   Materials == other.Materials &&
-                   Description == other.Description &&
-                   NotDeselectable == other.NotDeselectable;
+            return Name == other.Name;
+                   //Ritual == other.Ritual &&
+                   //Level == other.Level &&
+                   //School == other.School &&
+                   //CastTime == other.CastTime &&
+                   //Range == other.Range &&
+                   //Duration == other.Duration &&
+                   //Components == other.Components &&
+                   //Materials == other.Materials &&
+                   //Description == other.Description &&
+                   //NotDeselectable == other.NotDeselectable;
         }
 
-        //public override bool Equals(Object other)
-        //{
-        //    if (other == null)
-        //    {
-        //        return false;
-        //    }
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
 
-        //    Spell otherSpell = other as Spell;
-        //    if (otherSpell == null)
-        //    {
-        //        return false;
-        //    }
-                
-        //    return Equals(otherSpell);
-        //}
+            Spell otherSpell = other as Spell;
+            if (otherSpell == null)
+            {
+                return false;
+            }
+
+            return Equals(otherSpell);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
     }
 }

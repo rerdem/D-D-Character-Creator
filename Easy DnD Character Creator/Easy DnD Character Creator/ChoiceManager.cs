@@ -74,7 +74,7 @@ namespace Easy_DnD_Character_Creator
         public List<Spell> Spells { get; set; }
 
         //ExtraRaceChoiceControl
-        public string extraRaceChoice { get; set; }
+        public List<Object> extraRaceChoices { get; set; }
 
         public ChoiceManager()
         {
@@ -129,7 +129,7 @@ namespace Easy_DnD_Character_Creator
 
             Spells = new List<Spell>();
 
-            extraRaceChoice = "";
+            extraRaceChoices = new List<Object>();
         }
     }
 }
