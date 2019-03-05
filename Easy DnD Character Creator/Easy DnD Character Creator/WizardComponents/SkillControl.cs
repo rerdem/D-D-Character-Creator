@@ -271,9 +271,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             //place Checkboxes in table layout
             int boxcounter = 0;
-            for (int i = 0; i < 5; i++)
+            //for (int i = 0; i < 5; i++)
+            for (int i = 0; i < skillLayout.ColumnCount; i++)
             {
-                for (int j = 0; j < 4; j++)
+                //for (int j = 0; j < 4; j++)
+                for (int j = 0; j < skillLayout.RowCount; j++)
                 {
                     skillLayout.Controls.Add(skillBoxes.ElementAt(boxcounter), i, j);
                     boxcounter++;

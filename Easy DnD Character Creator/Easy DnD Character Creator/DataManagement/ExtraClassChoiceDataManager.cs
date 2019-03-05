@@ -21,7 +21,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
         public bool hasExtraClassChoices(string className, int level)
         {
-            return hasFavoredEnemy(className, level) || hasFavoredTerrain(className, level);
+            return hasFightingStyle(className, level) || hasFavoredEnemy(className, level) || hasFavoredTerrain(className, level);
         }
 
         /// <summary>
@@ -89,37 +89,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             return fightingStyles;
         }
-
-        ///// <summary>
-        ///// gets the description of the given fighting style
-        ///// </summary>
-        ///// <param name="fightingStyle">name of fighting style</param>
-        //public string getFightingStyleDescription(string fightingStyle)
-        //{
-        //    string description = "";
-
-        //    DBConnection.Open();
-        //    SQLiteDataReader dbReader;
-        //    SQLiteCommand dbQuery;
-        //    dbQuery = DBConnection.CreateCommand();
-        //    dbQuery.CommandText = "SELECT description FROM fightingStyles " +
-        //                          "WHERE name=\"";
-        //    dbQuery.CommandText += fightingStyle;
-        //    dbQuery.CommandText = "\"";
-
-        //    dbReader = dbQuery.ExecuteReader();
-        //    while (dbReader.Read())
-        //    {
-        //        if (!dbReader.IsDBNull(0))
-        //        {
-        //            description = dbReader.GetString(0);
-        //        }
-        //    }
-
-        //    DBConnection.Close();
-
-        //    return description;
-        //}
 
         /// <summary>
         /// checks, if a given class may choose a favored enemy at the given level
@@ -311,5 +280,76 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             return favoredTerrain;
         }
+
+        /// <summary>
+        /// checks, if the given class has more than the standard set of skills
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public bool hasExtraSkillCheckbox(string className)
+        {
+            return (className == "Rogue");
+        }
+
+        /// <summary>
+        /// gets the name of the additional skill outside of the standard skill set
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public string getExtraSkillCheckbox(string className)
+        {
+            if (className == "Rogue")
+            {
+                return "Thieves' Tools";
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// gets the tooltip of the additional skill outside of the standard skill set
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public string getExtraSkillTooltip(string className)
+        {
+            if (className == "Rogue")
+            {
+                return "Your skill with thieves' tools lets you disarm traps and pick locks.";
+            }
+
+            return "";
+        }
+
+
+
+
+        ///// <summary>
+        ///// gets the description of the given fighting style
+        ///// </summary>
+        ///// <param name="fightingStyle">name of fighting style</param>
+        //public string getFightingStyleDescription(string fightingStyle)
+        //{
+        //    string description = "";
+
+        //    DBConnection.Open();
+        //    SQLiteDataReader dbReader;
+        //    SQLiteCommand dbQuery;
+        //    dbQuery = DBConnection.CreateCommand();
+        //    dbQuery.CommandText = "SELECT description FROM fightingStyles " +
+        //                          "WHERE name=\"";
+        //    dbQuery.CommandText += fightingStyle;
+        //    dbQuery.CommandText = "\"";
+
+        //    dbReader = dbQuery.ExecuteReader();
+        //    while (dbReader.Read())
+        //    {
+        //        if (!dbReader.IsDBNull(0))
+        //        {
+        //            description = dbReader.GetString(0);
+        //        }
+        //    }
+
+        //    DBConnection.Close();
+
+        //    return description;
+        //}
     }
 }

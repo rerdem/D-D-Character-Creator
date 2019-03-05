@@ -96,9 +96,9 @@ namespace Easy_DnD_Character_Creator
             return activeBooks;
         }
 
-        public bool hasExtraChoices(string subrace, string className, string subclass, int level)
-        {
-            return ExtraRaceChoiceData.hasExtraRaceChoices(subrace) || ExtraClassChoiceData.hasExtraClassChoices(className, level) || ExtraSubclassChoiceData.hasExtraSubclassChoices(subclass, level);
-        }
+        //public bool hasExtraChoices(string subrace, string className, string subclass, int level)
+        //{
+        //    return ExtraRaceChoiceData.hasExtraRaceChoices(subrace) || ExtraClassChoiceData.hasExtraClassChoices(className, level) || ExtraSubclassChoiceData.hasExtraSubclassChoices(subclass, level);
+        //}
     }
 }

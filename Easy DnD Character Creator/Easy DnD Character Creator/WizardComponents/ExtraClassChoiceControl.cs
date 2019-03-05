@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.WizardComponents.SubComponents;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -15,11 +16,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private FightingStyleControl fightingStyle;
+        private FavoredEnemyTerrainControl favoredEnemyTerrain;
+
         public ExtraClassChoiceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             Visited = false;
-            
+
+            fightingStyle = new FightingStyleControl(wm);
+            favoredEnemyTerrain = new FavoredEnemyTerrainControl(wm);
+
             InitializeComponent();
         }
 
@@ -47,7 +54,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            
+            Visited = true;
         }
 
         public void saveContent()

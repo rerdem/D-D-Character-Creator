@@ -1,7 +1,7 @@
 XHigh Elf bonus Cantrip
 
-Fighter Fighting Style
-Ranger Favored Enemy/Terrain
+/Fighter Fighting Style
+/Ranger Favored Enemy/Terrain
 Rogue Expertise
 
 Draconic Bloodline Ancestry
@@ -48,7 +48,8 @@ Druid:
 	!Wild Shape
 	
 	Subclass:
-	!!!Land: +1 Cantrip
+	!!!Land: 
+		X+1 Cantrip
 		Natural Recovery
 		Choose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
 	XMoon: Combat Wild Shape
@@ -114,17 +115,17 @@ Ranger:
 			!!Hunter: Hunter's Prey
 			!!Beast Master: Ranger's Companion
 
-Rogue:
+XRogue:
 	XLevel 2:
 		Cunning Action
 		
-	Level 3:
+	XLevel 3:
 		Subclass:
 		XThief:
 			Fast Hands, Second-Story Work
-		Assassin:
-			extra proficiency: disguise kit, poisoner's kit
-			Assassinate
+		XAssassin:
+			Xextra proficiency: disguise kit, poisoner's kit
+			XAssassinate
 		XArcane Trickster:
 			!!Spellcasting -> Wizard list
 				2 cantrips (+1 lvl 10) + mage hand

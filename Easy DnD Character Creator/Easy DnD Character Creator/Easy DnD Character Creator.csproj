@@ -191,6 +191,24 @@
       <DependentUpon>SpellControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\SpellFormatter.cs" />
+    <Compile Include="WizardComponents\SubComponents\ExtraSkillControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\ExtraSkillControl.Designer.cs">
+      <DependentUpon>ExtraSkillControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.Designer.cs">
+      <DependentUpon>FavoredEnemyTerrainControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\FightingStyleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\FightingStyleControl.Designer.cs">
+      <DependentUpon>FightingStyleControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -228,6 +246,9 @@
     <EmbeddedResource Include="WizardComponents\EquipmentControl.resx">
       <DependentUpon>EquipmentControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraClassChoiceControl.resx">
+      <DependentUpon>ExtraClassChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraRaceChoiceControl.resx">
       <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -242,6 +263,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\SpellControl.resx">
       <DependentUpon>SpellControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\ExtraSkillControl.resx">
+      <DependentUpon>ExtraSkillControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.resx">
+      <DependentUpon>FavoredEnemyTerrainControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\FightingStyleControl.resx">
+      <DependentUpon>FightingStyleControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

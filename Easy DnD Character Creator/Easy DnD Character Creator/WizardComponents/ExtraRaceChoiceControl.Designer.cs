@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.raceChoiceGroupBox = new System.Windows.Forms.GroupBox();
-            this.introLabel = new System.Windows.Forms.Label();
-            this.choiceList = new System.Windows.Forms.ListBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
+            this.choiceList = new System.Windows.Forms.ListBox();
+            this.introLabel = new System.Windows.Forms.Label();
             this.raceChoiceGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,26 +45,7 @@
             this.raceChoiceGroupBox.Size = new System.Drawing.Size(953, 193);
             this.raceChoiceGroupBox.TabIndex = 0;
             this.raceChoiceGroupBox.TabStop = false;
-            this.raceChoiceGroupBox.Text = "Additional Race Choice";
-            // 
-            // introLabel
-            // 
-            this.introLabel.AutoSize = true;
-            this.introLabel.Location = new System.Drawing.Point(7, 20);
-            this.introLabel.MaximumSize = new System.Drawing.Size(940, 29);
-            this.introLabel.Name = "introLabel";
-            this.introLabel.Size = new System.Drawing.Size(82, 13);
-            this.introLabel.TabIndex = 0;
-            this.introLabel.Text = "introductory text";
-            // 
-            // choiceList
-            // 
-            this.choiceList.FormattingEnabled = true;
-            this.choiceList.Location = new System.Drawing.Point(7, 52);
-            this.choiceList.Name = "choiceList";
-            this.choiceList.Size = new System.Drawing.Size(120, 134);
-            this.choiceList.TabIndex = 1;
-            this.choiceList.SelectedIndexChanged += new System.EventHandler(this.choiceList_SelectedIndexChanged);
+            this.raceChoiceGroupBox.Text = "Additional Race Choices";
             // 
             // descriptionLabel
             // 
@@ -75,6 +56,25 @@
             this.descriptionLabel.Size = new System.Drawing.Size(58, 13);
             this.descriptionLabel.TabIndex = 2;
             this.descriptionLabel.Text = "description";
+            // 
+            // choiceList
+            // 
+            this.choiceList.FormattingEnabled = true;
+            this.choiceList.Location = new System.Drawing.Point(7, 52);
+            this.choiceList.Name = "choiceList";
+            this.choiceList.Size = new System.Drawing.Size(120, 134);
+            this.choiceList.TabIndex = 1;
+            this.choiceList.SelectedIndexChanged += new System.EventHandler(this.choiceList_SelectedIndexChanged);
+            // 
+            // introLabel
+            // 
+            this.introLabel.AutoSize = true;
+            this.introLabel.Location = new System.Drawing.Point(7, 20);
+            this.introLabel.MaximumSize = new System.Drawing.Size(940, 29);
+            this.introLabel.Name = "introLabel";
+            this.introLabel.Size = new System.Drawing.Size(82, 13);
+            this.introLabel.TabIndex = 0;
+            this.introLabel.Text = "introductory text";
             // 
             // ExtraRaceChoiceControl
             // 

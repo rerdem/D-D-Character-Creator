@@ -76,6 +76,11 @@ namespace Easy_DnD_Character_Creator
         //ExtraRaceChoiceControl
         public List<Object> extraRaceChoices { get; set; }
 
+        //ExtraClassChoiceControl
+        public List<FightingStyle> ClassFightingStyles { get; set; }
+        public string FavoredEnemies { get; set; }
+        public string FavoredTerrains { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -130,6 +135,10 @@ namespace Easy_DnD_Character_Creator
             Spells = new List<Spell>();
 
             extraRaceChoices = new List<Object>();
+
+            ClassFightingStyles = new List<FightingStyle>();
+            FavoredEnemies = "";
+            FavoredTerrains = "";
         }
     }
 }
