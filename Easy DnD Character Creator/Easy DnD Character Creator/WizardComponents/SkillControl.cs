@@ -21,6 +21,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private ToolTip toolTips;
         private List<CheckBox> skillBoxes;
         private List<CheckBox> choiceBoxes;
+        private int classSkillCount;
 
         public event EventHandler SkillChosen;
 
@@ -28,9 +29,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm = inputWizardManager;
             Visited = false;
+
             toolTips = new ToolTip();
             skillBoxes = new List<CheckBox>();
             choiceBoxes = new List<CheckBox>();
+            classSkillCount = 0;
+
             InitializeComponent();
             tutorialLabel.Text = "The skills dictated by your choices of race and background have already been applied. " +
                                  "Based on your choice of class you have to choose a number of skills from the presented options. " +
@@ -64,9 +68,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (selectedBoxes != wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class))
+            if (selectedBoxes != classSkillCount)
             {
-                int missingSkills = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class) - selectedBoxes;
+                int missingSkills = classSkillCount - selectedBoxes;
                 output += $"select {missingSkills} more skill(s)";
             }
 
@@ -106,7 +110,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            return (selectedBoxes == wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class));
+            return (selectedBoxes == classSkillCount);
         }
 
         public void populateForm()
@@ -195,7 +199,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (selectedBoxes >= wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class))
+            if (selectedBoxes >= classSkillCount)
             {
                 foreach (CheckBox box in choiceBoxes)
                 {
@@ -217,6 +221,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void resetSkillBoxes()
         {
             choiceBoxes.Clear();
+            classSkillCount = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class);
             List<string> knownSkills = wm.DBManager.SkillData.getKnownSkills(wm.Choices.Subrace, wm.Choices.Background);
             List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.Class);
 

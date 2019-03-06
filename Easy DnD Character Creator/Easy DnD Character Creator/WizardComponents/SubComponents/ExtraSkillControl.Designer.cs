@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.extraSkillBox = new System.Windows.Forms.GroupBox();
-            this.extraSkillLabel = new System.Windows.Forms.Label();
             this.extraSkillLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.extraSkillLabel = new System.Windows.Forms.Label();
             this.extraSkillBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,16 +43,7 @@
             this.extraSkillBox.Size = new System.Drawing.Size(911, 188);
             this.extraSkillBox.TabIndex = 0;
             this.extraSkillBox.TabStop = false;
-            this.extraSkillBox.Text = "groupBox1";
-            // 
-            // extraSkillLabel
-            // 
-            this.extraSkillLabel.AutoSize = true;
-            this.extraSkillLabel.Location = new System.Drawing.Point(7, 20);
-            this.extraSkillLabel.Name = "extraSkillLabel";
-            this.extraSkillLabel.Size = new System.Drawing.Size(35, 13);
-            this.extraSkillLabel.TabIndex = 0;
-            this.extraSkillLabel.Text = "label1";
+            this.extraSkillBox.Text = "Extra Skills";
             // 
             // extraSkillLayout
             // 
@@ -71,6 +62,15 @@
             this.extraSkillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.extraSkillLayout.Size = new System.Drawing.Size(898, 121);
             this.extraSkillLayout.TabIndex = 1;
+            // 
+            // extraSkillLabel
+            // 
+            this.extraSkillLabel.AutoSize = true;
+            this.extraSkillLabel.Location = new System.Drawing.Point(7, 20);
+            this.extraSkillLabel.Name = "extraSkillLabel";
+            this.extraSkillLabel.Size = new System.Drawing.Size(93, 13);
+            this.extraSkillLabel.TabIndex = 0;
+            this.extraSkillLabel.Text = "extra skill intro text";
             // 
             // ExtraSkillControl
             // 

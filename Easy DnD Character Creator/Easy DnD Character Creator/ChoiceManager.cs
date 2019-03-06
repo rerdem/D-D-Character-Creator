@@ -80,6 +80,8 @@ namespace Easy_DnD_Character_Creator
         public List<FightingStyle> ClassFightingStyles { get; set; }
         public string FavoredEnemies { get; set; }
         public string FavoredTerrains { get; set; }
+        public List<string> ClassSkills { get; set; }
+        public bool DoublesProficiency { get; set; }
 
         public ChoiceManager()
         {
@@ -139,6 +141,8 @@ namespace Easy_DnD_Character_Creator
             ClassFightingStyles = new List<FightingStyle>();
             FavoredEnemies = "";
             FavoredTerrains = "";
+            ClassSkills = new List<string>();
+            DoublesProficiency = false;
         }
     }
 }

@@ -2,7 +2,7 @@ XHigh Elf bonus Cantrip
 
 /Fighter Fighting Style
 /Ranger Favored Enemy/Terrain
-Rogue Expertise
+/Rogue Expertise
 
 Draconic Bloodline Ancestry
 Knowledge Domain Double Proficiency
@@ -27,7 +27,7 @@ Bard:
 		Features: (!)Jack of all trades, Song of Rest
 	
 	Level 3:
-		!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
+		/!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
 		Subclass:
 		!!Lore: 3 extra skill proficiencies
 			cutting words

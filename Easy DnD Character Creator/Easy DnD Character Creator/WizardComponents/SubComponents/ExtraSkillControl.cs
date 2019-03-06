@@ -16,23 +16,37 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
         private WizardManager wm;
         private bool visited;
 
+        private bool doublesProficiency;
+        List<string> skills;
+        private int choiceAmount;
+        private string lastClass;
+
         private ToolTip toolTips;
         private List<CheckBox> skillBoxes;
         private List<CheckBox> choiceBoxes;
         private CheckBox extraSkillCheckBox;
+
+        public event EventHandler SkillChosen;
 
         public ExtraSkillControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             Visited = false;
 
+            doublesProficiency = false;
+            skills = new List<string>();
+            choiceAmount = 0;
+            lastClass = "";
+
             toolTips = new ToolTip();
             skillBoxes = new List<CheckBox>();
             choiceBoxes = new List<CheckBox>();
             extraSkillCheckBox = new CheckBox();
-            extraSkillCheckBox.Name = "extraSkillBox"
+            //extraSkillCheckBox.Name = "extraSkillCheckBox";
 
             InitializeComponent();
+
+            fillExtraSkillLayout();
         }
 
         public bool Visited
@@ -59,27 +73,38 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
 
         public void populateForm()
         {
-            //set groupbox text
+            resetSkillBoxes();
 
+            if ((Visited) && (!hasClassChanged()))
+            {
+                loadPreviousSelection();
+            }
+
+            lastClass = wm.Choices.Class;
             Visited = true;
         }
 
         public void saveContent()
         {
-            
+            //save skills
+            wm.Choices.ClassSkills.Clear();
+            foreach (CheckBox box in choiceBoxes)
+            {
+                if (box.Checked)
+                {
+                    wm.Choices.ClassSkills.Add(box.Text);
+                }
+            }
+
+            //save doubling proficiency
+            wm.Choices.DoublesProficiency = doublesProficiency;
         }
 
-        private void resetSkillBoxes()
+        private void loadPreviousSelection()
         {
-            choiceBoxes.Clear();
-            List<string> knownSkills = new List<string>();
-            List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.Class);
-
-            foreach (CheckBox box in skillBoxes)
+            foreach (CheckBox box in choiceBoxes)
             {
-                box.Enabled = false;
-
-                if (knownSkills.Contains(box.Text))
+                if (wm.Choices.ClassSkills.Contains(box.Text))
                 {
                     box.Checked = true;
                 }
@@ -87,29 +112,135 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                 {
                     box.Checked = false;
                 }
+            }
+        }
 
-                if ((skillOptions.Contains(box.Text)) && (!box.Checked))
+        private void resetSkillBoxes()
+        {
+            choiceBoxes.Clear();
+            doublesProficiency = wm.DBManager.ExtraClassChoiceData.SkillChoiceDoublesProficiency(wm.Choices.Class, wm.Choices.Level);
+            choiceAmount = wm.DBManager.ExtraClassChoiceData.getSkillChoiceAmount(wm.Choices.Class, wm.Choices.Level);
+
+            //get choosable skills
+            List<string> choosableSkills;
+            if (wm.DBManager.ExtraClassChoiceData.hasSkillChoiceRestrictions(wm.Choices.Class))
+            {
+                if (doublesProficiency)
+                {
+                    choosableSkills = new List<string>(wm.Choices.Skills.Count +
+                                                                    wm.Choices.ExtraSkills.Count);
+                    choosableSkills.AddRange(wm.Choices.Skills);
+                    choosableSkills.AddRange(wm.Choices.ExtraSkills);
+                }
+                else
+                {
+                    choosableSkills = new List<string>(skills.Count);
+                    choosableSkills.AddRange(skills);
+                }
+
+                List<string> restrictions = wm.DBManager.ExtraClassChoiceData.getSkillChoiceRestrictions(wm.Choices.Class);
+                choosableSkills.RemoveAll(skill => !restrictions.Exists(restriction => skill == restriction));
+            }
+            else
+            {
+                if (doublesProficiency)
+                {
+                    choosableSkills = new List<string>(wm.Choices.Skills.Count +
+                                                                    wm.Choices.ExtraSkills.Count);
+                    choosableSkills.AddRange(wm.Choices.Skills);
+                    choosableSkills.AddRange(wm.Choices.ExtraSkills);
+                }
+                else
+                {
+                    choosableSkills = new List<string>();
+                }
+            }
+
+            //add additional box, if applicable
+            if (wm.DBManager.ExtraClassChoiceData.hasExtraSkillCheckbox(wm.Choices.Class))
+            {
+                string extraSkillBoxName = wm.DBManager.ExtraClassChoiceData.getExtraSkillCheckbox(wm.Choices.Class);
+                choosableSkills.Add(extraSkillBoxName);
+                extraSkillBox.Text = extraSkillBoxName;
+                extraSkillBox.Visible = true;
+            }
+
+            //enable choosable skill boxes and fill in choiceBoxes
+            foreach (CheckBox box in skillBoxes)
+            {
+                box.Enabled = false;
+                box.Checked = false;
+
+                if (choosableSkills.Contains(box.Text))
                 {
                     box.Enabled = true;
                     choiceBoxes.Add(box);
                 }
+                else
+                {
+                    box.Enabled = false;
+                }
             }
 
-            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+            //set box title
+            if (doublesProficiency)
             {
-                int choiceAmount = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace);
-                extraSkillLabel.Text = $"Please choose {choiceAmount} additional skill(s):";
-                extraSkillLayout.Visible = true;
+                extraSkillBox.Text = $"{wm.Choices.Class} Expertise";
             }
             else
             {
-                extraSkillLayout.Visible = false;
+                extraSkillBox.Text = $"{wm.Choices.Class} Bonus Skills";
+            }
+
+            //set label text
+            if (doublesProficiency)
+            {
+                extraSkillLabel.Text = $"Please choose {choiceAmount} of your skill proficiencies. Your proficiency bonus " +
+                                       $"is doubled for any ability check you make that uses any of the chosen proficiencies.";
+            }
+            else
+            {
+                extraSkillLabel.Text = $"Please choose {choiceAmount} additional skill(s) below:";
+            }
+        }
+        private bool hasClassChanged()
+        {
+            return (lastClass != wm.Choices.Class);
+        }
+
+        private void toggleChoiceBoxes()
+        {
+            int selectedBoxes = 0;
+            foreach (CheckBox box in choiceBoxes)
+            {
+                if (box.Checked)
+                {
+                    selectedBoxes++;
+                }
+            }
+
+            if (selectedBoxes >= choiceAmount)
+            {
+                foreach (CheckBox box in choiceBoxes)
+                {
+                    if (!box.Checked)
+                    {
+                        box.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (CheckBox box in choiceBoxes)
+                {
+                    box.Enabled = true;
+                }
             }
         }
 
         private void fillExtraSkillLayout()
         {
-            List<string> skills = wm.DBManager.SkillData.getSkills();
+            skills = wm.DBManager.SkillData.getSkills();
 
             //create Checkboxes
             foreach (string skill in skills)
@@ -154,9 +285,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
         private void skillBoxes_CheckedChanged(object sender, EventArgs e)
         {
             toggleChoiceBoxes();
-            refreshExtraSkillBox();
 
             OnSkillChosen(null);
+        }
+
+        protected virtual void OnSkillChosen(EventArgs e)
+        {
+            EventHandler handler = SkillChosen;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }
