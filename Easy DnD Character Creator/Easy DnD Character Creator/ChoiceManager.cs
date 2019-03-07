@@ -18,6 +18,7 @@ namespace Easy_DnD_Character_Creator
         public string Race { get; set; }
         public string Subrace { get; set; }
         public string RaceProficiency { get; set; }
+        public bool HasExtraRaceChoice { get; set; }
 
         //AlignmentControl
         public string LawAlignment { get; set; }
@@ -41,6 +42,8 @@ namespace Easy_DnD_Character_Creator
         public string Class { get; set; }
         public string Subclass { get; set; }
         public string ClassProficiency { get; set; }
+        public bool HasExtraClassChoice { get; set; }
+        public bool HasExtraSubclassChoice { get; set; }
         public bool HasSpellcasting { get; set; }
         public bool ChoosesSpells { get; set; }
 
@@ -92,6 +95,7 @@ namespace Easy_DnD_Character_Creator
             Race = "";
             Subrace = "";
             RaceProficiency = "";
+            HasExtraRaceChoice = false;
 
             LawAlignment = "";
             MoralityAlignment = "";
@@ -110,6 +114,8 @@ namespace Easy_DnD_Character_Creator
             Class = "";
             Subclass = "";
             ClassProficiency = "";
+            HasExtraClassChoice = false;
+            HasExtraSubclassChoice = false;
             HasSpellcasting = false;
             ChoosesSpells = false;
 

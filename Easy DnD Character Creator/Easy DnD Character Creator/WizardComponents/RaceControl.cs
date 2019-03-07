@@ -124,6 +124,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wm.Choices.RaceProficiency = "";
             }
+
+            wm.Choices.HasExtraRaceChoice = wm.DBManager.ExtraRaceChoiceData.hasExtraRaceChoices(subraceListBox.SelectedItem.ToString());
         }
 
         private void raceListBox_SelectedIndexChanged(object sender, EventArgs e)

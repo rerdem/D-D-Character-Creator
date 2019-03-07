@@ -87,6 +87,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm.Choices.Class = classListBox.SelectedItem.ToString();
             wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
+            wm.Choices.HasExtraClassChoice = wm.DBManager.ExtraClassChoiceData.hasExtraClassChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasExtraSubclassChoice = wm.DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.ChoosesSpells = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
 
