@@ -555,12 +555,12 @@
             // 
             // recommendationLayout
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.recommendationLayout, 4);
+            this.tableLayoutPanel1.SetColumnSpan(this.recommendationLayout, 6);
             this.recommendationLayout.Controls.Add(this.recommendationTitleLabel);
             this.recommendationLayout.Controls.Add(this.recommendationLabel);
             this.recommendationLayout.Location = new System.Drawing.Point(3, 65);
             this.recommendationLayout.Name = "recommendationLayout";
-            this.recommendationLayout.Size = new System.Drawing.Size(626, 24);
+            this.recommendationLayout.Size = new System.Drawing.Size(944, 24);
             this.recommendationLayout.TabIndex = 40;
             // 
             // recommendationTitleLabel

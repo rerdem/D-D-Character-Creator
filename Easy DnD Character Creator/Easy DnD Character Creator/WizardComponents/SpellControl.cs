@@ -202,6 +202,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 introLabel.Text += $" With the exception of {SubclassSpellSchoolLimitationExceptions} spell(s), you are limited to spells from these schools: {string.Join(", ", SubclassSpellSchoolLimitations.ToArray())}.";
             }
 
+            //reset spell description labels
+            cantripDescriptionLabel.Text = "No cantrips available.";
+            spellDescriptionLabel.Text = "No spells available.";
+
             //clear and populate source lists
             chosenCantripsSource.Clear();
             chosenSpellsSource.Clear();

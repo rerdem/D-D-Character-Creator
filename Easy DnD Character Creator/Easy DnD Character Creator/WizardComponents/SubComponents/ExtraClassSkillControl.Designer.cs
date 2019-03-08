@@ -1,6 +1,6 @@
 ﻿namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
 {
-    partial class ExtraSkillControl
+    partial class ExtraClassSkillControl
     {
         /// <summary> 
         /// Required designer variable.

@@ -68,6 +68,10 @@
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
+    <Compile Include="DataManagement\SubManagers\ExtraClassSkillDataManager.cs" />
+    <Compile Include="DataManagement\SubManagers\FavoredEnemyTerrainDataManager.cs" />
+    <Compile Include="DataManagement\SubManagers\FightingStyleDataManager.cs" />
+    <Compile Include="DataManagement\SubManagers\WarlockChoiceDataManager.cs" />
     <Compile Include="DataTypes\Armor.cs" />
     <Compile Include="DataManagement\AbilityDataManager.cs" />
     <Compile Include="DataManagement\AppearanceDataManager.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
     <Compile Include="DataTypes\Dragon.cs" />
+    <Compile Include="DataTypes\EldritchInvocation.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
@@ -191,11 +196,11 @@
       <DependentUpon>SpellControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\SpellFormatter.cs" />
-    <Compile Include="WizardComponents\SubComponents\ExtraSkillControl.cs">
+    <Compile Include="WizardComponents\SubComponents\ExtraClassSkillControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\ExtraSkillControl.Designer.cs">
-      <DependentUpon>ExtraSkillControl.cs</DependentUpon>
+    <Compile Include="WizardComponents\SubComponents\ExtraClassSkillControl.Designer.cs">
+      <DependentUpon>ExtraClassSkillControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.cs">
       <SubType>UserControl</SubType>
@@ -264,8 +269,8 @@
     <EmbeddedResource Include="WizardComponents\SpellControl.resx">
       <DependentUpon>SpellControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\ExtraSkillControl.resx">
-      <DependentUpon>ExtraSkillControl.cs</DependentUpon>
+    <EmbeddedResource Include="WizardComponents\SubComponents\ExtraClassSkillControl.resx">
+      <DependentUpon>ExtraClassSkillControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.resx">
       <DependentUpon>FavoredEnemyTerrainControl.cs</DependentUpon>

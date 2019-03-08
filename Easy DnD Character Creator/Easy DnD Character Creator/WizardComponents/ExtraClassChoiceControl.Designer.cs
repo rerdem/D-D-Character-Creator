@@ -54,6 +54,7 @@
             this.classChoiceLayout.Name = "classChoiceLayout";
             this.classChoiceLayout.Size = new System.Drawing.Size(935, 462);
             this.classChoiceLayout.TabIndex = 0;
+            this.classChoiceLayout.WrapContents = false;
             // 
             // ExtraClassChoiceControl
             // 

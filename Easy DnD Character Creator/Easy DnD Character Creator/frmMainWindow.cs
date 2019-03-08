@@ -59,7 +59,7 @@ namespace Easy_DnD_Character_Creator
             extraRaceChoiceComponent = new ExtraRaceChoiceControl(WM);
             extraRaceChoiceComponent.ExtraRaceChoiceChanged += new EventHandler(extraRaceChoiceComponent_ExtraRaceChoiceChanged);
             extraClassChoiceComponent = new ExtraClassChoiceControl(WM);
-            extraClassChoiceComponent.SkillChosen += new EventHandler(extraClassChoiceComponent_SkillChosen);
+            extraClassChoiceComponent.SubcontrolOptionChosen += new EventHandler(extraClassChoiceComponent_SubcontrolOptionChosen);
 
 
             InitializeComponent();
@@ -473,7 +473,7 @@ namespace Easy_DnD_Character_Creator
             }
         }
 
-        private void extraClassChoiceComponent_SkillChosen(object sender, EventArgs e)
+        private void extraClassChoiceComponent_SubcontrolOptionChosen(object sender, EventArgs e)
         {
             ExtraClassChoiceControl incoming = sender as ExtraClassChoiceControl;
             if (incoming != null)

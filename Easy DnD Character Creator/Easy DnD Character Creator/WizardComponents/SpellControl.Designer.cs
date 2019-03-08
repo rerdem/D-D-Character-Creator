@@ -158,9 +158,9 @@
             this.spellDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
             this.spellDescriptionLabel.Name = "spellDescriptionLabel";
             this.spellLayout.SetRowSpan(this.spellDescriptionLabel, 2);
-            this.spellDescriptionLabel.Size = new System.Drawing.Size(82, 13);
+            this.spellDescriptionLabel.Size = new System.Drawing.Size(98, 13);
             this.spellDescriptionLabel.TabIndex = 5;
-            this.spellDescriptionLabel.Text = "spell description";
+            this.spellDescriptionLabel.Text = "No spells available.";
             // 
             // cantripLayout
             // 
@@ -249,9 +249,9 @@
             this.cantripDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
             this.cantripDescriptionLabel.Name = "cantripDescriptionLabel";
             this.cantripLayout.SetRowSpan(this.cantripDescriptionLabel, 2);
-            this.cantripDescriptionLabel.Size = new System.Drawing.Size(93, 13);
+            this.cantripDescriptionLabel.Size = new System.Drawing.Size(109, 13);
             this.cantripDescriptionLabel.TabIndex = 5;
-            this.cantripDescriptionLabel.Text = "cantrip description";
+            this.cantripDescriptionLabel.Text = "No cantrips available.";
             // 
             // SpellControl
             // 

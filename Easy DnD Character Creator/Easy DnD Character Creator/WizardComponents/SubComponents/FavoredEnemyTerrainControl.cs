@@ -25,6 +25,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
         private List<string> availableTerrain;
         private List<int> terrainOrder;
 
+        public event EventHandler FavoredEnemyChosen;
+        public event EventHandler FavoredTerrainChosen;
+
         public FavoredEnemyTerrainControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
@@ -108,8 +111,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
 
         private void resetPage()
         {
-            favoredEnemyAmount = wm.DBManager.ExtraClassChoiceData.getFavoredEnemyAmount(wm.Choices.Class, wm.Choices.Level);
-            favoredTerrainAmount = wm.DBManager.ExtraClassChoiceData.getFavoredTerrainAmount(wm.Choices.Class, wm.Choices.Level);
+            favoredEnemyAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredEnemyAmount(wm.Choices.Class, wm.Choices.Level);
+            favoredTerrainAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredTerrainAmount(wm.Choices.Class, wm.Choices.Level);
 
             if (!Visited || hasLevelChanged())
             {
@@ -118,8 +121,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                                    $"Choose each below.";
             }
 
-            availableEnemies = wm.DBManager.ExtraClassChoiceData.getFavoredEnemyTypes();
-            availableTerrain = wm.DBManager.ExtraClassChoiceData.getFavoredTerrainTypes();
+            availableEnemies = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredEnemyTypes();
+            availableTerrain = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredTerrainTypes();
 
             enemyBox.BeginUpdate();
             enemyBox.DataSource = null;
@@ -212,6 +215,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                     int lastSelectedIndex = enemyOrder.ElementAt(enemyOrder.Count - 1);
                     enemyBox.SelectedIndices.Remove(lastSelectedIndex);
                 }
+
+                OnFavoredEnemyChosen(null);
             }
         }
 
@@ -229,6 +234,26 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                     int lastSelectedIndex = terrainOrder.ElementAt(terrainOrder.Count - 1);
                     terrainBox.SelectedIndices.Remove(lastSelectedIndex);
                 }
+
+                OnFavoredTerrainChosen(null);
+            }
+        }
+
+        protected virtual void OnFavoredEnemyChosen(EventArgs e)
+        {
+            EventHandler handler = FavoredEnemyChosen;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnFavoredTerrainChosen(EventArgs e)
+        {
+            EventHandler handler = FavoredTerrainChosen;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
     }

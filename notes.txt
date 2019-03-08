@@ -1,8 +1,8 @@
 XHigh Elf bonus Cantrip
 
-/Fighter Fighting Style
-/Ranger Favored Enemy/Terrain
-/Rogue Expertise
+XFighter Fighting Style
+XRanger Favored Enemy/Terrain
+XRogue Expertise
 
 Draconic Bloodline Ancestry
 Knowledge Domain Double Proficiency
@@ -27,7 +27,7 @@ Bard:
 		Features: (!)Jack of all trades, Song of Rest
 	
 	Level 3:
-		/!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
+		X!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
 		Subclass:
 		!!Lore: 3 extra skill proficiencies
 			cutting words
@@ -88,9 +88,9 @@ Monk:
 			Elemental Attunement
 			!! 1 extra discipline (some are spells)
 			
-Paladin:
-	Level 2:
-		!!Fighting style
+XPaladin:
+	XLevel 2:
+		X!!Fighting style
 		X!!Spellcasting:
 			spells known all
 			spell ability cha: 8 + prof + cha mod
@@ -103,9 +103,9 @@ Paladin:
 		XChannel Divinity oath-specific
 
 Ranger:
-	Level 2:
-		!!Fighting Style
-		!!Spellcasting:
+	XLevel 2:
+		X!!Fighting Style
+		X!!Spellcasting:
 			spells known table
 			spell ability wis
 			
@@ -147,6 +147,8 @@ Warlock:
 	X!expanded pact spells each level
 	Level 2:
 		!!Eldritch Invocations: choose 2
+			Beguiling Influence
+			Book of Ancient Secrets
 		
 	Level 3:
 		!!Pact Boon: choose 1

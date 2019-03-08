@@ -16,6 +16,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
         private WizardManager wm;
         private bool visited;
 
+        public event EventHandler FightingStyleChosen;
+
         private List<FightingStyle> availableStyles;
 
         public FightingStyleControl(WizardManager inputWizardManager)
@@ -57,7 +59,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                 fightingStyleLabel.Text = "You adopt a particular style of fighting as your specialty. Choose one of the following options:";
             }
 
-            availableStyles = wm.DBManager.ExtraClassChoiceData.getFightingStyles(wm.Choices.Class, wm.Choices.Level);
+            availableStyles = wm.DBManager.ExtraClassChoiceData.FightingStyleData.getFightingStyles(wm.Choices.Class, wm.Choices.Level);
             fightingStyleListBox.BeginUpdate();
             fightingStyleListBox.DataSource = null;
             fightingStyleListBox.DataSource = availableStyles;
@@ -96,6 +98,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
                 {
                     descriptionLabel.Text = selectedStyle.Description;
                 }
+
+                OnFightingStyleChosen(null);
+            }
+        }
+
+        protected virtual void OnFightingStyleChosen(EventArgs e)
+        {
+            EventHandler handler = FightingStyleChosen;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
     }
