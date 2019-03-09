@@ -10,6 +10,24 @@ Nature Domain extra skills
 
 
 
+SELECT eldritchInvocations.name, eldritchInvocations.description, eldritchInvocations.level, eldritchInvocations.pactRestriction, 
+RequiredSpells.name, RequiredSpells.ritual, RequiredSpells.level, RequiredSpells.school, RequiredSpells.castTime, RequiredSpells.range, RequiredSpells.duration, RequiredSpells.components, RequiredSpells.materials, RequiredSpells.description, 
+GainedSpells.name, GainedSpells.ritual, GainedSpells.level, GainedSpells.school, GainedSpells.castTime, GainedSpells.range, GainedSpells.duration, GainedSpells.components, GainedSpells.materials, GainedSpells.description
+FROM eldritchInvocations
+LEFT JOIN eldritchInvocationRequiredSpells ON eldritchInvocationRequiredSpells.invocationId = eldritchInvocations.invocationId
+LEFT JOIN eldritchInvocationGainedSpells ON eldritchInvocationGainedSpells.invocationId = eldritchInvocations.invocationId
+LEFT JOIN spells as RequiredSpells ON RequiredSpells.spellId = eldritchInvocationRequiredSpells.spellId
+LEFT JOIN spells as GainedSpells ON GainedSpells.spellId = eldritchInvocationGainedSpells.spellId
+WHERE (eldritchInvocations.pactRestriction = "" OR eldritchInvocations.pactRestriction LIKE "%%")
+AND eldritchInvocations.level BETWEEN 1 AND 20
+
+
+
+
+
+
+
+
 Class/Subclass choices to separate page:
 
 Barbarian:

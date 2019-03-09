@@ -214,6 +214,24 @@
     <Compile Include="WizardComponents\SubComponents\FightingStyleControl.Designer.cs">
       <DependentUpon>FightingStyleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockControl.Designer.cs">
+      <DependentUpon>WarlockControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockInvocationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockInvocationControl.Designer.cs">
+      <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockPactControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\SubComponents\WarlockPactControl.Designer.cs">
+      <DependentUpon>WarlockPactControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -277,6 +295,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\SubComponents\FightingStyleControl.resx">
       <DependentUpon>FightingStyleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockControl.resx">
+      <DependentUpon>WarlockControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockInvocationControl.resx">
+      <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockPactControl.resx">
+      <DependentUpon>WarlockPactControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

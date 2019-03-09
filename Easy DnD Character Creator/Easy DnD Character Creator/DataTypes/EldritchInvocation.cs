@@ -11,28 +11,28 @@ namespace Easy_DnD_Character_Creator.DataTypes
         public string Name { get; }
         public string Description { get; }
         public int LevelRestriction { get; }
-        public bool RequiresEldritchBlast { get; }
+        public Spell RequiredSpell { get; }
         public string PactRestriction { get; }
-        public Spell gainedSpell { get; }
+        public Spell GainedSpell { get; }
 
         public EldritchInvocation()
         {
             Name = "";
             Description = "";
             LevelRestriction = 0;
-            RequiresEldritchBlast = false;
+            RequiredSpell = new Spell();
             PactRestriction = "";
-            gainedSpell = new Spell();
+            GainedSpell = new Spell();
         }
 
-        public EldritchInvocation(string inputName, string inputDescription, int inputLevelRestriction, bool inputRequiresEldritchBlast, string inputPactRestriction, Spell inputGainedSpell)
+        public EldritchInvocation(string inputName, string inputDescription, int inputLevelRestriction, Spell inputRequiredSpell, string inputPactRestriction, Spell inputGainedSpell)
         {
             Name = inputName;
             Description = inputDescription;
             LevelRestriction = inputLevelRestriction;
-            RequiresEldritchBlast = inputRequiresEldritchBlast;
+            RequiredSpell = inputRequiredSpell;
             PactRestriction = inputPactRestriction;
-            gainedSpell = inputGainedSpell;
+            GainedSpell = inputGainedSpell;
         }
     }
 }

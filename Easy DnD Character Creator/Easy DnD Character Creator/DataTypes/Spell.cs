@@ -58,16 +58,6 @@ namespace Easy_DnD_Character_Creator.DataTypes
             }
 
             return Name == other.Name;
-                   //Ritual == other.Ritual &&
-                   //Level == other.Level &&
-                   //School == other.School &&
-                   //CastTime == other.CastTime &&
-                   //Range == other.Range &&
-                   //Duration == other.Duration &&
-                   //Components == other.Components &&
-                   //Materials == other.Materials &&
-                   //Description == other.Description &&
-                   //NotDeselectable == other.NotDeselectable;
         }
 
         public override bool Equals(Object other)
