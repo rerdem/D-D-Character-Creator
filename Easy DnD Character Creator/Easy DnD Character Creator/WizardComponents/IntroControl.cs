@@ -171,7 +171,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             introPanel.Controls.Add(settingsBox);
 
             Controls.Add(introPanel);
-            Size = new Size(950, 550);
+            Size = new Size(937, 496);
         }
 
         public void populateForm()

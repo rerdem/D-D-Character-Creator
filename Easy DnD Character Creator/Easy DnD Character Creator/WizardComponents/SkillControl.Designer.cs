@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.skillBox = new System.Windows.Forms.GroupBox();
-            this.skillLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.extraSkillBox = new System.Windows.Forms.ListBox();
-            this.extraSkillLabel = new System.Windows.Forms.Label();
-            this.extraSkillLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.tutorialLabel = new System.Windows.Forms.Label();
+            this.extraSkillLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.extraSkillLabel = new System.Windows.Forms.Label();
+            this.extraSkillBox = new System.Windows.Forms.ListBox();
+            this.skillLayout = new System.Windows.Forms.TableLayoutPanel();
             this.skillBox.SuspendLayout();
             this.extraSkillLayout.SuspendLayout();
             this.SuspendLayout();
@@ -45,10 +45,54 @@
             this.skillBox.Controls.Add(this.skillLayout);
             this.skillBox.Location = new System.Drawing.Point(3, 3);
             this.skillBox.Name = "skillBox";
-            this.skillBox.Size = new System.Drawing.Size(954, 194);
+            this.skillBox.Size = new System.Drawing.Size(925, 194);
             this.skillBox.TabIndex = 0;
             this.skillBox.TabStop = false;
             this.skillBox.Text = "Skills";
+            // 
+            // tutorialLabel
+            // 
+            this.tutorialLabel.AutoSize = true;
+            this.tutorialLabel.Location = new System.Drawing.Point(1, 20);
+            this.tutorialLabel.MaximumSize = new System.Drawing.Size(777, 47);
+            this.tutorialLabel.Name = "tutorialLabel";
+            this.tutorialLabel.Size = new System.Drawing.Size(90, 13);
+            this.tutorialLabel.TabIndex = 4;
+            this.tutorialLabel.Text = "actual tutorial text";
+            // 
+            // extraSkillLayout
+            // 
+            this.extraSkillLayout.Controls.Add(this.extraSkillLabel);
+            this.extraSkillLayout.Controls.Add(this.extraSkillBox);
+            this.extraSkillLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.extraSkillLayout.Location = new System.Drawing.Point(769, 20);
+            this.extraSkillLayout.Name = "extraSkillLayout";
+            this.extraSkillLayout.Size = new System.Drawing.Size(150, 168);
+            this.extraSkillLayout.TabIndex = 3;
+            this.extraSkillLayout.Visible = false;
+            // 
+            // extraSkillLabel
+            // 
+            this.extraSkillLabel.AutoSize = true;
+            this.extraSkillLabel.Location = new System.Drawing.Point(3, 3);
+            this.extraSkillLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.extraSkillLabel.MaximumSize = new System.Drawing.Size(144, 0);
+            this.extraSkillLabel.Name = "extraSkillLabel";
+            this.extraSkillLabel.Size = new System.Drawing.Size(75, 13);
+            this.extraSkillLabel.TabIndex = 2;
+            this.extraSkillLabel.Text = "extraSkillLabel";
+            // 
+            // extraSkillBox
+            // 
+            this.extraSkillBox.FormattingEnabled = true;
+            this.extraSkillBox.Location = new System.Drawing.Point(3, 22);
+            this.extraSkillBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.extraSkillBox.Name = "extraSkillBox";
+            this.extraSkillBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.extraSkillBox.Size = new System.Drawing.Size(144, 121);
+            this.extraSkillBox.TabIndex = 1;
+            this.extraSkillBox.SelectedIndexChanged += new System.EventHandler(this.extraSkillBox_SelectedIndexChanged);
+            this.extraSkillBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.extraSkillBox_MouseMove);
             // 
             // skillLayout
             // 
@@ -65,52 +109,8 @@
             this.skillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.skillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.skillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.skillLayout.Size = new System.Drawing.Size(789, 118);
+            this.skillLayout.Size = new System.Drawing.Size(757, 118);
             this.skillLayout.TabIndex = 0;
-            // 
-            // extraSkillBox
-            // 
-            this.extraSkillBox.FormattingEnabled = true;
-            this.extraSkillBox.Location = new System.Drawing.Point(3, 22);
-            this.extraSkillBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.extraSkillBox.Name = "extraSkillBox";
-            this.extraSkillBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.extraSkillBox.Size = new System.Drawing.Size(144, 121);
-            this.extraSkillBox.TabIndex = 1;
-            this.extraSkillBox.SelectedIndexChanged += new System.EventHandler(this.extraSkillBox_SelectedIndexChanged);
-            this.extraSkillBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.extraSkillBox_MouseMove);
-            // 
-            // extraSkillLabel
-            // 
-            this.extraSkillLabel.AutoSize = true;
-            this.extraSkillLabel.Location = new System.Drawing.Point(3, 3);
-            this.extraSkillLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.extraSkillLabel.MaximumSize = new System.Drawing.Size(144, 0);
-            this.extraSkillLabel.Name = "extraSkillLabel";
-            this.extraSkillLabel.Size = new System.Drawing.Size(75, 13);
-            this.extraSkillLabel.TabIndex = 2;
-            this.extraSkillLabel.Text = "extraSkillLabel";
-            // 
-            // extraSkillLayout
-            // 
-            this.extraSkillLayout.Controls.Add(this.extraSkillLabel);
-            this.extraSkillLayout.Controls.Add(this.extraSkillBox);
-            this.extraSkillLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.extraSkillLayout.Location = new System.Drawing.Point(798, 20);
-            this.extraSkillLayout.Name = "extraSkillLayout";
-            this.extraSkillLayout.Size = new System.Drawing.Size(150, 168);
-            this.extraSkillLayout.TabIndex = 3;
-            this.extraSkillLayout.Visible = false;
-            // 
-            // tutorialLabel
-            // 
-            this.tutorialLabel.AutoSize = true;
-            this.tutorialLabel.Location = new System.Drawing.Point(1, 20);
-            this.tutorialLabel.MaximumSize = new System.Drawing.Size(777, 47);
-            this.tutorialLabel.Name = "tutorialLabel";
-            this.tutorialLabel.Size = new System.Drawing.Size(90, 13);
-            this.tutorialLabel.TabIndex = 4;
-            this.tutorialLabel.Text = "actual tutorial text";
             // 
             // SkillControl
             // 
@@ -118,7 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.skillBox);
             this.Name = "SkillControl";
-            this.Size = new System.Drawing.Size(960, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.skillBox.ResumeLayout(false);
             this.skillBox.PerformLayout();
             this.extraSkillLayout.ResumeLayout(false);

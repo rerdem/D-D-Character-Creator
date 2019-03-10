@@ -44,7 +44,7 @@
             this.standardLanguageBox.Controls.Add(this.standardLanguageLayout);
             this.standardLanguageBox.Location = new System.Drawing.Point(4, 4);
             this.standardLanguageBox.Name = "standardLanguageBox";
-            this.standardLanguageBox.Size = new System.Drawing.Size(380, 138);
+            this.standardLanguageBox.Size = new System.Drawing.Size(370, 138);
             this.standardLanguageBox.TabIndex = 0;
             this.standardLanguageBox.TabStop = false;
             this.standardLanguageBox.Text = "Standard Languages";
@@ -61,15 +61,15 @@
             this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.standardLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.standardLanguageLayout.Size = new System.Drawing.Size(367, 112);
+            this.standardLanguageLayout.Size = new System.Drawing.Size(357, 112);
             this.standardLanguageLayout.TabIndex = 0;
             // 
             // classLanguageBox
             // 
             this.classLanguageBox.Controls.Add(this.classLanguageLayout);
-            this.classLanguageBox.Location = new System.Drawing.Point(776, 4);
+            this.classLanguageBox.Location = new System.Drawing.Point(757, 4);
             this.classLanguageBox.Name = "classLanguageBox";
-            this.classLanguageBox.Size = new System.Drawing.Size(180, 138);
+            this.classLanguageBox.Size = new System.Drawing.Size(176, 138);
             this.classLanguageBox.TabIndex = 1;
             this.classLanguageBox.TabStop = false;
             this.classLanguageBox.Text = "Class-specific Languages";
@@ -79,15 +79,15 @@
             this.classLanguageLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.classLanguageLayout.Location = new System.Drawing.Point(7, 20);
             this.classLanguageLayout.Name = "classLanguageLayout";
-            this.classLanguageLayout.Size = new System.Drawing.Size(167, 112);
+            this.classLanguageLayout.Size = new System.Drawing.Size(163, 112);
             this.classLanguageLayout.TabIndex = 0;
             // 
             // exoticLanguageBox
             // 
             this.exoticLanguageBox.Controls.Add(this.exoticLanguageLayout);
-            this.exoticLanguageBox.Location = new System.Drawing.Point(390, 4);
+            this.exoticLanguageBox.Location = new System.Drawing.Point(380, 4);
             this.exoticLanguageBox.Name = "exoticLanguageBox";
-            this.exoticLanguageBox.Size = new System.Drawing.Size(380, 138);
+            this.exoticLanguageBox.Size = new System.Drawing.Size(370, 138);
             this.exoticLanguageBox.TabIndex = 2;
             this.exoticLanguageBox.TabStop = false;
             this.exoticLanguageBox.Text = "Exotic Languages";
@@ -104,7 +104,7 @@
             this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.exoticLanguageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.exoticLanguageLayout.Size = new System.Drawing.Size(367, 112);
+            this.exoticLanguageLayout.Size = new System.Drawing.Size(357, 112);
             this.exoticLanguageLayout.TabIndex = 0;
             // 
             // LanguageControl
@@ -115,7 +115,7 @@
             this.Controls.Add(this.classLanguageBox);
             this.Controls.Add(this.standardLanguageBox);
             this.Name = "LanguageControl";
-            this.Size = new System.Drawing.Size(960, 150);
+            this.Size = new System.Drawing.Size(937, 150);
             this.standardLanguageBox.ResumeLayout(false);
             this.classLanguageBox.ResumeLayout(false);
             this.exoticLanguageBox.ResumeLayout(false);

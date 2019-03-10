@@ -117,9 +117,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             classListBox.BeginUpdate();
             classListBox.Items.Clear();
-            foreach (string race in classList)
+            foreach (string className in classList)
             {
-                classListBox.Items.Add(race);
+                classListBox.Items.Add(className);
             }
             classListBox.EndUpdate();
 
@@ -180,10 +180,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
-        private void classListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void toggleExtraChoiceBox()
         {
-            fillSubclassListBox(classListBox.SelectedItem.ToString());
-
             if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
@@ -208,6 +206,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 extraChoiceLayout.Visible = false;
                 ChoiceAmount = 0;
             }
+        }
+
+        private void classListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillSubclassListBox(classListBox.SelectedItem.ToString());
+
+            toggleExtraChoiceBox();
 
             OnClassChanged(null);
         }

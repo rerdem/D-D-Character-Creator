@@ -43,7 +43,7 @@
             this.ageBox.Controls.Add(this.ageLabel);
             this.ageBox.Location = new System.Drawing.Point(4, 4);
             this.ageBox.Name = "ageBox";
-            this.ageBox.Size = new System.Drawing.Size(944, 68);
+            this.ageBox.Size = new System.Drawing.Size(925, 68);
             this.ageBox.TabIndex = 0;
             this.ageBox.TabStop = false;
             this.ageBox.Text = "Age";
@@ -86,7 +86,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ageBox);
             this.Name = "AgeControl";
-            this.Size = new System.Drawing.Size(950, 80);
+            this.Size = new System.Drawing.Size(937, 80);
             this.ageBox.ResumeLayout(false);
             this.ageBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ageValue)).EndInit();

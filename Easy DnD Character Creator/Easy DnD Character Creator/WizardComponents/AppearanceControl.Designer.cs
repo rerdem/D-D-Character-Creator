@@ -45,7 +45,7 @@
             this.appearanceBox.Controls.Add(this.appearanceLayout);
             this.appearanceBox.Location = new System.Drawing.Point(3, 3);
             this.appearanceBox.Name = "appearanceBox";
-            this.appearanceBox.Size = new System.Drawing.Size(944, 68);
+            this.appearanceBox.Size = new System.Drawing.Size(925, 68);
             this.appearanceBox.TabIndex = 0;
             this.appearanceBox.TabStop = false;
             this.appearanceBox.Text = "Physical Appearance";
@@ -60,7 +60,7 @@
             this.appearanceLayout.Controls.Add(this.hairColorBox);
             this.appearanceLayout.Location = new System.Drawing.Point(6, 24);
             this.appearanceLayout.Name = "appearanceLayout";
-            this.appearanceLayout.Size = new System.Drawing.Size(926, 37);
+            this.appearanceLayout.Size = new System.Drawing.Size(913, 37);
             this.appearanceLayout.TabIndex = 0;
             this.appearanceLayout.WrapContents = false;
             // 
@@ -124,7 +124,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.appearanceBox);
             this.Name = "AppearanceControl";
-            this.Size = new System.Drawing.Size(960, 80);
+            this.Size = new System.Drawing.Size(937, 80);
             this.appearanceBox.ResumeLayout(false);
             this.appearanceLayout.ResumeLayout(false);
             this.appearanceLayout.PerformLayout();

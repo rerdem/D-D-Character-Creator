@@ -74,9 +74,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             choiceList.EndUpdate();
 
             //if there was a previous choice, load it
-            if (wm.Choices.extraRaceChoices.Count > 0)
+            if (wm.Choices.ExtraRaceChoices.Count > 0)
             {
-                List<Spell> choiceToLoad = wm.Choices.extraRaceChoices.OfType<Spell>().ToList();
+                List<Spell> choiceToLoad = wm.Choices.ExtraRaceChoices.OfType<Spell>().ToList();
                 for (int i = 0; i < choiceList.Items.Count; i++)
                 {
                     if (choiceToLoad.Contains(choiceList.Items[i]))
@@ -100,20 +100,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (choiceList.SelectedItems.Count > 0)
             {
-                wm.Choices.extraRaceChoices.Clear();
+                wm.Choices.ExtraRaceChoices.Clear();
 
                 //needs refactor, once more than High Elves have additional choices
                 foreach (Spell spell in choiceList.SelectedItems)
                 {
                     if (spell != null)
                     {
-                        wm.Choices.extraRaceChoices.Add(spell);
+                        wm.Choices.ExtraRaceChoices.Add(spell);
                     }
                 }
             }
             else
             {
-                wm.Choices.extraRaceChoices.Clear();
+                wm.Choices.ExtraRaceChoices.Clear();
             }
         }
 

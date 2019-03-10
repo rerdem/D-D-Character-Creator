@@ -44,7 +44,7 @@
             this.alignmentBox.Controls.Add(this.tableLayoutPanel1);
             this.alignmentBox.Location = new System.Drawing.Point(4, 4);
             this.alignmentBox.Name = "alignmentBox";
-            this.alignmentBox.Size = new System.Drawing.Size(944, 188);
+            this.alignmentBox.Size = new System.Drawing.Size(925, 188);
             this.alignmentBox.TabIndex = 0;
             this.alignmentBox.TabStop = false;
             this.alignmentBox.Text = "Alignment";
@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(932, 163);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(913, 163);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // generalAlignmentLabel
@@ -94,14 +94,14 @@
             this.lawBox.FormattingEnabled = true;
             this.lawBox.Location = new System.Drawing.Point(3, 83);
             this.lawBox.Name = "lawBox";
-            this.lawBox.Size = new System.Drawing.Size(90, 69);
+            this.lawBox.Size = new System.Drawing.Size(89, 69);
             this.lawBox.TabIndex = 2;
             this.lawBox.SelectedIndexChanged += new System.EventHandler(this.lawBox_SelectedIndexChanged);
             // 
             // moralityBox
             // 
             this.moralityBox.FormattingEnabled = true;
-            this.moralityBox.Location = new System.Drawing.Point(100, 83);
+            this.moralityBox.Location = new System.Drawing.Point(98, 83);
             this.moralityBox.Name = "moralityBox";
             this.moralityBox.Size = new System.Drawing.Size(90, 69);
             this.moralityBox.TabIndex = 3;
@@ -110,7 +110,8 @@
             // chosenAlignmentLabel
             // 
             this.chosenAlignmentLabel.AutoSize = true;
-            this.chosenAlignmentLabel.Location = new System.Drawing.Point(199, 80);
+            this.chosenAlignmentLabel.Location = new System.Drawing.Point(198, 86);
+            this.chosenAlignmentLabel.Margin = new System.Windows.Forms.Padding(6);
             this.chosenAlignmentLabel.Name = "chosenAlignmentLabel";
             this.chosenAlignmentLabel.Size = new System.Drawing.Size(145, 13);
             this.chosenAlignmentLabel.TabIndex = 4;
@@ -122,7 +123,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.alignmentBox);
             this.Name = "AlignmentControl";
-            this.Size = new System.Drawing.Size(950, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.alignmentBox.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

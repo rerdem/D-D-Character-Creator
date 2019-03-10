@@ -1,4 +1,4 @@
-﻿using Easy_DnD_Character_Creator.DataManagement.SubManagers;
+﻿using Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers;
 using Easy_DnD_Character_Creator.DataTypes;
 using System;
 using System.Collections.Generic;
@@ -47,8 +47,8 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public bool hasExtraClassChoices(string className, int level)
         {
             return FightingStyleData.hasFightingStyle(className, level) || FavoredEnemyTerrainData.hasFavoredEnemy(className, level)
-                || FavoredEnemyTerrainData.hasFavoredTerrain(className, level) || ExtraClassSkillData.hasSkillChoice(className, level);
-            //ADD WORLOCK CHOICES
+                || FavoredEnemyTerrainData.hasFavoredTerrain(className, level) || ExtraClassSkillData.hasSkillChoice(className, level)
+                || WarlockChoiceData.hasWarlockChoices(className, level);
         }
 
     }

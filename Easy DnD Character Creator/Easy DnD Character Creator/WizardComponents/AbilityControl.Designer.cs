@@ -148,7 +148,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.26844F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.53951F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(953, 493);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(925, 489);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tutorialLabel
@@ -166,7 +166,7 @@
             // 
             this.strLabel.AutoSize = true;
             this.strLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.strLabel.Location = new System.Drawing.Point(3, 164);
+            this.strLabel.Location = new System.Drawing.Point(3, 162);
             this.strLabel.Margin = new System.Windows.Forms.Padding(3);
             this.strLabel.Name = "strLabel";
             this.strLabel.Size = new System.Drawing.Size(105, 20);
@@ -177,7 +177,7 @@
             // 
             this.dexLabel.AutoSize = true;
             this.dexLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dexLabel.Location = new System.Drawing.Point(161, 164);
+            this.dexLabel.Location = new System.Drawing.Point(157, 162);
             this.dexLabel.Margin = new System.Windows.Forms.Padding(3);
             this.dexLabel.Name = "dexLabel";
             this.dexLabel.Size = new System.Drawing.Size(109, 20);
@@ -188,7 +188,7 @@
             // 
             this.conLabel.AutoSize = true;
             this.conLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.conLabel.Location = new System.Drawing.Point(319, 164);
+            this.conLabel.Location = new System.Drawing.Point(311, 162);
             this.conLabel.Margin = new System.Windows.Forms.Padding(3);
             this.conLabel.Name = "conLabel";
             this.conLabel.Size = new System.Drawing.Size(138, 20);
@@ -199,7 +199,7 @@
             // 
             this.intLabel.AutoSize = true;
             this.intLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.intLabel.Location = new System.Drawing.Point(477, 164);
+            this.intLabel.Location = new System.Drawing.Point(465, 162);
             this.intLabel.Margin = new System.Windows.Forms.Padding(3);
             this.intLabel.Name = "intLabel";
             this.intLabel.Size = new System.Drawing.Size(137, 20);
@@ -210,7 +210,7 @@
             // 
             this.wisLabel.AutoSize = true;
             this.wisLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wisLabel.Location = new System.Drawing.Point(635, 164);
+            this.wisLabel.Location = new System.Drawing.Point(619, 162);
             this.wisLabel.Margin = new System.Windows.Forms.Padding(3);
             this.wisLabel.Name = "wisLabel";
             this.wisLabel.Size = new System.Drawing.Size(83, 20);
@@ -221,7 +221,7 @@
             // 
             this.chaLabel.AutoSize = true;
             this.chaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chaLabel.Location = new System.Drawing.Point(793, 164);
+            this.chaLabel.Location = new System.Drawing.Point(773, 162);
             this.chaLabel.Margin = new System.Windows.Forms.Padding(3);
             this.chaLabel.Name = "chaLabel";
             this.chaLabel.Size = new System.Drawing.Size(103, 20);
@@ -232,9 +232,9 @@
             // 
             this.strDropzone.AllowDrop = true;
             this.strDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.strDropzone.Location = new System.Drawing.Point(3, 190);
+            this.strDropzone.Location = new System.Drawing.Point(3, 188);
             this.strDropzone.Name = "strDropzone";
-            this.strDropzone.Size = new System.Drawing.Size(152, 63);
+            this.strDropzone.Size = new System.Drawing.Size(148, 62);
             this.strDropzone.TabIndex = 10;
             this.strDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.strDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -243,9 +243,9 @@
             // 
             this.dexDropzone.AllowDrop = true;
             this.dexDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dexDropzone.Location = new System.Drawing.Point(161, 190);
+            this.dexDropzone.Location = new System.Drawing.Point(157, 188);
             this.dexDropzone.Name = "dexDropzone";
-            this.dexDropzone.Size = new System.Drawing.Size(152, 63);
+            this.dexDropzone.Size = new System.Drawing.Size(148, 62);
             this.dexDropzone.TabIndex = 11;
             this.dexDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.dexDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -254,9 +254,9 @@
             // 
             this.conDropzone.AllowDrop = true;
             this.conDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.conDropzone.Location = new System.Drawing.Point(319, 190);
+            this.conDropzone.Location = new System.Drawing.Point(311, 188);
             this.conDropzone.Name = "conDropzone";
-            this.conDropzone.Size = new System.Drawing.Size(152, 63);
+            this.conDropzone.Size = new System.Drawing.Size(148, 62);
             this.conDropzone.TabIndex = 12;
             this.conDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.conDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -265,9 +265,9 @@
             // 
             this.intDropzone.AllowDrop = true;
             this.intDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.intDropzone.Location = new System.Drawing.Point(477, 190);
+            this.intDropzone.Location = new System.Drawing.Point(465, 188);
             this.intDropzone.Name = "intDropzone";
-            this.intDropzone.Size = new System.Drawing.Size(152, 63);
+            this.intDropzone.Size = new System.Drawing.Size(148, 62);
             this.intDropzone.TabIndex = 13;
             this.intDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.intDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -276,9 +276,9 @@
             // 
             this.wisDropzone.AllowDrop = true;
             this.wisDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.wisDropzone.Location = new System.Drawing.Point(635, 190);
+            this.wisDropzone.Location = new System.Drawing.Point(619, 188);
             this.wisDropzone.Name = "wisDropzone";
-            this.wisDropzone.Size = new System.Drawing.Size(152, 63);
+            this.wisDropzone.Size = new System.Drawing.Size(148, 62);
             this.wisDropzone.TabIndex = 14;
             this.wisDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.wisDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -287,9 +287,9 @@
             // 
             this.chaDropzone.AllowDrop = true;
             this.chaDropzone.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.chaDropzone.Location = new System.Drawing.Point(793, 190);
+            this.chaDropzone.Location = new System.Drawing.Point(773, 188);
             this.chaDropzone.Name = "chaDropzone";
-            this.chaDropzone.Size = new System.Drawing.Size(157, 63);
+            this.chaDropzone.Size = new System.Drawing.Size(149, 62);
             this.chaDropzone.TabIndex = 15;
             this.chaDropzone.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropzone_DragDrop);
             this.chaDropzone.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropzone_DragEnter);
@@ -297,7 +297,7 @@
             // strBonusLabel
             // 
             this.strBonusLabel.AutoSize = true;
-            this.strBonusLabel.Location = new System.Drawing.Point(3, 259);
+            this.strBonusLabel.Location = new System.Drawing.Point(3, 256);
             this.strBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.strBonusLabel.Name = "strBonusLabel";
             this.strBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -307,7 +307,7 @@
             // dexBonusLabel
             // 
             this.dexBonusLabel.AutoSize = true;
-            this.dexBonusLabel.Location = new System.Drawing.Point(161, 259);
+            this.dexBonusLabel.Location = new System.Drawing.Point(157, 256);
             this.dexBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.dexBonusLabel.Name = "dexBonusLabel";
             this.dexBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -317,7 +317,7 @@
             // conBonusLabel
             // 
             this.conBonusLabel.AutoSize = true;
-            this.conBonusLabel.Location = new System.Drawing.Point(319, 259);
+            this.conBonusLabel.Location = new System.Drawing.Point(311, 256);
             this.conBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.conBonusLabel.Name = "conBonusLabel";
             this.conBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -327,7 +327,7 @@
             // intBonusLabel
             // 
             this.intBonusLabel.AutoSize = true;
-            this.intBonusLabel.Location = new System.Drawing.Point(477, 259);
+            this.intBonusLabel.Location = new System.Drawing.Point(465, 256);
             this.intBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.intBonusLabel.Name = "intBonusLabel";
             this.intBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -337,7 +337,7 @@
             // wisBonusLabel
             // 
             this.wisBonusLabel.AutoSize = true;
-            this.wisBonusLabel.Location = new System.Drawing.Point(635, 259);
+            this.wisBonusLabel.Location = new System.Drawing.Point(619, 256);
             this.wisBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.wisBonusLabel.Name = "wisBonusLabel";
             this.wisBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -347,7 +347,7 @@
             // chaBonusLabel
             // 
             this.chaBonusLabel.AutoSize = true;
-            this.chaBonusLabel.Location = new System.Drawing.Point(793, 259);
+            this.chaBonusLabel.Location = new System.Drawing.Point(773, 256);
             this.chaBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.chaBonusLabel.Name = "chaBonusLabel";
             this.chaBonusLabel.Size = new System.Drawing.Size(19, 13);
@@ -358,10 +358,10 @@
             // 
             this.raceAbilityBonusSeparatorLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tableLayoutPanel1.SetColumnSpan(this.raceAbilityBonusSeparatorLabel, 6);
-            this.raceAbilityBonusSeparatorLabel.Location = new System.Drawing.Point(6, 315);
+            this.raceAbilityBonusSeparatorLabel.Location = new System.Drawing.Point(6, 312);
             this.raceAbilityBonusSeparatorLabel.Margin = new System.Windows.Forms.Padding(6);
             this.raceAbilityBonusSeparatorLabel.Name = "raceAbilityBonusSeparatorLabel";
-            this.raceAbilityBonusSeparatorLabel.Size = new System.Drawing.Size(941, 2);
+            this.raceAbilityBonusSeparatorLabel.Size = new System.Drawing.Size(913, 2);
             this.raceAbilityBonusSeparatorLabel.TabIndex = 22;
             // 
             // raceAbilityBonusLabel
@@ -369,7 +369,7 @@
             this.raceAbilityBonusLabel.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.raceAbilityBonusLabel, 6);
             this.raceAbilityBonusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.raceAbilityBonusLabel.Location = new System.Drawing.Point(3, 326);
+            this.raceAbilityBonusLabel.Location = new System.Drawing.Point(3, 323);
             this.raceAbilityBonusLabel.Margin = new System.Windows.Forms.Padding(3);
             this.raceAbilityBonusLabel.Name = "raceAbilityBonusLabel";
             this.raceAbilityBonusLabel.Size = new System.Drawing.Size(407, 13);
@@ -379,7 +379,7 @@
             // strBonusCheck
             // 
             this.strBonusCheck.AutoSize = true;
-            this.strBonusCheck.Location = new System.Drawing.Point(3, 345);
+            this.strBonusCheck.Location = new System.Drawing.Point(3, 342);
             this.strBonusCheck.Name = "strBonusCheck";
             this.strBonusCheck.Size = new System.Drawing.Size(66, 17);
             this.strBonusCheck.TabIndex = 24;
@@ -390,7 +390,7 @@
             // dexBonusCheck
             // 
             this.dexBonusCheck.AutoSize = true;
-            this.dexBonusCheck.Location = new System.Drawing.Point(161, 345);
+            this.dexBonusCheck.Location = new System.Drawing.Point(157, 342);
             this.dexBonusCheck.Name = "dexBonusCheck";
             this.dexBonusCheck.Size = new System.Drawing.Size(67, 17);
             this.dexBonusCheck.TabIndex = 25;
@@ -401,7 +401,7 @@
             // conBonusCheck
             // 
             this.conBonusCheck.AutoSize = true;
-            this.conBonusCheck.Location = new System.Drawing.Point(319, 345);
+            this.conBonusCheck.Location = new System.Drawing.Point(311, 342);
             this.conBonusCheck.Name = "conBonusCheck";
             this.conBonusCheck.Size = new System.Drawing.Size(81, 17);
             this.conBonusCheck.TabIndex = 26;
@@ -412,7 +412,7 @@
             // intBonusCheck
             // 
             this.intBonusCheck.AutoSize = true;
-            this.intBonusCheck.Location = new System.Drawing.Point(477, 345);
+            this.intBonusCheck.Location = new System.Drawing.Point(465, 342);
             this.intBonusCheck.Name = "intBonusCheck";
             this.intBonusCheck.Size = new System.Drawing.Size(80, 17);
             this.intBonusCheck.TabIndex = 27;
@@ -423,7 +423,7 @@
             // wisBonusCheck
             // 
             this.wisBonusCheck.AutoSize = true;
-            this.wisBonusCheck.Location = new System.Drawing.Point(635, 345);
+            this.wisBonusCheck.Location = new System.Drawing.Point(619, 342);
             this.wisBonusCheck.Name = "wisBonusCheck";
             this.wisBonusCheck.Size = new System.Drawing.Size(64, 17);
             this.wisBonusCheck.TabIndex = 28;
@@ -434,7 +434,7 @@
             // chaBonusCheck
             // 
             this.chaBonusCheck.AutoSize = true;
-            this.chaBonusCheck.Location = new System.Drawing.Point(793, 345);
+            this.chaBonusCheck.Location = new System.Drawing.Point(773, 342);
             this.chaBonusCheck.Name = "chaBonusCheck";
             this.chaBonusCheck.Size = new System.Drawing.Size(69, 17);
             this.chaBonusCheck.TabIndex = 29;
@@ -446,16 +446,16 @@
             // 
             this.resultSeparatorLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tableLayoutPanel1.SetColumnSpan(this.resultSeparatorLabel, 6);
-            this.resultSeparatorLabel.Location = new System.Drawing.Point(6, 373);
+            this.resultSeparatorLabel.Location = new System.Drawing.Point(6, 370);
             this.resultSeparatorLabel.Margin = new System.Windows.Forms.Padding(6);
             this.resultSeparatorLabel.Name = "resultSeparatorLabel";
-            this.resultSeparatorLabel.Size = new System.Drawing.Size(941, 2);
+            this.resultSeparatorLabel.Size = new System.Drawing.Size(913, 2);
             this.resultSeparatorLabel.TabIndex = 30;
             // 
             // strResultLabel
             // 
             this.strResultLabel.AutoSize = true;
-            this.strResultLabel.Location = new System.Drawing.Point(3, 384);
+            this.strResultLabel.Location = new System.Drawing.Point(3, 381);
             this.strResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.strResultLabel.Name = "strResultLabel";
             this.strResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -465,7 +465,7 @@
             // dexResultLabel
             // 
             this.dexResultLabel.AutoSize = true;
-            this.dexResultLabel.Location = new System.Drawing.Point(161, 384);
+            this.dexResultLabel.Location = new System.Drawing.Point(157, 381);
             this.dexResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.dexResultLabel.Name = "dexResultLabel";
             this.dexResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -475,7 +475,7 @@
             // conResultLabel
             // 
             this.conResultLabel.AutoSize = true;
-            this.conResultLabel.Location = new System.Drawing.Point(319, 384);
+            this.conResultLabel.Location = new System.Drawing.Point(311, 381);
             this.conResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.conResultLabel.Name = "conResultLabel";
             this.conResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -485,7 +485,7 @@
             // intResultLabel
             // 
             this.intResultLabel.AutoSize = true;
-            this.intResultLabel.Location = new System.Drawing.Point(477, 384);
+            this.intResultLabel.Location = new System.Drawing.Point(465, 381);
             this.intResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.intResultLabel.Name = "intResultLabel";
             this.intResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -495,7 +495,7 @@
             // wisResultLabel
             // 
             this.wisResultLabel.AutoSize = true;
-            this.wisResultLabel.Location = new System.Drawing.Point(635, 384);
+            this.wisResultLabel.Location = new System.Drawing.Point(619, 381);
             this.wisResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.wisResultLabel.Name = "wisResultLabel";
             this.wisResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -505,7 +505,7 @@
             // chaResultLabel
             // 
             this.chaResultLabel.AutoSize = true;
-            this.chaResultLabel.Location = new System.Drawing.Point(793, 384);
+            this.chaResultLabel.Location = new System.Drawing.Point(773, 381);
             this.chaResultLabel.Margin = new System.Windows.Forms.Padding(3);
             this.chaResultLabel.Name = "chaResultLabel";
             this.chaResultLabel.Size = new System.Drawing.Size(34, 13);
@@ -514,7 +514,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(3, 440);
+            this.resetButton.Location = new System.Drawing.Point(3, 436);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(105, 23);
             this.resetButton.TabIndex = 37;
@@ -526,9 +526,9 @@
             // 
             this.healthLayout.Controls.Add(this.healthLabel);
             this.healthLayout.Controls.Add(this.healthBox);
-            this.healthLayout.Location = new System.Drawing.Point(319, 440);
+            this.healthLayout.Location = new System.Drawing.Point(311, 436);
             this.healthLayout.Name = "healthLayout";
-            this.healthLayout.Size = new System.Drawing.Size(152, 50);
+            this.healthLayout.Size = new System.Drawing.Size(148, 50);
             this.healthLayout.TabIndex = 39;
             // 
             // healthLabel
@@ -558,9 +558,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.recommendationLayout, 6);
             this.recommendationLayout.Controls.Add(this.recommendationTitleLabel);
             this.recommendationLayout.Controls.Add(this.recommendationLabel);
-            this.recommendationLayout.Location = new System.Drawing.Point(3, 65);
+            this.recommendationLayout.Location = new System.Drawing.Point(3, 64);
             this.recommendationLayout.Name = "recommendationLayout";
-            this.recommendationLayout.Size = new System.Drawing.Size(944, 24);
+            this.recommendationLayout.Size = new System.Drawing.Size(919, 24);
             this.recommendationLayout.TabIndex = 40;
             // 
             // recommendationTitleLabel
@@ -595,9 +595,9 @@
             this.abilityScoreHoldingLayout.Controls.Add(this.abilityScore4);
             this.abilityScoreHoldingLayout.Controls.Add(this.abilityScore5);
             this.abilityScoreHoldingLayout.Controls.Add(this.abilityScore6);
-            this.abilityScoreHoldingLayout.Location = new System.Drawing.Point(319, 95);
+            this.abilityScoreHoldingLayout.Location = new System.Drawing.Point(311, 94);
             this.abilityScoreHoldingLayout.Name = "abilityScoreHoldingLayout";
-            this.abilityScoreHoldingLayout.Size = new System.Drawing.Size(310, 63);
+            this.abilityScoreHoldingLayout.Size = new System.Drawing.Size(302, 62);
             this.abilityScoreHoldingLayout.TabIndex = 3;
             this.abilityScoreHoldingLayout.DragDrop += new System.Windows.Forms.DragEventHandler(this.abilityScoreHoldingLayout_DragDrop);
             this.abilityScoreHoldingLayout.DragEnter += new System.Windows.Forms.DragEventHandler(this.abilityScoreHoldingLayout_DragEnter);
@@ -688,7 +688,7 @@
             // 
             // rerollButton
             // 
-            this.rerollButton.Location = new System.Drawing.Point(161, 440);
+            this.rerollButton.Location = new System.Drawing.Point(157, 436);
             this.rerollButton.Name = "rerollButton";
             this.rerollButton.Size = new System.Drawing.Size(105, 23);
             this.rerollButton.TabIndex = 38;
@@ -702,7 +702,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AbilityControl";
-            this.Size = new System.Drawing.Size(960, 500);
+            this.Size = new System.Drawing.Size(937, 496);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.healthLayout.ResumeLayout(false);

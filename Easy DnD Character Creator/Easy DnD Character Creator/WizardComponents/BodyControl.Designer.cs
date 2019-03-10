@@ -49,7 +49,7 @@
             this.bodyBox.Controls.Add(this.heightWeightLayout);
             this.bodyBox.Location = new System.Drawing.Point(4, 4);
             this.bodyBox.Name = "bodyBox";
-            this.bodyBox.Size = new System.Drawing.Size(944, 148);
+            this.bodyBox.Size = new System.Drawing.Size(925, 148);
             this.bodyBox.TabIndex = 0;
             this.bodyBox.TabStop = false;
             this.bodyBox.Text = "Height/Weight";
@@ -75,7 +75,7 @@
             this.heightWeightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.heightWeightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.heightWeightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.heightWeightLayout.Size = new System.Drawing.Size(931, 120);
+            this.heightWeightLayout.Size = new System.Drawing.Size(912, 120);
             this.heightWeightLayout.TabIndex = 0;
             // 
             // descriptionLabel
@@ -109,7 +109,7 @@
             // 
             // heightModifier
             // 
-            this.heightModifier.Location = new System.Drawing.Point(313, 33);
+            this.heightModifier.Location = new System.Drawing.Point(306, 33);
             this.heightModifier.Maximum = new decimal(new int[] {
             20,
             0,
@@ -132,7 +132,7 @@
             // 
             // weightModifier
             // 
-            this.weightModifier.Location = new System.Drawing.Point(313, 63);
+            this.weightModifier.Location = new System.Drawing.Point(306, 63);
             this.weightModifier.Maximum = new decimal(new int[] {
             20,
             0,
@@ -156,7 +156,7 @@
             // heightResultLabel
             // 
             this.heightResultLabel.AutoSize = true;
-            this.heightResultLabel.Location = new System.Drawing.Point(623, 30);
+            this.heightResultLabel.Location = new System.Drawing.Point(610, 30);
             this.heightResultLabel.Name = "heightResultLabel";
             this.heightResultLabel.Size = new System.Drawing.Size(64, 13);
             this.heightResultLabel.TabIndex = 5;
@@ -165,7 +165,7 @@
             // weightResultLabel
             // 
             this.weightResultLabel.AutoSize = true;
-            this.weightResultLabel.Location = new System.Drawing.Point(623, 60);
+            this.weightResultLabel.Location = new System.Drawing.Point(610, 60);
             this.weightResultLabel.Name = "weightResultLabel";
             this.weightResultLabel.Size = new System.Drawing.Size(66, 13);
             this.weightResultLabel.TabIndex = 6;
@@ -173,7 +173,7 @@
             // 
             // randomizeButton
             // 
-            this.randomizeButton.Location = new System.Drawing.Point(313, 93);
+            this.randomizeButton.Location = new System.Drawing.Point(306, 93);
             this.randomizeButton.Name = "randomizeButton";
             this.randomizeButton.Size = new System.Drawing.Size(168, 23);
             this.randomizeButton.TabIndex = 7;
@@ -187,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.bodyBox);
             this.Name = "BodyControl";
-            this.Size = new System.Drawing.Size(960, 160);
+            this.Size = new System.Drawing.Size(937, 160);
             this.bodyBox.ResumeLayout(false);
             this.heightWeightLayout.ResumeLayout(false);
             this.heightWeightLayout.PerformLayout();

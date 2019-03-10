@@ -88,9 +88,7 @@
             // 
             // contentFlowPanel
             // 
-            this.contentFlowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.contentFlowPanel.AutoScroll = true;
             this.contentFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.contentFlowPanel.Location = new System.Drawing.Point(12, 72);
             this.contentFlowPanel.Name = "contentFlowPanel";

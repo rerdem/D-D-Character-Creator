@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.backgroundBox = new System.Windows.Forms.GroupBox();
-            this.backgroundDescription = new System.Windows.Forms.Label();
-            this.backgroundListBox = new System.Windows.Forms.ListBox();
             this.extraProficiencyLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.extraProficiencyLabel = new System.Windows.Forms.Label();
             this.extraProficiencyBox = new System.Windows.Forms.ListBox();
+            this.backgroundDescription = new System.Windows.Forms.Label();
+            this.backgroundListBox = new System.Windows.Forms.ListBox();
             this.backgroundBox.SuspendLayout();
             this.extraProficiencyLayout.SuspendLayout();
             this.SuspendLayout();
@@ -45,36 +45,17 @@
             this.backgroundBox.Controls.Add(this.backgroundListBox);
             this.backgroundBox.Location = new System.Drawing.Point(4, 4);
             this.backgroundBox.Name = "backgroundBox";
-            this.backgroundBox.Size = new System.Drawing.Size(944, 188);
+            this.backgroundBox.Size = new System.Drawing.Size(925, 188);
             this.backgroundBox.TabIndex = 0;
             this.backgroundBox.TabStop = false;
             this.backgroundBox.Text = "Background";
-            // 
-            // backgroundDescription
-            // 
-            this.backgroundDescription.AutoSize = true;
-            this.backgroundDescription.Location = new System.Drawing.Point(134, 20);
-            this.backgroundDescription.MaximumSize = new System.Drawing.Size(650, 160);
-            this.backgroundDescription.Name = "backgroundDescription";
-            this.backgroundDescription.Size = new System.Drawing.Size(118, 13);
-            this.backgroundDescription.TabIndex = 1;
-            this.backgroundDescription.Text = "background description";
-            // 
-            // backgroundListBox
-            // 
-            this.backgroundListBox.FormattingEnabled = true;
-            this.backgroundListBox.Location = new System.Drawing.Point(7, 20);
-            this.backgroundListBox.Name = "backgroundListBox";
-            this.backgroundListBox.Size = new System.Drawing.Size(120, 160);
-            this.backgroundListBox.TabIndex = 0;
-            this.backgroundListBox.SelectedIndexChanged += new System.EventHandler(this.backgroundListBox_SelectedIndexChanged);
             // 
             // extraProficiencyLayout
             // 
             this.extraProficiencyLayout.Controls.Add(this.extraProficiencyLabel);
             this.extraProficiencyLayout.Controls.Add(this.extraProficiencyBox);
             this.extraProficiencyLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.extraProficiencyLayout.Location = new System.Drawing.Point(813, 17);
+            this.extraProficiencyLayout.Location = new System.Drawing.Point(794, 20);
             this.extraProficiencyLayout.Name = "extraProficiencyLayout";
             this.extraProficiencyLayout.Size = new System.Drawing.Size(125, 163);
             this.extraProficiencyLayout.TabIndex = 2;
@@ -98,13 +79,32 @@
             this.extraProficiencyBox.Size = new System.Drawing.Size(114, 108);
             this.extraProficiencyBox.TabIndex = 1;
             // 
+            // backgroundDescription
+            // 
+            this.backgroundDescription.AutoSize = true;
+            this.backgroundDescription.Location = new System.Drawing.Point(134, 20);
+            this.backgroundDescription.MaximumSize = new System.Drawing.Size(650, 160);
+            this.backgroundDescription.Name = "backgroundDescription";
+            this.backgroundDescription.Size = new System.Drawing.Size(118, 13);
+            this.backgroundDescription.TabIndex = 1;
+            this.backgroundDescription.Text = "background description";
+            // 
+            // backgroundListBox
+            // 
+            this.backgroundListBox.FormattingEnabled = true;
+            this.backgroundListBox.Location = new System.Drawing.Point(7, 20);
+            this.backgroundListBox.Name = "backgroundListBox";
+            this.backgroundListBox.Size = new System.Drawing.Size(120, 160);
+            this.backgroundListBox.TabIndex = 0;
+            this.backgroundListBox.SelectedIndexChanged += new System.EventHandler(this.backgroundListBox_SelectedIndexChanged);
+            // 
             // BackgroundControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.backgroundBox);
             this.Name = "BackgroundControl";
-            this.Size = new System.Drawing.Size(960, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.backgroundBox.ResumeLayout(false);
             this.backgroundBox.PerformLayout();
             this.extraProficiencyLayout.ResumeLayout(false);

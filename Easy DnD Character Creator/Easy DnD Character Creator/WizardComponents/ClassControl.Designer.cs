@@ -47,7 +47,7 @@
             this.classBox.Controls.Add(this.classListBox);
             this.classBox.Location = new System.Drawing.Point(4, 4);
             this.classBox.Name = "classBox";
-            this.classBox.Size = new System.Drawing.Size(944, 188);
+            this.classBox.Size = new System.Drawing.Size(925, 188);
             this.classBox.TabIndex = 0;
             this.classBox.TabStop = false;
             this.classBox.Text = "Class/Subclass";
@@ -57,7 +57,7 @@
             this.extraChoiceLayout.Controls.Add(this.extraChoiceLabel);
             this.extraChoiceLayout.Controls.Add(this.extraChoiceBox);
             this.extraChoiceLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.extraChoiceLayout.Location = new System.Drawing.Point(804, 19);
+            this.extraChoiceLayout.Location = new System.Drawing.Point(779, 19);
             this.extraChoiceLayout.Name = "extraChoiceLayout";
             this.extraChoiceLayout.Size = new System.Drawing.Size(140, 163);
             this.extraChoiceLayout.TabIndex = 3;
@@ -116,7 +116,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.classBox);
             this.Name = "ClassControl";
-            this.Size = new System.Drawing.Size(960, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.classBox.ResumeLayout(false);
             this.classBox.PerformLayout();
             this.extraChoiceLayout.ResumeLayout(false);

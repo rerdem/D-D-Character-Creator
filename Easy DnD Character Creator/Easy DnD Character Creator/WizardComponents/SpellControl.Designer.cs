@@ -56,7 +56,7 @@
             this.spellBox.Controls.Add(this.cantripLayout);
             this.spellBox.Location = new System.Drawing.Point(4, 4);
             this.spellBox.Name = "spellBox";
-            this.spellBox.Size = new System.Drawing.Size(953, 493);
+            this.spellBox.Size = new System.Drawing.Size(925, 484);
             this.spellBox.TabIndex = 0;
             this.spellBox.TabStop = false;
             this.spellBox.Text = "Spells";
@@ -90,7 +90,7 @@
             this.spellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.spellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.spellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.spellLayout.Size = new System.Drawing.Size(940, 200);
+            this.spellLayout.Size = new System.Drawing.Size(913, 197);
             this.spellLayout.TabIndex = 1;
             // 
             // spellLabel
@@ -118,7 +118,7 @@
             // chosenSpells
             // 
             this.chosenSpells.FormattingEnabled = true;
-            this.chosenSpells.Location = new System.Drawing.Point(285, 29);
+            this.chosenSpells.Location = new System.Drawing.Point(276, 29);
             this.chosenSpells.Name = "chosenSpells";
             this.spellLayout.SetRowSpan(this.chosenSpells, 2);
             this.chosenSpells.Size = new System.Drawing.Size(145, 160);
@@ -130,7 +130,7 @@
             // 
             this.spellAddButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.spellAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spellAddButton.Location = new System.Drawing.Point(205, 39);
+            this.spellAddButton.Location = new System.Drawing.Point(197, 38);
             this.spellAddButton.Name = "spellAddButton";
             this.spellAddButton.Size = new System.Drawing.Size(60, 60);
             this.spellAddButton.TabIndex = 3;
@@ -142,7 +142,7 @@
             // 
             this.spellRemoveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.spellRemoveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spellRemoveButton.Location = new System.Drawing.Point(205, 126);
+            this.spellRemoveButton.Location = new System.Drawing.Point(197, 124);
             this.spellRemoveButton.Name = "spellRemoveButton";
             this.spellRemoveButton.Size = new System.Drawing.Size(60, 60);
             this.spellRemoveButton.TabIndex = 4;
@@ -153,7 +153,7 @@
             // spellDescriptionLabel
             // 
             this.spellDescriptionLabel.AutoSize = true;
-            this.spellDescriptionLabel.Location = new System.Drawing.Point(473, 29);
+            this.spellDescriptionLabel.Location = new System.Drawing.Point(458, 29);
             this.spellDescriptionLabel.Margin = new System.Windows.Forms.Padding(3);
             this.spellDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
             this.spellDescriptionLabel.Name = "spellDescriptionLabel";
@@ -181,7 +181,7 @@
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cantripLayout.Size = new System.Drawing.Size(940, 200);
+            this.cantripLayout.Size = new System.Drawing.Size(913, 200);
             this.cantripLayout.TabIndex = 0;
             // 
             // cantripLabel
@@ -209,7 +209,7 @@
             // chosenCantrips
             // 
             this.chosenCantrips.FormattingEnabled = true;
-            this.chosenCantrips.Location = new System.Drawing.Point(285, 29);
+            this.chosenCantrips.Location = new System.Drawing.Point(276, 29);
             this.chosenCantrips.Name = "chosenCantrips";
             this.cantripLayout.SetRowSpan(this.chosenCantrips, 2);
             this.chosenCantrips.Size = new System.Drawing.Size(145, 160);
@@ -221,7 +221,7 @@
             // 
             this.cantripAddButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cantripAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cantripAddButton.Location = new System.Drawing.Point(205, 39);
+            this.cantripAddButton.Location = new System.Drawing.Point(197, 39);
             this.cantripAddButton.Name = "cantripAddButton";
             this.cantripAddButton.Size = new System.Drawing.Size(60, 60);
             this.cantripAddButton.TabIndex = 3;
@@ -233,7 +233,7 @@
             // 
             this.cantripRemoveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cantripRemoveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cantripRemoveButton.Location = new System.Drawing.Point(205, 126);
+            this.cantripRemoveButton.Location = new System.Drawing.Point(197, 126);
             this.cantripRemoveButton.Name = "cantripRemoveButton";
             this.cantripRemoveButton.Size = new System.Drawing.Size(60, 60);
             this.cantripRemoveButton.TabIndex = 4;
@@ -244,7 +244,7 @@
             // cantripDescriptionLabel
             // 
             this.cantripDescriptionLabel.AutoSize = true;
-            this.cantripDescriptionLabel.Location = new System.Drawing.Point(473, 29);
+            this.cantripDescriptionLabel.Location = new System.Drawing.Point(458, 29);
             this.cantripDescriptionLabel.Margin = new System.Windows.Forms.Padding(3);
             this.cantripDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
             this.cantripDescriptionLabel.Name = "cantripDescriptionLabel";
@@ -259,7 +259,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.spellBox);
             this.Name = "SpellControl";
-            this.Size = new System.Drawing.Size(960, 500);
+            this.Size = new System.Drawing.Size(937, 496);
             this.spellBox.ResumeLayout(false);
             this.spellBox.PerformLayout();
             this.spellLayout.ResumeLayout(false);

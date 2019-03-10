@@ -8,9 +8,9 @@ Draconic Bloodline Ancestry
 Knowledge Domain Double Proficiency
 Nature Domain extra skills
 
+937,496
 
-
-SELECT eldritchInvocations.name, eldritchInvocations.description, eldritchInvocations.level, eldritchInvocations.pactRestriction, 
+SELECT eldritchInvocations.name, eldritchInvocations.description, eldritchInvocations.level, eldritchInvocations.pactRestriction, eldritchInvocations.hasSpellChoice, 
 RequiredSpells.name, RequiredSpells.ritual, RequiredSpells.level, RequiredSpells.school, RequiredSpells.castTime, RequiredSpells.range, RequiredSpells.duration, RequiredSpells.components, RequiredSpells.materials, RequiredSpells.description, 
 GainedSpells.name, GainedSpells.ritual, GainedSpells.level, GainedSpells.school, GainedSpells.castTime, GainedSpells.range, GainedSpells.duration, GainedSpells.components, GainedSpells.materials, GainedSpells.description
 FROM eldritchInvocations

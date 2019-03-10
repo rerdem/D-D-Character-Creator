@@ -52,7 +52,7 @@
             this.equipmentBox.Controls.Add(this.tableLayoutPanel1);
             this.equipmentBox.Location = new System.Drawing.Point(4, 4);
             this.equipmentBox.Name = "equipmentBox";
-            this.equipmentBox.Size = new System.Drawing.Size(953, 243);
+            this.equipmentBox.Size = new System.Drawing.Size(925, 243);
             this.equipmentBox.TabIndex = 0;
             this.equipmentBox.TabStop = false;
             this.equipmentBox.Text = "Equipment";
@@ -113,7 +113,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(940, 217);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(912, 217);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // equipmentLabel1
@@ -129,7 +129,7 @@
             // equipmentLabel2
             // 
             this.equipmentLabel2.AutoSize = true;
-            this.equipmentLabel2.Location = new System.Drawing.Point(191, 3);
+            this.equipmentLabel2.Location = new System.Drawing.Point(185, 3);
             this.equipmentLabel2.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel2.Name = "equipmentLabel2";
             this.equipmentLabel2.Size = new System.Drawing.Size(54, 13);
@@ -139,7 +139,7 @@
             // equipmentLabel3
             // 
             this.equipmentLabel3.AutoSize = true;
-            this.equipmentLabel3.Location = new System.Drawing.Point(379, 3);
+            this.equipmentLabel3.Location = new System.Drawing.Point(367, 3);
             this.equipmentLabel3.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel3.Name = "equipmentLabel3";
             this.equipmentLabel3.Size = new System.Drawing.Size(55, 13);
@@ -149,7 +149,7 @@
             // equipmentLabel4
             // 
             this.equipmentLabel4.AutoSize = true;
-            this.equipmentLabel4.Location = new System.Drawing.Point(567, 3);
+            this.equipmentLabel4.Location = new System.Drawing.Point(549, 3);
             this.equipmentLabel4.Margin = new System.Windows.Forms.Padding(3);
             this.equipmentLabel4.Name = "equipmentLabel4";
             this.equipmentLabel4.Size = new System.Drawing.Size(55, 13);
@@ -159,7 +159,7 @@
             // inventoryLabel
             // 
             this.inventoryLabel.AutoSize = true;
-            this.inventoryLabel.Location = new System.Drawing.Point(755, 3);
+            this.inventoryLabel.Location = new System.Drawing.Point(731, 3);
             this.inventoryLabel.Margin = new System.Windows.Forms.Padding(3);
             this.inventoryLabel.MaximumSize = new System.Drawing.Size(182, 211);
             this.inventoryLabel.Name = "inventoryLabel";
@@ -180,7 +180,7 @@
             // equipmentList2
             // 
             this.equipmentList2.FormattingEnabled = true;
-            this.equipmentList2.Location = new System.Drawing.Point(191, 29);
+            this.equipmentList2.Location = new System.Drawing.Point(185, 29);
             this.equipmentList2.Name = "equipmentList2";
             this.equipmentList2.Size = new System.Drawing.Size(120, 82);
             this.equipmentList2.TabIndex = 6;
@@ -189,7 +189,7 @@
             // equipmentList3
             // 
             this.equipmentList3.FormattingEnabled = true;
-            this.equipmentList3.Location = new System.Drawing.Point(379, 29);
+            this.equipmentList3.Location = new System.Drawing.Point(367, 29);
             this.equipmentList3.Name = "equipmentList3";
             this.equipmentList3.Size = new System.Drawing.Size(120, 82);
             this.equipmentList3.TabIndex = 7;
@@ -198,7 +198,7 @@
             // equipmentList4
             // 
             this.equipmentList4.FormattingEnabled = true;
-            this.equipmentList4.Location = new System.Drawing.Point(567, 29);
+            this.equipmentList4.Location = new System.Drawing.Point(549, 29);
             this.equipmentList4.Name = "equipmentList4";
             this.equipmentList4.Size = new System.Drawing.Size(120, 82);
             this.equipmentList4.TabIndex = 8;
@@ -217,7 +217,7 @@
             // descriptionLabel2
             // 
             this.descriptionLabel2.AutoSize = true;
-            this.descriptionLabel2.Location = new System.Drawing.Point(191, 124);
+            this.descriptionLabel2.Location = new System.Drawing.Point(185, 124);
             this.descriptionLabel2.Margin = new System.Windows.Forms.Padding(3);
             this.descriptionLabel2.Name = "descriptionLabel2";
             this.descriptionLabel2.Size = new System.Drawing.Size(58, 13);
@@ -227,7 +227,7 @@
             // descriptionLabel3
             // 
             this.descriptionLabel3.AutoSize = true;
-            this.descriptionLabel3.Location = new System.Drawing.Point(379, 124);
+            this.descriptionLabel3.Location = new System.Drawing.Point(367, 124);
             this.descriptionLabel3.Margin = new System.Windows.Forms.Padding(3);
             this.descriptionLabel3.Name = "descriptionLabel3";
             this.descriptionLabel3.Size = new System.Drawing.Size(58, 13);
@@ -237,7 +237,7 @@
             // descriptionLabel4
             // 
             this.descriptionLabel4.AutoSize = true;
-            this.descriptionLabel4.Location = new System.Drawing.Point(567, 124);
+            this.descriptionLabel4.Location = new System.Drawing.Point(549, 124);
             this.descriptionLabel4.Margin = new System.Windows.Forms.Padding(3);
             this.descriptionLabel4.Name = "descriptionLabel4";
             this.descriptionLabel4.Size = new System.Drawing.Size(58, 13);
@@ -250,7 +250,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.equipmentBox);
             this.Name = "EquipmentControl";
-            this.Size = new System.Drawing.Size(960, 250);
+            this.Size = new System.Drawing.Size(937, 250);
             this.equipmentBox.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

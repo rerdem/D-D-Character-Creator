@@ -1,4 +1,4 @@
-﻿namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
+﻿namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 {
     partial class FightingStyleControl
     {
@@ -42,7 +42,7 @@
             this.fightingStyleBox.Controls.Add(this.fightingStyleListBox);
             this.fightingStyleBox.Location = new System.Drawing.Point(4, 4);
             this.fightingStyleBox.Name = "fightingStyleBox";
-            this.fightingStyleBox.Size = new System.Drawing.Size(911, 138);
+            this.fightingStyleBox.Size = new System.Drawing.Size(890, 138);
             this.fightingStyleBox.TabIndex = 0;
             this.fightingStyleBox.TabStop = false;
             this.fightingStyleBox.Text = "Fighting Style";
@@ -51,7 +51,7 @@
             // 
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Location = new System.Drawing.Point(133, 35);
-            this.descriptionLabel.MaximumSize = new System.Drawing.Size(772, 95);
+            this.descriptionLabel.MaximumSize = new System.Drawing.Size(751, 95);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(58, 13);
             this.descriptionLabel.TabIndex = 2;
@@ -81,7 +81,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.fightingStyleBox);
             this.Name = "FightingStyleControl";
-            this.Size = new System.Drawing.Size(923, 150);
+            this.Size = new System.Drawing.Size(900, 150);
             this.fightingStyleBox.ResumeLayout(false);
             this.fightingStyleBox.PerformLayout();
             this.ResumeLayout(false);

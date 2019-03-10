@@ -68,10 +68,10 @@
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
-    <Compile Include="DataManagement\SubManagers\ExtraClassSkillDataManager.cs" />
-    <Compile Include="DataManagement\SubManagers\FavoredEnemyTerrainDataManager.cs" />
-    <Compile Include="DataManagement\SubManagers\FightingStyleDataManager.cs" />
-    <Compile Include="DataManagement\SubManagers\WarlockChoiceDataManager.cs" />
+    <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />
+    <Compile Include="DataManagement\ExtraClassManagers\FavoredEnemyTerrainDataManager.cs" />
+    <Compile Include="DataManagement\ExtraClassManagers\FightingStyleDataManager.cs" />
+    <Compile Include="DataManagement\ExtraClassManagers\WarlockChoiceDataManager.cs" />
     <Compile Include="DataTypes\Armor.cs" />
     <Compile Include="DataManagement\AbilityDataManager.cs" />
     <Compile Include="DataManagement\AppearanceDataManager.cs" />
@@ -90,6 +90,7 @@
     <Compile Include="DataTypes\Pack.cs" />
     <Compile Include="DataTypes\Spell.cs" />
     <Compile Include="DataTypes\Tool.cs" />
+    <Compile Include="DataTypes\WarlockPact.cs" />
     <Compile Include="DataTypes\Weapon.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
       <SubType>UserControl</SubType>
@@ -196,40 +197,40 @@
       <DependentUpon>SpellControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\SpellFormatter.cs" />
-    <Compile Include="WizardComponents\SubComponents\ExtraClassSkillControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\ExtraClassSkillControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\ExtraClassSkillControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\ExtraClassSkillControl.Designer.cs">
       <DependentUpon>ExtraClassSkillControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\FavoredEnemyTerrainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\FavoredEnemyTerrainControl.Designer.cs">
       <DependentUpon>FavoredEnemyTerrainControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\FightingStyleControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\FightingStyleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\FightingStyleControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\FightingStyleControl.Designer.cs">
       <DependentUpon>FightingStyleControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockControl.Designer.cs">
       <DependentUpon>WarlockControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockInvocationControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockInvocationControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.Designer.cs">
       <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockPactControl.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockPactControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WizardComponents\SubComponents\WarlockPactControl.Designer.cs">
+    <Compile Include="WizardComponents\ExtraClassComponents\WarlockPactControl.Designer.cs">
       <DependentUpon>WarlockPactControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardManager.cs" />
@@ -287,22 +288,22 @@
     <EmbeddedResource Include="WizardComponents\SpellControl.resx">
       <DependentUpon>SpellControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\ExtraClassSkillControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\ExtraClassSkillControl.resx">
       <DependentUpon>ExtraClassSkillControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\FavoredEnemyTerrainControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\FavoredEnemyTerrainControl.resx">
       <DependentUpon>FavoredEnemyTerrainControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\FightingStyleControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\FightingStyleControl.resx">
       <DependentUpon>FightingStyleControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockControl.resx">
       <DependentUpon>WarlockControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockInvocationControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.resx">
       <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\SubComponents\WarlockPactControl.resx">
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockPactControl.resx">
       <DependentUpon>WarlockPactControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

@@ -42,7 +42,7 @@
             this.raceChoiceGroupBox.Controls.Add(this.introLabel);
             this.raceChoiceGroupBox.Location = new System.Drawing.Point(4, 4);
             this.raceChoiceGroupBox.Name = "raceChoiceGroupBox";
-            this.raceChoiceGroupBox.Size = new System.Drawing.Size(953, 193);
+            this.raceChoiceGroupBox.Size = new System.Drawing.Size(925, 193);
             this.raceChoiceGroupBox.TabIndex = 0;
             this.raceChoiceGroupBox.TabStop = false;
             this.raceChoiceGroupBox.Text = "Additional Race Choices";
@@ -51,7 +51,7 @@
             // 
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Location = new System.Drawing.Point(134, 52);
-            this.descriptionLabel.MaximumSize = new System.Drawing.Size(813, 134);
+            this.descriptionLabel.MaximumSize = new System.Drawing.Size(785, 134);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(58, 13);
             this.descriptionLabel.TabIndex = 2;
@@ -82,7 +82,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.raceChoiceGroupBox);
             this.Name = "ExtraRaceChoiceControl";
-            this.Size = new System.Drawing.Size(960, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.raceChoiceGroupBox.ResumeLayout(false);
             this.raceChoiceGroupBox.PerformLayout();
             this.ResumeLayout(false);

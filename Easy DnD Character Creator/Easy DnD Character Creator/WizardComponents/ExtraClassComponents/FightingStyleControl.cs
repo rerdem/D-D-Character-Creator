@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Easy_DnD_Character_Creator.DataTypes;
 
-namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
+namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 {
     public partial class FightingStyleControl : UserControl, IWizardControl
     {

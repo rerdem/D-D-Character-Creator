@@ -77,7 +77,7 @@ namespace Easy_DnD_Character_Creator
         public List<Spell> Spells { get; set; }
 
         //ExtraRaceChoiceControl
-        public List<Object> extraRaceChoices { get; set; }
+        public List<Object> ExtraRaceChoices { get; set; }
 
         //ExtraClassChoiceControl
         public List<FightingStyle> ClassFightingStyles { get; set; }
@@ -85,6 +85,10 @@ namespace Easy_DnD_Character_Creator
         public string FavoredTerrains { get; set; }
         public List<string> ClassSkills { get; set; }
         public bool DoublesProficiency { get; set; }
+        public WarlockPact WarlockPactChoice { get; set; }
+        public List<Spell> WarlockPactSpells { get; set; }
+        public List<EldritchInvocation> WarlockInvocations { get; set; }
+        public List<Spell> WarlockInvocationSpells { get; set; }
 
         public ChoiceManager()
         {
@@ -142,13 +146,17 @@ namespace Easy_DnD_Character_Creator
 
             Spells = new List<Spell>();
 
-            extraRaceChoices = new List<Object>();
+            ExtraRaceChoices = new List<Object>();
 
             ClassFightingStyles = new List<FightingStyle>();
             FavoredEnemies = "";
             FavoredTerrains = "";
             ClassSkills = new List<string>();
             DoublesProficiency = false;
+            WarlockPactChoice = new WarlockPact();
+            WarlockPactSpells = new List<Spell>();
+            WarlockInvocations = new List<EldritchInvocation>();
+            WarlockInvocationSpells = new List<Spell>();
         }
     }
 }

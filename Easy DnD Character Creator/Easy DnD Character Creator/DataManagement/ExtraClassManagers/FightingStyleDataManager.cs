@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Easy_DnD_Character_Creator.DataManagement.SubManagers
+namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
 {
     public class FightingStyleDataManager
     {

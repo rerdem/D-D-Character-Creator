@@ -1,4 +1,4 @@
-﻿namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
+﻿namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 {
     partial class ExtraClassSkillControl
     {
@@ -40,7 +40,7 @@
             this.extraSkillBox.Controls.Add(this.extraSkillLabel);
             this.extraSkillBox.Location = new System.Drawing.Point(4, 4);
             this.extraSkillBox.Name = "extraSkillBox";
-            this.extraSkillBox.Size = new System.Drawing.Size(911, 188);
+            this.extraSkillBox.Size = new System.Drawing.Size(890, 188);
             this.extraSkillBox.TabIndex = 0;
             this.extraSkillBox.TabStop = false;
             this.extraSkillBox.Text = "Extra Skills";
@@ -60,7 +60,7 @@
             this.extraSkillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.extraSkillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.extraSkillLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.extraSkillLayout.Size = new System.Drawing.Size(898, 121);
+            this.extraSkillLayout.Size = new System.Drawing.Size(877, 121);
             this.extraSkillLayout.TabIndex = 1;
             // 
             // extraSkillLabel
@@ -72,13 +72,13 @@
             this.extraSkillLabel.TabIndex = 0;
             this.extraSkillLabel.Text = "extra skill intro text";
             // 
-            // ExtraSkillControl
+            // ExtraClassSkillControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.extraSkillBox);
-            this.Name = "ExtraSkillControl";
-            this.Size = new System.Drawing.Size(923, 200);
+            this.Name = "ExtraClassSkillControl";
+            this.Size = new System.Drawing.Size(900, 200);
             this.extraSkillBox.ResumeLayout(false);
             this.extraSkillBox.PerformLayout();
             this.ResumeLayout(false);

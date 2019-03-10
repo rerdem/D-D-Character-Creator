@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Easy_DnD_Character_Creator.WizardComponents.SubComponents;
+using Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -19,6 +20,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private FightingStyleControl fightingStyleComponent;
         private FavoredEnemyTerrainControl favoredEnemyTerrainComponent;
         private ExtraClassSkillControl extraClassSkillsComponent;
+        private WarlockControl warlockComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -36,6 +38,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             extraClassSkillsComponent = new ExtraClassSkillControl(wm);
             extraClassSkillsComponent.SkillChosen += new EventHandler(extraClassSkillsComponent_SkillChosen);
+
+            warlockComponent = new WarlockControl(wm);
+            warlockComponent.SubcontrolOptionChosen += new EventHandler(warlockComponent_SubcontrolOptionChosen);
 
             InitializeComponent();
         }
@@ -86,6 +91,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraClassSkillsComponent.getInvalidElements();
             }
 
+            if (classChoiceLayout.Controls.Contains(warlockComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = warlockComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -94,6 +109,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isFightingStyleValid = true;
             bool isFavoredEnemyTerrainValid = true;
             bool isExtraClassSkillValid = true;
+            bool isWarlockValid = true;
 
             if (classChoiceLayout.Controls.Contains(fightingStyleComponent))
             {
@@ -110,9 +126,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isExtraClassSkillValid = extraClassSkillsComponent.isValid();
             }
 
+            if (classChoiceLayout.Controls.Contains(warlockComponent))
+            {
+                isWarlockValid = warlockComponent.isValid();
+            }
+
             return isFightingStyleValid &&
                    isFavoredEnemyTerrainValid &&
-                   isExtraClassSkillValid;
+                   isExtraClassSkillValid &&
+                   isWarlockValid;
         }
 
         public void populateForm()
@@ -139,6 +161,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 classChoiceLayout.Controls.Add(extraClassSkillsComponent);
             }
             extraClassSkillsComponent.populateForm();
+
+            //warlock choices
+            if (wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockChoices(wm.Choices.Class, wm.Choices.Level))
+            {
+                classChoiceLayout.Controls.Add(warlockComponent);
+            }
+            warlockComponent.populateForm();
 
 
             Visited = true;
@@ -174,6 +203,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.ClassSkills.Clear();
                 wm.Choices.DoublesProficiency = false;
             }
+
+            if (classChoiceLayout.Controls.Contains(warlockComponent))
+            {
+                warlockComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.WarlockPactChoice = new WarlockPact();
+                wm.Choices.WarlockPactSpells.Clear();
+                wm.Choices.WarlockInvocations.Clear();
+                wm.Choices.WarlockInvocationSpells.Clear();
+
+            }
         }
 
         private void fightingStyleComponent_FightingStyleChosen(object sender, EventArgs e)
@@ -187,6 +229,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         }
 
         private void extraClassSkillsComponent_SkillChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void warlockComponent_SubcontrolOptionChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }

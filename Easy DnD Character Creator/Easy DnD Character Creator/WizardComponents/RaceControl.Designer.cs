@@ -52,7 +52,7 @@
             this.raceBox.Controls.Add(this.raceListBox);
             this.raceBox.Location = new System.Drawing.Point(3, 3);
             this.raceBox.Name = "raceBox";
-            this.raceBox.Size = new System.Drawing.Size(944, 188);
+            this.raceBox.Size = new System.Drawing.Size(925, 188);
             this.raceBox.TabIndex = 0;
             this.raceBox.TabStop = false;
             this.raceBox.Text = "Race/Subrace";
@@ -63,7 +63,7 @@
             this.extraChoiceLayout.Controls.Add(this.extraChoiceLabel);
             this.extraChoiceLayout.Controls.Add(this.extraChoiceBox);
             this.extraChoiceLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.extraChoiceLayout.Location = new System.Drawing.Point(813, 19);
+            this.extraChoiceLayout.Location = new System.Drawing.Point(794, 19);
             this.extraChoiceLayout.Name = "extraChoiceLayout";
             this.extraChoiceLayout.Size = new System.Drawing.Size(125, 163);
             this.extraChoiceLayout.TabIndex = 3;
@@ -121,7 +121,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.raceBox);
             this.Name = "RaceControl";
-            this.Size = new System.Drawing.Size(960, 200);
+            this.Size = new System.Drawing.Size(937, 200);
             this.raceBox.ResumeLayout(false);
             this.raceBox.PerformLayout();
             this.extraChoiceLayout.ResumeLayout(false);

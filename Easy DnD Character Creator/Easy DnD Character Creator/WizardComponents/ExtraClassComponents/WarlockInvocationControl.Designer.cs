@@ -1,4 +1,4 @@
-﻿namespace Easy_DnD_Character_Creator.WizardComponents.SubComponents
+﻿namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 {
     partial class WarlockInvocationControl
     {
@@ -49,9 +49,9 @@
             this.invocationSpellIntroLabel.Location = new System.Drawing.Point(3, 3);
             this.invocationSpellIntroLabel.Margin = new System.Windows.Forms.Padding(3);
             this.invocationSpellIntroLabel.Name = "invocationSpellIntroLabel";
-            this.invocationSpellIntroLabel.Size = new System.Drawing.Size(150, 13);
+            this.invocationSpellIntroLabel.Size = new System.Drawing.Size(235, 13);
             this.invocationSpellIntroLabel.TabIndex = 0;
-            this.invocationSpellIntroLabel.Text = "Choose your invocation spells:";
+            this.invocationSpellIntroLabel.Text = "Choose your 2 \"Book of Ancient Secrets\" spells:";
             // 
             // invocationBox
             // 
@@ -59,7 +59,7 @@
             this.invocationBox.Controls.Add(this.invocationLayout);
             this.invocationBox.Location = new System.Drawing.Point(3, 3);
             this.invocationBox.Name = "invocationBox";
-            this.invocationBox.Size = new System.Drawing.Size(887, 188);
+            this.invocationBox.Size = new System.Drawing.Size(855, 288);
             this.invocationBox.TabIndex = 1;
             this.invocationBox.TabStop = false;
             this.invocationBox.Text = "Eldritch Invocations";
@@ -73,12 +73,12 @@
             this.invocationSpellLayout.Controls.Add(this.invocationSpellIntroLabel, 0, 0);
             this.invocationSpellLayout.Controls.Add(this.invocationSpellDescriptionLabel, 1, 1);
             this.invocationSpellLayout.Controls.Add(this.invocationSpellListBox, 0, 1);
-            this.invocationSpellLayout.Location = new System.Drawing.Point(452, 20);
+            this.invocationSpellLayout.Location = new System.Drawing.Point(434, 20);
             this.invocationSpellLayout.Name = "invocationSpellLayout";
             this.invocationSpellLayout.RowCount = 2;
             this.invocationSpellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.invocationSpellLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.invocationSpellLayout.Size = new System.Drawing.Size(429, 162);
+            this.invocationSpellLayout.Size = new System.Drawing.Size(415, 262);
             this.invocationSpellLayout.TabIndex = 3;
             // 
             // invocationSpellDescriptionLabel
@@ -96,8 +96,9 @@
             this.invocationSpellListBox.FormattingEnabled = true;
             this.invocationSpellListBox.Location = new System.Drawing.Point(3, 29);
             this.invocationSpellListBox.Name = "invocationSpellListBox";
-            this.invocationSpellListBox.Size = new System.Drawing.Size(120, 121);
+            this.invocationSpellListBox.Size = new System.Drawing.Size(120, 225);
             this.invocationSpellListBox.TabIndex = 2;
+            this.invocationSpellListBox.SelectedIndexChanged += new System.EventHandler(this.invocationSpellListBox_SelectedIndexChanged);
             // 
             // invocationLayout
             // 
@@ -112,7 +113,7 @@
             this.invocationLayout.RowCount = 2;
             this.invocationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.invocationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.invocationLayout.Size = new System.Drawing.Size(439, 162);
+            this.invocationLayout.Size = new System.Drawing.Size(425, 262);
             this.invocationLayout.TabIndex = 2;
             // 
             // invocationListBox
@@ -120,8 +121,9 @@
             this.invocationListBox.FormattingEnabled = true;
             this.invocationListBox.Location = new System.Drawing.Point(3, 29);
             this.invocationListBox.Name = "invocationListBox";
-            this.invocationListBox.Size = new System.Drawing.Size(120, 121);
+            this.invocationListBox.Size = new System.Drawing.Size(120, 225);
             this.invocationListBox.TabIndex = 1;
+            this.invocationListBox.SelectedIndexChanged += new System.EventHandler(this.invocationListBox_SelectedIndexChanged);
             // 
             // invocationIntroLabel
             // 
@@ -150,7 +152,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.invocationBox);
             this.Name = "WarlockInvocationControl";
-            this.Size = new System.Drawing.Size(899, 200);
+            this.Size = new System.Drawing.Size(865, 300);
             this.invocationBox.ResumeLayout(false);
             this.invocationSpellLayout.ResumeLayout(false);
             this.invocationSpellLayout.PerformLayout();
