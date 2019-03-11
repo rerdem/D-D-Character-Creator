@@ -120,14 +120,25 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void saveContent()
         {
+            wm.Choices.WarlockInvocations.Clear();
+            wm.Choices.WarlockInvocationSkills.Clear();
+            wm.Choices.WarlockInvocationSpells.Clear();
+
+            //save chosen invocations and possibly gained skills
             foreach (EldritchInvocation invocation in invocationListBox.SelectedItems)
             {
                 if (invocation != null)
                 {
                     wm.Choices.WarlockInvocations.Add(invocation);
+
+                    if (invocation.HasSkillGain)
+                    {
+                        wm.Choices.WarlockInvocationSkills.AddRange(wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getInvocationGainedSkills(invocation));
+                    }
                 }
             }
 
+            //save invocation spells, if applicable
             if (hasInvocationSelectionSpellChoice())
             {
                 foreach (Spell spell in invocationSpellListBox.SelectedItems)
@@ -137,10 +148,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                         wm.Choices.WarlockInvocationSpells.Add(spell);
                     }
                 }
-            }
-            else
-            {
-                wm.Choices.WarlockInvocationSpells.Clear();
             }
         }
 
@@ -280,6 +287,25 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             }
 
             return hasSpellChoice;
+        }
+
+        private bool hasInvocationSelectionSkillGain()
+        {
+            bool hasSkillGain = false;
+
+            foreach (EldritchInvocation invocation in invocationListBox.SelectedItems)
+            {
+                if (invocation != null)
+                {
+                    if (invocation.HasSkillGain)
+                    {
+                        hasSkillGain = true;
+                        break;
+                    }
+                }
+            }
+
+            return hasSkillGain;
         }
 
         private void syncInvocationSelectionOrder()

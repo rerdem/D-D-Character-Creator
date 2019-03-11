@@ -1,31 +1,9 @@
-XHigh Elf bonus Cantrip
-
-XFighter Fighting Style
-XRanger Favored Enemy/Terrain
-XRogue Expertise
 
 Draconic Bloodline Ancestry
 Knowledge Domain Double Proficiency
 Nature Domain extra skills
 
 937,496
-
-SELECT eldritchInvocations.name, eldritchInvocations.description, eldritchInvocations.level, eldritchInvocations.pactRestriction, eldritchInvocations.hasSpellChoice, 
-RequiredSpells.name, RequiredSpells.ritual, RequiredSpells.level, RequiredSpells.school, RequiredSpells.castTime, RequiredSpells.range, RequiredSpells.duration, RequiredSpells.components, RequiredSpells.materials, RequiredSpells.description, 
-GainedSpells.name, GainedSpells.ritual, GainedSpells.level, GainedSpells.school, GainedSpells.castTime, GainedSpells.range, GainedSpells.duration, GainedSpells.components, GainedSpells.materials, GainedSpells.description
-FROM eldritchInvocations
-LEFT JOIN eldritchInvocationRequiredSpells ON eldritchInvocationRequiredSpells.invocationId = eldritchInvocations.invocationId
-LEFT JOIN eldritchInvocationGainedSpells ON eldritchInvocationGainedSpells.invocationId = eldritchInvocations.invocationId
-LEFT JOIN spells as RequiredSpells ON RequiredSpells.spellId = eldritchInvocationRequiredSpells.spellId
-LEFT JOIN spells as GainedSpells ON GainedSpells.spellId = eldritchInvocationGainedSpells.spellId
-WHERE (eldritchInvocations.pactRestriction = "" OR eldritchInvocations.pactRestriction LIKE "%%")
-AND eldritchInvocations.level BETWEEN 1 AND 20
-
-
-
-
-
-
 
 
 Class/Subclass choices to separate page:
@@ -51,7 +29,7 @@ Bard:
 			cutting words
 		Valor: medium armor, shields, martial weapons, Combat Inspiration
 
-XCleric:
+Cleric:
 	Level 1:
 		Knowledge Domain Double Proficiency
 		Nature Domain extra skills
@@ -63,7 +41,7 @@ XCleric:
 
 Druid:
 	Level 2:
-	!Wild Shape
+	!Wild Shape (choose origin for animals known? -> Xanathar)
 	
 	Subclass:
 	!!!Land: 

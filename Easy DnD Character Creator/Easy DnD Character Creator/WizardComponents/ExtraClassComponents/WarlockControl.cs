@@ -135,6 +135,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             {
                 wm.Choices.WarlockInvocations.Clear();
                 wm.Choices.WarlockInvocationSpells.Clear();
+                wm.Choices.WarlockInvocationSkills.Clear();
             }
         }
 

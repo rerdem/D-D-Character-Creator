@@ -245,16 +245,43 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
                             Spell gainedSpell = new Spell();
                             if (!dbReader.IsDBNull(5))
                             {
-                                gainedSpell = new Spell(dbReader.GetString(5), dbReader.GetBoolean(6), dbReader.GetInt32(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), dbReader.GetString(11), dbReader.GetString(12), dbReader.GetString(13), dbReader.GetString(14), false);
+                                gainedSpell = new Spell(dbReader.GetString(5), 
+                                                        dbReader.GetBoolean(6), 
+                                                        dbReader.GetInt32(7), 
+                                                        dbReader.GetString(8), 
+                                                        dbReader.GetString(9), 
+                                                        dbReader.GetString(10), 
+                                                        dbReader.GetString(11), 
+                                                        dbReader.GetString(12), 
+                                                        dbReader.GetString(13), 
+                                                        dbReader.GetString(14), 
+                                                        false);
                             }
 
                             Spell requiredSpell = new Spell();
                             if (!dbReader.IsDBNull(15))
                             {
-                                requiredSpell = new Spell(dbReader.GetString(15), dbReader.GetBoolean(16), dbReader.GetInt32(17), dbReader.GetString(18), dbReader.GetString(19), dbReader.GetString(20), dbReader.GetString(21), dbReader.GetString(22), dbReader.GetString(23), dbReader.GetString(24), false);
+                                requiredSpell = new Spell(dbReader.GetString(15), 
+                                                          dbReader.GetBoolean(16), 
+                                                          dbReader.GetInt32(17), 
+                                                          dbReader.GetString(18), 
+                                                          dbReader.GetString(19), 
+                                                          dbReader.GetString(20), 
+                                                          dbReader.GetString(21), 
+                                                          dbReader.GetString(22), 
+                                                          dbReader.GetString(23), 
+                                                          dbReader.GetString(24), 
+                                                          false);
                             }
 
-                            invocations.Add(new EldritchInvocation(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetInt32(2), requiredSpell, dbReader.GetString(3), gainedSpell, dbReader.GetBoolean(4)));
+                            invocations.Add(new EldritchInvocation(dbReader.GetString(0), 
+                                                                   dbReader.GetString(1), 
+                                                                   dbReader.GetInt32(2), 
+                                                                   requiredSpell, 
+                                                                   dbReader.GetString(3), 
+                                                                   gainedSpell, 
+                                                                   dbReader.GetBoolean(4), 
+                                                                   hasInvocationSkillGain(dbReader.GetString(0))));
                         }
                     }
                 }
@@ -320,6 +347,69 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             }
 
             return spellList;
+        }
+
+        /// <summary>
+        /// checks, if the eldritch invocation with the given name is connected with a skill proficiency gain
+        /// </summary>
+        /// <param name="invocationName">name of eldritch invocation</param>
+        private bool hasInvocationSkillGain(string invocationName)
+        {
+            bool hasSkillGain = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT skills.name FROM eldritchInvocations " +
+                                      "INNER JOIN eldritchInvocationsGainedSkills ON eldritchInvocationsGainedSkills.invocationId = eldritchInvocations.invocationId " +
+                                      "INNER JOIN skills ON skills.skillId = eldritchInvocationsGainedSkills.skillId " +
+                                      "WHERE eldritchInvocations.name = @Invocation";
+                command.Parameters.AddWithValue("@Invocation", invocationName);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        hasSkillGain = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasSkillGain;
+        }
+
+        /// <summary>
+        /// gets a list of skills the invocation gains
+        /// </summary>
+        /// <param name="invocation">chosen invocation</param>
+        public List<string> getInvocationGainedSkills(EldritchInvocation invocation)
+        {
+            List<string> gainedSkills = new List<string>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT skills.name FROM eldritchInvocations " +
+                                      "INNER JOIN eldritchInvocationsGainedSkills ON eldritchInvocationsGainedSkills.invocationId = eldritchInvocations.invocationId " +
+                                      "INNER JOIN skills ON skills.skillId = eldritchInvocationsGainedSkills.skillId " +
+                                      "WHERE eldritchInvocations.name = @Invocation";
+                command.Parameters.AddWithValue("@Invocation", invocation.Name);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            gainedSkills.Add(dbReader.GetString(0));
+                        }
+                    }
+                }
+            }
+
+            return gainedSkills;
         }
     }
 }

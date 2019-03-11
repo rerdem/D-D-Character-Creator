@@ -112,10 +112,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void saveContent()
         {
+            //save chosen pact
             WarlockPact currentPact = (WarlockPact)pactListBox.SelectedItem;
-
             wm.Choices.WarlockPactChoice = currentPact;
 
+            //save pact spells, if applicable
+            wm.Choices.WarlockPactSpells.Clear();
             if (currentPact.SpellAmount > 0)
             {
                 foreach (Spell spell in pactSpellListBox.SelectedItems)
@@ -125,10 +127,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                         wm.Choices.WarlockPactSpells.Add(spell);
                     }
                 }
-            }
-            else
-            {
-                wm.Choices.WarlockPactSpells.Clear();
             }
         }
 

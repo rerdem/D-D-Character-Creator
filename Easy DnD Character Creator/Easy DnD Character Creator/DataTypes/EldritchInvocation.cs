@@ -15,6 +15,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
         public string PactRestriction { get; }
         public Spell GainedSpell { get; }
         public bool HasSpellChoice { get; }
+        public bool HasSkillGain { get; }
 
         public EldritchInvocation()
         {
@@ -25,9 +26,10 @@ namespace Easy_DnD_Character_Creator.DataTypes
             PactRestriction = "";
             GainedSpell = new Spell();
             HasSpellChoice = false;
+            HasSkillGain = false;
         }
 
-        public EldritchInvocation(string inputName, string inputDescription, int inputLevelRestriction, Spell inputRequiredSpell, string inputPactRestriction, Spell inputGainedSpell, bool inputHasSpellChoice)
+        public EldritchInvocation(string inputName, string inputDescription, int inputLevelRestriction, Spell inputRequiredSpell, string inputPactRestriction, Spell inputGainedSpell, bool inputHasSpellChoice, bool inputHasSkillGain)
         {
             Name = inputName;
             Description = inputDescription;
@@ -36,6 +38,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
             PactRestriction = inputPactRestriction;
             GainedSpell = inputGainedSpell;
             HasSpellChoice = inputHasSpellChoice;
+            HasSkillGain = inputHasSkillGain;
         }
     }
 }
