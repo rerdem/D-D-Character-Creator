@@ -59,7 +59,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                     missingElements += ", ";
                 }
 
-                missingElements = warlockPactComponent.getInvalidElements();
+                missingElements += warlockPactComponent.getInvalidElements();
             }
 
             if (warlockLayout.Controls.Contains(warlockInvocationComponent))
@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                     missingElements += ", ";
                 }
 
-                missingElements = warlockInvocationComponent.getInvalidElements();
+                missingElements += warlockInvocationComponent.getInvalidElements();
             }
 
             return missingElements;

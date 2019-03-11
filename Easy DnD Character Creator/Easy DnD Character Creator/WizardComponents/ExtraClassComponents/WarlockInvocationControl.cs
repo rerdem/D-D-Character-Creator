@@ -16,7 +16,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         private WizardManager wm;
         private bool visited;
 
-        private int eldritchInvocationsKnown;
+        private int invocationsKnown;
         private int invocationSpellsKnown;
 
         private List<EldritchInvocation> invocationSource;
@@ -32,7 +32,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             wm = inputWizardManager;
             Visited = false;
 
-            eldritchInvocationsKnown = 0;
+            invocationsKnown = 0;
             invocationSpellsKnown = 0;
 
             invocationSource = new List<EldritchInvocation>();
@@ -59,14 +59,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         {
             string output = "";
 
-            if (invocationListBox.SelectedItems.Count < eldritchInvocationsKnown)
+            if (invocationListBox.SelectedItems.Count < invocationsKnown)
             {
-                output = $"select {eldritchInvocationsKnown - invocationListBox.SelectedItems.Count} more eldritch invocation(s)";
+                output += $"select {invocationsKnown - invocationListBox.SelectedItems.Count} more eldritch invocation(s)";
             }
 
             if (hasInvocationSelectionSpellChoice())
             {
-                if (invocationSpellListBox.SelectedItems.Count == invocationSpellsKnown)
+                if (invocationSpellListBox.SelectedItems.Count < invocationSpellsKnown)
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
@@ -85,11 +85,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
             if (hasInvocationSelectionSpellChoice())
             {
-                isValid = ((invocationListBox.SelectedItems.Count == eldritchInvocationsKnown) && (invocationSpellListBox.SelectedItems.Count == invocationSpellsKnown));
+                isValid = ((invocationListBox.SelectedItems.Count == invocationsKnown) && (invocationSpellListBox.SelectedItems.Count == invocationSpellsKnown));
             }
             else
             {
-                isValid = (invocationListBox.SelectedItems.Count == eldritchInvocationsKnown);
+                isValid = (invocationListBox.SelectedItems.Count == invocationsKnown);
             }
 
             return isValid;
@@ -97,8 +97,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void populateForm()
         {
-            eldritchInvocationsKnown = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getEldritchInvocationAmount(wm.Choices.Level);
-            if (eldritchInvocationsKnown > 1)
+            invocationsKnown = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getEldritchInvocationAmount(wm.Choices.Level);
+            if (invocationsKnown > 1)
             {
                 invocationListBox.SelectionMode = SelectionMode.MultiSimple;
             }
@@ -179,7 +179,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                     knownSpells.Add(spell);
                 }
             }
-            knownSpells.AddRange(wm.Choices.WarlockPactSpells);
+            if (wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockPact(wm.Choices.Class, wm.Choices.Level))
+            {
+                knownSpells.AddRange(wm.Choices.WarlockPactSpells);
+            }
 
             //refresh list
             invocationSource = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getEldritchInvocations(knownSpells, wm.Choices.WarlockPactChoice, wm.Choices.Level);
@@ -314,15 +317,24 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             syncInvocationSelectionOrder();
             if (invocationListBox.SelectedItems.Count > 0)
             {
-                EldritchInvocation currentInvocation = (EldritchInvocation)invocationListBox.SelectedItem;
-                if (currentInvocation != null)
+                if (invocationListBox.SelectedIndices.Count <= invocationsKnown)
                 {
-                    invocationDescriptionLabel.Text = currentInvocation.Description;
+                    int lastSelectedIndex = invocationOrderedSelection.ElementAt(invocationOrderedSelection.Count - 1);
+                    EldritchInvocation currentInvocation = (EldritchInvocation)invocationListBox.Items[lastSelectedIndex];
+                    if (currentInvocation != null)
+                    {
+                        invocationDescriptionLabel.Text = currentInvocation.Description;
 
-                    toggleInvocationSpellSelection();
-
-                    OnInvocationChosen(null);
+                        toggleInvocationSpellSelection();
+                    }
                 }
+                else
+                {
+                    int lastSelectedIndex = invocationOrderedSelection.ElementAt(invocationOrderedSelection.Count - 1);
+                    invocationListBox.SelectedIndices.Remove(lastSelectedIndex);
+                }
+
+                OnInvocationChosen(null);
             }
         }
 

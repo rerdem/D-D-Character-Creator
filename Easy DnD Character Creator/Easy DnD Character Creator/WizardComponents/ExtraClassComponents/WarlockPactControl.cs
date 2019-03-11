@@ -16,6 +16,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         private WizardManager wm;
         private bool visited;
 
+        private int lastLevel;
+
         private List<WarlockPact> pactSource;
         private List<Spell> pactSpellSource;
         private List<int> pactSpellsOrderedSelection;
@@ -27,6 +29,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         {
             wm = inputWizardManager;
             Visited = false;
+
+            lastLevel = 0;
 
             pactSource = new List<WarlockPact>();
             pactSpellSource = new List<Spell>();
@@ -58,7 +62,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                 {
                     if (pactSpellListBox.SelectedItems.Count < currentPact.SpellAmount)
                     {
-                        output = $"select {currentPact.SpellAmount - pactSpellListBox.SelectedItems.Count} more spell(s)";
+                        output = $"select {currentPact.SpellAmount - pactSpellListBox.SelectedItems.Count} more pact spell(s)";
                     }
                 }
             }
@@ -97,11 +101,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         {
             refreshPactList();
 
-            if (Visited)
+            if (Visited && !hasLevelChanged())
             {
                 loadPreviousSelections();
             }
 
+            lastLevel = wm.Choices.Level;
             Visited = true;
         }
 
@@ -209,6 +214,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             pactSpellListBox.DataSource = pactSpellSource;
             pactSpellListBox.DisplayMember = "Name";
             pactSpellListBox.EndUpdate();
+        }
+
+        private bool hasLevelChanged()
+        {
+            return (lastLevel != wm.Choices.Level);
         }
 
         private void syncSpellSelectionOrder()
