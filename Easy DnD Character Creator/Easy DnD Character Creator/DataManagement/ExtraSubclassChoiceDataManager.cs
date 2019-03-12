@@ -1,4 +1,5 @@
-﻿using Easy_DnD_Character_Creator.DataTypes;
+﻿using Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers;
+using Easy_DnD_Character_Creator.DataTypes;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -13,48 +14,25 @@ namespace Easy_DnD_Character_Creator.DataManagement
         private string ConnectionString { get; }
         public List<string> UsedBooks { get; set; }
 
+        public ExtraSubclassSkillDataManager ExtraSubclassSkillData { get; }
+
         public ExtraSubclassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
             ConnectionString = inputConnectionString;
             UsedBooks = inputUsedBooks;
+
+            ExtraSubclassSkillData = new ExtraSubclassSkillDataManager(ConnectionString, inputUsedBooks);
+        }
+
+        public void setUsedBooks(List<string> inputUsedBooks)
+        {
+            UsedBooks = inputUsedBooks;
+            ExtraSubclassSkillData.UsedBooks = inputUsedBooks;
         }
 
         public bool hasExtraSubclassChoices(string subclass, int level)
         {
-            return true;
-        }
-
-        /// <summary>
-        /// gets a list of all skills the given cleric subclass may choose from
-        /// </summary>
-        /// <param name="subclass">given subclass</param>
-        public List<string> getClericSubclassSkills(string subclass)
-        {
-            List<string> clericSubclassSkills = new List<string>();
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT skills.name FROM extraClericProficiencies " +
-                                      "INNER JOIN subclasses ON extraClericProficiencies.subclassId=subclasses.subclassId " +
-                                      "INNER JOIN skills ON extraClericProficiencies.skillId=skills.skillId " +
-                                      "WHERE subclasses.name=@Subclass";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            clericSubclassSkills.Add(dbReader.GetString(0));
-                        }
-                    }
-                }
-            }
-
-            return clericSubclassSkills;
+            return ExtraSubclassSkillData.hasSkillChoice(subclass, level);
         }
 
         /// <summary>

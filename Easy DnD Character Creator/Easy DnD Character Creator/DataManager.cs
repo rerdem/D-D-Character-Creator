@@ -65,7 +65,7 @@ namespace Easy_DnD_Character_Creator
             SpellData.UsedBooks = inputUsedBooks;
             ExtraRaceChoiceData.UsedBooks = inputUsedBooks;
             ExtraClassChoiceData.setUsedBooks(inputUsedBooks);
-            ExtraSubclassChoiceData.UsedBooks = inputUsedBooks;
+            ExtraSubclassChoiceData.setUsedBooks(inputUsedBooks);
         }
 
         /// <summary>

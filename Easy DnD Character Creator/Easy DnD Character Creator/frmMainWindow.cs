@@ -29,6 +29,7 @@ namespace Easy_DnD_Character_Creator
         private SpellControl spellComponent;
         private ExtraRaceChoiceControl extraRaceChoiceComponent;
         private ExtraClassChoiceControl extraClassChoiceComponent;
+        private ExtraSubclassChoiceControl extraSubclassChoiceComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -60,6 +61,8 @@ namespace Easy_DnD_Character_Creator
             extraRaceChoiceComponent.ExtraRaceChoiceChanged += new EventHandler(extraRaceChoiceComponent_ExtraRaceChoiceChanged);
             extraClassChoiceComponent = new ExtraClassChoiceControl(WM);
             extraClassChoiceComponent.SubcontrolOptionChosen += new EventHandler(extraClassChoiceComponent_SubcontrolOptionChosen);
+            extraSubclassChoiceComponent = new ExtraSubclassChoiceControl(WM);
+            extraSubclassChoiceComponent.SubcontrolOptionChosen += new EventHandler(extraSubclassChoiceComponent_SubcontrolOptionChosen);
 
 
             InitializeComponent();
@@ -135,6 +138,8 @@ namespace Easy_DnD_Character_Creator
                     extraClassChoiceComponent.populateForm();
                     break;
                 case WizardState.extraSubclassChoices:
+                    contentFlowPanel.Controls.Add(extraSubclassChoiceComponent);
+                    extraSubclassChoiceComponent.populateForm();
                     break;
                 case WizardState.story:
                     break;
@@ -220,6 +225,7 @@ namespace Easy_DnD_Character_Creator
                         missingElements = extraClassChoiceComponent.getInvalidElements();
                         break;
                     case WizardState.extraSubclassChoices:
+                        missingElements = extraSubclassChoiceComponent.getInvalidElements();
                         break;
                     case WizardState.story:
                         break;
@@ -272,6 +278,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = extraClassChoiceComponent.isValid();
                     break;
                 case WizardState.extraSubclassChoices:
+                    isValid = extraSubclassChoiceComponent.isValid();
                     break;
                 case WizardState.story:
                     break;
@@ -351,6 +358,7 @@ namespace Easy_DnD_Character_Creator
                     extraClassChoiceComponent.saveContent();
                     break;
                 case WizardState.extraSubclassChoices:
+                    extraSubclassChoiceComponent.saveContent();
                     break;
                 case WizardState.story:
                     break;
@@ -476,6 +484,15 @@ namespace Easy_DnD_Character_Creator
         private void extraClassChoiceComponent_SubcontrolOptionChosen(object sender, EventArgs e)
         {
             ExtraClassChoiceControl incoming = sender as ExtraClassChoiceControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+        private void extraSubclassChoiceComponent_SubcontrolOptionChosen(object sender, EventArgs e)
+        {
+            ExtraSubclassChoiceControl incoming = sender as ExtraSubclassChoiceControl;
             if (incoming != null)
             {
                 refreshButtons();

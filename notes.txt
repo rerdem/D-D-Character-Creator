@@ -14,10 +14,10 @@ Ranger Hunter Hunter's Prey wie Barbarian Totem
 Ranger Beastmaster Companion
 Sorc Draconic Bloodline Ancestry
 
-Skills
-Bard Lore: 3 extra Skills
-Cleric Knowledge 2 extra skills from Arcana Nature History Religion -> Double Proficiency
-Cleric Nature 1 extra skills from Animal Handling, Nature, Survival
+XSkills
+XBard Lore: 3 extra Skills
+XCleric Knowledge 2 extra skills from Arcana Nature History Religion -> Double Proficiency
+XCleric Nature 1 extra skills from Animal Handling, Nature, Survival
 
 937,496
 
@@ -41,19 +41,19 @@ Bard:
 	Level 3:
 		X!!Expertise: 2 proficient Skills for which proficiency doubles (lvl 10 another 2)
 		Subclass:
-		!!Lore: 3 extra skill proficiencies
-			cutting words
+		X!!Lore: 3 extra skill proficiencies
+			Xcutting words
 		Valor: medium armor, shields, martial weapons, Combat Inspiration
 
-Cleric:
-	Level 1:
-		Knowledge Domain Double Proficiency
-		Nature Domain extra skills
-	XLevel 2:
-		Channel Divinity -> Turn Undead + Domain specific
-	
-	XLevel 3:
-		Domain spells
+											XCleric:
+												XLevel 1:
+													XKnowledge Domain Double Proficiency
+													XNature Domain extra skills
+												XLevel 2:
+													Channel Divinity -> Turn Undead + Domain specific
+												
+												XLevel 3:
+													Domain spells
 
 Druid:
 	Level 2:

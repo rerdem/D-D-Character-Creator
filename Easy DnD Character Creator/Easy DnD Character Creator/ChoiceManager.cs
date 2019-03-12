@@ -84,13 +84,17 @@ namespace Easy_DnD_Character_Creator
         public string FavoredEnemies { get; set; }
         public string FavoredTerrains { get; set; }
         public List<string> ClassSkills { get; set; }
-        public bool DoublesProficiency { get; set; }
+        public bool ClassDoublesProficiency { get; set; }
         public WarlockPact WarlockPactChoice { get; set; }
         public List<Spell> WarlockPactSpells { get; set; }
         public List<EldritchInvocation> WarlockInvocations { get; set; }
         public List<Spell> WarlockInvocationSpells { get; set; }
         public List<string> WarlockInvocationSkills { get; set; }
         public List<Metamagic> SorcererMetamagic { get; set; }
+
+        //ExtraSubclassChoiceControl
+        public List<string> SubclassSkills { get; set; }
+        public bool SubclassDoublesProficiency { get; set; }
 
         public ChoiceManager()
         {
@@ -154,13 +158,16 @@ namespace Easy_DnD_Character_Creator
             FavoredEnemies = "";
             FavoredTerrains = "";
             ClassSkills = new List<string>();
-            DoublesProficiency = false;
+            ClassDoublesProficiency = false;
             WarlockPactChoice = new WarlockPact();
             WarlockPactSpells = new List<Spell>();
             WarlockInvocations = new List<EldritchInvocation>();
             WarlockInvocationSpells = new List<Spell>();
             WarlockInvocationSkills = new List<string>();
             SorcererMetamagic = new List<Metamagic>();
+
+            SubclassSkills = new List<string>();
+            SubclassDoublesProficiency = false;
         }
     }
 }

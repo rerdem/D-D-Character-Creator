@@ -5,62 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
+namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
 {
-    public class ExtraClassSkillDataManager
+    public class ExtraSubclassSkillDataManager
     {
         private string ConnectionString { get; }
         public List<string> UsedBooks { get; set; }
 
-        public ExtraClassSkillDataManager(string inputConnectionString, List<string> inputUsedBooks)
+        public ExtraSubclassSkillDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
             ConnectionString = inputConnectionString;
             UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
-        /// checks, if the given class has more than the standard set of skills
+        /// checks, if a given subclass chooses additional skills or skills to which more modifiers are applied
         /// </summary>
-        /// <param name="className">chosen class</param>
-        public bool hasExtraSkillCheckbox(string className)
-        {
-            return (className == "Rogue");
-        }
-
-        /// <summary>
-        /// gets the name of the additional skill outside of the standard skill set
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        public string getExtraSkillCheckbox(string className)
-        {
-            if (className == "Rogue")
-            {
-                return "Thieves' Tools";
-            }
-
-            return "";
-        }
-
-        /// <summary>
-        /// gets the tooltip of the additional skill outside of the standard skill set
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        public string getExtraSkillTooltip(string className)
-        {
-            if (className == "Rogue")
-            {
-                return "Your skill with thieves' tools lets you disarm traps and pick locks.";
-            }
-
-            return "";
-        }
-
-        /// <summary>
-        /// checks, if a given class chooses additional skills or skills to which more modifiers are applied
-        /// </summary>
-        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public bool hasSkillChoice(string className, int level)
+        public bool hasSkillChoice(string subclass, int level)
         {
             bool hasSkillCoice = false;
 
@@ -68,11 +31,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT * FROM extraClassSkillChoice " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoice.classId " +
-                                      "WHERE classes.name=@Class AND extraClassSkillChoice.level BETWEEN 1 AND @Level " +
+                command.CommandText = "SELECT * FROM extraSubclassSkillChoice " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId=extraSubclassSkillChoice.subclassId " +
+                                      "WHERE subclasses.name=@Subclass AND extraSubclassSkillChoice.level BETWEEN 1 AND @Level " +
                                       "ORDER BY level DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
@@ -90,9 +53,9 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         /// <summary>
         /// checks, if the extra skill choice doubles proficiency or gains new proficiencies
         /// </summary>
-        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public bool SkillChoiceDoublesProficiency(string className, int level)
+        public bool SkillChoiceDoublesProficiency(string subclass, int level)
         {
             bool doublesProficiency = false;
 
@@ -100,11 +63,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT doublesProficiency FROM extraClassSkillChoice " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoice.classId " +
-                                      "WHERE classes.name=@Class AND extraClassSkillChoice.level BETWEEN 1 AND @Level " +
+                command.CommandText = "SELECT doublesProficiency FROM extraSubclassSkillChoice " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId=extraSubclassSkillChoice.subclassId " +
+                                      "WHERE subclasses.name=@Subclass AND extraSubclassSkillChoice.level BETWEEN 1 AND @Level " +
                                       "ORDER BY level DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
@@ -123,11 +86,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         }
 
         /// <summary>
-        /// gets the amount of additional skills a class can choose
+        /// gets the amount of additional skills a subclass can choose
         /// </summary>
-        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public int getSkillChoiceAmount(string className, int level)
+        public int getSkillChoiceAmount(string subclass, int level)
         {
             int choiceAmount = 0;
 
@@ -135,11 +98,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT amount FROM extraClassSkillChoice " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoice.classId " +
-                                      "WHERE classes.name=@Class AND extraClassSkillChoice.level BETWEEN 1 AND @Level " +
+                command.CommandText = "SELECT amount FROM extraSubclassSkillChoice " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId=extraSubclassSkillChoice.subclassId " +
+                                      "WHERE subclasses.name=@Subclass AND extraSubclassSkillChoice.level BETWEEN 1 AND @Level " +
                                       "ORDER BY level DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
@@ -160,8 +123,8 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         /// <summary>
         /// checks, if there are any restrictions on the skills that may be chosen
         /// </summary>
-        /// <param name="className">chosen class</param>
-        public bool hasSkillChoiceRestrictions(string className)
+        /// <param name="subclass">chosen subclass</param>
+        public bool hasSkillChoiceRestrictions(string subclass)
         {
             bool hasSkillCoiceRestrictions = false;
 
@@ -169,11 +132,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT skills.name FROM extraClassSkillChoiceRestrictions " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoiceRestrictions.classId " +
-                                      "INNER JOIN skills ON skills.skillId=extraClassSkillChoiceRestrictions.skillId " +
-                                      "WHERE classes.name=@Class";
-                command.Parameters.AddWithValue("@Class", className);
+                command.CommandText = "SELECT skills.name FROM extraSubclassSkillChoiceRestrictions " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId = extraSubclassSkillChoiceRestrictions.subclassId " +
+                                      "INNER JOIN skills ON skills.skillId = extraSubclassSkillChoiceRestrictions.skillId " +
+                                      "WHERE subclasses.name = @Subclass";
+                command.Parameters.AddWithValue("@Subclass", subclass);
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
                 {
@@ -190,8 +153,8 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         /// <summary>
         /// gets a list of skills from which the additional choices must be selected
         /// </summary>
-        /// <param name="className">chosen class</param>
-        public List<string> getSkillChoiceRestrictions(string className)
+        /// <param name="subclass">chosen subclass</param>
+        public List<string> getSkillChoiceRestrictions(string subclass)
         {
             List<string> skillCoiceRestrictions = new List<string>();
 
@@ -199,11 +162,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT skills.name FROM extraClassSkillChoiceRestrictions " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoiceRestrictions.classId " +
-                                      "INNER JOIN skills ON skills.skillId=extraClassSkillChoiceRestrictions.skillId  " +
-                                      "WHERE classes.name=@Class";
-                command.Parameters.AddWithValue("@Class", className);
+                command.CommandText = "SELECT skills.name FROM extraSubclassSkillChoiceRestrictions " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId = extraSubclassSkillChoiceRestrictions.subclassId " +
+                                      "INNER JOIN skills ON skills.skillId = extraSubclassSkillChoiceRestrictions.skillId " +
+                                      "WHERE subclasses.name = @Subclass";
+                command.Parameters.AddWithValue("@Subclass", subclass);
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
                 {

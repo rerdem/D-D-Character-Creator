@@ -228,7 +228,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             else
             {
                 wm.Choices.ClassSkills.Clear();
-                wm.Choices.DoublesProficiency = false;
+                wm.Choices.ClassDoublesProficiency = false;
             }
 
             if (classChoiceLayout.Controls.Contains(warlockComponent))

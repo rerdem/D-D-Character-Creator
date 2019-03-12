@@ -64,7 +64,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.classChoiceBox);
             this.Name = "ExtraClassChoiceControl";
-            this.Size = new System.Drawing.Size(937, 500);
+            this.Size = new System.Drawing.Size(937, 496);
             this.classChoiceBox.ResumeLayout(false);
             this.classChoiceBox.PerformLayout();
             this.ResumeLayout(false);
