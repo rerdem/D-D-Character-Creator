@@ -1,7 +1,23 @@
+Monk Ki & Features
+Sorc Sorc Points
+XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
-Draconic Bloodline Ancestry
-Knowledge Domain Double Proficiency
-Nature Domain extra skills
+Barbarian Totem Warrior Totem
+Cleric Nature 1 extra druid cantrip
+Druid Circle Land terrain for circle spells
+Fighter Battlemaster +1 artisan tool proficiency
+Fighter Battlemaster 3 Maneuvers
+						je +2 auf lvl 7, 10, 15
+Monk Shadow Arts gained Spells: Darkness, Darkvision, Pass without Trace, Silence, Minor Illusion
+Monk Way of Elements, Elemental Attunement -> wie eldritch invocations (1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17)
+Ranger Hunter Hunter's Prey wie Barbarian Totem
+Ranger Beastmaster Companion
+Sorc Draconic Bloodline Ancestry
+
+Skills
+Bard Lore: 3 extra Skills
+Cleric Knowledge 2 extra skills from Arcana Nature History Religion -> Double Proficiency
+Cleric Nature 1 extra skills from Animal Handling, Nature, Survival
 
 937,496
 
@@ -46,7 +62,7 @@ Druid:
 	Subclass:
 	!!!Land: 
 		X+1 Cantrip
-		Natural Recovery
+		XNatural Recovery
 		Choose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
 	XMoon: Combat Wild Shape
 		Circle Forms
@@ -76,7 +92,7 @@ Monk:
 	Level 3:
 		Deflect Missiles
 		Subclass:
-		Open Hand:
+		XOpen Hand:
 			Open Hand Technique
 		Shadow:
 			!Shadow Arts -> bonus spells
@@ -84,19 +100,19 @@ Monk:
 			Elemental Attunement
 			!! 1 extra discipline (some are spells)
 			
-XPaladin:
-	XLevel 2:
-		X!!Fighting style
-		X!!Spellcasting:
-			spells known all
-			spell ability cha: 8 + prof + cha mod
-		XDivine Smite
-		
-	XLevel 3:
-		XDivine Health
-		Subclass:
-		XOath spells
-		XChannel Divinity oath-specific
+												XPaladin:
+													XLevel 2:
+														X!!Fighting style
+														X!!Spellcasting:
+															spells known all
+															spell ability cha: 8 + prof + cha mod
+														XDivine Smite
+														
+													XLevel 3:
+														XDivine Health
+														Subclass:
+														XOath spells
+														XChannel Divinity oath-specific
 
 Ranger:
 	XLevel 2:
@@ -111,51 +127,52 @@ Ranger:
 			!!Hunter: Hunter's Prey
 			!!Beast Master: Ranger's Companion
 
-XRogue:
-	XLevel 2:
-		Cunning Action
-		
-	XLevel 3:
-		Subclass:
-		XThief:
-			Fast Hands, Second-Story Work
-		XAssassin:
-			Xextra proficiency: disguise kit, poisoner's kit
-			XAssassinate
-		XArcane Trickster:
-			!!Spellcasting -> Wizard list
-				2 cantrips (+1 lvl 10) + mage hand
-				3 spells (davon 2 enchantment oder illusion)
-					alle zusätzlichen spells müssen ench oder illu sein außer lvl 8, 14, 20
-				ability: intelligence
-			Mage Hand Legerdemain
+												XRogue:
+													XLevel 2:
+														Cunning Action
+														
+													XLevel 3:
+														Subclass:
+														XThief:
+															Fast Hands, Second-Story Work
+														XAssassin:
+															Xextra proficiency: disguise kit, poisoner's kit
+															XAssassinate
+														XArcane Trickster:
+															!!Spellcasting -> Wizard list
+																2 cantrips (+1 lvl 10) + mage hand
+																3 spells (davon 2 enchantment oder illusion)
+																	alle zusätzlichen spells müssen ench oder illu sein außer lvl 8, 14, 20
+																ability: intelligence
+															Mage Hand Legerdemain
 				
 Sorcerer:
 	!!Draconic Ancestry
 	Level 2:
-		!Font of Magic -> Sorcery Points
+		Sorcery Points
+		X!Font of Magic
 		
-	Level 3:
-		!!Metamagic:
+	XLevel 3:
+		X!!Metamagic:
 			choose 2
 
-Warlock:
-	X!expanded pact spells each level
-	Level 2:
-		!!Eldritch Invocations: choose 2
-			Beguiling Influence
-			Book of Ancient Secrets
-		
-	Level 3:
-		!!Pact Boon: choose 1
-
-XWizard:
-	XLevel 2:
-		Subclass:
-		each Savant
-		each has extra feature
-		!!Illusion:
-			minor illusion (if already learned, different cantrip), doesn't count to cantrips known, does more stuff
-			
-	XLevel 3:
+												XWarlock:
+													X!expanded pact spells each level
+													XLevel 2:
+														X!!Eldritch Invocations: choose 2
+															XBeguiling Influence
+															XBook of Ancient Secrets
+														
+													XLevel 3:
+														X!!Pact Boon: choose 1
+												
+												XWizard:
+													XLevel 2:
+														Subclass:
+														each Savant
+														each has extra feature
+														!!Illusion:
+															minor illusion (if already learned, different cantrip), doesn't count to cantrips known, does more stuff
+															
+													XLevel 3:
 	

@@ -90,6 +90,7 @@ namespace Easy_DnD_Character_Creator
         public List<EldritchInvocation> WarlockInvocations { get; set; }
         public List<Spell> WarlockInvocationSpells { get; set; }
         public List<string> WarlockInvocationSkills { get; set; }
+        public List<Metamagic> SorcererMetamagic { get; set; }
 
         public ChoiceManager()
         {
@@ -159,6 +160,7 @@ namespace Easy_DnD_Character_Creator
             WarlockInvocations = new List<EldritchInvocation>();
             WarlockInvocationSpells = new List<Spell>();
             WarlockInvocationSkills = new List<string>();
+            SorcererMetamagic = new List<Metamagic>();
         }
     }
 }

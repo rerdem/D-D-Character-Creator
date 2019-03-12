@@ -21,6 +21,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private FavoredEnemyTerrainControl favoredEnemyTerrainComponent;
         private ExtraClassSkillControl extraClassSkillsComponent;
         private WarlockControl warlockComponent;
+        private MetamagicControl metamagicComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -41,6 +42,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             warlockComponent = new WarlockControl(wm);
             warlockComponent.SubcontrolOptionChosen += new EventHandler(warlockComponent_SubcontrolOptionChosen);
+
+            metamagicComponent = new MetamagicControl(wm);
+            metamagicComponent.MetamagicChosen += new EventHandler(metamagicComponent_MetamagicChosen);
 
             InitializeComponent();
         }
@@ -101,6 +105,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = warlockComponent.getInvalidElements();
             }
 
+            if (classChoiceLayout.Controls.Contains(metamagicComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = metamagicComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -110,6 +124,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isFavoredEnemyTerrainValid = true;
             bool isExtraClassSkillValid = true;
             bool isWarlockValid = true;
+            bool isMetamagicValid = true;
 
             if (classChoiceLayout.Controls.Contains(fightingStyleComponent))
             {
@@ -131,10 +146,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isWarlockValid = warlockComponent.isValid();
             }
 
+            if (classChoiceLayout.Controls.Contains(metamagicComponent))
+            {
+                isMetamagicValid = metamagicComponent.isValid();
+            }
+
             return isFightingStyleValid &&
                    isFavoredEnemyTerrainValid &&
                    isExtraClassSkillValid &&
-                   isWarlockValid;
+                   isWarlockValid &&
+                   isMetamagicValid;
         }
 
         public void populateForm()
@@ -169,6 +190,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             warlockComponent.populateForm();
 
+            //metamagic
+            if (wm.DBManager.ExtraClassChoiceData.MetamagicData.hasMetamagic(wm.Choices.Class, wm.Choices.Level))
+            {
+                classChoiceLayout.Controls.Add(metamagicComponent);
+            }
+            metamagicComponent.populateForm();
 
             Visited = true;
         }
@@ -214,7 +241,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.WarlockPactSpells.Clear();
                 wm.Choices.WarlockInvocations.Clear();
                 wm.Choices.WarlockInvocationSpells.Clear();
+            }
 
+            if (classChoiceLayout.Controls.Contains(metamagicComponent))
+            {
+                metamagicComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.SorcererMetamagic.Clear();
             }
         }
 
@@ -234,6 +269,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         }
 
         private void warlockComponent_SubcontrolOptionChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void metamagicComponent_MetamagicChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }

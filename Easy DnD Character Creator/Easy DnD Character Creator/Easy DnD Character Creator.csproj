@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataManagement\ExtraClassChoiceDataManager.cs" />
+    <Compile Include="DataManagement\ExtraClassManagers\MetamagicDataManager.cs" />
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="DataTypes\EldritchInvocation.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
+    <Compile Include="DataTypes\Metamagic.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
     <Compile Include="DataTypes\Pack.cs" />
     <Compile Include="DataTypes\Spell.cs" />
@@ -156,6 +158,12 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraClassChoiceControl.Designer.cs">
       <DependentUpon>ExtraClassChoiceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraClassComponents\MetamagicControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraClassComponents\MetamagicControl.Designer.cs">
+      <DependentUpon>MetamagicControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\ExtraRaceChoiceControl.cs">
       <SubType>UserControl</SubType>
@@ -272,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraClassChoiceControl.resx">
       <DependentUpon>ExtraClassChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\MetamagicControl.resx">
+      <DependentUpon>MetamagicControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraRaceChoiceControl.resx">
       <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>

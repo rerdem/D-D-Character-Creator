@@ -18,6 +18,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public FavoredEnemyTerrainDataManager FavoredEnemyTerrainData { get; }
         public ExtraClassSkillDataManager ExtraClassSkillData { get; }
         public WarlockChoiceDataManager WarlockChoiceData { get; }
+        public MetamagicDataManager MetamagicData { get; }
 
         public ExtraClassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
@@ -28,6 +29,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             FavoredEnemyTerrainData = new FavoredEnemyTerrainDataManager(ConnectionString, inputUsedBooks);
             ExtraClassSkillData = new ExtraClassSkillDataManager(ConnectionString, inputUsedBooks);
             WarlockChoiceData = new WarlockChoiceDataManager(ConnectionString, inputUsedBooks);
+            MetamagicData = new MetamagicDataManager(ConnectionString, inputUsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -37,6 +39,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             FavoredEnemyTerrainData.UsedBooks = inputUsedBooks;
             ExtraClassSkillData.UsedBooks = inputUsedBooks;
             WarlockChoiceData.UsedBooks = inputUsedBooks;
+            MetamagicData.UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         {
             return FightingStyleData.hasFightingStyle(className, level) || FavoredEnemyTerrainData.hasFavoredEnemy(className, level)
                 || FavoredEnemyTerrainData.hasFavoredTerrain(className, level) || ExtraClassSkillData.hasSkillChoice(className, level)
-                || WarlockChoiceData.hasWarlockChoices(className, level);
+                || WarlockChoiceData.hasWarlockChoices(className, level) || MetamagicData.hasMetamagic(className, level);
         }
 
     }
