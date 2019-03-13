@@ -69,6 +69,7 @@
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\FavoredEnemyTerrainDataManager.cs" />
@@ -93,6 +94,8 @@
     <Compile Include="DataTypes\Pack.cs" />
     <Compile Include="DataTypes\Spell.cs" />
     <Compile Include="DataTypes\Tool.cs" />
+    <Compile Include="DataTypes\TotemFeature.cs" />
+    <Compile Include="DataTypes\TotemOption.cs" />
     <Compile Include="DataTypes\WarlockPact.cs" />
     <Compile Include="DataTypes\Weapon.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
@@ -183,6 +186,18 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.Designer.cs">
       <DependentUpon>ExtraSubclassSkillControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\TotemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\TotemControl.Designer.cs">
+      <DependentUpon>TotemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\TotemFeatureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\TotemFeatureControl.Designer.cs">
+      <DependentUpon>TotemFeatureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\IWizardControl.cs" />
     <Compile Include="WizardComponents\IntroControl.cs">
@@ -305,6 +320,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.resx">
       <DependentUpon>ExtraSubclassSkillControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\TotemControl.resx">
+      <DependentUpon>TotemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\TotemFeatureControl.resx">
+      <DependentUpon>TotemFeatureControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\LanguageControl.resx">
       <DependentUpon>LanguageControl.cs</DependentUpon>

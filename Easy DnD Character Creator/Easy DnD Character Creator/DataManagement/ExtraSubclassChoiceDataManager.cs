@@ -15,6 +15,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public List<string> UsedBooks { get; set; }
 
         public ExtraSubclassSkillDataManager ExtraSubclassSkillData { get; }
+        public TotemDataManager TotemData { get; }
 
         public ExtraSubclassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
@@ -22,17 +23,19 @@ namespace Easy_DnD_Character_Creator.DataManagement
             UsedBooks = inputUsedBooks;
 
             ExtraSubclassSkillData = new ExtraSubclassSkillDataManager(ConnectionString, inputUsedBooks);
+            TotemData = new TotemDataManager(ConnectionString, inputUsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
         {
             UsedBooks = inputUsedBooks;
             ExtraSubclassSkillData.UsedBooks = inputUsedBooks;
+            TotemData.UsedBooks = inputUsedBooks;
         }
 
         public bool hasExtraSubclassChoices(string subclass, int level)
         {
-            return ExtraSubclassSkillData.hasSkillChoice(subclass, level);
+            return ExtraSubclassSkillData.hasSkillChoice(subclass, level) || TotemData.hasTotemFeatures(subclass, level);
         }
 
         /// <summary>

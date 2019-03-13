@@ -17,6 +17,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private bool visited;
 
         private ExtraSubclassSkillControl extraSubclassSkillComponent;
+        private TotemControl totemComponent;
         
         public event EventHandler SubcontrolOptionChosen;
 
@@ -27,6 +28,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             extraSubclassSkillComponent = new ExtraSubclassSkillControl(wm);
             extraSubclassSkillComponent.SkillChosen += new EventHandler(extraSubclassSkillComponent_SkillChosen);
+
+            totemComponent = new TotemControl(wm);
+            totemComponent.TotemOptionChosen += new EventHandler(totemComponent_TotemOptionChosen);
 
             InitializeComponent();
         }
@@ -57,19 +61,36 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraSubclassSkillComponent.getInvalidElements();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(totemComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = totemComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
         public bool isValid()
         {
             bool isExtraSubclassSkillValid = true;
+            bool isTotemFeatureValid = true;
             
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
                 isExtraSubclassSkillValid = extraSubclassSkillComponent.isValid();
             }
 
-            return isExtraSubclassSkillValid;
+            if (subclassChoiceLayout.Controls.Contains(totemComponent))
+            {
+                isTotemFeatureValid = totemComponent.isValid();
+            }
+
+            return isExtraSubclassSkillValid &&
+                   isTotemFeatureValid;
         }
 
         public void populateForm()
@@ -82,6 +103,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 subclassChoiceLayout.Controls.Add(extraSubclassSkillComponent);
             }
             extraSubclassSkillComponent.populateForm();
+
+            //totems
+            if (wm.DBManager.ExtraSubclassChoiceData.TotemData.hasTotemFeatures(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(totemComponent);
+            }
+            totemComponent.populateForm();
 
             Visited = true;
         }
@@ -97,9 +125,23 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.SubclassSkills.Clear();
                 wm.Choices.SubclassDoublesProficiency = false;
             }
+
+            if (subclassChoiceLayout.Controls.Contains(totemComponent))
+            {
+                totemComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.TotemFeatures.Clear();
+            }
         }
 
         private void extraSubclassSkillComponent_SkillChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void totemComponent_TotemOptionChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }
