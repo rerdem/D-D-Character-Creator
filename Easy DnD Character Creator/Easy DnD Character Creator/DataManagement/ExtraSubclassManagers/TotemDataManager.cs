@@ -113,8 +113,5 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
 
             return featureList;
         }
-
-
-        
     }
 }

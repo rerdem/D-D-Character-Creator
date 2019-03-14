@@ -70,18 +70,24 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             totemList.DisplayMember = "Name";
             totemList.EndUpdate();
 
-            totemList.SetSelected(getCurrentlySelectedOption(), true);
+            totemList.SetSelected(getCurrentlySelectedOptionIndex(), true);
 
             Visited = true;
         }
 
         public void saveContent()
         {
+            if (totemList.SelectedItems.Count > 0)
+            {
+                TotemOption currentOption = (TotemOption)totemList.SelectedItem;
+                feature.selectOption(currentOption);
+            }
+
             wm.Choices.TotemFeatures.Remove(feature);
             wm.Choices.TotemFeatures.Add(feature);
         }
 
-        private int getCurrentlySelectedOption()
+        private int getCurrentlySelectedOptionIndex()
         {
             for (int i = 0; i < feature.Options.Count; i++)
             {

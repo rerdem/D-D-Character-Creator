@@ -2,7 +2,7 @@ Monk Ki & Features
 Sorc Sorc Points
 XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
-Barbarian Totem Warrior Totem
+XBarbarian Totem Warrior Totem
 Cleric Nature 1 extra druid cantrip
 Druid Circle Land terrain for circle spells
 Fighter Battlemaster +1 artisan tool proficiency
@@ -32,7 +32,7 @@ Barbarian:
 		Subclass:
 		XBerserker Feature: Frenzy
 		!!Totem Warrior: Bonus Spells: Beast Sense, Speak with animals as rituals only
-							Totem Spirit Choice: Bear Eagle Wolf
+					XTotem Spirit Choice: Bear Eagle Wolf
 					
 Bard:
 	XLevel 2:

@@ -82,15 +82,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            totemFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.TotemData.totemFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
-            totemFeatures = wm.DBManager.ExtraSubclassChoiceData.TotemData.getTotemFeatures(wm.Choices.Subclass, wm.Choices.Level);
+            if (!Visited || hasSubclassLevelChanged())
+            {
+                totemFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.TotemData.totemFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
+                totemFeatures = wm.DBManager.ExtraSubclassChoiceData.TotemData.getTotemFeatures(wm.Choices.Subclass, wm.Choices.Level);
+            }
 
             if (Visited && !hasSubclassLevelChanged())
             {
                 //load content
-                foreach (TotemFeature feature in wm.Choices.TotemFeatures)
+                foreach (TotemFeature feature in totemFeatures)
                 {
-                    totemFeatures[totemFeatures.IndexOf(feature)].selectOption(feature.getSelectedOption());
+                    if (wm.Choices.TotemFeatures.Contains(feature))
+                    {
+                        feature.selectOption(wm.Choices.TotemFeatures[wm.Choices.TotemFeatures.IndexOf(feature)].getSelectedOption());
+                    }
                 }
             }
             refreshContent();

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.totemFeatureBox = new System.Windows.Forms.GroupBox();
-            this.featureIntroLabel = new System.Windows.Forms.Label();
-            this.totemList = new System.Windows.Forms.ListBox();
             this.totemDescriptionLabel = new System.Windows.Forms.Label();
+            this.totemList = new System.Windows.Forms.ListBox();
+            this.featureIntroLabel = new System.Windows.Forms.Label();
             this.totemFeatureBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,15 +47,15 @@
             this.totemFeatureBox.TabStop = false;
             this.totemFeatureBox.Text = "Totem Feature";
             // 
-            // featureIntroLabel
+            // totemDescriptionLabel
             // 
-            this.featureIntroLabel.AutoSize = true;
-            this.featureIntroLabel.Location = new System.Drawing.Point(7, 20);
-            this.featureIntroLabel.MaximumSize = new System.Drawing.Size(840, 14);
-            this.featureIntroLabel.Name = "featureIntroLabel";
-            this.featureIntroLabel.Size = new System.Drawing.Size(83, 13);
-            this.featureIntroLabel.TabIndex = 0;
-            this.featureIntroLabel.Text = "feature intro text";
+            this.totemDescriptionLabel.AutoSize = true;
+            this.totemDescriptionLabel.Location = new System.Drawing.Point(136, 50);
+            this.totemDescriptionLabel.MaximumSize = new System.Drawing.Size(700, 80);
+            this.totemDescriptionLabel.Name = "totemDescriptionLabel";
+            this.totemDescriptionLabel.Size = new System.Drawing.Size(98, 13);
+            this.totemDescriptionLabel.TabIndex = 2;
+            this.totemDescriptionLabel.Text = "No totem available.";
             // 
             // totemList
             // 
@@ -66,15 +66,15 @@
             this.totemList.TabIndex = 1;
             this.totemList.SelectedIndexChanged += new System.EventHandler(this.featureList_SelectedIndexChanged);
             // 
-            // totemDescriptionLabel
+            // featureIntroLabel
             // 
-            this.totemDescriptionLabel.AutoSize = true;
-            this.totemDescriptionLabel.Location = new System.Drawing.Point(137, 37);
-            this.totemDescriptionLabel.MaximumSize = new System.Drawing.Size(700, 95);
-            this.totemDescriptionLabel.Name = "totemDescriptionLabel";
-            this.totemDescriptionLabel.Size = new System.Drawing.Size(98, 13);
-            this.totemDescriptionLabel.TabIndex = 2;
-            this.totemDescriptionLabel.Text = "No totem available.";
+            this.featureIntroLabel.AutoSize = true;
+            this.featureIntroLabel.Location = new System.Drawing.Point(7, 20);
+            this.featureIntroLabel.MaximumSize = new System.Drawing.Size(840, 14);
+            this.featureIntroLabel.Name = "featureIntroLabel";
+            this.featureIntroLabel.Size = new System.Drawing.Size(83, 13);
+            this.featureIntroLabel.TabIndex = 0;
+            this.featureIntroLabel.Text = "feature intro text";
             // 
             // TotemFeatureControl
             // 
