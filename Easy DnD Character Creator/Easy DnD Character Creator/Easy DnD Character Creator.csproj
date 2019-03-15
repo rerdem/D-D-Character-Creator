@@ -194,6 +194,12 @@
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSpellControl.Designer.cs">
       <DependentUpon>ExtraSubclassSpellControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.Designer.cs">
+      <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\TotemControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -330,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSpellControl.resx">
       <DependentUpon>ExtraSubclassSpellControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.resx">
+      <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\TotemControl.resx">
       <DependentUpon>TotemControl.cs</DependentUpon>

@@ -44,9 +44,13 @@
             this.cantripAddButton = new System.Windows.Forms.Button();
             this.cantripRemoveButton = new System.Windows.Forms.Button();
             this.cantripDescriptionLabel = new System.Windows.Forms.Label();
+            this.cantripDescriptionLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.spellDescriptionLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.spellBox.SuspendLayout();
             this.spellLayout.SuspendLayout();
             this.cantripLayout.SuspendLayout();
+            this.cantripDescriptionLayout.SuspendLayout();
+            this.spellDescriptionLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // spellBox
@@ -83,7 +87,7 @@
             this.spellLayout.Controls.Add(this.chosenSpells, 2, 1);
             this.spellLayout.Controls.Add(this.spellAddButton, 1, 1);
             this.spellLayout.Controls.Add(this.spellRemoveButton, 1, 2);
-            this.spellLayout.Controls.Add(this.spellDescriptionLabel, 3, 1);
+            this.spellLayout.Controls.Add(this.spellDescriptionLayout, 3, 1);
             this.spellLayout.Location = new System.Drawing.Point(6, 287);
             this.spellLayout.Name = "spellLayout";
             this.spellLayout.RowCount = 3;
@@ -153,11 +157,10 @@
             // spellDescriptionLabel
             // 
             this.spellDescriptionLabel.AutoSize = true;
-            this.spellDescriptionLabel.Location = new System.Drawing.Point(458, 29);
+            this.spellDescriptionLabel.Location = new System.Drawing.Point(3, 3);
             this.spellDescriptionLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.spellDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
+            this.spellDescriptionLabel.MaximumSize = new System.Drawing.Size(425, 500);
             this.spellDescriptionLabel.Name = "spellDescriptionLabel";
-            this.spellLayout.SetRowSpan(this.spellDescriptionLabel, 2);
             this.spellDescriptionLabel.Size = new System.Drawing.Size(98, 13);
             this.spellDescriptionLabel.TabIndex = 5;
             this.spellDescriptionLabel.Text = "No spells available.";
@@ -174,13 +177,14 @@
             this.cantripLayout.Controls.Add(this.chosenCantrips, 2, 1);
             this.cantripLayout.Controls.Add(this.cantripAddButton, 1, 1);
             this.cantripLayout.Controls.Add(this.cantripRemoveButton, 1, 2);
-            this.cantripLayout.Controls.Add(this.cantripDescriptionLabel, 3, 1);
+            this.cantripLayout.Controls.Add(this.cantripDescriptionLayout, 3, 1);
             this.cantripLayout.Location = new System.Drawing.Point(6, 81);
             this.cantripLayout.Name = "cantripLayout";
             this.cantripLayout.RowCount = 3;
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.cantripLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.cantripLayout.Size = new System.Drawing.Size(913, 200);
             this.cantripLayout.TabIndex = 0;
             // 
@@ -244,14 +248,41 @@
             // cantripDescriptionLabel
             // 
             this.cantripDescriptionLabel.AutoSize = true;
-            this.cantripDescriptionLabel.Location = new System.Drawing.Point(458, 29);
+            this.cantripDescriptionLabel.Location = new System.Drawing.Point(3, 3);
             this.cantripDescriptionLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.cantripDescriptionLabel.MaximumSize = new System.Drawing.Size(464, 168);
+            this.cantripDescriptionLabel.MaximumSize = new System.Drawing.Size(425, 500);
             this.cantripDescriptionLabel.Name = "cantripDescriptionLabel";
-            this.cantripLayout.SetRowSpan(this.cantripDescriptionLabel, 2);
             this.cantripDescriptionLabel.Size = new System.Drawing.Size(109, 13);
             this.cantripDescriptionLabel.TabIndex = 5;
             this.cantripDescriptionLabel.Text = "No cantrips available.";
+            // 
+            // cantripDescriptionLayout
+            // 
+            this.cantripDescriptionLayout.AutoScroll = true;
+            this.cantripDescriptionLayout.BackColor = System.Drawing.SystemColors.Control;
+            this.cantripDescriptionLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cantripDescriptionLayout.Controls.Add(this.cantripDescriptionLabel);
+            this.cantripDescriptionLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.cantripDescriptionLayout.Location = new System.Drawing.Point(458, 29);
+            this.cantripDescriptionLayout.MaximumSize = new System.Drawing.Size(464, 168);
+            this.cantripDescriptionLayout.Name = "cantripDescriptionLayout";
+            this.cantripLayout.SetRowSpan(this.cantripDescriptionLayout, 2);
+            this.cantripDescriptionLayout.Size = new System.Drawing.Size(452, 168);
+            this.cantripDescriptionLayout.TabIndex = 6;
+            // 
+            // spellDescriptionLayout
+            // 
+            this.spellDescriptionLayout.AutoScroll = true;
+            this.spellDescriptionLayout.BackColor = System.Drawing.SystemColors.Control;
+            this.spellDescriptionLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.spellDescriptionLayout.Controls.Add(this.spellDescriptionLabel);
+            this.spellDescriptionLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.spellDescriptionLayout.Location = new System.Drawing.Point(458, 29);
+            this.spellDescriptionLayout.MaximumSize = new System.Drawing.Size(464, 168);
+            this.spellDescriptionLayout.Name = "spellDescriptionLayout";
+            this.spellLayout.SetRowSpan(this.spellDescriptionLayout, 2);
+            this.spellDescriptionLayout.Size = new System.Drawing.Size(452, 165);
+            this.spellDescriptionLayout.TabIndex = 6;
             // 
             // SpellControl
             // 
@@ -266,6 +297,10 @@
             this.spellLayout.PerformLayout();
             this.cantripLayout.ResumeLayout(false);
             this.cantripLayout.PerformLayout();
+            this.cantripDescriptionLayout.ResumeLayout(false);
+            this.cantripDescriptionLayout.PerformLayout();
+            this.spellDescriptionLayout.ResumeLayout(false);
+            this.spellDescriptionLayout.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -288,5 +323,7 @@
         private System.Windows.Forms.Button spellRemoveButton;
         private System.Windows.Forms.Label spellDescriptionLabel;
         private System.Windows.Forms.Label introLabel;
+        private System.Windows.Forms.FlowLayoutPanel spellDescriptionLayout;
+        private System.Windows.Forms.FlowLayoutPanel cantripDescriptionLayout;
     }
 }

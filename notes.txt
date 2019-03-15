@@ -3,7 +3,7 @@ Sorc Sorc Points
 XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
 XBarbarian Totem Warrior Totem
-Cleric Nature 1 extra druid cantrip
+XCleric Nature 1 extra druid cantrip
 Druid Circle Land terrain for circle spells
 Fighter Battlemaster +1 artisan tool proficiency
 Fighter Battlemaster 3 Maneuvers

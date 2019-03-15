@@ -51,6 +51,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
                 //description
                 output += spell.Description;
+
+                //use proper line breaks
+                output = output.Replace("<br>", Environment.NewLine);
             }
             
             return output;
