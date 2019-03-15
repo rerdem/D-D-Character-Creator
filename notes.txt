@@ -5,7 +5,7 @@ XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 XBarbarian Totem Warrior Totem
 XCleric Nature 1 extra druid cantrip
 Druid Circle Land terrain for circle spells
-Fighter Battlemaster +1 artisan tool proficiency
+XFighter Battlemaster +1 artisan tool proficiency
 Fighter Battlemaster 3 Maneuvers
 						je +2 auf lvl 7, 10, 15
 Monk Shadow Arts gained Spells: Darkness, Darkvision, Pass without Trace, Silence, Minor Illusion

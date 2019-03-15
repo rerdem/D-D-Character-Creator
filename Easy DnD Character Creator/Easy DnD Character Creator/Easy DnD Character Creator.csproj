@@ -70,6 +70,7 @@
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSpellDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\ExtraToolProficiencyDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />

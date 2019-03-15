@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.toolBox = new System.Windows.Forms.GroupBox();
-            this.introLabel = new System.Windows.Forms.Label();
             this.toolComboBox = new System.Windows.Forms.ComboBox();
+            this.introLabel = new System.Windows.Forms.Label();
             this.toolBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +45,15 @@
             this.toolBox.TabStop = false;
             this.toolBox.Text = "Additional Tool Proficiency";
             // 
+            // toolComboBox
+            // 
+            this.toolComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolComboBox.FormattingEnabled = true;
+            this.toolComboBox.Location = new System.Drawing.Point(229, 23);
+            this.toolComboBox.Name = "toolComboBox";
+            this.toolComboBox.Size = new System.Drawing.Size(200, 21);
+            this.toolComboBox.TabIndex = 1;
+            // 
             // introLabel
             // 
             this.introLabel.AutoSize = true;
@@ -53,15 +62,6 @@
             this.introLabel.Size = new System.Drawing.Size(217, 13);
             this.introLabel.TabIndex = 0;
             this.introLabel.Text = "Please choose an additional tool proficiency:";
-            // 
-            // toolComboBox
-            // 
-            this.toolComboBox.FormattingEnabled = true;
-            this.toolComboBox.Location = new System.Drawing.Point(229, 23);
-            this.toolComboBox.Name = "toolComboBox";
-            this.toolComboBox.Size = new System.Drawing.Size(200, 21);
-            this.toolComboBox.Sorted = true;
-            this.toolComboBox.TabIndex = 1;
             // 
             // ExtraToolProficiencyControl
             // 

@@ -19,6 +19,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private ExtraSubclassSkillControl extraSubclassSkillComponent;
         private TotemControl totemComponent;
         private ExtraSubclassSpellControl extraSubclassSpellComponent;
+        private ExtraToolProficiencyControl extraToolProficiencyComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -34,6 +35,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             totemComponent.TotemOptionChosen += new EventHandler(totemComponent_TotemOptionChosen);
 
             extraSubclassSpellComponent = new ExtraSubclassSpellControl(wm);
+            extraSubclassSpellComponent.SpellChosen += new EventHandler(extraSubclassSpellComponent_SpellChosen);
+
+            extraToolProficiencyComponent = new ExtraToolProficiencyControl(wm);
 
             InitializeComponent();
         }
@@ -84,6 +88,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraSubclassSpellComponent.getInvalidElements();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = extraToolProficiencyComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -92,7 +106,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isExtraSubclassSkillValid = true;
             bool isTotemFeatureValid = true;
             bool isExtraSubclassSpellValid = true;
-            
+            bool isExtraToolProficiencyValid = true;
+
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
                 isExtraSubclassSkillValid = extraSubclassSkillComponent.isValid();
@@ -108,9 +123,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isExtraSubclassSpellValid = extraSubclassSpellComponent.isValid();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
+            {
+                isExtraToolProficiencyValid = extraToolProficiencyComponent.isValid();
+            }
+
             return isExtraSubclassSkillValid &&
                    isTotemFeatureValid &&
-                   isExtraSubclassSpellValid;
+                   isExtraSubclassSpellValid &&
+                   isExtraToolProficiencyValid;
         }
 
         public void populateForm()
@@ -137,6 +158,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 subclassChoiceLayout.Controls.Add(extraSubclassSpellComponent);
             }
             extraSubclassSpellComponent.populateForm();
+
+            //additional tool proficiencies
+            if (wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.hasToolProficiencyChoice(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(extraToolProficiencyComponent);
+            }
+            extraToolProficiencyComponent.populateForm();
 
             Visited = true;
         }
@@ -170,9 +198,23 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wm.Choices.SubclassSpells.Clear();
             }
+
+            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
+            {
+                extraToolProficiencyComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.SubclassToolProficiency = "";
+            }
         }
 
         private void extraSubclassSkillComponent_SkillChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void extraSubclassSpellComponent_SpellChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }
