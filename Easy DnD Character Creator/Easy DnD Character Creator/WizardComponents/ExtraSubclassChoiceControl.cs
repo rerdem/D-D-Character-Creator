@@ -18,7 +18,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private ExtraSubclassSkillControl extraSubclassSkillComponent;
         private TotemControl totemComponent;
-        
+        private ExtraSubclassSpellControl extraSubclassSpellComponent;
+
         public event EventHandler SubcontrolOptionChosen;
 
         public ExtraSubclassChoiceControl(WizardManager inputWizardManager)
@@ -31,6 +32,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             totemComponent = new TotemControl(wm);
             totemComponent.TotemOptionChosen += new EventHandler(totemComponent_TotemOptionChosen);
+
+            extraSubclassSpellComponent = new ExtraSubclassSpellControl(wm);
 
             InitializeComponent();
         }
@@ -71,6 +74,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = totemComponent.getInvalidElements();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = extraSubclassSpellComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -78,6 +91,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             bool isExtraSubclassSkillValid = true;
             bool isTotemFeatureValid = true;
+            bool isExtraSubclassSpellValid = true;
             
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
@@ -89,8 +103,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isTotemFeatureValid = totemComponent.isValid();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
+            {
+                isExtraSubclassSpellValid = extraSubclassSpellComponent.isValid();
+            }
+
             return isExtraSubclassSkillValid &&
-                   isTotemFeatureValid;
+                   isTotemFeatureValid &&
+                   isExtraSubclassSpellValid;
         }
 
         public void populateForm()
@@ -110,6 +130,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 subclassChoiceLayout.Controls.Add(totemComponent);
             }
             totemComponent.populateForm();
+
+            //additional spells
+            if (wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.hasExtraSpellChoice(wm.Choices.Subclass))
+            {
+                subclassChoiceLayout.Controls.Add(extraSubclassSpellComponent);
+            }
+            extraSubclassSpellComponent.populateForm();
 
             Visited = true;
         }
@@ -133,6 +160,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             else
             {
                 wm.Choices.TotemFeatures.Clear();
+            }
+
+            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
+            {
+                extraSubclassSpellComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.SubclassSpells.Clear();
             }
         }
 

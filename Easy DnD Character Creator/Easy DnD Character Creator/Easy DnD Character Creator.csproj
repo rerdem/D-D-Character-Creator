@@ -69,6 +69,7 @@
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />
@@ -186,6 +187,12 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.Designer.cs">
       <DependentUpon>ExtraSubclassSkillControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSpellControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSpellControl.Designer.cs">
+      <DependentUpon>ExtraSubclassSpellControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\TotemControl.cs">
       <SubType>UserControl</SubType>
@@ -320,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.resx">
       <DependentUpon>ExtraSubclassSkillControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSpellControl.resx">
+      <DependentUpon>ExtraSubclassSpellControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\TotemControl.resx">
       <DependentUpon>TotemControl.cs</DependentUpon>

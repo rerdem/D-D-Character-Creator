@@ -96,6 +96,7 @@ namespace Easy_DnD_Character_Creator
         public List<string> SubclassSkills { get; set; }
         public bool SubclassDoublesProficiency { get; set; }
         public List<TotemFeature> TotemFeatures { get; set; }
+        public List<Spell> SubclassSpells { get; set; }
 
         public ChoiceManager()
         {
@@ -170,6 +171,7 @@ namespace Easy_DnD_Character_Creator
             SubclassSkills = new List<string>();
             SubclassDoublesProficiency = false;
             TotemFeatures = new List<TotemFeature>();
+            SubclassSpells = new List<Spell>();
         }
     }
 }

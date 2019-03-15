@@ -65,7 +65,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             //set intro text
             introLabel.Text = wm.DBManager.ExtraRaceChoiceData.getExtraRaceChoiceIntroText(wm.Choices.Subrace);
 
-            //fill choice lsit
+            //fill choice list
             choiceList.BeginUpdate();
             spellOptions = wm.DBManager.ExtraRaceChoiceData.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace).Except(wm.Choices.Spells).ToList();
             choiceList.DataSource = null;

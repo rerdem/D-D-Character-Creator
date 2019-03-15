@@ -97,19 +97,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             resetSkillBoxes();
 
-            if ((Visited) && (!hasSubclassChanged()))
+            if (Visited && !hasSubclassChanged())
             {
                 loadPreviousSelection();
             }
 
-            lastSubclass = wm.Choices.Class;
+            lastSubclass = wm.Choices.Subclass;
             Visited = true;
         }
 
         public void saveContent()
         {
             //save skills
-            wm.Choices.ClassSkills.Clear();
+            wm.Choices.SubclassSkills.Clear();
             foreach (CheckBox box in choiceBoxes)
             {
                 if (box.Checked)
@@ -140,9 +140,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         private void resetSkillBoxes()
         {
             choiceBoxes.Clear();
-            doublesProficiency = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.SkillChoiceDoublesProficiency(wm.Choices.Subclass, wm.Choices.Level);
-            choiceAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceAmount(wm.Choices.Subclass, wm.Choices.Level);
-
+            if (hasSubclassChanged())
+            {
+                doublesProficiency = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.SkillChoiceDoublesProficiency(wm.Choices.Subclass, wm.Choices.Level);
+                choiceAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceAmount(wm.Choices.Subclass, wm.Choices.Level);
+            }
+            
             //get choosable skills
             List<string> choosableSkills = new List<string>();
             choosableSkills = new List<string>(skills.Count);
