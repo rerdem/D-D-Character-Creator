@@ -71,6 +71,7 @@
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraToolProficiencyDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\ManeuverDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="DataTypes\EldritchInvocation.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
+    <Compile Include="DataTypes\Maneuver.cs" />
     <Compile Include="DataTypes\Metamagic.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
     <Compile Include="DataTypes\Pack.cs" />
@@ -200,6 +202,12 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.Designer.cs">
       <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ManeuverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\ManeuverControl.Designer.cs">
+      <DependentUpon>ManeuverControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\TotemControl.cs">
       <SubType>UserControl</SubType>
@@ -340,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.resx">
       <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ManeuverControl.resx">
+      <DependentUpon>ManeuverControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\TotemControl.resx">
       <DependentUpon>TotemControl.cs</DependentUpon>

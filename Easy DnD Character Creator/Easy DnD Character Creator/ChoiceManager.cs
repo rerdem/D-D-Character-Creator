@@ -98,6 +98,7 @@ namespace Easy_DnD_Character_Creator
         public List<TotemFeature> TotemFeatures { get; set; }
         public List<Spell> SubclassSpells { get; set; }
         public string SubclassToolProficiency { get; set; }
+        public List<Maneuver> Maneuvers { get; set; }
 
         public ChoiceManager()
         {
@@ -174,6 +175,7 @@ namespace Easy_DnD_Character_Creator
             TotemFeatures = new List<TotemFeature>();
             SubclassSpells = new List<Spell>();
             SubclassToolProficiency = "";
+            Maneuvers = new List<Maneuver>();
         }
     }
 }

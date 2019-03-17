@@ -20,6 +20,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private TotemControl totemComponent;
         private ExtraSubclassSpellControl extraSubclassSpellComponent;
         private ExtraToolProficiencyControl extraToolProficiencyComponent;
+        private ManeuverControl maneuverComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -38,6 +39,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             extraSubclassSpellComponent.SpellChosen += new EventHandler(extraSubclassSpellComponent_SpellChosen);
 
             extraToolProficiencyComponent = new ExtraToolProficiencyControl(wm);
+
+            maneuverComponent = new ManeuverControl(wm);
+            maneuverComponent.ManeuverChosen += new EventHandler(maneuverComponent_ManeuverChosen);
 
             InitializeComponent();
         }
@@ -98,6 +102,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraToolProficiencyComponent.getInvalidElements();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = maneuverComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -107,6 +121,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isTotemFeatureValid = true;
             bool isExtraSubclassSpellValid = true;
             bool isExtraToolProficiencyValid = true;
+            bool isManeuverValid = true;
 
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
@@ -128,10 +143,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isExtraToolProficiencyValid = extraToolProficiencyComponent.isValid();
             }
 
+            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
+            {
+                isManeuverValid = maneuverComponent.isValid();
+            }
+
             return isExtraSubclassSkillValid &&
                    isTotemFeatureValid &&
                    isExtraSubclassSpellValid &&
-                   isExtraToolProficiencyValid;
+                   isExtraToolProficiencyValid &&
+                   isManeuverValid;
         }
 
         public void populateForm()
@@ -166,11 +187,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             extraToolProficiencyComponent.populateForm();
 
+            //maneuvers
+            if (wm.DBManager.ExtraSubclassChoiceData.ManeuverData.hasManeuvers(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(maneuverComponent);
+            }
+            maneuverComponent.populateForm();
+
             Visited = true;
         }
 
         public void saveContent()
         {
+            //extra subclass skills
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
                 extraSubclassSkillComponent.saveContent();
@@ -181,6 +210,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.SubclassDoublesProficiency = false;
             }
 
+            //totem choices
             if (subclassChoiceLayout.Controls.Contains(totemComponent))
             {
                 totemComponent.saveContent();
@@ -190,6 +220,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.TotemFeatures.Clear();
             }
 
+            //extra subclass spells
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
             {
                 extraSubclassSpellComponent.saveContent();
@@ -199,6 +230,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.SubclassSpells.Clear();
             }
 
+            //extra subclass tool proficiencies
             if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
             {
                 extraToolProficiencyComponent.saveContent();
@@ -206,6 +238,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             else
             {
                 wm.Choices.SubclassToolProficiency = "";
+            }
+
+            //maneuvers
+            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
+            {
+                maneuverComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.Maneuvers.Clear();
             }
         }
 
@@ -220,6 +262,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         }
 
         private void totemComponent_TotemOptionChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void maneuverComponent_ManeuverChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }

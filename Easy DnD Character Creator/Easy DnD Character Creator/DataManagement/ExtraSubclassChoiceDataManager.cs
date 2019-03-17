@@ -18,6 +18,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public TotemDataManager TotemData { get; }
         public ExtraSubclassSpellDataManager ExtraSubclassSpellData { get; }
         public ExtraToolProficiencyDataManager ExtraToolProficiencyData { get; }
+        public ManeuverDataManager ManeuverData { get; }
 
         public ExtraSubclassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
@@ -28,6 +29,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             TotemData = new TotemDataManager(ConnectionString, inputUsedBooks);
             ExtraSubclassSpellData = new ExtraSubclassSpellDataManager(ConnectionString, inputUsedBooks);
             ExtraToolProficiencyData = new ExtraToolProficiencyDataManager(ConnectionString, inputUsedBooks);
+            ManeuverData = new ManeuverDataManager(ConnectionString, inputUsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -37,12 +39,14 @@ namespace Easy_DnD_Character_Creator.DataManagement
             TotemData.UsedBooks = inputUsedBooks;
             ExtraSubclassSpellData.UsedBooks = inputUsedBooks;
             ExtraToolProficiencyData.UsedBooks = inputUsedBooks;
+            ManeuverData.UsedBooks = inputUsedBooks;
         }
 
         public bool hasExtraSubclassChoices(string subclass, int level)
         {
             return ExtraSubclassSkillData.hasSkillChoice(subclass, level) || TotemData.hasTotemFeatures(subclass, level) 
-                || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level);
+                || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level)
+                || ManeuverData.hasManeuvers(subclass, level);
         }
 
         

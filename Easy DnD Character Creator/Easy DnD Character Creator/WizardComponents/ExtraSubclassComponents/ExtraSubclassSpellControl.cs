@@ -50,16 +50,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             spellAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.extraSpellChoiceAmount(wm.Choices.Subclass);
 
-            //set intro text
-            introLabel.Text = $"Please choose {spellAmount} spell(s) below:";
-
-            //fill choice list
-            spellSourceList = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.getExtraSubclassCantripOptions(wm.Choices.Subclass).Except(wm.Choices.Spells).ToList();
-            spellListBox.BeginUpdate();
-            spellListBox.DataSource = null;
-            spellListBox.DataSource = spellSourceList;
-            spellListBox.DisplayMember = "Name";
-            spellListBox.EndUpdate();
+            resetContent();
 
             //if there was a previous choice, load it
             if (wm.Choices.SubclassSpells.Count > 0)
@@ -81,6 +72,30 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             }
 
             Visited = true;
+        }
+
+        private void resetContent()
+        {
+            //set intro text
+            introLabel.Text = $"Please choose {spellAmount} spell(s) below:";
+
+            //fill choice list
+            spellSourceList = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.getExtraSubclassCantripOptions(wm.Choices.Subclass).Except(wm.Choices.Spells).ToList();
+            spellListBox.BeginUpdate();
+            spellListBox.DataSource = null;
+            spellListBox.DataSource = spellSourceList;
+            spellListBox.DisplayMember = "Name";
+            spellListBox.EndUpdate();
+
+            //set selection mode
+            if (spellAmount > 1)
+            {
+                spellListBox.SelectionMode = SelectionMode.MultiSimple;
+            }
+            else
+            {
+                spellListBox.SelectionMode = SelectionMode.One;
+            }
         }
 
         public void saveContent()
@@ -137,8 +152,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             syncSpellSelectionOrder();
             if (spellListBox.SelectedItems.Count > 0)
             {
-                descriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)spellListBox.SelectedItem);
-
+                if (spellListBox.SelectedIndices.Count <= spellAmount)
+                {
+                    int lastSelectedIndex = spellOrderedSelection.ElementAt(spellOrderedSelection.Count - 1);
+                    descriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)spellListBox.Items[lastSelectedIndex]);
+                }
+                else
+                {
+                    int lastSelectedIndex = spellOrderedSelection.ElementAt(spellOrderedSelection.Count - 1);
+                    spellListBox.SelectedIndices.Remove(lastSelectedIndex);
+                }
+                
                 OnSpellChosen(null);
             }
         }
