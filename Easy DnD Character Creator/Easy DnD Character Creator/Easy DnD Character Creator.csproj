@@ -68,6 +68,8 @@
     <Compile Include="DataManagement\ExtraClassManagers\MetamagicDataManager.cs" />
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\DraconicAncestryDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\ElementalDisciplineDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraToolProficiencyDataManager.cs" />
@@ -88,8 +90,9 @@
     <Compile Include="DataManagement\RaceDataManager.cs" />
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
-    <Compile Include="DataTypes\Dragon.cs" />
+    <Compile Include="DataTypes\DraconicAncestry.cs" />
     <Compile Include="DataTypes\EldritchInvocation.cs" />
+    <Compile Include="DataTypes\ElementalDiscipline.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
     <Compile Include="DataTypes\Maneuver.cs" />
@@ -184,6 +187,18 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassChoiceControl.Designer.cs">
       <DependentUpon>ExtraSubclassChoiceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\DisciplineControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\DisciplineControl.Designer.cs">
+      <DependentUpon>DisciplineControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\DraconicAncestryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\DraconicAncestryControl.Designer.cs">
+      <DependentUpon>DraconicAncestryControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.cs">
       <SubType>UserControl</SubType>
@@ -339,6 +354,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassChoiceControl.resx">
       <DependentUpon>ExtraSubclassChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\DisciplineControl.resx">
+      <DependentUpon>DisciplineControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\DraconicAncestryControl.resx">
+      <DependentUpon>DraconicAncestryControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraSubclassSkillControl.resx">
       <DependentUpon>ExtraSubclassSkillControl.cs</DependentUpon>

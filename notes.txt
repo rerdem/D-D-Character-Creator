@@ -1,4 +1,5 @@
 Monk Ki & Features
+Monk Shadow Arts gained Spells: Darkness, Darkvision, Pass without Trace, Silence, Minor Illusion
 Sorc Sorc Points
 XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
@@ -8,11 +9,10 @@ Druid Circle Land terrain for circle spells
 XFighter Battlemaster +1 artisan tool proficiency
 XFighter Battlemaster 3 Maneuvers
 						je +2 auf lvl 7, 10, 15
-Monk Shadow Arts gained Spells: Darkness, Darkvision, Pass without Trace, Silence, Minor Illusion
-Monk Way of Elements, Elemental Attunement -> wie eldritch invocations (1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17)
+XMonk Way of Elements, Elemental Attunement -> 1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17
 Ranger Hunter Hunter's Prey wie Barbarian Totem
 Ranger Beastmaster Companion
-Sorc Draconic Bloodline Ancestry
+XSorc Draconic Bloodline Ancestry
 
 XSkills
 XBard Lore: 3 extra Skills
@@ -96,7 +96,7 @@ Monk:
 			Open Hand Technique
 		Shadow:
 			!Shadow Arts -> bonus spells
-		4 Elements:
+		X4 Elements:
 			Elemental Attunement
 			!! 1 extra discipline (some are spells)
 			
@@ -147,7 +147,7 @@ Ranger:
 															Mage Hand Legerdemain
 				
 Sorcerer:
-	!!Draconic Ancestry
+	X!!Draconic Ancestry
 	Level 2:
 		Sorcery Points
 		X!Font of Magic

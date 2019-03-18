@@ -99,6 +99,9 @@ namespace Easy_DnD_Character_Creator
         public List<Spell> SubclassSpells { get; set; }
         public string SubclassToolProficiency { get; set; }
         public List<Maneuver> Maneuvers { get; set; }
+        public List<ElementalDiscipline> MandatoryDisciplines { get; set; }
+        public List<ElementalDiscipline> ChosenDisciplines { get; set; }
+        public DraconicAncestry Ancestry;
 
         public ChoiceManager()
         {
@@ -176,6 +179,9 @@ namespace Easy_DnD_Character_Creator
             SubclassSpells = new List<Spell>();
             SubclassToolProficiency = "";
             Maneuvers = new List<Maneuver>();
+            MandatoryDisciplines = new List<ElementalDiscipline>();
+            ChosenDisciplines = new List<ElementalDiscipline>();
+            Ancestry = new DraconicAncestry();
         }
     }
 }

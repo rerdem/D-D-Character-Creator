@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -21,6 +22,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private ExtraSubclassSpellControl extraSubclassSpellComponent;
         private ExtraToolProficiencyControl extraToolProficiencyComponent;
         private ManeuverControl maneuverComponent;
+        private DraconicAncestryControl draconicAncestryComponent;
+        private DisciplineControl disciplineComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -43,6 +46,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             maneuverComponent = new ManeuverControl(wm);
             maneuverComponent.ManeuverChosen += new EventHandler(maneuverComponent_ManeuverChosen);
 
+            draconicAncestryComponent = new DraconicAncestryControl(wm);
+
+            disciplineComponent = new DisciplineControl(wm);
+            disciplineComponent.DisciplineChosen += new EventHandler(disciplineComponent_DisciplineChosen);
+
             InitializeComponent();
         }
 
@@ -62,6 +70,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             string missingElements = "";
 
+            //extra skills
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
                 if (!string.IsNullOrEmpty(missingElements))
@@ -72,6 +81,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraSubclassSkillComponent.getInvalidElements();
             }
 
+            //totem
             if (subclassChoiceLayout.Controls.Contains(totemComponent))
             {
                 if (!string.IsNullOrEmpty(missingElements))
@@ -82,6 +92,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = totemComponent.getInvalidElements();
             }
 
+            //extra spells
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
             {
                 if (!string.IsNullOrEmpty(missingElements))
@@ -92,6 +103,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraSubclassSpellComponent.getInvalidElements();
             }
 
+            //extra tool proficiencies
             if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
             {
                 if (!string.IsNullOrEmpty(missingElements))
@@ -102,6 +114,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = extraToolProficiencyComponent.getInvalidElements();
             }
 
+            //maneuvers
             if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
             {
                 if (!string.IsNullOrEmpty(missingElements))
@@ -110,6 +123,28 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
 
                 missingElements = maneuverComponent.getInvalidElements();
+            }
+
+            //draconic ancestry
+            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = draconicAncestryComponent.getInvalidElements();
+            }
+
+            //elemental disciplines
+            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = disciplineComponent.getInvalidElements();
             }
 
             return missingElements;
@@ -122,37 +157,58 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isExtraSubclassSpellValid = true;
             bool isExtraToolProficiencyValid = true;
             bool isManeuverValid = true;
+            bool isAncestryValid = true;
+            bool isDisciplineValid = true;
 
+            //extra skills
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
             {
                 isExtraSubclassSkillValid = extraSubclassSkillComponent.isValid();
             }
 
+            //totems
             if (subclassChoiceLayout.Controls.Contains(totemComponent))
             {
                 isTotemFeatureValid = totemComponent.isValid();
             }
 
+            //extra spells
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
             {
                 isExtraSubclassSpellValid = extraSubclassSpellComponent.isValid();
             }
 
+            //extra tool proficiencies
             if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
             {
                 isExtraToolProficiencyValid = extraToolProficiencyComponent.isValid();
             }
 
+            //maneuvers
             if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
             {
                 isManeuverValid = maneuverComponent.isValid();
+            }
+
+            //draconic ancestry
+            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
+            {
+                isAncestryValid = draconicAncestryComponent.isValid();
+            }
+
+            //elemental disciplines
+            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
+            {
+                isDisciplineValid = disciplineComponent.isValid();
             }
 
             return isExtraSubclassSkillValid &&
                    isTotemFeatureValid &&
                    isExtraSubclassSpellValid &&
                    isExtraToolProficiencyValid &&
-                   isManeuverValid;
+                   isManeuverValid &&
+                   isAncestryValid &&
+                   isDisciplineValid;
         }
 
         public void populateForm()
@@ -193,6 +249,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 subclassChoiceLayout.Controls.Add(maneuverComponent);
             }
             maneuverComponent.populateForm();
+
+            //draconic ancestry
+            if (wm.DBManager.ExtraSubclassChoiceData.DraconicAncestryData.hasDraconicAncestry(wm.Choices.Subclass))
+            {
+                subclassChoiceLayout.Controls.Add(draconicAncestryComponent);
+            }
+            draconicAncestryComponent.populateForm();
+
+            //elemental disciplines
+            if (wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.hasDisciplines(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(disciplineComponent);
+            }
+            disciplineComponent.populateForm();
 
             Visited = true;
         }
@@ -249,6 +319,27 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wm.Choices.Maneuvers.Clear();
             }
+
+            //draconic ancestry
+            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
+            {
+                draconicAncestryComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.Ancestry = new DraconicAncestry();
+            }
+
+            //elemental disciplines
+            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
+            {
+                disciplineComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.ChosenDisciplines.Clear();
+                wm.Choices.MandatoryDisciplines.Clear();
+            }
         }
 
         private void extraSubclassSkillComponent_SkillChosen(object sender, EventArgs e)
@@ -267,6 +358,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         }
 
         private void maneuverComponent_ManeuverChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void disciplineComponent_DisciplineChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }
