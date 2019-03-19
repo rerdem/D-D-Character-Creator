@@ -103,6 +103,7 @@ namespace Easy_DnD_Character_Creator
         public List<ElementalDiscipline> ChosenDisciplines { get; set; }
         public DraconicAncestry Ancestry { get; set; }
         public List<ChoiceFeature> HunterFeatures { get; set; }
+        public Beast BeastCompanion { get; set; }
 
         public ChoiceManager()
         {
@@ -184,6 +185,7 @@ namespace Easy_DnD_Character_Creator
             ChosenDisciplines = new List<ElementalDiscipline>();
             Ancestry = new DraconicAncestry();
             HunterFeatures = new List<ChoiceFeature>();
+            BeastCompanion = new Beast();
         }
     }
 }

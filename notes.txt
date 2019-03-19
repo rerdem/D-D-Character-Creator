@@ -11,7 +11,7 @@ XFighter Battlemaster 3 Maneuvers
 XMonk Way of Elements, Elemental Attunement -> 1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17
 Druid Circle Land terrain for circle spells
 XRanger Hunter Hunter's Prey wie Barbarian Totem
-Ranger Beastmaster Companion
+XRanger Beastmaster Companion
 XSorc Draconic Bloodline Ancestry
 
 XSkills
@@ -114,18 +114,18 @@ Monk:
 														XOath spells
 														XChannel Divinity oath-specific
 
-Ranger:
-	XLevel 2:
-		X!!Fighting Style
-		X!!Spellcasting:
-			spells known table
-			spell ability wis
-			
-	Level 3:
-		XPrimeval Awareness
-		Subclass:
-			X!!Hunter: Hunter's Prey
-			!!Beast Master: Ranger's Companion
+												XRanger:
+													XLevel 2:
+														X!!Fighting Style
+														X!!Spellcasting:
+															spells known table
+															spell ability wis
+															
+													XLevel 3:
+														XPrimeval Awareness
+														XSubclass:
+															X!!Hunter: Hunter's Prey
+															X!!Beast Master: Ranger's Companion
 
 												XRogue:
 													XLevel 2:

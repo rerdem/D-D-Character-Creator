@@ -22,6 +22,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public ElementalDisciplineDataManager ElementalDisciplineData { get; }
         public DraconicAncestryDataManager DraconicAncestryData { get; }
         public HunterDataManager HunterData { get; }
+        public BeastCompanionDataManager BeastCompanionData { get; }
 
         public ExtraSubclassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
@@ -36,6 +37,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             ElementalDisciplineData = new ElementalDisciplineDataManager(ConnectionString, inputUsedBooks);
             DraconicAncestryData = new DraconicAncestryDataManager(ConnectionString, inputUsedBooks);
             HunterData = new HunterDataManager(ConnectionString, inputUsedBooks);
+            BeastCompanionData = new BeastCompanionDataManager(ConnectionString, inputUsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -49,6 +51,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             ElementalDisciplineData.UsedBooks = inputUsedBooks;
             DraconicAncestryData.UsedBooks = inputUsedBooks;
             HunterData.UsedBooks = inputUsedBooks;
+            BeastCompanionData.UsedBooks = inputUsedBooks;
         }
 
         public bool hasExtraSubclassChoices(string subclass, int level)
@@ -56,7 +59,8 @@ namespace Easy_DnD_Character_Creator.DataManagement
             return ExtraSubclassSkillData.hasSkillChoice(subclass, level) || TotemData.hasTotemFeatures(subclass, level) 
                 || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level)
                 || ManeuverData.hasManeuvers(subclass, level) || DraconicAncestryData.hasDraconicAncestry(subclass)
-                || ElementalDisciplineData.hasDisciplines(subclass, level) || HunterData.hasHunterFeatures(subclass, level);
+                || ElementalDisciplineData.hasDisciplines(subclass, level) || HunterData.hasHunterFeatures(subclass, level)
+                || BeastCompanionData.hasCompanion(subclass, level);
         }
     }
 }

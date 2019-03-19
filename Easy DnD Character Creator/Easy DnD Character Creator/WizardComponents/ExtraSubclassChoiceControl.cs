@@ -25,6 +25,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private DraconicAncestryControl draconicAncestryComponent;
         private DisciplineControl disciplineComponent;
         private HunterControl hunterComponent;
+        private CompanionControl companionComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -54,6 +55,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             hunterComponent = new HunterControl(wm);
             hunterComponent.HunterOptionChosen += new EventHandler(subcomponents_OptionChosen);
+
+            companionComponent = new CompanionControl(wm);
 
             InitializeComponent();
         }
@@ -162,6 +165,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = hunterComponent.getInvalidElements();
             }
 
+            //beast companion
+            if (subclassChoiceLayout.Controls.Contains(companionComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = companionComponent.getInvalidElements();
+            }
+            
             return missingElements;
         }
 
@@ -175,6 +189,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isAncestryValid = true;
             bool isDisciplineValid = true;
             bool isHunterFeatureValid = true;
+            bool isCompanionValid = true;
 
             //extra skills
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
@@ -224,6 +239,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isHunterFeatureValid = hunterComponent.isValid();
             }
 
+            //beast companion
+            if (subclassChoiceLayout.Controls.Contains(companionComponent))
+            {
+                isCompanionValid = companionComponent.isValid();
+            }
+            
             return isExtraSubclassSkillValid &&
                    isTotemFeatureValid &&
                    isExtraSubclassSpellValid &&
@@ -231,7 +252,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                    isManeuverValid &&
                    isAncestryValid &&
                    isDisciplineValid &&
-                   isHunterFeatureValid;
+                   isHunterFeatureValid &&
+                   isCompanionValid;
         }
 
         public void populateForm()
@@ -294,6 +316,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             hunterComponent.populateForm();
 
+            //beast companion
+            if (wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.hasCompanion(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(companionComponent);
+            }
+            companionComponent.populateForm();
+            
             Visited = true;
         }
 
@@ -380,6 +409,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wm.Choices.HunterFeatures.Clear();
             }
+
+            //beast companion
+            if (subclassChoiceLayout.Controls.Contains(companionComponent))
+            {
+                companionComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.BeastCompanion = new Beast();
+            }
+            
         }
 
         private void subcomponents_OptionChosen(object sender, EventArgs e)
