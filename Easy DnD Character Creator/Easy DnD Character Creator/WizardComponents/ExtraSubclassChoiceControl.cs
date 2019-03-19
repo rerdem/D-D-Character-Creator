@@ -24,6 +24,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private ManeuverControl maneuverComponent;
         private DraconicAncestryControl draconicAncestryComponent;
         private DisciplineControl disciplineComponent;
+        private HunterControl hunterComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -33,23 +34,26 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             Visited = false;
 
             extraSubclassSkillComponent = new ExtraSubclassSkillControl(wm);
-            extraSubclassSkillComponent.SkillChosen += new EventHandler(extraSubclassSkillComponent_SkillChosen);
+            extraSubclassSkillComponent.SkillChosen += new EventHandler(subcomponents_OptionChosen);
 
             totemComponent = new TotemControl(wm);
-            totemComponent.TotemOptionChosen += new EventHandler(totemComponent_TotemOptionChosen);
+            totemComponent.TotemOptionChosen += new EventHandler(subcomponents_OptionChosen);
 
             extraSubclassSpellComponent = new ExtraSubclassSpellControl(wm);
-            extraSubclassSpellComponent.SpellChosen += new EventHandler(extraSubclassSpellComponent_SpellChosen);
+            extraSubclassSpellComponent.SpellChosen += new EventHandler(subcomponents_OptionChosen);
 
             extraToolProficiencyComponent = new ExtraToolProficiencyControl(wm);
 
             maneuverComponent = new ManeuverControl(wm);
-            maneuverComponent.ManeuverChosen += new EventHandler(maneuverComponent_ManeuverChosen);
+            maneuverComponent.ManeuverChosen += new EventHandler(subcomponents_OptionChosen);
 
             draconicAncestryComponent = new DraconicAncestryControl(wm);
 
             disciplineComponent = new DisciplineControl(wm);
-            disciplineComponent.DisciplineChosen += new EventHandler(disciplineComponent_DisciplineChosen);
+            disciplineComponent.DisciplineChosen += new EventHandler(subcomponents_OptionChosen);
+
+            hunterComponent = new HunterControl(wm);
+            hunterComponent.HunterOptionChosen += new EventHandler(subcomponents_OptionChosen);
 
             InitializeComponent();
         }
@@ -147,6 +151,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 missingElements = disciplineComponent.getInvalidElements();
             }
 
+            //hunter features
+            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
+            {
+                if (!string.IsNullOrEmpty(missingElements))
+                {
+                    missingElements += ", ";
+                }
+
+                missingElements = hunterComponent.getInvalidElements();
+            }
+
             return missingElements;
         }
 
@@ -159,6 +174,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bool isManeuverValid = true;
             bool isAncestryValid = true;
             bool isDisciplineValid = true;
+            bool isHunterFeatureValid = true;
 
             //extra skills
             if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
@@ -202,13 +218,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 isDisciplineValid = disciplineComponent.isValid();
             }
 
+            //hunter feature
+            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
+            {
+                isHunterFeatureValid = hunterComponent.isValid();
+            }
+
             return isExtraSubclassSkillValid &&
                    isTotemFeatureValid &&
                    isExtraSubclassSpellValid &&
                    isExtraToolProficiencyValid &&
                    isManeuverValid &&
                    isAncestryValid &&
-                   isDisciplineValid;
+                   isDisciplineValid &&
+                   isHunterFeatureValid;
         }
 
         public void populateForm()
@@ -263,6 +286,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 subclassChoiceLayout.Controls.Add(disciplineComponent);
             }
             disciplineComponent.populateForm();
+
+            //hunter features
+            if (wm.DBManager.ExtraSubclassChoiceData.HunterData.hasHunterFeatures(wm.Choices.Subclass, wm.Choices.Level))
+            {
+                subclassChoiceLayout.Controls.Add(hunterComponent);
+            }
+            hunterComponent.populateForm();
 
             Visited = true;
         }
@@ -340,29 +370,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.ChosenDisciplines.Clear();
                 wm.Choices.MandatoryDisciplines.Clear();
             }
+
+            //hunter features
+            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
+            {
+                hunterComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.HunterFeatures.Clear();
+            }
         }
 
-        private void extraSubclassSkillComponent_SkillChosen(object sender, EventArgs e)
-        {
-            OnSubcontrolOptionChosen(null);
-        }
-
-        private void extraSubclassSpellComponent_SpellChosen(object sender, EventArgs e)
-        {
-            OnSubcontrolOptionChosen(null);
-        }
-
-        private void totemComponent_TotemOptionChosen(object sender, EventArgs e)
-        {
-            OnSubcontrolOptionChosen(null);
-        }
-
-        private void maneuverComponent_ManeuverChosen(object sender, EventArgs e)
-        {
-            OnSubcontrolOptionChosen(null);
-        }
-
-        private void disciplineComponent_DisciplineChosen(object sender, EventArgs e)
+        private void subcomponents_OptionChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }

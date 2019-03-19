@@ -6,46 +6,46 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class TotemFeature : IEquatable<TotemFeature>
+    public class ChoiceFeature : IEquatable<ChoiceFeature>
     {
         public string Name { get; }
         public string Description { get; }
-        public List<TotemOption> Options { get; }
+        public List<ChoiceFeatureOption> Options { get; }
 
-        public TotemFeature()
+        public ChoiceFeature()
         {
             Name = "";
             Description = "";
-            Options = new List<TotemOption>();
+            Options = new List<ChoiceFeatureOption>();
         }
 
-        public TotemFeature(string inputName, string inputDescription)
+        public ChoiceFeature(string inputName, string inputDescription)
         {
             Name = inputName;
             Description = inputDescription;
-            Options = new List<TotemOption>();
+            Options = new List<ChoiceFeatureOption>();
         }
 
-        public TotemFeature(string inputName, string inputDescription, List<TotemOption> inputOptions)
+        public ChoiceFeature(string inputName, string inputDescription, List<ChoiceFeatureOption> inputOptions)
         {
             Name = inputName;
             Description = inputDescription;
             Options = inputOptions;
         }
 
-        public void addOption(TotemOption newOption)
+        public void addOption(ChoiceFeatureOption newOption)
         {
             Options.Add(newOption);
         }
 
-        public void removeOption(TotemOption oldOption)
+        public void removeOption(ChoiceFeatureOption oldOption)
         {
             Options.Remove(oldOption);
         }
 
-        public void selectOption(TotemOption selectedOption)
+        public void selectOption(ChoiceFeatureOption selectedOption)
         {
-            foreach (TotemOption option in Options)
+            foreach (ChoiceFeatureOption option in Options)
             {
                 if (option == selectedOption)
                 {
@@ -58,9 +58,9 @@ namespace Easy_DnD_Character_Creator.DataTypes
             }
         }
 
-        public TotemOption getSelectedOption()
+        public ChoiceFeatureOption getSelectedOption()
         {
-            foreach (TotemOption option in Options)
+            foreach (ChoiceFeatureOption option in Options)
             {
                 if (option.Selected)
                 {
@@ -68,10 +68,10 @@ namespace Easy_DnD_Character_Creator.DataTypes
                 }
             }
 
-            return new TotemOption();
+            return new ChoiceFeatureOption();
         }
 
-        public bool Equals(TotemFeature other)
+        public bool Equals(ChoiceFeature other)
         {
             if (other == null)
             {
@@ -88,7 +88,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
                 return false;
             }
 
-            TotemFeature otherFeature = other as TotemFeature;
+            ChoiceFeature otherFeature = other as ChoiceFeature;
             if (otherFeature == null)
             {
                 return false;

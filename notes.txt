@@ -5,12 +5,12 @@ XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
 XBarbarian Totem Warrior Totem
 XCleric Nature 1 extra druid cantrip
-Druid Circle Land terrain for circle spells
 XFighter Battlemaster +1 artisan tool proficiency
 XFighter Battlemaster 3 Maneuvers
 						je +2 auf lvl 7, 10, 15
 XMonk Way of Elements, Elemental Attunement -> 1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17
-Ranger Hunter Hunter's Prey wie Barbarian Totem
+Druid Circle Land terrain for circle spells
+XRanger Hunter Hunter's Prey wie Barbarian Totem
 Ranger Beastmaster Companion
 XSorc Draconic Bloodline Ancestry
 
@@ -124,7 +124,7 @@ Ranger:
 	Level 3:
 		XPrimeval Awareness
 		Subclass:
-			!!Hunter: Hunter's Prey
+			X!!Hunter: Hunter's Prey
 			!!Beast Master: Ranger's Companion
 
 												XRogue:

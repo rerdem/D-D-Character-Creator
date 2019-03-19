@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class TotemOption : IEquatable<TotemOption>
+    public class ChoiceFeatureOption : IEquatable<ChoiceFeatureOption>
     {
         public string Name { get; }
         public string Description { get; }
         public bool Selected { get; set; }
 
-        public TotemOption()
+        public ChoiceFeatureOption()
         {
             Name = "";
             Description = "";
             Selected = false;
         }
 
-        public TotemOption(string inputName, string inputDescription, bool inputSelected)
+        public ChoiceFeatureOption(string inputName, string inputDescription, bool inputSelected)
         {
             Name = inputName;
             Description = inputDescription;
             Selected = inputSelected;
         }
 
-        public bool Equals(TotemOption other)
+        public bool Equals(ChoiceFeatureOption other)
         {
             if (other == null)
             {
@@ -43,7 +43,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
                 return false;
             }
 
-            TotemOption otherOption = other as TotemOption;
+            ChoiceFeatureOption otherOption = other as ChoiceFeatureOption;
             if (otherOption == null)
             {
                 return false;

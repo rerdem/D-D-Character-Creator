@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
 {
-    public class TotemDataManager
+    public class HunterDataManager
     {
         private string ConnectionString { get; }
         public List<string> UsedBooks { get; set; }
 
-        public TotemDataManager(string inputConnectionString, List<string> inputUsedBooks)
+        public HunterDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
             ConnectionString = inputConnectionString;
             UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
-        /// checks, if a given subclass has a totem choice at the given level
+        /// checks, if a given subclass has a hunter choice at the given level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
         /// <returns></returns>
-        public bool hasTotemFeatures(string subclass, int level)
+        public bool hasHunterFeatures(string subclass, int level)
         {
-            return (totemFeatureAmount(subclass, level) > 0);
+            return (hunterFeatureAmount(subclass, level) > 0);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         /// </summary>
         /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public int totemFeatureAmount(string subclass, int level)
+        public int hunterFeatureAmount(string subclass, int level)
         {
             int featureAmount = 0;
 
@@ -43,9 +43,9 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT COUNT(barbarianTotemFeatures.name) FROM barbarianTotemFeatures " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = barbarianTotemFeatures.subclassId " +
-                                      "WHERE subclasses.name = @Subclass AND barbarianTotemFeatures.level BETWEEN 1 and @Level";
+                command.CommandText = "SELECT COUNT(hunterFeatures.name) FROM hunterFeatures  " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId = hunterFeatures.subclassId " +
+                                      "WHERE subclasses.name = @Subclass AND hunterFeatures.level BETWEEN 1 AND  @Level";
                 command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         /// </summary>
         /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>
-        public List<ChoiceFeature> getTotemFeatures(string subclass, int level)
+        public List<ChoiceFeature> getHunterFeatures(string subclass, int level)
         {
             List<ChoiceFeature> featureList = new List<ChoiceFeature>();
             ChoiceFeature feature = new ChoiceFeature();
@@ -78,11 +78,11 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT barbarianTotemFeatures.name, barbarianTotemFeatures.description, barbarianTotemOptions.name, " +
-                                      "barbarianTotemOptions.description FROM barbarianTotemFeatures " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = barbarianTotemFeatures.subclassId " +
-                                      "INNER JOIN barbarianTotemOptions ON barbarianTotemOptions.totemFeatureId=barbarianTotemFeatures.totemFeatureId " +
-                                      "WHERE subclasses.name = @Subclass AND barbarianTotemFeatures.level BETWEEN 1 and @Level";
+                command.CommandText = "SELECT hunterFeatures.name, hunterFeatures.description, hunterOptions.name, hunterOptions.description " +
+                                      "FROM hunterFeatures " +
+                                      "INNER JOIN subclasses ON subclasses.subclassId = hunterFeatures.subclassId " +
+                                      "INNER JOIN hunterOptions ON hunterOptions.hunterFeatureId=hunterFeatures.hunterFeatureId " +
+                                      "WHERE subclasses.name = @Subclass AND hunterFeatures.level BETWEEN 1 and @Level";
                 command.Parameters.AddWithValue("@Subclass", subclass);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 

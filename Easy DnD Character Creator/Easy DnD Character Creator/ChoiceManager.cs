@@ -95,13 +95,14 @@ namespace Easy_DnD_Character_Creator
         //ExtraSubclassChoiceControl
         public List<string> SubclassSkills { get; set; }
         public bool SubclassDoublesProficiency { get; set; }
-        public List<TotemFeature> TotemFeatures { get; set; }
+        public List<ChoiceFeature> TotemFeatures { get; set; }
         public List<Spell> SubclassSpells { get; set; }
         public string SubclassToolProficiency { get; set; }
         public List<Maneuver> Maneuvers { get; set; }
         public List<ElementalDiscipline> MandatoryDisciplines { get; set; }
         public List<ElementalDiscipline> ChosenDisciplines { get; set; }
-        public DraconicAncestry Ancestry;
+        public DraconicAncestry Ancestry { get; set; }
+        public List<ChoiceFeature> HunterFeatures { get; set; }
 
         public ChoiceManager()
         {
@@ -175,13 +176,14 @@ namespace Easy_DnD_Character_Creator
 
             SubclassSkills = new List<string>();
             SubclassDoublesProficiency = false;
-            TotemFeatures = new List<TotemFeature>();
+            TotemFeatures = new List<ChoiceFeature>();
             SubclassSpells = new List<Spell>();
             SubclassToolProficiency = "";
             Maneuvers = new List<Maneuver>();
             MandatoryDisciplines = new List<ElementalDiscipline>();
             ChosenDisciplines = new List<ElementalDiscipline>();
             Ancestry = new DraconicAncestry();
+            HunterFeatures = new List<ChoiceFeature>();
         }
     }
 }

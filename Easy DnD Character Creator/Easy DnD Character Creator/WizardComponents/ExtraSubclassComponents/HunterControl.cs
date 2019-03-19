@@ -11,27 +11,27 @@ using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 {
-    public partial class TotemControl : UserControl, IWizardControl
+    public partial class HunterControl : UserControl, IWizardControl
     {
         private WizardManager wm;
         private bool visited;
 
         private string lastSubclassLevel;
 
-        private int totemFeatureAmount;
-        private List<ChoiceFeature> totemFeatures;
-        private List<TotemFeatureControl> featureControls;
+        private int hunterFeatureAmount;
+        private List<ChoiceFeature> hunterFeatures;
+        private List<HunterFeatureControl> featureControls;
 
-        public event EventHandler TotemOptionChosen;
+        public event EventHandler HunterOptionChosen;
 
-        public TotemControl(WizardManager inputWizardManager)
+        public HunterControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             Visited = false;
 
-            totemFeatureAmount = 0;
-            totemFeatures = new List<ChoiceFeature>();
-            featureControls = new List<TotemFeatureControl>();
+            hunterFeatureAmount = 0;
+            hunterFeatures = new List<ChoiceFeature>();
+            featureControls = new List<HunterFeatureControl>();
 
             InitializeComponent();
         }
@@ -52,7 +52,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             string output = "";
 
-            foreach (TotemFeatureControl control in featureControls)
+            foreach (HunterFeatureControl control in featureControls)
             {
                 if (!control.isValid())
                 {
@@ -69,9 +69,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public bool isValid()
         {
-            foreach (TotemFeatureControl control in featureControls)
+            foreach (HunterFeatureControl control in featureControls)
             {
-                if(!control.isValid())
+                if (!control.isValid())
                 {
                     return false;
                 }
@@ -84,18 +84,18 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (!Visited || hasSubclassLevelChanged())
             {
-                totemFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.TotemData.totemFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
-                totemFeatures = wm.DBManager.ExtraSubclassChoiceData.TotemData.getTotemFeatures(wm.Choices.Subclass, wm.Choices.Level);
+                hunterFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.HunterData.hunterFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
+                hunterFeatures = wm.DBManager.ExtraSubclassChoiceData.HunterData.getHunterFeatures(wm.Choices.Subclass, wm.Choices.Level);
             }
 
             if (Visited && !hasSubclassLevelChanged())
             {
                 //load content
-                foreach (ChoiceFeature feature in totemFeatures)
+                foreach (ChoiceFeature feature in hunterFeatures)
                 {
-                    if (wm.Choices.TotemFeatures.Contains(feature))
+                    if (wm.Choices.HunterFeatures.Contains(feature))
                     {
-                        feature.selectOption(wm.Choices.TotemFeatures[wm.Choices.TotemFeatures.IndexOf(feature)].getSelectedOption());
+                        feature.selectOption(wm.Choices.HunterFeatures[wm.Choices.HunterFeatures.IndexOf(feature)].getSelectedOption());
                     }
                 }
             }
@@ -107,8 +107,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void saveContent()
         {
-            wm.Choices.TotemFeatures.Clear();
-            foreach (TotemFeatureControl control in featureControls)
+            wm.Choices.HunterFeatures.Clear();
+            foreach (HunterFeatureControl control in featureControls)
             {
                 control.saveContent();
             }
@@ -116,31 +116,31 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         private void refreshContent()
         {
-            totemLayout.Controls.Clear();
+            hunterLayout.Controls.Clear();
             featureControls.Clear();
-            for (int i = 0; i < totemFeatures.Count; i++)
+            for (int i = 0; i < hunterFeatures.Count; i++)
             {
-                TotemFeatureControl control = new TotemFeatureControl(wm, totemFeatures[i]);
-                control.TotemOptionChosen += new EventHandler(control_TotemOptionChosen);
+                HunterFeatureControl control = new HunterFeatureControl(wm, hunterFeatures[i]);
+                control.HunterOptionChosen += new EventHandler(control_HunterOptionChosen);
                 featureControls.Add(control);
-                totemLayout.Controls.Add(featureControls[i]);
+                hunterLayout.Controls.Add(featureControls[i]);
                 featureControls[i].populateForm();
             }
-    }
+        }
 
         private bool hasSubclassLevelChanged()
         {
             return (lastSubclassLevel != (wm.Choices.Subclass + wm.Choices.Level.ToString()));
         }
 
-        private void control_TotemOptionChosen(object sender, EventArgs e)
+        private void control_HunterOptionChosen(object sender, EventArgs e)
         {
-            OnTotemOptionChosen(null);
+            OnHunterOptionChosen(null);
         }
 
-        protected virtual void OnTotemOptionChosen(EventArgs e)
+        protected virtual void OnHunterOptionChosen(EventArgs e)
         {
-            EventHandler handler = TotemOptionChosen;
+            EventHandler handler = HunterOptionChosen;
             if (handler != null)
             {
                 handler(this, e);

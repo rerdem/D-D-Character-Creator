@@ -73,6 +73,7 @@
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraToolProficiencyDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\HunterDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ManeuverDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
@@ -101,8 +102,8 @@
     <Compile Include="DataTypes\Pack.cs" />
     <Compile Include="DataTypes\Spell.cs" />
     <Compile Include="DataTypes\Tool.cs" />
-    <Compile Include="DataTypes\TotemFeature.cs" />
-    <Compile Include="DataTypes\TotemOption.cs" />
+    <Compile Include="DataTypes\ChoiceFeature.cs" />
+    <Compile Include="DataTypes\ChoiceFeatureOption.cs" />
     <Compile Include="DataTypes\WarlockPact.cs" />
     <Compile Include="DataTypes\Weapon.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
@@ -217,6 +218,18 @@
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.Designer.cs">
       <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\HunterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\HunterControl.Designer.cs">
+      <DependentUpon>HunterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\HunterFeatureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\HunterFeatureControl.Designer.cs">
+      <DependentUpon>HunterFeatureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\ManeuverControl.cs">
       <SubType>UserControl</SubType>
@@ -369,6 +382,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ExtraToolProficiencyControl.resx">
       <DependentUpon>ExtraToolProficiencyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\HunterControl.resx">
+      <DependentUpon>HunterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\HunterFeatureControl.resx">
+      <DependentUpon>HunterFeatureControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\ManeuverControl.resx">
       <DependentUpon>ManeuverControl.cs</DependentUpon>

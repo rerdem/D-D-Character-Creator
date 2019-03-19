@@ -11,16 +11,16 @@ using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 {
-    public partial class TotemFeatureControl : UserControl, IWizardControl
+    public partial class HunterFeatureControl : UserControl, IWizardControl
     {
         private WizardManager wm;
         private bool visited;
 
         private ChoiceFeature feature;
 
-        public event EventHandler TotemOptionChosen;
+        public event EventHandler HunterOptionChosen;
 
-        public TotemFeatureControl(WizardManager inputWizardManager, ChoiceFeature inputFeature)
+        public HunterFeatureControl(WizardManager inputWizardManager, ChoiceFeature inputFeature)
         {
             wm = inputWizardManager;
             Visited = false;
@@ -46,9 +46,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             string output = "";
 
-            if (totemList.SelectedItems.Count <= 0)
+            if (optionList.SelectedItems.Count <= 0)
             {
-                output = "select a totem for " + feature.Name;
+                output = "select an option for " + feature.Name;
             }
 
             return output;
@@ -56,35 +56,35 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public bool isValid()
         {
-            return (totemList.SelectedItems.Count > 0);
+            return (optionList.SelectedItems.Count > 0);
         }
 
         public void populateForm()
         {
-            totemFeatureBox.Text = feature.Name;
+            hunterFeatureBox.Text = feature.Name;
             featureIntroLabel.Text = feature.Description;
 
-            totemList.BeginUpdate();
-            totemList.DataSource = null;
-            totemList.DataSource = feature.Options;
-            totemList.DisplayMember = "Name";
-            totemList.EndUpdate();
+            optionList.BeginUpdate();
+            optionList.DataSource = null;
+            optionList.DataSource = feature.Options;
+            optionList.DisplayMember = "Name";
+            optionList.EndUpdate();
 
-            totemList.SetSelected(getCurrentlySelectedOptionIndex(), true);
+            optionList.SetSelected(getCurrentlySelectedOptionIndex(), true);
 
             Visited = true;
         }
 
         public void saveContent()
         {
-            if (totemList.SelectedItems.Count > 0)
+            if (optionList.SelectedItems.Count > 0)
             {
-                ChoiceFeatureOption currentOption = (ChoiceFeatureOption)totemList.SelectedItem;
+                ChoiceFeatureOption currentOption = (ChoiceFeatureOption)optionList.SelectedItem;
                 feature.selectOption(currentOption);
             }
 
-            wm.Choices.TotemFeatures.Remove(feature);
-            wm.Choices.TotemFeatures.Add(feature);
+            wm.Choices.HunterFeatures.Remove(feature);
+            wm.Choices.HunterFeatures.Add(feature);
         }
 
         private int getCurrentlySelectedOptionIndex()
@@ -100,20 +100,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             return 0;
         }
 
-        private void featureList_SelectedIndexChanged(object sender, EventArgs e)
+        private void optionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (totemList.SelectedItems.Count > 0)
+            if (optionList.SelectedItems.Count > 0)
             {
-                ChoiceFeatureOption currentOption = (ChoiceFeatureOption)totemList.SelectedItem;
-                totemDescriptionLabel.Text = currentOption.Description;
+                ChoiceFeatureOption currentOption = (ChoiceFeatureOption)optionList.SelectedItem;
+                optionDescriptionLabel.Text = currentOption.Description;
             }
 
-            OnTotemOptionChosen(null);
+            OnHunterOptionChosen(null);
         }
 
-        protected virtual void OnTotemOptionChosen(EventArgs e)
+        protected virtual void OnHunterOptionChosen(EventArgs e)
         {
-            EventHandler handler = TotemOptionChosen;
+            EventHandler handler = HunterOptionChosen;
             if (handler != null)
             {
                 handler(this, e);
