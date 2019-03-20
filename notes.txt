@@ -1,6 +1,7 @@
 Monk Ki & Features
 Monk Shadow Arts gained Spells: Darkness, Darkvision, Pass without Trace, Silence, Minor Illusion
 Sorc Sorc Points
+Druid Wildshape
 XSorc Metamagic 2 Options je +1 auf lvl 10, 17
 
 XBarbarian Totem Warrior Totem
