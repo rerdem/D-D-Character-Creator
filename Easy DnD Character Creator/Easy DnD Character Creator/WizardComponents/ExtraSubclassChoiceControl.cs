@@ -17,6 +17,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private List<bool> subcomponentActivationList;
+        private List<IWizardControl> subcomponentList;
+        
         private ExtraSubclassSkillControl extraSubclassSkillComponent;
         private TotemControl totemComponent;
         private ExtraSubclassSpellControl extraSubclassSpellComponent;
@@ -34,29 +37,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm = inputWizardManager;
             Visited = false;
 
-            extraSubclassSkillComponent = new ExtraSubclassSkillControl(wm);
-            extraSubclassSkillComponent.SkillChosen += new EventHandler(subcomponents_OptionChosen);
-
-            totemComponent = new TotemControl(wm);
-            totemComponent.TotemOptionChosen += new EventHandler(subcomponents_OptionChosen);
-
-            extraSubclassSpellComponent = new ExtraSubclassSpellControl(wm);
-            extraSubclassSpellComponent.SpellChosen += new EventHandler(subcomponents_OptionChosen);
-
-            extraToolProficiencyComponent = new ExtraToolProficiencyControl(wm);
-
-            maneuverComponent = new ManeuverControl(wm);
-            maneuverComponent.ManeuverChosen += new EventHandler(subcomponents_OptionChosen);
-
-            draconicAncestryComponent = new DraconicAncestryControl(wm);
-
-            disciplineComponent = new DisciplineControl(wm);
-            disciplineComponent.DisciplineChosen += new EventHandler(subcomponents_OptionChosen);
-
-            hunterComponent = new HunterControl(wm);
-            hunterComponent.HunterOptionChosen += new EventHandler(subcomponents_OptionChosen);
-
-            companionComponent = new CompanionControl(wm);
+            subcomponentActivationList = new List<bool>();
+            initializeSubcomponentList();
+            refreshActivationList();
+            
 
             InitializeComponent();
         }
@@ -77,103 +61,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             string missingElements = "";
 
-            //extra skills
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                if (!string.IsNullOrEmpty(missingElements))
+                if (subcomponentActivationList[i])
                 {
-                    missingElements += ", ";
+                    if (!string.IsNullOrEmpty(missingElements))
+                    {
+                        missingElements += ", ";
+                    }
+
+                    missingElements = subcomponentList[i].getInvalidElements();
                 }
-
-                missingElements = extraSubclassSkillComponent.getInvalidElements();
-            }
-
-            //totem
-            if (subclassChoiceLayout.Controls.Contains(totemComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = totemComponent.getInvalidElements();
-            }
-
-            //extra spells
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = extraSubclassSpellComponent.getInvalidElements();
-            }
-
-            //extra tool proficiencies
-            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = extraToolProficiencyComponent.getInvalidElements();
-            }
-
-            //maneuvers
-            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = maneuverComponent.getInvalidElements();
-            }
-
-            //draconic ancestry
-            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = draconicAncestryComponent.getInvalidElements();
-            }
-
-            //elemental disciplines
-            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = disciplineComponent.getInvalidElements();
-            }
-
-            //hunter features
-            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = hunterComponent.getInvalidElements();
-            }
-
-            //beast companion
-            if (subclassChoiceLayout.Controls.Contains(companionComponent))
-            {
-                if (!string.IsNullOrEmpty(missingElements))
-                {
-                    missingElements += ", ";
-                }
-
-                missingElements = companionComponent.getInvalidElements();
             }
             
             return missingElements;
@@ -181,245 +79,113 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            bool isExtraSubclassSkillValid = true;
-            bool isTotemFeatureValid = true;
-            bool isExtraSubclassSpellValid = true;
-            bool isExtraToolProficiencyValid = true;
-            bool isManeuverValid = true;
-            bool isAncestryValid = true;
-            bool isDisciplineValid = true;
-            bool isHunterFeatureValid = true;
-            bool isCompanionValid = true;
-
-            //extra skills
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                isExtraSubclassSkillValid = extraSubclassSkillComponent.isValid();
+                if (subcomponentActivationList[i])
+                {
+                    if (!subcomponentList[i].isValid())
+                    {
+                        return false;
+                    }
+                }
             }
 
-            //totems
-            if (subclassChoiceLayout.Controls.Contains(totemComponent))
-            {
-                isTotemFeatureValid = totemComponent.isValid();
-            }
-
-            //extra spells
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
-            {
-                isExtraSubclassSpellValid = extraSubclassSpellComponent.isValid();
-            }
-
-            //extra tool proficiencies
-            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
-            {
-                isExtraToolProficiencyValid = extraToolProficiencyComponent.isValid();
-            }
-
-            //maneuvers
-            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
-            {
-                isManeuverValid = maneuverComponent.isValid();
-            }
-
-            //draconic ancestry
-            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
-            {
-                isAncestryValid = draconicAncestryComponent.isValid();
-            }
-
-            //elemental disciplines
-            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
-            {
-                isDisciplineValid = disciplineComponent.isValid();
-            }
-
-            //hunter feature
-            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
-            {
-                isHunterFeatureValid = hunterComponent.isValid();
-            }
-
-            //beast companion
-            if (subclassChoiceLayout.Controls.Contains(companionComponent))
-            {
-                isCompanionValid = companionComponent.isValid();
-            }
-            
-            return isExtraSubclassSkillValid &&
-                   isTotemFeatureValid &&
-                   isExtraSubclassSpellValid &&
-                   isExtraToolProficiencyValid &&
-                   isManeuverValid &&
-                   isAncestryValid &&
-                   isDisciplineValid &&
-                   isHunterFeatureValid &&
-                   isCompanionValid;
+            return true;
         }
 
         public void populateForm()
         {
+            refreshActivationList();
+
             //setup subcontrols
             subclassChoiceLayout.Controls.Clear();
-            //additional skills
-            if (wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.hasSkillChoice(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(extraSubclassSkillComponent);
-            }
-            extraSubclassSkillComponent.populateForm();
 
-            //totems
-            if (wm.DBManager.ExtraSubclassChoiceData.TotemData.hasTotemFeatures(wm.Choices.Subclass, wm.Choices.Level))
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                subclassChoiceLayout.Controls.Add(totemComponent);
+                if (subcomponentActivationList[i])
+                {
+                    subclassChoiceLayout.Controls.Add((UserControl)subcomponentList[i]);
+                }
+                subcomponentList[i].populateForm();
             }
-            totemComponent.populateForm();
-
-            //additional spells
-            if (wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.hasExtraSpellChoice(wm.Choices.Subclass))
-            {
-                subclassChoiceLayout.Controls.Add(extraSubclassSpellComponent);
-            }
-            extraSubclassSpellComponent.populateForm();
-
-            //additional tool proficiencies
-            if (wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.hasToolProficiencyChoice(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(extraToolProficiencyComponent);
-            }
-            extraToolProficiencyComponent.populateForm();
-
-            //maneuvers
-            if (wm.DBManager.ExtraSubclassChoiceData.ManeuverData.hasManeuvers(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(maneuverComponent);
-            }
-            maneuverComponent.populateForm();
-
-            //draconic ancestry
-            if (wm.DBManager.ExtraSubclassChoiceData.DraconicAncestryData.hasDraconicAncestry(wm.Choices.Subclass))
-            {
-                subclassChoiceLayout.Controls.Add(draconicAncestryComponent);
-            }
-            draconicAncestryComponent.populateForm();
-
-            //elemental disciplines
-            if (wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.hasDisciplines(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(disciplineComponent);
-            }
-            disciplineComponent.populateForm();
-
-            //hunter features
-            if (wm.DBManager.ExtraSubclassChoiceData.HunterData.hasHunterFeatures(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(hunterComponent);
-            }
-            hunterComponent.populateForm();
-
-            //beast companion
-            if (wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.hasCompanion(wm.Choices.Subclass, wm.Choices.Level))
-            {
-                subclassChoiceLayout.Controls.Add(companionComponent);
-            }
-            companionComponent.populateForm();
             
             Visited = true;
         }
 
         public void saveContent()
         {
-            //extra subclass skills
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSkillComponent))
-            {
-                extraSubclassSkillComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.SubclassSkills.Clear();
-                wm.Choices.SubclassDoublesProficiency = false;
-            }
+            wm.Choices.SubclassSkills.Clear();
+            wm.Choices.SubclassDoublesProficiency = false;
+            wm.Choices.TotemFeatures.Clear();
+            wm.Choices.SubclassSpells.Clear();
+            wm.Choices.SubclassToolProficiency = "";
+            wm.Choices.Maneuvers.Clear();
+            wm.Choices.Ancestry = new DraconicAncestry();
+            wm.Choices.ChosenDisciplines.Clear();
+            wm.Choices.MandatoryDisciplines.Clear();
+            wm.Choices.HunterFeatures.Clear();
+            wm.Choices.BeastCompanion = new Beast();
 
-            //totem choices
-            if (subclassChoiceLayout.Controls.Contains(totemComponent))
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                totemComponent.saveContent();
+                if (subcomponentActivationList[i])
+                {
+                    subcomponentList[i].saveContent();
+                }
             }
-            else
-            {
-                wm.Choices.TotemFeatures.Clear();
-            }
+        }
 
-            //extra subclass spells
-            if (subclassChoiceLayout.Controls.Contains(extraSubclassSpellComponent))
-            {
-                extraSubclassSpellComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.SubclassSpells.Clear();
-            }
+        private void refreshActivationList()
+        {
+            subcomponentActivationList.Clear();
+            subcomponentActivationList.Add(wm.Choices.HasExtraSubclassSkills);
+            subcomponentActivationList.Add(wm.Choices.HasTotems);
+            subcomponentActivationList.Add(wm.Choices.HasExtraSubclassSpells);
+            subcomponentActivationList.Add(wm.Choices.HasExtraToolProficiencies);
+            subcomponentActivationList.Add(wm.Choices.HasManeuvers);
+            subcomponentActivationList.Add(wm.Choices.HasDraconicAncestry);
+            subcomponentActivationList.Add(wm.Choices.HasElementalDisciplines);
+            subcomponentActivationList.Add(wm.Choices.HasHunterChoices);
+            subcomponentActivationList.Add(wm.Choices.HasCompanion);
+            subcomponentActivationList.Add(wm.Choices.HasCircleTerrain);
+        }
 
-            //extra subclass tool proficiencies
-            if (subclassChoiceLayout.Controls.Contains(extraToolProficiencyComponent))
-            {
-                extraToolProficiencyComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.SubclassToolProficiency = "";
-            }
+        private void initializeSubcomponentList()
+        {
+            subcomponentList = new List<IWizardControl>();
 
-            //maneuvers
-            if (subclassChoiceLayout.Controls.Contains(maneuverComponent))
-            {
-                maneuverComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.Maneuvers.Clear();
-            }
+            extraSubclassSkillComponent = new ExtraSubclassSkillControl(wm);
+            extraSubclassSkillComponent.SkillChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(extraSubclassSkillComponent);
 
-            //draconic ancestry
-            if (subclassChoiceLayout.Controls.Contains(draconicAncestryComponent))
-            {
-                draconicAncestryComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.Ancestry = new DraconicAncestry();
-            }
+            totemComponent = new TotemControl(wm);
+            totemComponent.TotemOptionChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(totemComponent);
 
-            //elemental disciplines
-            if (subclassChoiceLayout.Controls.Contains(disciplineComponent))
-            {
-                disciplineComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.ChosenDisciplines.Clear();
-                wm.Choices.MandatoryDisciplines.Clear();
-            }
+            extraSubclassSpellComponent = new ExtraSubclassSpellControl(wm);
+            extraSubclassSpellComponent.SpellChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(extraSubclassSpellComponent);
 
-            //hunter features
-            if (subclassChoiceLayout.Controls.Contains(hunterComponent))
-            {
-                hunterComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.HunterFeatures.Clear();
-            }
+            extraToolProficiencyComponent = new ExtraToolProficiencyControl(wm);
+            subcomponentList.Add(extraToolProficiencyComponent);
 
-            //beast companion
-            if (subclassChoiceLayout.Controls.Contains(companionComponent))
-            {
-                companionComponent.saveContent();
-            }
-            else
-            {
-                wm.Choices.BeastCompanion = new Beast();
-            }
-            
+            maneuverComponent = new ManeuverControl(wm);
+            maneuverComponent.ManeuverChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(maneuverComponent);
+
+            draconicAncestryComponent = new DraconicAncestryControl(wm);
+            subcomponentList.Add(draconicAncestryComponent);
+
+            disciplineComponent = new DisciplineControl(wm);
+            disciplineComponent.DisciplineChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(disciplineComponent);
+
+            hunterComponent = new HunterControl(wm);
+            hunterComponent.HunterOptionChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(hunterComponent);
+
+            companionComponent = new CompanionControl(wm);
+            subcomponentList.Add(companionComponent);
         }
 
         private void subcomponents_OptionChosen(object sender, EventArgs e)

@@ -85,13 +85,43 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
+            //save class/subclass
             wm.Choices.Class = classListBox.SelectedItem.ToString();
             wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
+
+            //save information about properties and additional choices to make
             wm.Choices.HasExtraClassChoice = wm.DBManager.ExtraClassChoiceData.hasExtraClassChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasExtraSubclassChoice = wm.DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            //wm.Choices.HasExtraSubclassChoice = wm.DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.ChoosesSpells = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
 
+            wm.Choices.HasExtraSubclassSkills = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.hasSkillChoice(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasTotems = wm.DBManager.ExtraSubclassChoiceData.TotemData.hasTotemFeatures(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasExtraSubclassSpells = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.hasExtraSpellChoice(subclassListBox.SelectedItem.ToString());
+            wm.Choices.HasExtraToolProficiencies = wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.hasToolProficiencyChoice(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasManeuvers = wm.DBManager.ExtraSubclassChoiceData.ManeuverData.hasManeuvers(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasDraconicAncestry = wm.DBManager.ExtraSubclassChoiceData.DraconicAncestryData.hasDraconicAncestry(subclassListBox.SelectedItem.ToString());
+            wm.Choices.HasElementalDisciplines = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.hasDisciplines(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasHunterChoices = wm.DBManager.ExtraSubclassChoiceData.HunterData.hasHunterFeatures(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasCompanion = wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.hasCompanion(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasCircleTerrain = wm.DBManager.ExtraSubclassChoiceData.CircleTerrainData.hasCircleTerrain(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasExtraSubclassChoice = wm.Choices.HasExtraSubclassSkills ||
+                                                wm.Choices.HasTotems ||
+                                                wm.Choices.HasExtraSubclassSpells ||
+                                                wm.Choices.HasExtraToolProficiencies ||
+                                                wm.Choices.HasManeuvers ||
+                                                wm.Choices.HasDraconicAncestry ||
+                                                wm.Choices.HasElementalDisciplines ||
+                                                wm.Choices.HasHunterChoices ||
+                                                wm.Choices.HasCompanion ||
+                                                wm.Choices.HasCircleTerrain;
+
+
+
+
+
+
+            //save extra choices that did not require extre UserControls
             if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
                 string proficiencyString = "";

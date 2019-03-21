@@ -53,13 +53,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             resetContent();
 
             //if there was a previous choice, load it
-            if (wm.Choices.Maneuvers.Count > 0)
+            if (Visited && (wm.Choices.Maneuvers.Count > 0))
             {
                 for (int i = 0; i < maneuverListBox.Items.Count; i++)
                 {
                     if (wm.Choices.Maneuvers.Contains(maneuverListBox.Items[i]))
                     {
                         maneuverListBox.SetSelected(i, true);
+                    }
+                    else
+                    {
+                        maneuverListBox.SetSelected(i, false);
                     }
                 }
             }

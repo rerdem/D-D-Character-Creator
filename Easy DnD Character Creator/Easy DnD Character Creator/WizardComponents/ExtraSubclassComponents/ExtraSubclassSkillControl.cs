@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 {
-    public partial class ExtraSubclassSkillControl : UserControl
+    public partial class ExtraSubclassSkillControl : UserControl, IWizardControl
     {
         private WizardManager wm;
         private bool visited;

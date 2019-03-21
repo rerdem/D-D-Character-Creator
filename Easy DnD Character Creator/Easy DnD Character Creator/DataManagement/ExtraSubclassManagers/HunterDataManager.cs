@@ -65,7 +65,7 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// gets a list of all totem features and options for the given subclass/level
+        /// gets a list of all hunter features and options for the given subclass/level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>
         /// <param name="level">current level</param>

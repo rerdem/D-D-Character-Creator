@@ -47,6 +47,17 @@ namespace Easy_DnD_Character_Creator
         public bool HasSpellcasting { get; set; }
         public bool ChoosesSpells { get; set; }
 
+        public bool HasExtraSubclassSkills { get; set; }
+        public bool HasTotems { get; set; }
+        public bool HasExtraSubclassSpells { get; set; }
+        public bool HasExtraToolProficiencies { get; set; }
+        public bool HasManeuvers { get; set; }
+        public bool HasDraconicAncestry { get; set; }
+        public bool HasElementalDisciplines { get; set; }
+        public bool HasHunterChoices { get; set; }
+        public bool HasCompanion { get; set; }
+        public bool HasCircleTerrain { get; set; }
+
         //BackgroundControl
         public string Background { get; set; }
         public string BackgroundProficiency { get; set; }
@@ -137,6 +148,17 @@ namespace Easy_DnD_Character_Creator
             HasExtraSubclassChoice = false;
             HasSpellcasting = false;
             ChoosesSpells = false;
+
+            HasExtraSubclassSkills = false;
+            HasTotems = false;
+            HasExtraSubclassSpells = false;
+            HasExtraToolProficiencies = false;
+            HasManeuvers = false;
+            HasDraconicAncestry = false;
+            HasElementalDisciplines = false;
+            HasHunterChoices = false;
+            HasCompanion = false;
+            HasCircleTerrain = false;
 
             Background = "";
             BackgroundProficiency = "";

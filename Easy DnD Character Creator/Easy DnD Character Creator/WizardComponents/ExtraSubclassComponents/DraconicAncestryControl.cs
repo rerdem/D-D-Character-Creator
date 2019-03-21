@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             {
                 if (ancestryComboBox.Items.Contains(wm.Choices.Ancestry))
                 {
-                    ancestryComboBox.SelectedIndex = ancestryComboBox.Items.IndexOf(wm.Choices.Ancestry);
+                    ancestryComboBox.SelectedItem = wm.Choices.Ancestry;
                 }
             }
 

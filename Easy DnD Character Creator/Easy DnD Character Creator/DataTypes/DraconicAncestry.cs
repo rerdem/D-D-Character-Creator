@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class DraconicAncestry
+    public class DraconicAncestry : IEquatable<DraconicAncestry>
     {
         public string Color { get; }
         public string DamageType { get; }
@@ -22,6 +22,37 @@ namespace Easy_DnD_Character_Creator.DataTypes
         {
             Color = inputColor;
             DamageType = inputDamageType;
+        }
+
+        public bool Equals(DraconicAncestry other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return FullInfo == other.FullInfo;
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            DraconicAncestry otherAncestry = other as DraconicAncestry;
+            if (otherAncestry == null)
+            {
+                return false;
+            }
+
+            return Equals(otherAncestry);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.FullInfo.GetHashCode();
         }
     }
 }

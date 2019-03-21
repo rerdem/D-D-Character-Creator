@@ -23,6 +23,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         public DraconicAncestryDataManager DraconicAncestryData { get; }
         public HunterDataManager HunterData { get; }
         public BeastCompanionDataManager BeastCompanionData { get; }
+        public CircleTerrainDataManager CircleTerrainData { get; }
 
         public ExtraSubclassChoiceDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
@@ -38,6 +39,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             DraconicAncestryData = new DraconicAncestryDataManager(ConnectionString, inputUsedBooks);
             HunterData = new HunterDataManager(ConnectionString, inputUsedBooks);
             BeastCompanionData = new BeastCompanionDataManager(ConnectionString, inputUsedBooks);
+            CircleTerrainData = new CircleTerrainDataManager(ConnectionString, inputUsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -52,6 +54,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             DraconicAncestryData.UsedBooks = inputUsedBooks;
             HunterData.UsedBooks = inputUsedBooks;
             BeastCompanionData.UsedBooks = inputUsedBooks;
+            CircleTerrainData.UsedBooks = inputUsedBooks;
         }
 
         public bool hasExtraSubclassChoices(string subclass, int level)
@@ -60,7 +63,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                 || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level)
                 || ManeuverData.hasManeuvers(subclass, level) || DraconicAncestryData.hasDraconicAncestry(subclass)
                 || ElementalDisciplineData.hasDisciplines(subclass, level) || HunterData.hasHunterFeatures(subclass, level)
-                || BeastCompanionData.hasCompanion(subclass, level);
+                || BeastCompanionData.hasCompanion(subclass, level) || CircleTerrainData.hasCircleTerrain(subclass, level);
         }
     }
 }
