@@ -10,7 +10,7 @@ XFighter Battlemaster +1 artisan tool proficiency
 XFighter Battlemaster 3 Maneuvers
 						je +2 auf lvl 7, 10, 15
 XMonk Way of Elements, Elemental Attunement -> 1 vorgegeben +1 Aussuchen, je +1 auf lvl 6, 11, 17
-Druid Circle Land terrain for circle spells
+XDruid Circle Land terrain for circle spells
 XRanger Hunter Hunter's Prey wie Barbarian Totem
 XRanger Beastmaster Companion
 XSorc Draconic Bloodline Ancestry
@@ -60,13 +60,13 @@ Druid:
 	Level 2:
 	!Wild Shape (choose origin for animals known? -> Xanathar)
 	
-	Subclass:
-	!!!Land: 
-		X+1 Cantrip
-		XNatural Recovery
-		Choose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
-	XMoon: Combat Wild Shape
-		Circle Forms
+	XSubclass:
+		X!!!Land: 
+			X+1 Cantrip
+			XNatural Recovery
+			XChoose Terrain for Circle spells -> similar to cleric domains pells (LEVEL 3)
+		XMoon: Combat Wild Shape
+			XCircle Forms
 	
 											XFighter:
 												XLevel 2:

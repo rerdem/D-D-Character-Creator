@@ -29,6 +29,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private DisciplineControl disciplineComponent;
         private HunterControl hunterComponent;
         private CompanionControl companionComponent;
+        private CircleTerrainControl circleTerrainComponent;
 
         public event EventHandler SubcontrolOptionChosen;
 
@@ -148,6 +149,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             subcomponentActivationList.Add(wm.Choices.HasHunterChoices);
             subcomponentActivationList.Add(wm.Choices.HasCompanion);
             subcomponentActivationList.Add(wm.Choices.HasCircleTerrain);
+
+            //fail safe, in case someone forgets to add the appropriate variable to the activation list
+            //this should not need to exist, rethink link in future update
+            while (subcomponentActivationList.Count < subcomponentList.Count)
+            {
+                subcomponentActivationList.Add(false);
+            }
         }
 
         private void initializeSubcomponentList()
@@ -186,6 +194,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             companionComponent = new CompanionControl(wm);
             subcomponentList.Add(companionComponent);
+
+            circleTerrainComponent = new CircleTerrainControl(wm);
+            subcomponentList.Add(circleTerrainComponent);
         }
 
         private void subcomponents_OptionChosen(object sender, EventArgs e)

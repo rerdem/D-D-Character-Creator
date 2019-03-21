@@ -57,13 +57,13 @@ namespace Easy_DnD_Character_Creator.DataManagement
             CircleTerrainData.UsedBooks = inputUsedBooks;
         }
 
-        public bool hasExtraSubclassChoices(string subclass, int level)
-        {
-            return ExtraSubclassSkillData.hasSkillChoice(subclass, level) || TotemData.hasTotemFeatures(subclass, level) 
-                || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level)
-                || ManeuverData.hasManeuvers(subclass, level) || DraconicAncestryData.hasDraconicAncestry(subclass)
-                || ElementalDisciplineData.hasDisciplines(subclass, level) || HunterData.hasHunterFeatures(subclass, level)
-                || BeastCompanionData.hasCompanion(subclass, level) || CircleTerrainData.hasCircleTerrain(subclass, level);
-        }
+        //public bool hasExtraSubclassChoices(string subclass, int level)
+        //{
+        //    return ExtraSubclassSkillData.hasSkillChoice(subclass, level) || TotemData.hasTotemFeatures(subclass, level) 
+        //        || ExtraSubclassSpellData.hasExtraSpellChoice(subclass) || ExtraToolProficiencyData.hasToolProficiencyChoice(subclass, level)
+        //        || ManeuverData.hasManeuvers(subclass, level) || DraconicAncestryData.hasDraconicAncestry(subclass)
+        //        || ElementalDisciplineData.hasDisciplines(subclass, level) || HunterData.hasHunterFeatures(subclass, level)
+        //        || BeastCompanionData.hasCompanion(subclass, level) || CircleTerrainData.hasCircleTerrain(subclass, level);
+        //}
     }
 }

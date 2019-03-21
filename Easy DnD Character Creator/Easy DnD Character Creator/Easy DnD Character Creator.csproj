@@ -193,6 +193,12 @@
     <Compile Include="WizardComponents\ExtraSubclassChoiceControl.Designer.cs">
       <DependentUpon>ExtraSubclassChoiceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\CircleTerrainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraSubclassComponents\CircleTerrainControl.Designer.cs">
+      <DependentUpon>CircleTerrainControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\ExtraSubclassComponents\CompanionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -377,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassChoiceControl.resx">
       <DependentUpon>ExtraSubclassChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\CircleTerrainControl.resx">
+      <DependentUpon>CircleTerrainControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassComponents\CompanionControl.resx">
       <DependentUpon>CompanionControl.cs</DependentUpon>
