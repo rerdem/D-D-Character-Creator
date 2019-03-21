@@ -69,6 +69,7 @@
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\BeastCompanionDataManager.cs" />
+    <Compile Include="DataManagement\ExtraSubclassManagers\CircleTerrainDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\DraconicAncestryDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ElementalDisciplineDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ExtraSubclassSkillDataManager.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
     <Compile Include="DataTypes\Beast.cs" />
+    <Compile Include="DataTypes\CircleTerrain.cs" />
     <Compile Include="DataTypes\DraconicAncestry.cs" />
     <Compile Include="DataTypes\EldritchInvocation.cs" />
     <Compile Include="DataTypes\ElementalDiscipline.cs" />
