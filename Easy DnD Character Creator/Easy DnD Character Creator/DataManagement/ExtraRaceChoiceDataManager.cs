@@ -20,16 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// checks, if a given subrace has any additional choices to make
-        /// </summary>
-        /// <param name="subrace">given subrace</param>
-        public bool hasExtraRaceChoices(string subrace)
-        {
-            //currently the only possible race choice is an extra cantrip for High Elves
-            return hasExtraRaceCantripChoice(subrace);
-        }
-
-        /// <summary>
         /// checks, if a given subrace may choose additional cantrips
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
@@ -95,16 +85,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
             }
 
             return cantripList;
-        }
-
-        public string getExtraRaceChoiceIntroText(string subrace)
-        {
-            if (subrace == "High Elf")
-            {
-                return "As a High Elf, please choose a cantrip you know:";
-            }
-
-            return "";
         }
     }
 }

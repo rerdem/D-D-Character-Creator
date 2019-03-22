@@ -177,11 +177,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             //compile list of all known spells
             List<Spell> knownSpells = new List<Spell>();
             knownSpells.AddRange(wm.Choices.Spells);
-            foreach (object item in wm.Choices.ExtraRaceChoices)
+            foreach (Spell spell in wm.Choices.RaceSpells)
             {
-                Spell spell = item as Spell;
-
-                if (spell != null)
+                if (!string.IsNullOrEmpty(spell.Name))
                 {
                     knownSpells.Add(spell);
                 }
@@ -255,9 +253,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                 invocationSpellSource.Remove(spell);
             }
 
-            foreach (Spell spell in wm.Choices.ExtraRaceChoices)
+            foreach (Spell spell in wm.Choices.RaceSpells)
             {
-                if (spell != null)
+                if (!string.IsNullOrEmpty(spell.Name))
                 {
                     invocationSpellSource.Remove(spell);
                 }

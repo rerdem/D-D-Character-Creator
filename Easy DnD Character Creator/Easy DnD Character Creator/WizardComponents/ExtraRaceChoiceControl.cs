@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Easy_DnD_Character_Creator.DataTypes;
+using Easy_DnD_Character_Creator.WizardComponents.ExtraRaceComponents;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -17,7 +18,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
-        private List<Spell> spellOptions;
+        private List<bool> subcomponentActivationList;
+        private List<IWizardControl> subcomponentList;
+
+        private ExtraRaceSpellControl extraRaceSpellComponent;
 
         public event EventHandler ExtraRaceChoiceChanged;
 
@@ -26,7 +30,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm = inputWizardManager;
             Visited = false;
 
-            spellOptions = new List<Spell>();
+            subcomponentActivationList = new List<bool>();
+            initializeSubcomponentList();
+            refreshActivationList();
+
 
             InitializeComponent();
         }
@@ -45,52 +52,54 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public string getInvalidElements()
         {
-            string output = "";
+            string missingElements = "";
 
-            if (choiceList.SelectedItems.Count <= 0)
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                output = "select an option";
+                if (subcomponentActivationList[i])
+                {
+                    if (!string.IsNullOrEmpty(missingElements))
+                    {
+                        missingElements += ", ";
+                    }
+
+                    missingElements = subcomponentList[i].getInvalidElements();
+                }
             }
 
-            return output;
+            return missingElements;
         }
 
         public bool isValid()
         {
-            return (choiceList.SelectedItems.Count > 0);
+            for (int i = 0; i < subcomponentList.Count; i++)
+            {
+                if (subcomponentActivationList[i])
+                {
+                    if (!subcomponentList[i].isValid())
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public void populateForm()
         {
-            //set intro text
-            introLabel.Text = wm.DBManager.ExtraRaceChoiceData.getExtraRaceChoiceIntroText(wm.Choices.Subrace);
+            refreshActivationList();
 
-            //fill choice list
-            choiceList.BeginUpdate();
-            spellOptions = wm.DBManager.ExtraRaceChoiceData.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace).Except(wm.Choices.Spells).ToList();
-            choiceList.DataSource = null;
-            choiceList.DataSource = spellOptions;
-            choiceList.DisplayMember = "Name";
-            choiceList.EndUpdate();
+            //setup subcontrols
+            raceChoiceLayout.Controls.Clear();
 
-            //if there was a previous choice, load it
-            if (wm.Choices.ExtraRaceChoices.Count > 0)
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                List<Spell> choiceToLoad = wm.Choices.ExtraRaceChoices.OfType<Spell>().ToList();
-                for (int i = 0; i < choiceList.Items.Count; i++)
+                if (subcomponentActivationList[i])
                 {
-                    if (choiceToLoad.Contains(choiceList.Items[i]))
-                    {
-                        choiceList.SetSelected(i, true);
-                    }
+                    raceChoiceLayout.Controls.Add((UserControl)subcomponentList[i]);
                 }
-            }
-            else
-            {
-                if (choiceList.Items.Count > 0)
-                {
-                    choiceList.SetSelected(0, true);
-                }
+                subcomponentList[i].populateForm();
             }
 
             Visited = true;
@@ -98,37 +107,42 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            if (choiceList.SelectedItems.Count > 0)
-            {
-                wm.Choices.ExtraRaceChoices.Clear();
+            wm.Choices.RaceSpells.Clear();
 
-                //needs refactor, once more than High Elves have additional choices
-                foreach (Spell spell in choiceList.SelectedItems)
-                {
-                    if (spell != null)
-                    {
-                        wm.Choices.ExtraRaceChoices.Add(spell);
-                    }
-                }
-            }
-            else
+            for (int i = 0; i < subcomponentList.Count; i++)
             {
-                wm.Choices.ExtraRaceChoices.Clear();
+                if (subcomponentActivationList[i])
+                {
+                    subcomponentList[i].saveContent();
+                }
             }
         }
 
-        private void choiceList_SelectedIndexChanged(object sender, EventArgs e)
+        private void refreshActivationList()
         {
-            if (choiceList.SelectedItems.Count > 0)
-            {
-                //will need refactoring, when implementing other races with different choices
-                if ((Spell)choiceList.SelectedItem != null)
-                {
-                    descriptionLabel.Text = SpellFormatter.formatSpellDescription((Spell)choiceList.SelectedItem);
+            subcomponentActivationList.Clear();
+            subcomponentActivationList.Add(wm.Choices.HasExtraRaceSpells);
 
-                    OnExtraRaceChoiceChanged(null);
-                }
+            //fail safe, in case someone forgets to add the appropriate variable to the activation list
+            //this should not need to exist, rethink link in future update
+            while (subcomponentActivationList.Count < subcomponentList.Count)
+            {
+                subcomponentActivationList.Add(false);
             }
+        }
+
+        private void initializeSubcomponentList()
+        {
+            subcomponentList = new List<IWizardControl>();
+
+            extraRaceSpellComponent = new ExtraRaceSpellControl(wm);
+            extraRaceSpellComponent.SpellChosen += new EventHandler(subcomponents_OptionChosen);
+            subcomponentList.Add(extraRaceSpellComponent);
+        }
+
+        private void subcomponents_OptionChosen(object sender, EventArgs e)
+        {
+            OnExtraRaceChoiceChanged(null);
         }
 
         protected virtual void OnExtraRaceChoiceChanged(EventArgs e)

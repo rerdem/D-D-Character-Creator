@@ -199,9 +199,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                 pactSpellSource.Remove(spell);
             }
 
-            foreach (Spell spell in wm.Choices.ExtraRaceChoices)
+            foreach (Spell spell in wm.Choices.RaceSpells)
             {
-                if (spell != null)
+                if (!string.IsNullOrEmpty(spell.Name))
                 {
                     pactSpellSource.Remove(spell);
                 }

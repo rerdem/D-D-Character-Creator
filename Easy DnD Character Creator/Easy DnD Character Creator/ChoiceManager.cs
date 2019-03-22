@@ -19,6 +19,7 @@ namespace Easy_DnD_Character_Creator
         public string Subrace { get; set; }
         public string RaceProficiency { get; set; }
         public bool HasExtraRaceChoice { get; set; }
+        public bool HasExtraRaceSpells { get; set; }
 
         //AlignmentControl
         public string LawAlignment { get; set; }
@@ -88,7 +89,7 @@ namespace Easy_DnD_Character_Creator
         public List<Spell> Spells { get; set; }
 
         //ExtraRaceChoiceControl
-        public List<Object> ExtraRaceChoices { get; set; }
+        public List<Spell> RaceSpells { get; set; }
 
         //ExtraClassChoiceControl
         public List<FightingStyle> ClassFightingStyles { get; set; }
@@ -127,6 +128,7 @@ namespace Easy_DnD_Character_Creator
             Subrace = "";
             RaceProficiency = "";
             HasExtraRaceChoice = false;
+            HasExtraRaceSpells = false;
 
             LawAlignment = "";
             MoralityAlignment = "";
@@ -184,7 +186,7 @@ namespace Easy_DnD_Character_Creator
 
             Spells = new List<Spell>();
 
-            ExtraRaceChoices = new List<Object>();
+            RaceSpells = new List<Spell>();
 
             ClassFightingStyles = new List<FightingStyle>();
             FavoredEnemies = "";

@@ -187,6 +187,12 @@
     <Compile Include="WizardComponents\ExtraRaceChoiceControl.Designer.cs">
       <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\ExtraRaceComponents\ExtraRaceSpellControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExtraRaceComponents\ExtraRaceSpellControl.Designer.cs">
+      <DependentUpon>ExtraRaceSpellControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\ExtraSubclassChoiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -380,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraRaceChoiceControl.resx">
       <DependentUpon>ExtraRaceChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExtraRaceComponents\ExtraRaceSpellControl.resx">
+      <DependentUpon>ExtraRaceSpellControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraSubclassChoiceControl.resx">
       <DependentUpon>ExtraSubclassChoiceControl.cs</DependentUpon>
