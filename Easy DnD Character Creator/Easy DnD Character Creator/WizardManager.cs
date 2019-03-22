@@ -241,18 +241,6 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// generates a random number between min (incl.) and max (excl.)
-        /// wrapper for random.Next to make sure random only gets seeded once
-        /// </summary>
-        /// <param name="minimum">lower inclusive threshhold</param>
-        /// <param name="maximum">upper exclusive threshhold</param>
-        /// <returns></returns>
-        public int getRandomNumber(int minimum, int maximum)
-        {
-            return random.Next(minimum, maximum);
-        }
-
-        /// <summary>
         /// gets the headline of the current wizard page
         /// </summary>
         public string getCurrentPageHeader()
@@ -294,6 +282,7 @@ namespace Easy_DnD_Character_Creator
                     headerOutput = "Character Story";
                     break;
                 case WizardState.export:
+                    headerOutput = "Export";
                     break;
                 default: //WizardState.intro
                     headerOutput = "Introduction";
@@ -346,6 +335,7 @@ namespace Easy_DnD_Character_Creator
                     descriptionOutput = "Please create your character's backstory.";
                     break;
                 case WizardState.export:
+                    descriptionOutput = "Please export your character.";
                     break;
                 default: //WizardState.intro
                     descriptionOutput = "Please select the used books, creation preset and character level.";
@@ -377,6 +367,37 @@ namespace Easy_DnD_Character_Creator
             {
                 LastPage = false;
             }
+        }
+
+        /// <summary>
+        /// generates a random number between min (incl.) and max (excl.)
+        /// wrapper for random.Next to make sure random only gets seeded once
+        /// </summary>
+        /// <param name="minimum">lower inclusive threshhold</param>
+        /// <param name="maximum">upper exclusive threshhold</param>
+        public int getRandomNumber(int minimum, int maximum)
+        {
+            return random.Next(minimum, maximum);
+        }
+
+        /// <summary>
+        /// generates a full character for a member of the given subrace and sex
+        /// </summary>
+        /// <param name="isMale">chosen sex</param>
+        public string generateCharacterName(bool isMale)
+        {
+            List<string> firstNames = DBManager.NameData.getFirstNames(Choices.Subrace, isMale);
+
+            string output = firstNames[getRandomNumber(0, firstNames.Count)];
+
+            if (DBManager.NameData.hasLastName(Choices.Subrace))
+            {
+                List<string> lastNames = DBManager.NameData.getLastNames(Choices.Subrace);
+                output += " ";
+                output += lastNames[getRandomNumber(0, lastNames.Count)];
+            }
+
+            return output;
         }
     }
 }

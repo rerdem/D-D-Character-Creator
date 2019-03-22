@@ -78,6 +78,7 @@
     <Compile Include="DataManagement\ExtraSubclassManagers\HunterDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\ManeuverDataManager.cs" />
     <Compile Include="DataManagement\ExtraSubclassManagers\TotemDataManager.cs" />
+    <Compile Include="DataManagement\NameDataManager.cs" />
     <Compile Include="DataManagement\SpellDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\ExtraClassSkillDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\FavoredEnemyTerrainDataManager.cs" />
@@ -341,6 +342,12 @@
     <Compile Include="WizardComponents\ExtraClassComponents\WarlockPactControl.Designer.cs">
       <DependentUpon>WarlockPactControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\NameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\NameControl.Designer.cs">
+      <DependentUpon>NameControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -458,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockPactControl.resx">
       <DependentUpon>WarlockPactControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\NameControl.resx">
+      <DependentUpon>NameControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

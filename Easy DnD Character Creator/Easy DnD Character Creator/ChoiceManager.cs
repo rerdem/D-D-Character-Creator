@@ -118,6 +118,11 @@ namespace Easy_DnD_Character_Creator
         public Beast BeastCompanion { get; set; }
         public CircleTerrain DruidCircleTerrain { get; set; }
 
+        //NameControl
+        public string CharacterName { get; set; }
+        public string PlayerName { get; set; }
+        public bool IsMale { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -212,6 +217,10 @@ namespace Easy_DnD_Character_Creator
             HunterFeatures = new List<ChoiceFeature>();
             BeastCompanion = new Beast();
             DruidCircleTerrain = new CircleTerrain();
+
+            CharacterName = "";
+            PlayerName = "";
+            IsMale = false;
         }
     }
 }
