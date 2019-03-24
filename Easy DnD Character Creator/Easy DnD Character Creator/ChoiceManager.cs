@@ -123,6 +123,18 @@ namespace Easy_DnD_Character_Creator
         public string PlayerName { get; set; }
         public bool IsMale { get; set; }
 
+        //StoryControl
+        public string Trait { get; set; }
+        public string Ideal { get; set; }
+        public string Bond { get; set; }
+        public string Flaw { get; set; }
+        public bool CustomTrait { get; set; }
+        public bool CustomIdeal { get; set; }
+        public bool CustomBond { get; set; }
+        public bool CustomFlaw { get; set; }
+        public BackgroundStoryChoice BackgroundChoice { get; set; }
+        public string Backstory { get; set; }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -221,6 +233,17 @@ namespace Easy_DnD_Character_Creator
             CharacterName = "";
             PlayerName = "";
             IsMale = false;
+
+            Trait = "";
+            Ideal = "";
+            Bond = "";
+            Flaw = "";
+            CustomTrait = false;
+            CustomIdeal = false;
+            CustomBond = false;
+            CustomFlaw = false;
+            BackgroundChoice = new BackgroundStoryChoice();
+            Backstory = "";
         }
     }
 }

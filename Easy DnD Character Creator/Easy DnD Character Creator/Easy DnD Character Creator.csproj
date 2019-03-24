@@ -84,6 +84,7 @@
     <Compile Include="DataManagement\ExtraClassManagers\FavoredEnemyTerrainDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\FightingStyleDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\WarlockChoiceDataManager.cs" />
+    <Compile Include="DataManagement\StoryDataManager.cs" />
     <Compile Include="DataTypes\Armor.cs" />
     <Compile Include="DataManagement\AbilityDataManager.cs" />
     <Compile Include="DataManagement\AppearanceDataManager.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="DataManagement\RaceDataManager.cs" />
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
+    <Compile Include="DataTypes\BackgroundStoryChoice.cs" />
     <Compile Include="DataTypes\Beast.cs" />
     <Compile Include="DataTypes\CircleTerrain.cs" />
     <Compile Include="DataTypes\DraconicAncestry.cs" />
@@ -348,6 +350,30 @@
     <Compile Include="WizardComponents\NameControl.Designer.cs">
       <DependentUpon>NameControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\StoryComponents\BackgroundStoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\BackgroundStoryControl.Designer.cs">
+      <DependentUpon>BackgroundStoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\BackstoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\BackstoryControl.Designer.cs">
+      <DependentUpon>BackstoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\PersonalityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\PersonalityControl.Designer.cs">
+      <DependentUpon>PersonalityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WizardComponents\StoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\StoryControl.Designer.cs">
+      <DependentUpon>StoryControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardManager.cs" />
     <EmbeddedResource Include="WizardComponents\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
@@ -468,6 +494,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\NameControl.resx">
       <DependentUpon>NameControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\StoryComponents\BackgroundStoryControl.resx">
+      <DependentUpon>BackgroundStoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\StoryComponents\BackstoryControl.resx">
+      <DependentUpon>BackstoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\StoryComponents\PersonalityControl.resx">
+      <DependentUpon>PersonalityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\StoryControl.resx">
+      <DependentUpon>StoryControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -28,6 +28,7 @@ namespace Easy_DnD_Character_Creator
         public ExtraClassChoiceDataManager ExtraClassChoiceData { get; }
         public ExtraSubclassChoiceDataManager ExtraSubclassChoiceData { get; }
         public NameDataManager NameData { get; }
+        public StoryDataManager StoryData { get; }
 
         public DataManager()
         {
@@ -51,6 +52,7 @@ namespace Easy_DnD_Character_Creator
             ExtraClassChoiceData = new ExtraClassChoiceDataManager(ConnectionString, UsedBooks);
             ExtraSubclassChoiceData = new ExtraSubclassChoiceDataManager(ConnectionString, UsedBooks);
             NameData = new NameDataManager(ConnectionString, UsedBooks);
+            StoryData = new StoryDataManager(ConnectionString, UsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -69,6 +71,7 @@ namespace Easy_DnD_Character_Creator
             ExtraClassChoiceData.setUsedBooks(inputUsedBooks);
             ExtraSubclassChoiceData.setUsedBooks(inputUsedBooks);
             NameData.UsedBooks = inputUsedBooks;
+            StoryData.UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
