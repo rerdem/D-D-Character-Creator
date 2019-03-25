@@ -82,6 +82,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void saveContent()
         {
             wm.Choices.Background = backgroundListBox.SelectedItem.ToString();
+            wm.Choices.HasBackgroundStoryChoice = wm.DBManager.StoryData.hasBackgroundStoryChoice(backgroundListBox.SelectedItem.ToString());
 
             if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
             {

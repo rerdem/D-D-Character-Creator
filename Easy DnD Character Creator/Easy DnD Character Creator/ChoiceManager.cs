@@ -62,6 +62,7 @@ namespace Easy_DnD_Character_Creator
         //BackgroundControl
         public string Background { get; set; }
         public string BackgroundProficiency { get; set; }
+        public bool HasBackgroundStoryChoice { get; set; }
 
         //AbilityControl
         public AbilityScore Strength { get; set; }
@@ -182,6 +183,7 @@ namespace Easy_DnD_Character_Creator
 
             Background = "";
             BackgroundProficiency = "";
+            HasBackgroundStoryChoice = false;
 
             Strength = new AbilityScore();
             Dexterity = new AbilityScore();
