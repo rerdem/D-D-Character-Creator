@@ -172,6 +172,12 @@
       <DependentUpon>EquipmentControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WizardComponents\EquipmentFormatter.cs" />
+    <Compile Include="WizardComponents\ExportControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\ExportControl.Designer.cs">
+      <DependentUpon>ExportControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\ExtraClassChoiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -410,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\EquipmentControl.resx">
       <DependentUpon>EquipmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\ExportControl.resx">
+      <DependentUpon>ExportControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraClassChoiceControl.resx">
       <DependentUpon>ExtraClassChoiceControl.cs</DependentUpon>
