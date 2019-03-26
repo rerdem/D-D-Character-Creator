@@ -32,6 +32,7 @@ namespace Easy_DnD_Character_Creator
         private ExtraSubclassChoiceControl extraSubclassChoiceComponent;
         private NameControl nameComponent;
         private StoryControl storyComponent;
+        private ExportControl exportComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
@@ -78,6 +79,7 @@ namespace Easy_DnD_Character_Creator
             nameComponent.NameChanged += new EventHandler(nameComponent_NameChanged);
             storyComponent = new StoryControl(WM);
             storyComponent.SubcontrolOptionChosen += new EventHandler(storyComponent_SubcontrolOptionChosen);
+            exportComponent = new ExportControl(WM);
         }
 
         private void refreshWindow()
@@ -159,6 +161,8 @@ namespace Easy_DnD_Character_Creator
                     storyComponent.populateForm();
                     break;
                 case WizardState.export:
+                    contentFlowPanel.Controls.Add(exportComponent);
+                    exportComponent.populateForm();
                     break;
                 default: //WizardState.intro
                     contentFlowPanel.Controls.Add(introComponent);
@@ -249,6 +253,7 @@ namespace Easy_DnD_Character_Creator
                                 }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.export:
+                        missingElements = exportComponent.getInvalidElements();
                         break;
                     default: //WizardState.intro
                         missingElements = introComponent.getInvalidElements();
@@ -303,6 +308,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = nameComponent.isValid() && storyComponent.isValid();
                     break;
                 case WizardState.export:
+                    isValid = exportComponent.isValid();
                     break;
                 default: //WizardState.intro
                     isValid = introComponent.isValid();
@@ -385,6 +391,7 @@ namespace Easy_DnD_Character_Creator
                     storyComponent.saveContent();
                     break;
                 case WizardState.export:
+                    exportComponent.saveContent();
                     break;
                 default: //WizardState.intro
                     introComponent.saveContent();

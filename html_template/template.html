@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+        <head>
+                <title></title>
+                <meta name="author" content="Rona David Erdem" >
+                 <style>
+					<!--
+						body						{ text-align:center; background:#FFFFFF; margin:0px auto; color:black; }
+										
+						.header						{ width:950px; margin-top:100px; margin-left:auto; margin-right:auto; overflow:auto; border-style:solid; border-width:2px; text-align:center; color:black; page-break-before:always; }
+						.header .charname			{ width:auto; margin:0px auto; float:left; padding:5px; font-size:24pt; font-weight:bold; text-align:left; color:black; }
+						.header .charinfo			{ width:auto; margin:0px auto; float:right; padding:5px; text-align:left; color:black; }
+						.header .charinfo .first	{ padding-left:5px; }
+						.header .charinfo .rest		{ padding-left:10px; }
+						
+						
+						.main					{ width:950px; margin:0px auto; overflow:auto; border-style:solid; border-width:2px; text-align:center; color:black; }
+						
+						.main .labelbox			{ overflow:auto; margin:5px; padding:5px; border-style:solid; border-width:thin; text-align:left; font-size:10pt; background:white; position:relative; }
+						.main .labelbox .label	{ margin:5px; margin-bottom:0px; padding:0px; font-weight:bold; text-align:center; position:absolute; bottom: 8px; left: 50%; transform: translateX(-50%); }
+						
+						.main .leftcolumn									{ width:32%; margin:0px auto; float:left; padding:5px; text-align:center; color:black; background:white; }
+						.main .leftcolumn .attributes						{ width:auto; margin:0px auto; margin-right:5px; float:left; background:#EDEDED; text-align:center; color:black; }
+						.main .leftcolumn .attributes .abilities				{ margin:10px; margin-top:15px; padding:5px; padding-bottom:0px; border-style:solid; border-width:thin; font-weight:bold; background:white; }
+						.main .leftcolumn .attributes .abilities .modifiers	{ font-weight:normal; font-size:24pt; }
+						.main .leftcolumn .attributes .abilities .scores		{ margin:5px; margin-bottom:0px; padding:5px; border-style:solid; border-width:thin; border-bottom-style:none; }
+						
+						.main .leftcolumn .singlestat			{ overflow:auto; margin:5px auto; padding:5px; border-style:solid; border-width:thin; }
+						.main .leftcolumn .singlestat .value	{ float:left; padding:5px; font-size:18pt; border-right-style:solid; border-width:thin; }
+						
+						
+						.main .centercolumn 					{ width:32%; margin:0px auto; float:left; padding:5px; text-align:center; color:black; background:white; }
+						
+						.main .centercolumn .labelbox .currencybox		{ width:20%; float:left; clear:left; margin:5px; padding:5px; border-style:solid; border-width:thin; }
+						
+						.main .centercolumn .hpdef										{ width:100%; margin:0px auto; float:left; background:#EDEDED; text-align:center; color:black; }
+						.main .centercolumn .hpdef .singlestatcontainer					{ display:flex; width:100%; margin:0px auto; float:left; text-align:center; color:black; }
+						.main .centercolumn .hpdef .singlestatcontainer .singlestat		{ flex:1; width:auto; overflow:auto; float:left; margin:5px; padding:5px; border-style:solid; border-width:thin; background:white; }
+						.main .centercolumn .hpdef .singlestatcontainer .singlestat .value	{ padding:5px; font-size:18pt; }
+						
+						.main .centercolumn .hpdef .halfboxcontainer					{ width:100%; margin:0px auto; float:left; text-align:center; color:black; }
+						.main .centercolumn .hpdef .halfboxcontainer .halfbox			{ float:left; width:40%; height:80px; overflow:auto; margin:5px; padding:5px; border-style:solid; border-width:thin; text-align:left; font-size:10pt; background:white;  position:relative; }
+						.main .centercolumn .hpdef .halfboxcontainer .halfbox .label	{ font-weight:bold; text-align:center; position:absolute; bottom: 8px; left: 50%; transform: translateX(-50%); }
+						
+						.main .rightcolumn					{ width:31%; margin:0px auto; float:left; padding:5px; text-align:center; color:black; background:white; }
+						.main .rightcolumn .personality		{ width:100%; margin:0px auto; padding:5px; float:left; background:#EDEDED; text-align:center; color:black; }
+						
+						.main .doublecolumn						{ width:65%; margin:0px auto; float:left; padding:5px; text-align:center; color:black; background:white; }
+						
+						.main .spellcolumn									{ width:32%; margin:0px auto; float:left; padding:5px; text-align:center; color:black; background:white; }
+						.main .spellcolumn .spelltier						{ overflow:auto; margin:5px; padding:0px; text-align:left; background:white; }
+						.main .spellcolumn .spelltier .headerbar			{ width:98%; float:left; border-style:solid; border-width:2px; font-weight:bold; }
+						.main .spellcolumn .spelltier .headerbar .titles	{ font-size:10pt; font-weight:normal; }
+						.main .spellcolumn .spelltier .headerbar .content	{ font-size:16px; font-weight:normal; }
+						.main .spellcolumn .spelltier .headerbar .box		{ width:auto; float:left; padding:5px; border-right-style:solid; border-width:thin; font-size:22pt; }
+						.main .spellcolumn .spelltier .headerbar .openbox	{ width:auto; float:left; padding:5px; font-size:14pt; }
+						
+						.main .spellcolumn .spelltier .spellbox			{ width:95%; float:left; padding:5px; border-bottom-style:solid; border-width:thin; }
+	
+						.main .spellbookentry		{ width:45%; overflow:auto; float:left; margin:5px; padding:10px; border-style:solid; border-width:thin; text-align:left; }
+						.main .spellbookentry h1	{ font-size:16pt; margin:0px; }
+	
+						table, th, td { width:100%; border:1px solid black; text-align:center; border-collapse:collapse; }
+	
+					-->
+				 </style>
+        </head>
+        <body>
+            <div class="header">
+                    <div class="charname">
+						@charactername@
+					</div>
+					<div class="charinfo">
+						<span class="first">
+							<b>Class & Level:</b> @classlevel@
+						</span>
+						<span class="rest">
+							<b>Background:</b> @background@
+						</span>
+						<span class="rest">
+							<b>Player Name:</b> @playername@
+						</span>
+						<br>
+						<span class="first">
+							<b>Race:</b> @race@
+						</span>
+						<span class="rest">
+							<b>Alignment:</b> @alignment@
+						</span>
+						<span class="rest">
+							<b>Experience:</b> @xp@
+						</span>
+					</div>
+            </div>
+            
+			<div class="main">
+				<div class="leftcolumn">
+					<div class="attributes" style="height:700px">
+						<div class="abilities">
+							Strength<br>
+							<span class="modifiers">@strmod@</span>
+							<div class="scores">
+								@str@
+							</div>
+						</div>
+						
+						<div class="abilities">
+							Dexterity<br>
+							<span class="modifiers">@dexmod@</span>
+							<div class="scores">
+								@dex@
+							</div>
+						</div>
+						
+						<div class="abilities">
+							Constitution<br>
+							<span class="modifiers">@conmod@</span>
+							<div class="scores">
+								@con@
+							</div>
+						</div>
+						
+						<div class="abilities">
+							Intelligence<br>
+							<span class="modifiers">@intmod@</span>
+							<div class="scores">
+								@int@
+							</div>
+						</div>
+						
+						<div class="abilities">
+							Wisdom<br>
+							<span class="modifiers">@wismod@</span>
+							<div class="scores">
+								@wis@
+							</div>
+						</div>
+						
+						<div class="abilities">
+							Charisma<br>
+							<span class="modifiers">@chamod@</span>
+							<div class="scores">
+								@cha@
+							</div>
+						</div>
+					</div>
+					
+					<div class="singlestat">
+						<span class="value">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+						Inspiration
+					</div>
+					
+					<div class="singlestat">
+						<span class="value">
+							&nbsp;@proficiencybonus@&nbsp;
+						</span>
+						Proficiency Bonus
+					</div>
+					
+					<div class="labelbox" style="height:160px;">
+						@savingthrows@
+						<div class=label>Saving Throws</div>
+					</div>
+					
+					<div class="labelbox" style="height:390px;">
+						@skills@
+						<div class=label>Skills</div>
+					</div>
+					
+					<div class="singlestat">
+						<span class="value">
+							@passiveperception@
+						</span>
+						Passive Perception
+					</div>
+					
+					<div class="labelbox" style="height:200px;">
+						@proficiencies@
+						<div class="label">
+							Other Proficiencies & Languages
+						</div>
+					</div>
+				</div>
+				
+				<div class="centercolumn">
+					<div class="hpdef">
+						<div class="singlestatcontainer">
+							<div class="singlestat">
+								<div class="value">
+									@ac@
+								</div>
+								Armor Class
+							</div>
+							
+							<div class="singlestat">
+								<div class="value">
+									@initiative@
+								</div>
+								Initiative
+							</div>
+							
+							<div class="singlestat">
+								<div class="value">
+									@speed@
+								</div>
+								Speed
+							</div>
+						</div>
+						
+						<div class="labelbox" style="height:80px;">
+							Hit Point Maximum @hp@<br><br><br>
+							<div class="label">
+								Current Hit Points
+							</div>
+						</div>
+						
+						<div class="labelbox" style="height:80px;">
+							<br><br><br>
+							<div class="label">
+								Temporary Hit Points
+							</div>
+						</div>
+						
+						<div class="halfboxcontainer">
+							<div class="halfbox">
+								Total: @hitdice@<br><br><br>
+								<div class="label">
+									Hit Dice
+								</div>
+							</div>
+							
+							<div class="halfbox">
+								Success:<input type="radio" name="s1"><input type="radio" name="s2"><input type="radio" name="s3"><br>
+								Fail:<input type="radio" name="f1"><input type="radio" name="f2"><input type="radio" name="f3"><br><br>								
+								<div class="label">
+									Death Saves
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:320px;">
+						@attackbox@
+						<div class="label">
+							Attacks & Spellcasting
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:210px;">
+						<div class="currencybox">
+							@cp@ CP
+						</div>
+						<div class="currencybox">
+							@sp@ SP
+						</div>
+						<div class="currencybox">
+							@ep@ EP
+						</div>
+						<div class="currencybox">
+							@gp@ GP
+						</div>
+						<div class="currencybox">
+							@pp@ PP
+						</div>
+						@equipment@
+						<div class="label">
+							Equipment
+						</div>
+					</div>
+				</div>
+				
+				<div class="rightcolumn">
+					<div class="personality">
+						<div class="labelbox">
+							@personalitytraits@<br><br>
+							<div class="label">
+								Personality Traits
+							</div>
+						</div>
+						
+						<div class="labelbox">
+							@ideals@<br><br>
+							<div class="label">
+								Ideals
+							</div>
+						</div>
+						
+						<div class="labelbox">
+							@bonds@<br><br>
+							<div class="label">
+								Bonds
+							</div>
+						</div>
+						
+						<div class="labelbox">
+							@flaws@<br><br>
+							<div class="label">
+								Flaws
+							</div>
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:620px;">
+						@features1@
+						<div class="label">
+							Features & Traits
+						</div>
+					</div>
+				</div>
+            </div>
+			
+			<!-- END PAGE 1, START PAGE 2 -->
+			
+			<div class="header">
+                <div class="charname">
+					@charactername@
+				</div>
+				<div class="charinfo">
+					<span class="first">
+						<b>Age:</b> @age@
+					</span>
+					<span class="rest">
+						<b>Height:</b> @height@
+					</span>
+					<span class="rest">
+						<b>Weight:</b> @weight@
+					</span>
+					<br>
+					<span class="first">
+						<b>Eyes:</b> @eyes@
+					</span>
+					<span class="rest">
+						<b>Skin:</b> @skin@
+					</span>
+					<span class="rest">
+						<b>Hair:</b> @hair@
+					</span>
+				</div>
+            </div>
+			
+			<div class="main">
+				<div class="leftcolumn">
+					<div class="labelbox" style="height:300px;">
+						<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+						<div class="label">
+							Character Appearance
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:300px;">
+						<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+						<div class="label">
+							Treasure
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:300px;">
+						<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+						<div class="label">
+							Allies & Organizations
+						</div>
+					</div>
+				</div>
+				
+				<div class="doublecolumn">
+					<div class="labelbox" style="height:300px;">
+						@backstory@
+						<div class="label">
+							Character Backstory
+						</div>
+					</div>
+					
+					<div class="labelbox" style="height:615px;">
+						@features2@
+						<div class="label">
+							Additional Features & Traits
+						</div>
+					</div>
+					
+				</div>
+            </div>
+			
+			<!-- END PAGE 2, START PAGE 3 -->
+			
+			<div class="header">
+                <div class="charname">
+					@charactername@
+				</div>
+				<div class="charinfo">
+					<span class="first">
+						<b>Spellcasting Ability:</b> @spellcastingability@
+					</span>
+					<span class="rest">
+						<b>Spell Save DC:</b> @spelldc@
+					</span>
+					<span class="rest">
+						<b>Spell Attack Bonus:</b> @spellatk@
+					</span>
+				</div>
+            </div>
+			
+			<div class="main">
+				<div class="spellcolumn">
+					
+					<!-- CANTRIPS -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;0&nbsp;
+							</span>
+							
+							<span class="openbox">
+								Cantrips
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+						
+						<div class="spellbox">
+							@cantrip@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 1 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;1&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot1@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell1@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 2 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;2&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot2@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell2@
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<div class="spellcolumn">
+					
+					<!-- Level 3 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;3&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot3@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell3@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 4 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;4&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot4@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell4@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 5 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;5&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot5@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell5@
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="spellcolumn">
+					
+					<!-- Level 6 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;6&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot6@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell6@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 7 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;7&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot7@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell7@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 8 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;8&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot8@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell8@
+						</div>
+					</div>
+					
+					
+					
+					<!-- Level 9 -->
+					<div class="spelltier">
+						<div class="headerbar">
+							<span class="box">
+								&nbsp;9&nbsp;
+							</span>
+							
+							<span class="box">
+								<span class="titles">Slots Total:</span><br>
+								<span class="content">@slot9@</span>
+							</span>
+							
+							<span class="openbox">
+								<span class="titles">Slots Expended:</span><br>
+							</span>
+						</div>
+						
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+						
+						<div class="spellbox">
+							<input type="radio" name="spelltest"> @spell9@
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- END PAGE 3, START PAGE 4 -->
+			
+			<div class="header">
+                <div class="charname">
+					@charactername@ - Spellbook
+				</div>
+            </div>
+			
+			<div class="main">
+				@spellbook@
+			</div>
+			
+        </body>
+</html>
