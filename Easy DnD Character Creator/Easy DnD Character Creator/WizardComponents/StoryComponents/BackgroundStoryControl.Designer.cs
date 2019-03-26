@@ -47,11 +47,13 @@
             // 
             // backgroundComboBox
             // 
+            this.backgroundComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.backgroundComboBox.FormattingEnabled = true;
             this.backgroundComboBox.Location = new System.Drawing.Point(7, 61);
             this.backgroundComboBox.Name = "backgroundComboBox";
             this.backgroundComboBox.Size = new System.Drawing.Size(877, 21);
             this.backgroundComboBox.TabIndex = 1;
+            this.backgroundComboBox.SelectedIndexChanged += new System.EventHandler(this.backgroundComboBox_SelectedIndexChanged);
             // 
             // introLabel
             // 

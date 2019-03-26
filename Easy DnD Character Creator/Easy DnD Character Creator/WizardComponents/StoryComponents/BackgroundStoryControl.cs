@@ -20,6 +20,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
         private BackgroundStoryChoice comboSource;
 
+        public event EventHandler BackgroundStoryChoiceChosen;
+
         public BackgroundStoryControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
@@ -46,17 +48,29 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
         public string getInvalidElements()
         {
-            if (backgroundComboBox.SelectedItem == null)
+            string output = "";
+
+            if (backgroundComboBox.Items.Count > 0)
             {
-                return "select a background story choice";
+                if (backgroundComboBox.SelectedItem == null)
+                {
+                    output = "select a background story choice";
+                }
             }
 
-            return "";
+            return output;
         }
 
         public bool isValid()
         {
-            return (backgroundComboBox.SelectedItem != null);
+            if (backgroundComboBox.Items.Count > 0)
+            {
+                return (backgroundComboBox.SelectedItem != null);
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public void populateForm()
@@ -68,6 +82,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
                 backgroundComboBox.DataSource = null;
                 backgroundComboBox.DataSource = comboSource.Options;
                 backgroundComboBox.EndUpdate();
+
+                backgroundBox.Text = comboSource.Name;
+                introLabel.Text = comboSource.Description;
             }
 
             if (Visited && !hasBackgroundChanged())
@@ -78,18 +95,40 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
                 }
             }
 
+            lastBackground = wm.Choices.Background;
             Visited = true;
         }
 
         public void saveContent()
         {
-            comboSource.setSelectedOption(backgroundComboBox.SelectedItem.ToString());
-            wm.Choices.BackgroundChoice = comboSource;
+            if ((wm.Choices.HasBackgroundStoryChoice) && (backgroundComboBox.SelectedItem != null))
+            {
+                comboSource.setSelectedOption(backgroundComboBox.SelectedItem.ToString());
+                wm.Choices.BackgroundChoice = comboSource;
+            }
+            else
+            {
+                wm.Choices.BackgroundChoice = new BackgroundStoryChoice();
+            }
         }
 
         private bool hasBackgroundChanged()
         {
             return (lastBackground != wm.Choices.Background);
+        }
+
+        private void backgroundComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OnBackgroundStoryChoiceChosen(null);
+        }
+
+        protected virtual void OnBackgroundStoryChoiceChosen(EventArgs e)
+        {
+            EventHandler handler = BackgroundStoryChoiceChosen;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }

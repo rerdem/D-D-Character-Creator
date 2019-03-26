@@ -31,11 +31,20 @@ namespace Easy_DnD_Character_Creator
         private ExtraClassChoiceControl extraClassChoiceComponent;
         private ExtraSubclassChoiceControl extraSubclassChoiceComponent;
         private NameControl nameComponent;
+        private StoryControl storyComponent;
 
         public frmMainWindow(WizardManager inputWizardManager)
         {
             WM = inputWizardManager;
 
+            initializeUserControls();
+
+            InitializeComponent();
+            refreshWindow();
+        }
+
+        private void initializeUserControls()
+        {
             introComponent = new IntroControl(WM);
             raceComponent = new RaceControl(WM);
             alignmentComponent = new AlignmentControl(WM);
@@ -67,10 +76,8 @@ namespace Easy_DnD_Character_Creator
             extraSubclassChoiceComponent.SubcontrolOptionChosen += new EventHandler(extraSubclassChoiceComponent_SubcontrolOptionChosen);
             nameComponent = new NameControl(WM);
             nameComponent.NameChanged += new EventHandler(nameComponent_NameChanged);
-
-
-            InitializeComponent();
-            refreshWindow();
+            storyComponent = new StoryControl(WM);
+            storyComponent.SubcontrolOptionChosen += new EventHandler(storyComponent_SubcontrolOptionChosen);
         }
 
         private void refreshWindow()
@@ -148,6 +155,8 @@ namespace Easy_DnD_Character_Creator
                 case WizardState.story:
                     contentFlowPanel.Controls.Add(nameComponent);
                     nameComponent.populateForm();
+                    contentFlowPanel.Controls.Add(storyComponent);
+                    storyComponent.populateForm();
                     break;
                 case WizardState.export:
                     break;
@@ -235,7 +244,8 @@ namespace Easy_DnD_Character_Creator
                         break;
                     case WizardState.story:
                         missingElements = string.Join(", ", new string[] {
-                            nameComponent.getInvalidElements()
+                            nameComponent.getInvalidElements(),
+                            storyComponent.getInvalidElements()
                                 }.Where(s => !string.IsNullOrEmpty(s)));
                         break;
                     case WizardState.export:
@@ -290,7 +300,7 @@ namespace Easy_DnD_Character_Creator
                     isValid = extraSubclassChoiceComponent.isValid();
                     break;
                 case WizardState.story:
-                    isValid = nameComponent.isValid();
+                    isValid = nameComponent.isValid() && storyComponent.isValid();
                     break;
                 case WizardState.export:
                     break;
@@ -372,6 +382,7 @@ namespace Easy_DnD_Character_Creator
                     break;
                 case WizardState.story:
                     nameComponent.saveContent();
+                    storyComponent.saveContent();
                     break;
                 case WizardState.export:
                     break;
@@ -501,6 +512,7 @@ namespace Easy_DnD_Character_Creator
                 refreshStatusText();
             }
         }
+
         private void extraSubclassChoiceComponent_SubcontrolOptionChosen(object sender, EventArgs e)
         {
             ExtraSubclassChoiceControl incoming = sender as ExtraSubclassChoiceControl;
@@ -511,10 +523,19 @@ namespace Easy_DnD_Character_Creator
             }
         }
 
-
         private void nameComponent_NameChanged(object sender, EventArgs e)
         {
             NameControl incoming = sender as NameControl;
+            if (incoming != null)
+            {
+                refreshButtons();
+                refreshStatusText();
+            }
+        }
+
+        private void storyComponent_SubcontrolOptionChosen(object sender, EventArgs e)
+        {
+            StoryControl incoming = sender as StoryControl;
             if (incoming != null)
             {
                 refreshButtons();

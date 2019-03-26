@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Easy_DnD_Character_Creator.WizardComponents.StoryComponents;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -18,6 +19,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private string lastBackground;
+
         private PersonalityControl traitComponent;
         private PersonalityControl idealComponent;
         private PersonalityControl bondComponent;
@@ -25,16 +28,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private BackgroundStoryControl backgroundStoryComponent;
         private BackstoryControl backstoryComponent;
 
+        public event EventHandler SubcontrolOptionChosen;
+
         public StoryControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             Visited = false;
+
+            lastBackground = "";
 
             traitComponent = new PersonalityControl(wm, PersonalityComponent.trait);
             idealComponent = new PersonalityControl(wm, PersonalityComponent.ideal);
             bondComponent = new PersonalityControl(wm, PersonalityComponent.bond);
             flawComponent = new PersonalityControl(wm, PersonalityComponent.flaw);
             backgroundStoryComponent = new BackgroundStoryControl(wm);
+            backgroundStoryComponent.BackgroundStoryChoiceChosen += new EventHandler(backgroundStoryComponent_BackgroundStoryChoiceChosen);
             backstoryComponent = new BackstoryControl(wm);
 
             InitializeComponent();
@@ -54,15 +62,49 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            //fill in controls (check for extra bg story choice
-            //check for bg story choice, if background has changed
+            storyLayout.Controls.Clear();
 
+            storyLayout.Controls.Add(traitComponent);
+            traitComponent.populateForm();
+
+            storyLayout.Controls.Add(idealComponent);
+            idealComponent.populateForm();
+
+            storyLayout.Controls.Add(bondComponent);
+            bondComponent.populateForm();
+
+            storyLayout.Controls.Add(flawComponent);
+            flawComponent.populateForm();
+
+            if (wm.Choices.HasBackgroundStoryChoice)
+            {
+                storyLayout.Controls.Add(backgroundStoryComponent);
+                backgroundStoryComponent.populateForm();
+            }
+
+            storyLayout.Controls.Add(backstoryComponent);
+            backstoryComponent.populateForm();
+
+            lastBackground = wm.Choices.Background;
             Visited = true;
         }
 
         public void saveContent()
         {
-            
+            traitComponent.saveContent();
+            idealComponent.saveContent();
+            bondComponent.saveContent();
+            flawComponent.saveContent();
+            backstoryComponent.saveContent();
+
+            if (wm.Choices.HasBackgroundStoryChoice)
+            {
+                backgroundStoryComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.BackgroundChoice = new BackgroundStoryChoice();
+            }
         }
 
         public bool isValid()
@@ -108,6 +150,25 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                             flawComponent.getInvalidElements(),
                             backstoryComponent.getInvalidElements()
                                 }.Where(s => !string.IsNullOrEmpty(s)));
+            }
+        }
+
+        private bool hasBackgroundChanged()
+        {
+            return (lastBackground != wm.Choices.Background);
+        }
+
+        private void backgroundStoryComponent_BackgroundStoryChoiceChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        protected virtual void OnSubcontrolOptionChosen(EventArgs e)
+        {
+            EventHandler handler = SubcontrolOptionChosen;
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
     }
