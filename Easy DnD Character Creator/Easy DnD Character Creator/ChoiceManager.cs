@@ -42,7 +42,7 @@ namespace Easy_DnD_Character_Creator
         //ClassControl
         public string Class { get; set; }
         public string Subclass { get; set; }
-        public string ClassProficiency { get; set; }
+        public List<string> ClassProficiencies { get; set; }
         public bool HasExtraClassChoice { get; set; }
         public bool HasExtraSubclassChoice { get; set; }
         public bool HasSpellcasting { get; set; }
@@ -65,6 +65,7 @@ namespace Easy_DnD_Character_Creator
         public bool HasBackgroundStoryChoice { get; set; }
 
         //AbilityControl
+        public List<AbilityScore> Abilities { get; set; }
         public AbilityScore Strength { get; set; }
         public AbilityScore Dexterity { get; set; }
         public AbilityScore Constitution { get; set; }
@@ -136,6 +137,21 @@ namespace Easy_DnD_Character_Creator
         public BackgroundStoryChoice BackgroundChoice { get; set; }
         public string Backstory { get; set; }
 
+        //ExportControl
+        private List<string> allKnownSkills;
+        public List<string> AllKnownSkills
+        {
+            get
+            {
+                allKnownSkills.Clear();
+                allKnownSkills.AddRange(Skills);
+                allKnownSkills.AddRange(ExtraSkills);
+                allKnownSkills.AddRange(ClassSkills);
+                allKnownSkills.AddRange(SubclassSkills);
+                return allKnownSkills;
+            }
+        }
+
         public ChoiceManager()
         {
             Preset = 0;
@@ -164,7 +180,7 @@ namespace Easy_DnD_Character_Creator
 
             Class = "";
             Subclass = "";
-            ClassProficiency = "";
+            ClassProficiencies = new List<string>();
             HasExtraClassChoice = false;
             HasExtraSubclassChoice = false;
             HasSpellcasting = false;
@@ -185,12 +201,13 @@ namespace Easy_DnD_Character_Creator
             BackgroundProficiency = "";
             HasBackgroundStoryChoice = false;
 
-            Strength = new AbilityScore();
-            Dexterity = new AbilityScore();
-            Constitution = new AbilityScore();
-            Intelligence = new AbilityScore();
-            Wisdom = new AbilityScore();
-            Charisma = new AbilityScore();
+            Strength = new AbilityScore("Strength");
+            Dexterity = new AbilityScore("Dexterity");
+            Constitution = new AbilityScore("Constitution");
+            Intelligence = new AbilityScore("Intelligence");
+            Wisdom = new AbilityScore("Wisdom");
+            Charisma = new AbilityScore("Charisma");
+            Abilities = new List<AbilityScore>(new AbilityScore[] { Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma });
 
             Languages = new List<string>();
 
@@ -246,6 +263,8 @@ namespace Easy_DnD_Character_Creator
             CustomFlaw = false;
             BackgroundChoice = new BackgroundStoryChoice();
             Backstory = "";
+
+            allKnownSkills = new List<string>();
         }
     }
 }

@@ -116,28 +116,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                                                 wm.Choices.HasCompanion ||
                                                 wm.Choices.HasCircleTerrain;
 
-
-
-
-
-
             //save extra choices that did not require extre UserControls
+            wm.Choices.ClassProficiencies.Clear();
             if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
             {
-                string proficiencyString = "";
                 foreach (object obj in extraChoiceBox.SelectedItems)
                 {
-                    if (!string.IsNullOrEmpty(proficiencyString))
+                    if (!string.IsNullOrEmpty(obj.ToString()))
                     {
-                        proficiencyString += ", ";
+                        wm.Choices.ClassProficiencies.Add(obj.ToString());
                     }
-                    proficiencyString += obj.ToString();
                 }
-                wm.Choices.ClassProficiency = proficiencyString;
-            }
-            else
-            {
-                wm.Choices.ClassProficiency = "";
             }
         }
 
@@ -197,14 +186,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             extraChoiceBox.EndUpdate();
 
-            if (!string.IsNullOrEmpty(wm.Choices.ClassProficiency))
+            if (wm.Choices.ClassProficiencies.Count > 0)
             {
-                string[] savedProficiencies = wm.Choices.ClassProficiency.Split(',');
-                foreach (string entry in savedProficiencies)
+                for (int i = 0; i < extraChoiceBox.Items.Count; i++)
                 {
-                    if (extraChoiceBox.Items.Contains(entry.Trim()))
+                    if (wm.Choices.ClassProficiencies.Contains(extraChoiceBox.Items[i]))
                     {
-                        extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(entry.Trim()), true);
+                        extraChoiceBox.SetSelected(i, true);
                     }
                 }
             }
@@ -262,7 +250,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 extraChoiceBox.SelectedItems.Remove(extraChoiceBox.SelectedItems[ChoiceAmount]);
             }
-            saveContent();
+            //saveContent();
 
             OnClassChoiceChanged(null);
         }
