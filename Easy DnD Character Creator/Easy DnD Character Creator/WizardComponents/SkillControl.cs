@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -259,16 +260,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void fillSkillLayout()
         {
-            List<string> skills = wm.DBManager.SkillData.getSkills();
+            List<Skill> skills = wm.DBManager.SkillData.getSkills();
             
             //create Checkboxes
-            foreach (string skill in skills)
+            foreach (Skill skill in skills)
             {
                 CheckBox box = new CheckBox();
-                box.Name = skill + "Box";
-                box.Text = skill;
+                box.Name = skill.Name + "Box";
+                box.Text = skill.Name;
                 box.CheckedChanged += skillBoxes_CheckedChanged;
-                string toolTipFormat = wm.DBManager.SkillData.getSkillDescription(skill);
+                string toolTipFormat = skill.Description;
                 toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
                 toolTips.SetToolTip(box, toolTipFormat);
                 skillBoxes.Add(box);

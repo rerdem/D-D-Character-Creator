@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManagement\ExportDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\MetamagicDataManager.cs" />
     <Compile Include="DataManagement\ExtraRaceChoiceDataManager.cs" />
@@ -107,12 +108,14 @@
     <Compile Include="DataTypes\Metamagic.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
     <Compile Include="DataTypes\Pack.cs" />
+    <Compile Include="DataTypes\Skill.cs" />
     <Compile Include="DataTypes\Spell.cs" />
     <Compile Include="DataTypes\Tool.cs" />
     <Compile Include="DataTypes\ChoiceFeature.cs" />
     <Compile Include="DataTypes\ChoiceFeatureOption.cs" />
     <Compile Include="DataTypes\WarlockPact.cs" />
     <Compile Include="DataTypes\Weapon.cs" />
+    <Compile Include="CharacterSheet.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

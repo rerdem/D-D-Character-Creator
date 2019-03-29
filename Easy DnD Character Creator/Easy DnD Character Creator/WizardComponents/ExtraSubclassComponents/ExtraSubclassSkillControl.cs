@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 {
@@ -17,7 +18,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         private bool visited;
 
         private bool doublesProficiency;
-        List<string> skills;
+        List<Skill> skills;
         private int choiceAmount;
         private string lastSubclass;
 
@@ -33,7 +34,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             Visited = false;
 
             doublesProficiency = false;
-            skills = new List<string>();
+            skills = new List<Skill>();
             choiceAmount = 0;
             lastSubclass = "";
 
@@ -149,7 +150,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             //get choosable skills
             List<string> choosableSkills = new List<string>();
             choosableSkills = new List<string>(skills.Count);
-            choosableSkills.AddRange(skills);
+            choosableSkills.AddRange(skills.Select(skill => skill.Name).ToList());
             choosableSkills.RemoveAll(skill => wm.Choices.Skills.Exists(chosenSkill => skill == chosenSkill));
             choosableSkills.RemoveAll(skill => wm.Choices.ExtraSkills.Exists(chosenSkill => skill == chosenSkill));
 
@@ -230,13 +231,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             skills = wm.DBManager.SkillData.getSkills();
 
             //create Checkboxes
-            foreach (string skill in skills)
+            foreach (Skill skill in skills)
             {
                 CheckBox box = new CheckBox();
-                box.Name = skill + "Box";
-                box.Text = skill;
+                box.Name = skill.Name + "Box";
+                box.Text = skill.Name;
                 box.CheckedChanged += skillBoxes_CheckedChanged;
-                string toolTipFormat = wm.DBManager.SkillData.getSkillDescription(skill);
+                string toolTipFormat = skill.Description;
                 toolTipFormat = Regex.Replace(toolTipFormat, "([^ ]+(?: [^ ]+){3}) ", "$1" + Environment.NewLine);
                 toolTips.SetToolTip(box, toolTipFormat);
                 skillBoxes.Add(box);

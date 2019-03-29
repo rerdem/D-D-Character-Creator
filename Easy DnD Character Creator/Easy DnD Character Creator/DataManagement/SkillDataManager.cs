@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_DnD_Character_Creator.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -21,23 +22,24 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// <summary>
         /// gets a list of all available skills
         /// </summary>
-        public List<string> getSkills()
+        public List<Skill> getSkills()
         {
-            List<string> skills = new List<string>();
+            List<Skill> skills = new List<Skill>();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name FROM skills";
-                
+                command.CommandText = "SELECT skills.name, skills.description, abilities.name FROM skills " +
+                                      "INNER JOIN abilities ON abilities.abilityId=skills.abilityId";
+
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
                 {
                     while (dbReader.Read())
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            skills.Add(dbReader.GetString(0));
+                            skills.Add(new Skill(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2)));
                         }
                     }
                 }
