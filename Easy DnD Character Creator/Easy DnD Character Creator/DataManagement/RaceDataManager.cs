@@ -340,5 +340,35 @@ namespace Easy_DnD_Character_Creator.DataManagement
             return moralityList;
         }
 
+        /// <summary>
+        /// gets the speed of a given subrace
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        public int getSpeed(string subrace)
+        {
+            int speed = 0;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT speed FROM races " +
+                                      "WHERE subrace=@Subrace";
+                command.Parameters.AddWithValue("@Subrace", subrace);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            speed = dbReader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+
+            return speed;
+        }
     }
 }

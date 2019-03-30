@@ -72,6 +72,7 @@ namespace Easy_DnD_Character_Creator
         public AbilityScore Intelligence { get; set; }
         public AbilityScore Wisdom { get; set; }
         public AbilityScore Charisma { get; set; }
+        public int HP { get; set; }
 
         //LanguageControl
         public List<string> Languages { get; set; }
@@ -208,6 +209,7 @@ namespace Easy_DnD_Character_Creator
             Wisdom = new AbilityScore("Wisdom");
             Charisma = new AbilityScore("Charisma");
             Abilities = new List<AbilityScore>(new AbilityScore[] { Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma });
+            HP = 0;
 
             Languages = new List<string>();
 

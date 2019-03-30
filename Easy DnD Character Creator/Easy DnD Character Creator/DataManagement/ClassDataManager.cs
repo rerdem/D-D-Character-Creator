@@ -259,5 +259,36 @@ namespace Easy_DnD_Character_Creator.DataManagement
             return amount;
         }
 
+        /// <summary>
+        /// gets the type of hit dice the given class uses
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public string getHitDieType(string className)
+        {
+            string dieType = "";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT dieType FROM hitDice " +
+                                      "INNER JOIN classes ON hitDice.classId=classes.classid " +
+                                      "WHERE classes.name=@Class";
+                command.Parameters.AddWithValue("@Class", className);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            dieType = dbReader.GetString(0);
+                        }
+                    }
+                }
+            }
+
+            return dieType;
+        }
     }
 }

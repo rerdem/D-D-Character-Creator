@@ -177,6 +177,20 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
+        /// gets a list of default languages known by the chosen race, class and subclass
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        public List<string> getDefaultLanguages(string subrace, string className, string subclass)
+        {
+            List<string> defaultLanguages = getDefaultRaceLanguages(subrace);
+            defaultLanguages.AddRange(getDefaultClassLanguages(className));
+            defaultLanguages.AddRange(getDefaultSubclassLanguages(subclass));
+            return defaultLanguages;
+        }
+
+        /// <summary>
         /// gets information about the speakers of the chosen language
         /// </summary>
         /// <param name="language">chosen language</param>
@@ -239,7 +253,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// gets the number of default languages gained from race, class and subclass
+        /// gets the number of default languages gained from subrace, class and subclass
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
         /// <param name="className">chosen class</param>
@@ -253,7 +267,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// gets the number of extra languages gained through race, class, subclass and background chocies
+        /// gets the number of extra languages gained through subrace, class, subclass and background choices
         /// </summary>
         /// <param name="subrace">chosen subrace</param>
         /// <param name="className">chosen class</param>
@@ -302,6 +316,18 @@ namespace Easy_DnD_Character_Creator.DataManagement
             }
 
             return languageCount;
+        }
+
+        /// <summary>
+        /// checks, if the subrace, class, subclass and background may choose additional languages
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="background">chosen background</param>
+        public bool hasExtraLanguages(string subrace, string subclass, string background)
+        {
+            return (getExtraLanguageCount(subrace, subclass, background) > 0);
         }
     }
 }

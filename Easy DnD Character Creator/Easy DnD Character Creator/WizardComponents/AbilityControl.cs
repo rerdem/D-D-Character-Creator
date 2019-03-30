@@ -367,6 +367,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
+            //HP
+            wm.Choices.HP = int.Parse(healthBox.Text);
+
             //subrace additions
             wm.Choices.Strength.SubraceAdd = int.Parse(strBonusLabel.Text.Substring(1));
             wm.Choices.Dexterity.SubraceAdd = int.Parse(dexBonusLabel.Text.Substring(1));
