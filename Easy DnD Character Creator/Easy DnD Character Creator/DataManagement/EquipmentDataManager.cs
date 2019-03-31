@@ -414,7 +414,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name, damage, damageType, properties FROM weapons " +
+                command.CommandText = "SELECT name, type, range, damage, damageType, properties FROM weapons " +
                                       "INNER JOIN books ON weapons.book = books.bookid " +
                                       "WHERE type LIKE @Type AND range LIKE @Range " +
                                       "AND books.title IN (@UsedBooks)";
@@ -429,7 +429,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            weapons.Add(new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3)));
+                            weapons.Add(new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3), dbReader.GetString(4), dbReader.GetString(5)));
                         }
                     }
                 }
@@ -450,7 +450,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name, damage, damageType, properties FROM weapons " +
+                command.CommandText = "SELECT name, type, range, damage, damageType, properties FROM weapons " +
                                       "INNER JOIN books ON weapons.book = books.bookid " +
                                       "WHERE name LIKE @Weapon " +
                                       "AND books.title IN (@UsedBooks)";
@@ -464,7 +464,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            weapons.Add(new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3)));
+                            weapons.Add(new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3), dbReader.GetString(4), dbReader.GetString(5)));
                         }
                     }
                 }
@@ -513,7 +513,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name, damage, damageType, properties FROM weapons " +
+                command.CommandText = "SELECT name, type, range, damage, damageType, properties FROM weapons " +
                                       "WHERE name=@Weapon";
                 command.Parameters.AddWithValue("@Weapon", name);
 
@@ -523,7 +523,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            weapon = new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3));
+                            weapon = new Weapon(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3), dbReader.GetString(4), dbReader.GetString(5));
                         }
                     }
                 }

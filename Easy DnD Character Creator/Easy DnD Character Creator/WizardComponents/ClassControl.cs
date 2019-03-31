@@ -90,7 +90,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
 
             //save information about properties and additional choices to make
-            wm.Choices.HasExtraClassChoice = wm.DBManager.ExtraClassChoiceData.hasExtraClassChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasFightingStyle = wm.DBManager.ExtraClassChoiceData.FightingStyleData.hasFightingStyle(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasFavoredEnemy = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredEnemy(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasFavoredTerrain = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredTerrain(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasExtraClassSkills = wm.DBManager.ExtraClassChoiceData.ExtraClassSkillData.hasSkillChoice(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasWarlockChoices = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasMetamagic = wm.DBManager.ExtraClassChoiceData.MetamagicData.hasMetamagic(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasExtraClassChoice = wm.Choices.HasFightingStyle ||
+                                             wm.Choices.HasFavoredEnemy ||
+                                             wm.Choices.HasFavoredTerrain ||
+                                             wm.Choices.HasExtraClassSkills ||
+                                             wm.Choices.HasWarlockChoices ||
+                                             wm.Choices.HasMetamagic;
+
+            //wm.Choices.HasExtraClassChoice = wm.DBManager.ExtraClassChoiceData.hasExtraClassChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
             //wm.Choices.HasExtraSubclassChoice = wm.DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.ChoosesSpells = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);

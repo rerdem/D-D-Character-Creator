@@ -48,6 +48,13 @@ namespace Easy_DnD_Character_Creator
         public bool HasSpellcasting { get; set; }
         public bool ChoosesSpells { get; set; }
 
+        public bool HasFightingStyle { get; set; }
+        public bool HasFavoredEnemy { get; set; }
+        public bool HasFavoredTerrain { get; set; }
+        public bool HasExtraClassSkills { get; set; }
+        public bool HasWarlockChoices { get; set; }
+        public bool HasMetamagic { get; set; }
+
         public bool HasExtraSubclassSkills { get; set; }
         public bool HasTotems { get; set; }
         public bool HasExtraSubclassSpells { get; set; }
@@ -61,6 +68,7 @@ namespace Easy_DnD_Character_Creator
 
         //BackgroundControl
         public string Background { get; set; }
+        public bool HasBackgroundProficiencyChoice { get; set; }
         public string BackgroundProficiency { get; set; }
         public bool HasBackgroundStoryChoice { get; set; }
 
@@ -149,7 +157,21 @@ namespace Easy_DnD_Character_Creator
                 allKnownSkills.AddRange(ExtraSkills);
                 allKnownSkills.AddRange(ClassSkills);
                 allKnownSkills.AddRange(SubclassSkills);
+                allKnownSkills.AddRange(WarlockInvocationSkills);
                 return allKnownSkills;
+            }
+        }
+        private List<EquipmentItem> chosenEquipment;
+        public List<EquipmentItem> ChosenEquipment
+        {
+            get
+            {
+                chosenEquipment.Clear();
+                chosenEquipment = Equipment1;
+                chosenEquipment.AddRange(Equipment2);
+                chosenEquipment.AddRange(Equipment3);
+                chosenEquipment.AddRange(Equipment4);
+                return chosenEquipment;
             }
         }
 
@@ -187,6 +209,13 @@ namespace Easy_DnD_Character_Creator
             HasSpellcasting = false;
             ChoosesSpells = false;
 
+            HasFightingStyle = false;
+            HasFavoredEnemy = false;
+            HasFavoredTerrain = false;
+            HasExtraClassSkills = false;
+            HasWarlockChoices = false;
+            HasMetamagic = false;
+
             HasExtraSubclassSkills = false;
             HasTotems = false;
             HasExtraSubclassSpells = false;
@@ -199,6 +228,7 @@ namespace Easy_DnD_Character_Creator
             HasCircleTerrain = false;
 
             Background = "";
+            HasBackgroundProficiencyChoice = false;
             BackgroundProficiency = "";
             HasBackgroundStoryChoice = false;
 
@@ -267,6 +297,6 @@ namespace Easy_DnD_Character_Creator
             Backstory = "";
 
             allKnownSkills = new List<string>();
+            chosenEquipment = new List<EquipmentItem>();
         }
     }
-}

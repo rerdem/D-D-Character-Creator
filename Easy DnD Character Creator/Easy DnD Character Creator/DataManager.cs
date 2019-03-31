@@ -13,6 +13,9 @@ namespace Easy_DnD_Character_Creator
     public class DataManager
     {
         private string ConnectionString { get; }
+        private string TemplatePath { get; }
+        private Random random;
+
         public List<string> UsedBooks { get; private set; }
 
         public RaceDataManager RaceData { get; }
@@ -29,12 +32,17 @@ namespace Easy_DnD_Character_Creator
         public ExtraSubclassChoiceDataManager ExtraSubclassChoiceData { get; }
         public NameDataManager NameData { get; }
         public StoryDataManager StoryData { get; }
+        public ExportDataManager ExportData { get; }
 
         public DataManager()
         {
             ConnectionString = "Data Source=";
             ConnectionString += Directory.GetCurrentDirectory();
             ConnectionString += "\\data.sqlite;Version=3;Read Only=True;";
+
+            TemplatePath = Directory.GetCurrentDirectory() + "\\template.html";
+
+            random = new Random();
 
             UsedBooks = new List<string>();
             UsedBooks.Add("Player's Handbook");
@@ -53,6 +61,7 @@ namespace Easy_DnD_Character_Creator
             ExtraSubclassChoiceData = new ExtraSubclassChoiceDataManager(ConnectionString, UsedBooks);
             NameData = new NameDataManager(ConnectionString, UsedBooks);
             StoryData = new StoryDataManager(ConnectionString, UsedBooks);
+            ExportData = new ExportDataManager(ConnectionString, TemplatePath, UsedBooks);
         }
 
         public void setUsedBooks(List<string> inputUsedBooks)
@@ -72,6 +81,7 @@ namespace Easy_DnD_Character_Creator
             ExtraSubclassChoiceData.setUsedBooks(inputUsedBooks);
             NameData.UsedBooks = inputUsedBooks;
             StoryData.UsedBooks = inputUsedBooks;
+            ExportData.UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
@@ -100,6 +110,40 @@ namespace Easy_DnD_Character_Creator
             }
 
             return activeBooks;
+        }
+
+        /// <summary>
+        /// gets the amount of starting gold adjusted by level for a given background
+        /// </summary>
+        /// <param name="level">current level</param>
+        /// <param name="background">chosen background</param>
+        public int getStartingGold(int level, string background)
+        {
+            int startingGold = 0;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT baseGP, GPdieValue, GPmultiplier FROM startingGold " +
+                                      "WHERE level BETWEEN 1 AND @Level " +
+                                      "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            startingGold = dbReader.GetInt32(0);
+                            startingGold += random.Next(1, dbReader.GetInt32(1) * dbReader.GetInt32(2));
+                        }
+                    }
+                }
+            }
+
+            return startingGold + BackgroundData.getBackgroundGold(background);
         }
     }
 }

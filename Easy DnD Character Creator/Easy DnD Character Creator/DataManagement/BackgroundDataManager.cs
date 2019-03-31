@@ -282,5 +282,70 @@ namespace Easy_DnD_Character_Creator.DataManagement
             return backgroundChoicesList;
         }
 
+        /// <summary>
+        /// gets equipment gained by the given background
+        /// </summary>
+        /// <param name="background">chosen background</param>
+        public string getBackgroundEquipment(string background)
+        {
+            string equipment = "";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT backgroundEquipment.equipment FROM backgroundEquipment " +
+                                      "INNER JOIN backgrounds ON backgroundEquipment.backgroundId = backgrounds.backgroundId " +
+                                      "WHERE backgrounds.name = @Background";
+                command.Parameters.AddWithValue("@Background", background);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            equipment = dbReader.GetString(0);
+                        }
+                    }
+                }
+            }
+
+            return equipment;
+        }
+
+        /// <summary>
+        /// gets the amount of gold gained by a given background
+        /// </summary>
+        /// <param name="background">chosen background</param>
+        public int getBackgroundGold(string background)
+        {
+            int gold = 0;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT backgroundEquipment.gp FROM backgroundEquipment " +
+                                      "INNER JOIN backgrounds ON backgroundEquipment.backgroundId=backgrounds.backgroundId " +
+                                      "WHERE backgrounds.name = @Background";
+                command.Parameters.AddWithValue("@Background", background);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            gold = dbReader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+
+            return gold;
+        }
+
+
     }
 }

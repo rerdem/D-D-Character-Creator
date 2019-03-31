@@ -42,17 +42,17 @@ namespace Easy_DnD_Character_Creator.DataManagement
             MetamagicData.UsedBooks = inputUsedBooks;
         }
 
-        /// <summary>
-        /// checks, if a given class has any additional choices to make
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasExtraClassChoices(string className, int level)
-        {
-            return FightingStyleData.hasFightingStyle(className, level) || FavoredEnemyTerrainData.hasFavoredEnemy(className, level)
-                || FavoredEnemyTerrainData.hasFavoredTerrain(className, level) || ExtraClassSkillData.hasSkillChoice(className, level)
-                || WarlockChoiceData.hasWarlockChoices(className, level) || MetamagicData.hasMetamagic(className, level);
-        }
+        ///// <summary>
+        ///// checks, if a given class has any additional choices to make
+        ///// </summary>
+        ///// <param name="className">chosen class</param>
+        ///// <param name="level">current level</param>
+        //public bool hasExtraClassChoices(string className, int level)
+        //{
+        //    return FightingStyleData.hasFightingStyle(className, level) || FavoredEnemyTerrainData.hasFavoredEnemy(className, level)
+        //        || FavoredEnemyTerrainData.hasFavoredTerrain(className, level) || ExtraClassSkillData.hasSkillChoice(className, level)
+        //        || WarlockChoiceData.hasWarlockChoices(className, level) || MetamagicData.hasMetamagic(className, level);
+        //}
 
     }
 }
