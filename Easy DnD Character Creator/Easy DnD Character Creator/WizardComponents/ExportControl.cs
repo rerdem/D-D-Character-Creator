@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -15,10 +16,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private CharacterSheet charSheet;
+
         public ExportControl(WizardManager inputWizardmanager)
         {
             wm = inputWizardmanager;
             Visited = false;
+
+            charSheet = new CharacterSheet(wm.DBManager, wm.Choices);
 
             InitializeComponent();
         }
@@ -57,7 +62,19 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void exportButton_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Save your character sheet...";
+            saveDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            saveDialog.DefaultExt = "html";
+            saveDialog.Filter = "html files (*.html, *.htm)|*.html;*.htm|All files (*.*)|*.*";
+            saveDialog.FilterIndex = 1;
+            saveDialog.CheckPathExists = true;
+            saveDialog.FileName = $"{wm.Choices.PlayerName} {wm.Choices.Class}.html";
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                charSheet.fillCharacterSheet();
+                charSheet.saveToHTML(saveDialog.FileName);
+            }
         }
     }
 }

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace Easy_DnD_Character_Creator
 {
     public enum WizardState { intro, race, appearance, classBackground, stats, languages, skillEquipment, spells, extraRaceChoices, extraClassChoices, extraSubclassChoices, story, export };
-
+    
     public class WizardManager
     {
         public DataManager DBManager { get; }
         public ChoiceManager Choices { get; }
+        public CharacterSheet Sheet { get; }
         public WizardState CurrentState { get; private set; }
         public bool FirstPage { get; private set; }
         public bool LastPage { get; private set; }
@@ -21,6 +22,7 @@ namespace Easy_DnD_Character_Creator
         {
             DBManager = new DataManager();
             Choices = new ChoiceManager();
+            Sheet = new CharacterSheet(DBManager, Choices);
             CurrentState = WizardState.intro;
             FirstPage = true;
             LastPage = false;
@@ -41,7 +43,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    if (DBManager.LanguageData.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.Subrace, Choices.Subclass, Choices.Background))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -155,7 +157,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skillEquipment:
-                    if (DBManager.LanguageData.getExtraLanguageCount(Choices.Subrace, Choices.Subclass, Choices.Background) > 0)
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.Subrace, Choices.Subclass, Choices.Background))
                     {
                         CurrentState = WizardState.languages;
                     }
