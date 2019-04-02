@@ -129,6 +129,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                                                 wm.Choices.HasCompanion ||
                                                 wm.Choices.HasCircleTerrain;
 
+            wm.Choices.HasWildShape = wm.DBManager.StoryData.hasWildShape(classListBox.SelectedItem.ToString());
+
             //save extra choices that did not require extre UserControls
             wm.Choices.ClassProficiencies.Clear();
             if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))

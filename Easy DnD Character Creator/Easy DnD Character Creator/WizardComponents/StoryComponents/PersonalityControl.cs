@@ -19,7 +19,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
         private PersonalityComponent currentComponent;
         private List<string> choices;
-        private bool customChoice;
         private int currentlyDisplayedIndex;
 
         public PersonalityControl(WizardManager inputWizardManager, PersonalityComponent inputComponent)
@@ -31,7 +30,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
             currentComponent = inputComponent;
             choices = new List<string>();
-            customChoice = false;
             currentlyDisplayedIndex = 0;
 
             InitializeComponent();

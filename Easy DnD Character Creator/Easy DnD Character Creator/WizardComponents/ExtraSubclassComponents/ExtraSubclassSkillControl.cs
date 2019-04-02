@@ -177,7 +177,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             }
 
             //set box title
-            extraSkillBox.Text = $"{wm.Choices.Class} Bonus Skills";
+            //set box title
+            if (doublesProficiency)
+            {
+                extraSkillBox.Text = $"{wm.Choices.Subclass} Expertise";
+            }
+            else
+            {
+                extraSkillBox.Text = $"{wm.Choices.Subclass} Bonus Skills";
+            }
 
             //set label text
             if (doublesProficiency)

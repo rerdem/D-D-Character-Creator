@@ -241,7 +241,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                 WarlockPact currentPact = (WarlockPact)pactListBox.SelectedItem;
                 if (currentPact != null)
                 {
-                    pactDescriptionLabel.Text = currentPact.Description;
+                    pactDescriptionLabel.Text = currentPact.Description.Replace("<br>", Environment.NewLine);
 
                     togglePactSpellSelection();
 

@@ -19,12 +19,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
-        private string lastBackground;
-
         private PersonalityControl traitComponent;
         private PersonalityControl idealComponent;
         private PersonalityControl bondComponent;
         private PersonalityControl flawComponent;
+        private WildShapeControl wildShapeComponent;
         private BackgroundStoryControl backgroundStoryComponent;
         private BackstoryControl backstoryComponent;
 
@@ -35,12 +34,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm = inputWizardManager;
             Visited = false;
 
-            lastBackground = "";
-
             traitComponent = new PersonalityControl(wm, PersonalityComponent.trait);
             idealComponent = new PersonalityControl(wm, PersonalityComponent.ideal);
             bondComponent = new PersonalityControl(wm, PersonalityComponent.bond);
             flawComponent = new PersonalityControl(wm, PersonalityComponent.flaw);
+            wildShapeComponent = new WildShapeControl(wm);
+            wildShapeComponent.WildShapeTerrainChosen += new EventHandler(wildShapeComponent_WildShapeTerrainChosen);
             backgroundStoryComponent = new BackgroundStoryControl(wm);
             backgroundStoryComponent.BackgroundStoryChoiceChosen += new EventHandler(backgroundStoryComponent_BackgroundStoryChoiceChosen);
             backstoryComponent = new BackstoryControl(wm);
@@ -76,6 +75,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             storyLayout.Controls.Add(flawComponent);
             flawComponent.populateForm();
 
+            if (wm.Choices.HasWildShape)
+            {
+                storyLayout.Controls.Add(wildShapeComponent);
+                wildShapeComponent.populateForm();
+            }
+
             if (wm.Choices.HasBackgroundStoryChoice)
             {
                 storyLayout.Controls.Add(backgroundStoryComponent);
@@ -85,7 +90,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             storyLayout.Controls.Add(backstoryComponent);
             backstoryComponent.populateForm();
 
-            lastBackground = wm.Choices.Background;
             Visited = true;
         }
 
@@ -96,6 +100,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             bondComponent.saveContent();
             flawComponent.saveContent();
             backstoryComponent.saveContent();
+
+            if (wm.Choices.HasWildShape)
+            {
+                wildShapeComponent.saveContent();
+            }
+            else
+            {
+                wm.Choices.TerrainChoice = new WildShapeTerrain();
+            }
 
             if (wm.Choices.HasBackgroundStoryChoice)
             {
@@ -109,56 +122,52 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            if (wm.Choices.HasBackgroundStoryChoice)
-            {
-                return traitComponent.isValid() &&
+            return traitComponent.isValid() &&
                    idealComponent.isValid() &&
                    bondComponent.isValid() &&
                    flawComponent.isValid() &&
+                   wildShapeComponent.isValid() &&
                    backgroundStoryComponent.isValid() &&
                    backstoryComponent.isValid();
-            }
-            else
-            {
-                return traitComponent.isValid() &&
-                   idealComponent.isValid() &&
-                   bondComponent.isValid() &&
-                   flawComponent.isValid() &&
-                   backstoryComponent.isValid();
-            }
         }
 
         public string getInvalidElements()
         {
+            string output = string.Join(", ", new string[] {
+                            traitComponent.getInvalidElements(),
+                            idealComponent.getInvalidElements(),
+                            bondComponent.getInvalidElements(),
+                            flawComponent.getInvalidElements(),
+                            backstoryComponent.getInvalidElements()
+                                }.Where(s => !string.IsNullOrEmpty(s)));
+
+            if (wm.Choices.HasWildShape)
+            {
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+                output += wildShapeComponent.getInvalidElements();
+            }
+
             if (wm.Choices.HasBackgroundStoryChoice)
             {
-                return string.Join(", ", new string[] {
-                            traitComponent.getInvalidElements(),
-                            idealComponent.getInvalidElements(),
-                            bondComponent.getInvalidElements(),
-                            flawComponent.getInvalidElements(),
-                            backgroundStoryComponent.getInvalidElements(),
-                            backstoryComponent.getInvalidElements()
-                                }.Where(s => !string.IsNullOrEmpty(s)));
+                if (!string.IsNullOrEmpty(output))
+                {
+                    output += ", ";
+                }
+                output += backgroundStoryComponent.getInvalidElements();
             }
-            else
-            {
-                return string.Join(", ", new string[] {
-                            traitComponent.getInvalidElements(),
-                            idealComponent.getInvalidElements(),
-                            bondComponent.getInvalidElements(),
-                            flawComponent.getInvalidElements(),
-                            backstoryComponent.getInvalidElements()
-                                }.Where(s => !string.IsNullOrEmpty(s)));
-            }
-        }
 
-        private bool hasBackgroundChanged()
-        {
-            return (lastBackground != wm.Choices.Background);
+            return output;
         }
 
         private void backgroundStoryComponent_BackgroundStoryChoiceChosen(object sender, EventArgs e)
+        {
+            OnSubcontrolOptionChosen(null);
+        }
+
+        private void wildShapeComponent_WildShapeTerrainChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }
