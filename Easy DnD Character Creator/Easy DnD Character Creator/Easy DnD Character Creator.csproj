@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterSheetStringBuilder.cs" />
     <Compile Include="DataManagement\ExportDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassChoiceDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\MetamagicDataManager.cs" />
@@ -97,12 +98,16 @@
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
     <Compile Include="DataTypes\BackgroundStoryChoice.cs" />
+    <Compile Include="DataTypes\BarbarianRage.cs" />
     <Compile Include="DataTypes\Beast.cs" />
+    <Compile Include="DataTypes\BonusSpell.cs" />
     <Compile Include="DataTypes\CircleTerrain.cs" />
     <Compile Include="DataTypes\DraconicAncestry.cs" />
     <Compile Include="DataTypes\EldritchInvocation.cs" />
     <Compile Include="DataTypes\ElementalDiscipline.cs" />
     <Compile Include="DataTypes\EquipmentItem.cs" />
+    <Compile Include="DataTypes\ExtraRaceSpell.cs" />
+    <Compile Include="DataTypes\Feature.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
     <Compile Include="DataTypes\Maneuver.cs" />
     <Compile Include="DataTypes\Metamagic.cs" />
@@ -116,6 +121,9 @@
     <Compile Include="DataTypes\WarlockPact.cs" />
     <Compile Include="DataTypes\Weapon.cs" />
     <Compile Include="CharacterSheet.cs" />
+    <Compile Include="DataTypes\WildShapeBeast.cs" />
+    <Compile Include="DataTypes\WildShapeTerrain.cs" />
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="WizardComponents\AbilityControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -377,6 +385,12 @@
     <Compile Include="WizardComponents\StoryComponents\PersonalityControl.Designer.cs">
       <DependentUpon>PersonalityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WizardComponents\StoryComponents\WildShapeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardComponents\StoryComponents\WildShapeControl.Designer.cs">
+      <DependentUpon>WildShapeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WizardComponents\StoryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -515,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\StoryComponents\PersonalityControl.resx">
       <DependentUpon>PersonalityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardComponents\StoryComponents\WildShapeControl.resx">
+      <DependentUpon>WildShapeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\StoryControl.resx">
       <DependentUpon>StoryControl.cs</DependentUpon>

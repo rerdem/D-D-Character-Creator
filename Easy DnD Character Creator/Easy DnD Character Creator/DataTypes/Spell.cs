@@ -50,6 +50,11 @@ namespace Easy_DnD_Character_Creator.DataTypes
             NotDeselectable = inputNotDeselectable;
         }
 
+        public bool isCantrip()
+        {
+            return Level == 0;
+        }
+
         public bool Equals(Spell other)
         {
             if (other == null)

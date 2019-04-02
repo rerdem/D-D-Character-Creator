@@ -161,7 +161,12 @@
 					</div>
 					
 					<div class="labelbox" style="height:160px;">
-						@savingthrows@
+						<input type="radio" name="strSave"@strsaveproficiency@>@strsave@<br>
+						<input type="radio" name="dexSave"@dexsaveproficiency@>@dexsave@<br>
+						<input type="radio" name="conSave"@consaveproficiency@>@consave@<br>
+						<input type="radio" name="intSave"@intsaveproficiency@>@intsave@<br>
+						<input type="radio" name="wisSave"@wissaveproficiency@>@wissave@<br>
+						<input type="radio" name="chaSave"@chasaveproficiency@>@chasave@<br>
 						<div class=label>Saving Throws</div>
 					</div>
 					
@@ -178,7 +183,10 @@
 					</div>
 					
 					<div class="labelbox" style="height:200px;">
-						@proficiencies@
+						<b>Armor:</b> @armorproficiencies@<br>
+						<b>Weapons:</b> @weaponproficiencies@<br>
+						<b>Tools:</b> @toolproficiencies@<br>
+						<b>Languages:</b> @languageproficiencies@<br>
 						<div class="label">
 							Other Proficiencies & Languages
 						</div>
@@ -243,7 +251,15 @@
 					</div>
 					
 					<div class="labelbox" style="height:320px;">
-						@attackbox@
+						<table>
+							<tr>
+								<th>Name</th>
+								<th>Atk Bonus</th>
+								<th>Damage/Type</th>
+							</tr>
+							@attacktableentries@
+						</table>
+						@attackboxtext@
 						<div class="label">
 							Attacks & Spellcasting
 						</div>
@@ -1026,15 +1042,11 @@
 			
 			<!-- END PAGE 3, START PAGE 4 -->
 			
-			<div class="header">
-                <div class="charname">
-					@charactername@ - Spellbook
-				</div>
-            </div>
+			@spellbook@
 			
-			<div class="main">
-				@spellbook@
-			</div>
+			<!-- END PAGE 3/4, START PAGE 4/5 -->
+			
+			@wildshapelist@
 			
         </body>
 </html>

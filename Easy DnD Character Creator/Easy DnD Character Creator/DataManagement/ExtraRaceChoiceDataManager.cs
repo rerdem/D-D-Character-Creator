@@ -60,7 +60,12 @@ namespace Easy_DnD_Character_Creator.DataManagement
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT * FROM spells " +
+                command.CommandText = "SELECT spells.name, spells.ritual, spells.level, spells.school, spells.castTime, spells.range, spells.duration, " +
+                                      "spells.components, spells.materials, spells.description, (SELECT abilities.name FROM extraRaceCantrips " +
+                                      "INNER JOIN races ON races.raceid = extraRaceCantrips.raceId INNER JOIN classes ON classes.classid = extraRaceCantrips.classId " +
+                                      "INNER JOIN abilities ON abilities.abilityId = extraRaceCantrips.spellcastingAbility " +
+                                      "WHERE races.subrace = @Subrace) as spellcastingAbility " +
+                                      "FROM spells " +
                                       "INNER JOIN books ON spells.book = books.bookid " +
                                       "WHERE spells.level = 0 " +
                                       "AND spells.classes LIKE \"%\" || " +
@@ -78,7 +83,18 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            cantripList.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), false));
+                            cantripList.Add(new ExtraRaceSpell(dbReader.GetString(0), 
+                                                               dbReader.GetBoolean(1), 
+                                                               dbReader.GetInt32(2), 
+                                                               dbReader.GetString(3), 
+                                                               dbReader.GetString(4), 
+                                                               dbReader.GetString(5), 
+                                                               dbReader.GetString(6), 
+                                                               dbReader.GetString(7), 
+                                                               dbReader.GetString(8), 
+                                                               dbReader.GetString(9), 
+                                                               false, 0,
+                                                               dbReader.GetString(10)));
                         }
                     }
                 }

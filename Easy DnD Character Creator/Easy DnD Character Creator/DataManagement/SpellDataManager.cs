@@ -447,9 +447,12 @@ namespace Easy_DnD_Character_Creator.DataManagement
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT spells.* FROM extraRaceSpells " +
+                command.CommandText = "SELECT spells.name, spells.ritual, spells.level, spells.school, spells.castTime, spells.range, spells.duration, " +
+                                      "spells.components, spells.materials, spells.description, extraRaceSpells.maxSpellLevel, abilities.name " +
+                                      "FROM extraRaceSpells " +
                                       "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
                                       "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId " +
+                                      "INNER JOIN abilities ON extraRaceSpells.spellcastingAbility=abilities.abilityId " +
                                       "WHERE races.subrace=@Subrace AND extraRaceSpells.level BETWEEN 1 AND @Level";
                 command.Parameters.AddWithValue("@Subrace", subrace);
                 command.Parameters.AddWithValue("@Level", level.ToString());
@@ -460,7 +463,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            extraRaceSpells.Add(new Spell(dbReader.GetString(1), dbReader.GetBoolean(2), dbReader.GetInt32(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), dbReader.GetString(10), true));
+                            extraRaceSpells.Add(new ExtraRaceSpell(dbReader.GetString(0), dbReader.GetBoolean(1), dbReader.GetInt32(2), dbReader.GetString(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), true, dbReader.GetInt32(10), dbReader.GetString(11)));
                         }
                     }
                 }
@@ -504,75 +507,75 @@ namespace Easy_DnD_Character_Creator.DataManagement
             return extraSubclassSpells;
         }
 
-        /// <summary>
-        /// checks, if a given spell was gained through choice of subrace
-        /// </summary>
-        /// <param name="subrace">chosen subrace</param>
-        /// <param name="level">current level</param>
-        /// <param name="spellName">name of the spell to checl</param>
-        public bool isExtraRaceSpell(string subrace, int level, string spellName)
-        {
-            bool isExtraRaceSpell = false;
+        ///// <summary>
+        ///// checks, if a given spell was gained through choice of subrace
+        ///// </summary>
+        ///// <param name="subrace">chosen subrace</param>
+        ///// <param name="level">current level</param>
+        ///// <param name="spellName">name of the spell to checl</param>
+        //public bool isExtraRaceSpell(string subrace, int level, string spellName)
+        //{
+        //    bool isExtraRaceSpell = false;
 
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT spells.name FROM extraRaceSpells " +
-                                      "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
-                                      "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId " +
-                                      "WHERE races.subrace=@Subrace AND extraRaceSpells.level BETWEEN 1 AND @Level " +
-                                      "AND spells.name=@Spell";
-                command.Parameters.AddWithValue("@Subrace", subrace);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-                command.Parameters.AddWithValue("@Spell", spellName);
+        //    using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+        //    using (SQLiteCommand command = new SQLiteCommand(connection))
+        //    {
+        //        connection.Open();
+        //        command.CommandText = "SELECT spells.name FROM extraRaceSpells " +
+        //                              "INNER JOIN races ON extraRaceSpells.raceId=races.raceid " +
+        //                              "INNER JOIN spells ON extraRaceSpells.spellId=spells.spellId " +
+        //                              "WHERE races.subrace=@Subrace AND extraRaceSpells.level BETWEEN 1 AND @Level " +
+        //                              "AND spells.name=@Spell";
+        //        command.Parameters.AddWithValue("@Subrace", subrace);
+        //        command.Parameters.AddWithValue("@Level", level.ToString());
+        //        command.Parameters.AddWithValue("@Spell", spellName);
 
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        isExtraRaceSpell = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
+        //        using (SQLiteDataReader dbReader = command.ExecuteReader())
+        //        {
+        //            if (dbReader.Read())
+        //            {
+        //                isExtraRaceSpell = !dbReader.IsDBNull(0);
+        //            }
+        //        }
+        //    }
 
-            return isExtraRaceSpell;
-        }
+        //    return isExtraRaceSpell;
+        //}
 
-        /// <summary>
-        /// checks, if a given spell was gained through the choice of subclass
-        /// </summary>
-        /// <param name="subclass">given subclass</param>
-        /// <param name="level">current level</param>
-        /// <param name="spellName">name of spell to check</param>
-        public bool isExtraSubclassSpell(string subclass, int level, string spellName)
-        {
-            bool isExtraSubclassSpell = false;
+        ///// <summary>
+        ///// checks, if a given spell was gained through the choice of subclass
+        ///// </summary>
+        ///// <param name="subclass">given subclass</param>
+        ///// <param name="level">current level</param>
+        ///// <param name="spellName">name of spell to check</param>
+        //public bool isExtraSubclassSpell(string subclass, int level, string spellName)
+        //{
+        //    bool isExtraSubclassSpell = false;
 
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT spells.* FROM extraSubclassSpells " +
-                                      "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
-                                      "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId " +
-                                      "WHERE subclasses.name=@Subclass AND extraSubclassSpells.level BETWEEN 1 AND @Level " +
-                                      "AND spells.name=@Spell";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-                command.Parameters.AddWithValue("@Spell", spellName);
+        //    using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+        //    using (SQLiteCommand command = new SQLiteCommand(connection))
+        //    {
+        //        connection.Open();
+        //        command.CommandText = "SELECT spells.* FROM extraSubclassSpells " +
+        //                              "INNER JOIN subclasses ON extraSubclassSpells.subclassId=subclasses.subclassId " +
+        //                              "INNER JOIN spells ON extraSubclassSpells.spellId=spells.spellId " +
+        //                              "WHERE subclasses.name=@Subclass AND extraSubclassSpells.level BETWEEN 1 AND @Level " +
+        //                              "AND spells.name=@Spell";
+        //        command.Parameters.AddWithValue("@Subclass", subclass);
+        //        command.Parameters.AddWithValue("@Level", level.ToString());
+        //        command.Parameters.AddWithValue("@Spell", spellName);
 
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        isExtraSubclassSpell = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
+        //        using (SQLiteDataReader dbReader = command.ExecuteReader())
+        //        {
+        //            if (dbReader.Read())
+        //            {
+        //                isExtraSubclassSpell = !dbReader.IsDBNull(0);
+        //            }
+        //        }
+        //    }
 
-            return isExtraSubclassSpell;
-        }
+        //    return isExtraSubclassSpell;
+        //}
 
         /// <summary>
         /// checks, if the given subclass has limitations on which spell school to choose from
@@ -668,6 +671,209 @@ namespace Easy_DnD_Character_Creator.DataManagement
 
             return exceptions;
         }
+
+        /// <summary>
+        /// gets the spellcasting ability for a given subrace
+        /// </summary>
+        /// <param name="subrace">chosen subrace</param>
+        /// <returns>the spellcasting ability of a subrace or an empty string, if there is none</returns>
+        public string getSpellcastingAbility(string subrace)
+        {
+            string ability = "";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT abilities.name FROM raceSpellcastingAbility " +
+                                      "INNER JOIN races ON raceSpellcastingAbility.raceId=races.raceid " +
+                                      "INNER JOIN abilities ON raceSpellcastingAbility.abilityId=abilities.abilityId " +
+                                      "WHERE races.subrace=@Subrace";
+                command.Parameters.AddWithValue("@Subrace", subrace);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            ability = dbReader.GetString(0);
+                        }
+                    }
+                }
+            }
+
+            return ability;
+        }
+
+        /// <summary>
+        /// gets the spellcasting ability for a given class/subclass
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <returns>the spellcasting ability of a class/subclass or an empty string, if there is none</returns>
+        public string getSpellcastingAbility(string className, string subclass)
+        {
+            string ability = "";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT abilities.name FROM classSpellcastingAbility " +
+                                      "INNER JOIN classes ON classSpellcastingAbility.classId=classes.classid " +
+                                      "INNER JOIN abilities ON classSpellcastingAbility.abilityId=abilities.abilityId " +
+                                      "WHERE classes.name=@Class " +
+                                      "UNION " +
+                                      "SELECT abilities.name FROM subclassSpellcastingAbility " +
+                                      "INNER JOIN subclasses ON subclassSpellcastingAbility.subclassId=subclasses.subclassId " +
+                                      "INNER JOIN abilities ON subclassSpellcastingAbility.abilityId=abilities.abilityId " +
+                                      "WHERE subclasses.name=@Subclass";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Subclass", subclass);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            ability = dbReader.GetString(0);
+                        }
+                    }
+                }
+            }
+
+            return ability;
+        }
+
+        /// <summary>
+        /// gets the list of bonus spells a subclass gains
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        public List<BonusSpell> getSubclasBonusSpells(string subclass)
+        {
+            List<BonusSpell> bonusSpells = new List<BonusSpell>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT spells.name, spells.ritual, spells.level, spells.school, spells.castTime, " +
+                                      "spells.range, spells.duration, spells.components, spells.materials, spells.description, subclassBonusSpells.onlyRitual " +
+                                      "FROM subclassBonusSpells " +
+                                      "INNER JOIN subclasses ON subclassBonusSpells.subclassId = subclasses.subclassId " +
+                                      "INNER JOIN spells ON subclassBonusSpells.spellId = spells.spellId " +
+                                      "WHERE subclasses.name = @Subclass";
+                command.Parameters.AddWithValue("@Subclass", subclass);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            bonusSpells.Add(new BonusSpell(dbReader.GetString(0), dbReader.GetBoolean(1), dbReader.GetInt32(2), dbReader.GetString(3), dbReader.GetString(4), dbReader.GetString(5), dbReader.GetString(6), dbReader.GetString(7), dbReader.GetString(8), dbReader.GetString(9), true, dbReader.GetBoolean(10)));
+                        }
+                    }
+                }
+            }
+
+            return bonusSpells;
+        }
+
+        /// <summary>
+        /// gets the number of spell slots of a given spell level for a class at the given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="characterLevel">current level</param>
+        /// <param name="spellLevel">spell level</param>
+        /// <returns></returns>
+        private int getClassSpellSlots(string className, int characterLevel, int spellLevel)
+        {
+            int slots = 0;
+
+            if ((spellLevel > 0) && (spellLevel < 10))
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+                using (SQLiteCommand command = new SQLiteCommand(connection))
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT level{spellLevel} FROM classSpellSlots " +
+                                          "INNER JOIN classes ON classSpellSlots.classId=classes.classid " +
+                                          "WHERE classes.name==@Class AND level=@Level";
+                    command.Parameters.AddWithValue("@Class", className);
+                    command.Parameters.AddWithValue("@Level", characterLevel.ToString());
+
+                    using (SQLiteDataReader dbReader = command.ExecuteReader())
+                    {
+                        if (dbReader.Read())
+                        {
+                            if (!dbReader.IsDBNull(0))
+                            {
+                                slots = dbReader.GetInt32(0);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return slots;
+        }
+
+        /// <summary>
+        /// gets the number of spell slots of a given spell level for a subclass
+        /// </summary>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="characterLevel">current level</param>
+        /// <param name="spellLevel">spell level</param>
+        /// <returns></returns>
+        private int getSubclassSpellSlots(string subclass, int characterLevel, int spellLevel)
+        {
+            int slots = 0;
+
+            if ((spellLevel > 0) && (spellLevel < 10))
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+                using (SQLiteCommand command = new SQLiteCommand(connection))
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT level{spellLevel} FROM subclassSpellSlots " +
+                                          "INNER JOIN subclasses ON subclassSpellSlots.subclassId=subclasses.subclassId " +
+                                          "WHERE subclasses.name==@Subclass AND level=@Level";
+                    command.Parameters.AddWithValue("@Subclass", subclass);
+                    command.Parameters.AddWithValue("@Level", characterLevel.ToString());
+
+                    using (SQLiteDataReader dbReader = command.ExecuteReader())
+                    {
+                        if (dbReader.Read())
+                        {
+                            if (!dbReader.IsDBNull(0))
+                            {
+                                slots = dbReader.GetInt32(0);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return slots;
+        }
+
+        /// <summary>
+        /// gets the number of spell slots of a given spell level for a class/subclass
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="subclass">chosen subclass</param>
+        /// <param name="characterLevel">current level</param>
+        /// <param name="spellLevel">spell level</param>
+        /// <returns></returns>
+        public int getSpellSlots(string className, string subclass, int characterLevel, int spellLevel)
+        {
+            return Math.Max(getClassSpellSlots(className, characterLevel, spellLevel), getSubclassSpellSlots(subclass, characterLevel, spellLevel));
+        }
+
+
 
     }
 }

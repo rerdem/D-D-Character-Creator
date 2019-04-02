@@ -66,6 +66,8 @@ namespace Easy_DnD_Character_Creator
         public bool HasCompanion { get; set; }
         public bool HasCircleTerrain { get; set; }
 
+        public bool HasWildShape { get; set; }
+
         //BackgroundControl
         public string Background { get; set; }
         public bool HasBackgroundProficiencyChoice { get; set; }
@@ -143,6 +145,7 @@ namespace Easy_DnD_Character_Creator
         public bool CustomIdeal { get; set; }
         public bool CustomBond { get; set; }
         public bool CustomFlaw { get; set; }
+        public WildShapeTerrain TerrainChoice { get; set; }
         public BackgroundStoryChoice BackgroundChoice { get; set; }
         public string Backstory { get; set; }
 
@@ -293,6 +296,7 @@ namespace Easy_DnD_Character_Creator
             CustomIdeal = false;
             CustomBond = false;
             CustomFlaw = false;
+            TerrainChoice = new WildShapeTerrain();
             BackgroundChoice = new BackgroundStoryChoice();
             Backstory = "";
 
@@ -300,3 +304,4 @@ namespace Easy_DnD_Character_Creator
             chosenEquipment = new List<EquipmentItem>();
         }
     }
+}
