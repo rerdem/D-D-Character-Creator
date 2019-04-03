@@ -349,18 +349,6 @@
     <Compile Include="WizardComponents\ExtraClassComponents\WarlockControl.Designer.cs">
       <DependentUpon>WarlockControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.Designer.cs">
-      <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WizardComponents\ExtraClassComponents\WarlockPactControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WizardComponents\ExtraClassComponents\WarlockPactControl.Designer.cs">
-      <DependentUpon>WarlockPactControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="WizardComponents\NameControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -511,12 +499,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockControl.resx">
       <DependentUpon>WarlockControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockInvocationControl.resx">
-      <DependentUpon>WarlockInvocationControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WizardComponents\ExtraClassComponents\WarlockPactControl.resx">
-      <DependentUpon>WarlockPactControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WizardComponents\NameControl.resx">
       <DependentUpon>NameControl.cs</DependentUpon>

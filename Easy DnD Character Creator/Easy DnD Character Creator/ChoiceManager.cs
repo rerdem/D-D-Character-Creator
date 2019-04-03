@@ -52,6 +52,8 @@ namespace Easy_DnD_Character_Creator
         public bool HasFavoredEnemy { get; set; }
         public bool HasFavoredTerrain { get; set; }
         public bool HasExtraClassSkills { get; set; }
+        public bool HasWarlockPact { get; set; }
+        public bool HasEldritchInvocations { get; set; }
         public bool HasWarlockChoices { get; set; }
         public bool HasMetamagic { get; set; }
 
@@ -216,6 +218,8 @@ namespace Easy_DnD_Character_Creator
             HasFavoredEnemy = false;
             HasFavoredTerrain = false;
             HasExtraClassSkills = false;
+            HasWarlockPact = false;
+            HasEldritchInvocations = false;
             HasWarlockChoices = false;
             HasMetamagic = false;
 

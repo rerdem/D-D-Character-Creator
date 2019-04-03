@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class EldritchInvocation
+    public class EldritchInvocation : IEquatable<EldritchInvocation>
     {
         public string Name { get; }
         public string Description { get; }
@@ -39,6 +39,37 @@ namespace Easy_DnD_Character_Creator.DataTypes
             GainedSpell = inputGainedSpell;
             HasSpellChoice = inputHasSpellChoice;
             HasSkillGain = inputHasSkillGain;
+        }
+
+        public bool Equals(EldritchInvocation other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Name == other.Name;
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            EldritchInvocation otherInvocation = other as EldritchInvocation;
+            if (otherInvocation == null)
+            {
+                return false;
+            }
+
+            return Equals(otherInvocation);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
         }
     }
 }

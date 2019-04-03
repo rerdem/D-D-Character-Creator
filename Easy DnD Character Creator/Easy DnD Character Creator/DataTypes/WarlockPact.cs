@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Easy_DnD_Character_Creator.DataTypes
 {
-    public class WarlockPact
+    public class WarlockPact : IEquatable<WarlockPact>
     {
         public string Name { get; }
         public string Description { get; }
@@ -24,6 +24,37 @@ namespace Easy_DnD_Character_Creator.DataTypes
             Name = inputName;
             Description = inputDescription;
             SpellAmount = inputSpellAmount;
+        }
+
+        public bool Equals(WarlockPact other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Name == other.Name;
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            WarlockPact otherPact = other as WarlockPact;
+            if (otherPact == null)
+            {
+                return false;
+            }
+
+            return Equals(otherPact);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
         }
     }
 }

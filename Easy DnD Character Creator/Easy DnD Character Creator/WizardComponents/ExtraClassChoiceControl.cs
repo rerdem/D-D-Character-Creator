@@ -41,7 +41,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             extraClassSkillsComponent.SkillChosen += new EventHandler(extraClassSkillsComponent_SkillChosen);
 
             warlockComponent = new WarlockControl(wm);
-            warlockComponent.SubcontrolOptionChosen += new EventHandler(warlockComponent_SubcontrolOptionChosen);
+            warlockComponent.PactChosen += new EventHandler(warlockComponent_OptionChosen);
+            warlockComponent.PactSpellChosen += new EventHandler(warlockComponent_OptionChosen);
+            warlockComponent.InvocationChosen += new EventHandler(warlockComponent_OptionChosen);
+            warlockComponent.InvocationSpellChosen += new EventHandler(warlockComponent_OptionChosen);
 
             metamagicComponent = new MetamagicControl(wm);
             metamagicComponent.MetamagicChosen += new EventHandler(metamagicComponent_MetamagicChosen);
@@ -268,7 +271,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             OnSubcontrolOptionChosen(null);
         }
 
-        private void warlockComponent_SubcontrolOptionChosen(object sender, EventArgs e)
+        private void warlockComponent_OptionChosen(object sender, EventArgs e)
         {
             OnSubcontrolOptionChosen(null);
         }

@@ -94,7 +94,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.HasFavoredEnemy = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredEnemy(classListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasFavoredTerrain = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredTerrain(classListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasExtraClassSkills = wm.DBManager.ExtraClassChoiceData.ExtraClassSkillData.hasSkillChoice(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasWarlockChoices = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasWarlockPact = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockPact(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasEldritchInvocations = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasEldritchInvocations(classListBox.SelectedItem.ToString(), wm.Choices.Level);
+            wm.Choices.HasWarlockChoices = wm.Choices.HasWarlockPact || wm.Choices.HasEldritchInvocations;
             wm.Choices.HasMetamagic = wm.DBManager.ExtraClassChoiceData.MetamagicData.hasMetamagic(classListBox.SelectedItem.ToString(), wm.Choices.Level);
             wm.Choices.HasExtraClassChoice = wm.Choices.HasFightingStyle ||
                                              wm.Choices.HasFavoredEnemy ||
