@@ -59,7 +59,7 @@ namespace Easy_DnD_Character_Creator
             //get information necessary for final calculations
             allKnownSpells = constructSpellList();
             CharSheetStrings.ProficiencyBonus = DBManager.ExportData.getProficiencyBonus(Choices.Level);
-            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.Subrace, Choices.Class, Choices.Subclass, Choices.Background));
+            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background));
             CharSheetStrings.SpellcastingAbility = DBManager.SpellData.getSpellcastingAbility(Choices.Class, Choices.Subclass);
 
             //fill template with information
@@ -77,7 +77,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@playername@", Choices.PlayerName);
 
             //race
-            template = template.Replace("@race@", Choices.Subrace);
+            template = template.Replace("@race@", Choices.RaceChoice.getSelectedSubrace().Name);
 
             //alignment
             template = template.Replace("@alignment@", CharSheetStrings.constructAlignmentString());
@@ -119,7 +119,7 @@ namespace Easy_DnD_Character_Creator
 
             //proficiencies
             //armor
-            template = template.Replace("@armorproficiencies@", string.Join(", ", DBManager.ExportData.getArmorProficiencies(Choices.Subrace, 
+            template = template.Replace("@armorproficiencies@", string.Join(", ", DBManager.ExportData.getArmorProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, 
                                                                                                                              Choices.Class, 
                                                                                                                              Choices.Subclass, 
                                                                                                                              Choices.Background)));
@@ -137,7 +137,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@ac@", CharSheetStrings.calculateAC().ToString());
 
             //speed
-            template = template.Replace("@speed@", DBManager.RaceData.getSpeed(Choices.Subrace).ToString());
+            template = template.Replace("@speed@", DBManager.RaceData.getSpeed(Choices.RaceChoice.getSelectedSubrace().Name).ToString());
 
             //HP
             template = template.Replace("@hp@", Choices.HP.ToString());
@@ -231,7 +231,7 @@ namespace Easy_DnD_Character_Creator
 
         private List<Feature> constructFeatureList()
         {
-            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.Subrace, Choices.Class, Choices.Subclass, Choices.Background, Choices.Level);
+            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background, Choices.Level);
 
             //add additional feature
             //fighting style
@@ -403,7 +403,7 @@ namespace Easy_DnD_Character_Creator
             //dragonborn breath weapon
             foreach (Feature feature in featureList.Where(entry => entry.Name == "Breath Weapon"))
             {
-                feature.Description = DBManager.ExportData.getBreathWeapon(Choices.Subrace, Choices.Level);
+                feature.Description = DBManager.ExportData.getBreathWeapon(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Level);
             }
 
             return featureList;
@@ -429,7 +429,7 @@ namespace Easy_DnD_Character_Creator
             }
 
             //race spell
-            if (Choices.HasExtraRaceSpells)
+            if (Choices.RaceChoice.getSelectedSubrace().HasExtraSpells)
             {
                 spellList.AddRange(Choices.RaceSpells);
             }

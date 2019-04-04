@@ -77,9 +77,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                if (SubraceBonusCounter != wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace))
+                if (SubraceBonusCounter != wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
@@ -106,9 +106,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //check, if subrace bonus choices have been chosen
-            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                return (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace));
+                return (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name));
             }
 
             return true;
@@ -148,12 +148,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             recommendationLabel.Text = wm.DBManager.AbilityData.getAbilityRecommendation(wm.Choices.Class);
 
             //populate ability score bonus from subrace
-            strBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Strength");
-            dexBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Dexterity");
-            conBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Constitution");
-            intBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Intelligence");
-            wisBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Wisdom");
-            chaBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.Subrace, "Charisma");
+            strBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Strength");
+            dexBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Dexterity");
+            conBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Constitution");
+            intBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Intelligence");
+            wisBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Wisdom");
+            chaBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Charisma");
 
             //populate ability choices from subrace
             toggleScoreBonusChoices();
@@ -176,7 +176,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             SubraceBonusCounter = 0;
 
-            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
                 //strength
                 if (wm.Choices.Strength.SubraceBonus > 0)
@@ -379,7 +379,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             wm.Choices.Charisma.SubraceAdd = int.Parse(chaBonusLabel.Text.Substring(1));
 
             //subrace choices
-            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
                 //strength
                 if (strBonusCheck.Checked)
@@ -470,7 +470,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 strength += int.Parse(strBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (strBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (strBonusCheck.Checked))
                 {
                     strength++;
                 }
@@ -507,7 +507,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 dexterity += int.Parse(dexBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (dexBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (dexBonusCheck.Checked))
                 {
                     dexterity++;
                 }
@@ -544,7 +544,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 constitution += int.Parse(conBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (conBonusCheck.Checked))
                 {
                     constitution++;
                 }
@@ -581,7 +581,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 intelligence += int.Parse(intBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (intBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (intBonusCheck.Checked))
                 {
                     intelligence++;
                 }
@@ -618,7 +618,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 wisdom += int.Parse(wisBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (wisBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (wisBonusCheck.Checked))
                 {
                     wisdom++;
                 }
@@ -655,7 +655,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 charisma += int.Parse(chaBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (chaBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (chaBonusCheck.Checked))
                 {
                     charisma++;
                 }
@@ -694,7 +694,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             {
                 constitution += int.Parse(conBonusLabel.Text.Substring(1));
 
-                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace)) && (conBonusCheck.Checked))
+                if ((wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name)) && (conBonusCheck.Checked))
                 {
                     constitution++;
                 }
@@ -705,7 +705,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 health = wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.Class) + conModifier;
 
                 //separate check for subrace and subclass because bonus stacks
-                if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.Subrace))
+                if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                 {
                     health++;
                 }
@@ -738,7 +738,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     health += conModifier;
 
                     //separate check for subrace and subclass because bonus stacks
-                    if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.Subrace))
+                    if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                     {
                         health++;
                     }
@@ -816,7 +816,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void toggleScoreBonusChoices()
         {
-            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.Subrace))
+            if (wm.DBManager.AbilityData.subraceHasAbilityChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
                 raceAbilityBonusSeparatorLabel.Visible = true;
                 raceAbilityBonusLabel.Visible = true;
@@ -840,7 +840,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void toggleScoreBonusSelectability()
         {
-            if (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.Subrace))
+            if (SubraceBonusCounter == wm.DBManager.AbilityData.subraceAbilityChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
                 foreach (CheckBox box in bonusCheckBoxes)
                 {

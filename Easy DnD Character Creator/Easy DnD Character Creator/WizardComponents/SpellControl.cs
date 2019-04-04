@@ -211,9 +211,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             chosenSpellsSource.Clear();
 
             //populate extra race and class spells
-            if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
+            if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
             {
-                List<Spell> raceClassSpells = wm.DBManager.SpellData.getExtraRaceSpells(wm.Choices.Subrace, wm.Choices.Level);
+                List<Spell> raceClassSpells = wm.DBManager.SpellData.getExtraRaceSpells(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Level);
                 raceClassSpells.AddRange(wm.DBManager.SpellData.getExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level));
 
                 foreach (Spell spell in raceClassSpells)
@@ -338,12 +338,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setCharacterInfo()
         {
-            lastCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
         }
 
         private bool hasCharacterInfoChanged()
         {
-            string currentCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
             return (currentCharacterInfo != lastCharacterInfo);
         }
 

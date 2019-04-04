@@ -71,7 +71,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraRaceComponents
         private void resetContent()
         {
             //fill choice list
-            spellSourceList = wm.DBManager.ExtraRaceChoiceData.getExtraRaceCantripChoiceOptions(wm.Choices.Subrace);
+            spellSourceList = wm.DBManager.ExtraRaceChoiceData.getExtraRaceCantripChoiceOptions(wm.Choices.RaceChoice.getSelectedSubrace().Name);
             foreach (Spell spell in wm.Choices.Spells)
             {
                 spellSourceList.Remove(spell);

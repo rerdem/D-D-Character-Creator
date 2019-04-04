@@ -1,5 +1,5 @@
 to do:
-refactor races/backgrounds/classes to datasource
+refactor backgrounds/classes to datasource
 
 937,496
 
@@ -67,20 +67,20 @@ Class/Subclass choices to separate page:
 															3 spells (davon 2 abjuration oder evocation)
 																alle zusätzlichen spells müssen abj oder evo sein außer lvl 8, 14, 20
 
-Monk:
-	XLevel 2:
-		Ki, 3 ki features, Unarmored Movement
-	
-	XLevel 3:
-		XDeflect Missiles
-		XSubclass:
-		XOpen Hand:
-			Open Hand Technique
-		XShadow:
-			X!Shadow Arts -> bonus spells
-		X4 Elements:
-			Elemental Attunement
-			!! 1 extra discipline (some are spells)
+											XMonk:
+												XLevel 2:
+													Ki, 3 ki features, Unarmored Movement
+												
+												XLevel 3:
+													XDeflect Missiles
+													XSubclass:
+													XOpen Hand:
+														Open Hand Technique
+													XShadow:
+														X!Shadow Arts -> bonus spells
+													X4 Elements:
+														Elemental Attunement
+														!! 1 extra discipline (some are spells)
 			
 												XPaladin:
 													XLevel 2:
@@ -128,15 +128,15 @@ Monk:
 																ability: intelligence
 															Mage Hand Legerdemain
 				
-Sorcerer:
-	X!!Draconic Ancestry
-	Level 2:
-		Sorcery Points
-		X!Font of Magic
-		
-	XLevel 3:
-		X!!Metamagic:
-			choose 2
+												XSorcerer:
+													X!!Draconic Ancestry
+													XLevel 2:
+														XSorcery Points
+														X!Font of Magic
+														
+													XLevel 3:
+														X!!Metamagic:
+															choose 2
 
 												XWarlock:
 													X!expanded pact spells each level

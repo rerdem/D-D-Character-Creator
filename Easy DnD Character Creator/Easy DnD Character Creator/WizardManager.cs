@@ -43,7 +43,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.Subrace, Choices.Subclass, Choices.Background))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -62,7 +62,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     else
                     {
-                        if (Choices.HasExtraRaceChoice)
+                        if (Choices.RaceChoice.getSelectedSubrace().HasExtraRaceChoice)
                         {
                             CurrentState = WizardState.extraRaceChoices;
                         }
@@ -81,7 +81,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.spells:
-                    if (Choices.HasExtraRaceChoice)
+                    if (Choices.RaceChoice.getSelectedSubrace().HasExtraRaceChoice)
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -157,7 +157,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skillEquipment:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.Subrace, Choices.Subclass, Choices.Background))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -180,7 +180,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraClassChoices:
-                    if (Choices.HasExtraRaceChoice)
+                    if (Choices.RaceChoice.getSelectedSubrace().HasExtraRaceChoice)
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -198,7 +198,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (Choices.HasExtraRaceChoice)
+                    else if (Choices.RaceChoice.getSelectedSubrace().HasExtraRaceChoice)
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -220,7 +220,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (Choices.HasExtraRaceChoice)
+                    else if (Choices.RaceChoice.getSelectedSubrace().HasExtraRaceChoice)
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
@@ -388,13 +388,13 @@ namespace Easy_DnD_Character_Creator
         /// <param name="isMale">chosen sex</param>
         public string generateCharacterName(bool isMale)
         {
-            List<string> firstNames = DBManager.NameData.getFirstNames(Choices.Subrace, isMale);
+            List<string> firstNames = DBManager.NameData.getFirstNames(Choices.RaceChoice.getSelectedSubrace().Name, isMale);
 
             string output = firstNames[getRandomNumber(0, firstNames.Count)];
 
-            if (DBManager.NameData.hasLastName(Choices.Subrace))
+            if (DBManager.NameData.hasLastName(Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                List<string> lastNames = DBManager.NameData.getLastNames(Choices.Subrace);
+                List<string> lastNames = DBManager.NameData.getLastNames(Choices.RaceChoice.getSelectedSubrace().Name);
                 output += " ";
                 output += lastNames[getRandomNumber(0, lastNames.Count)];
             }

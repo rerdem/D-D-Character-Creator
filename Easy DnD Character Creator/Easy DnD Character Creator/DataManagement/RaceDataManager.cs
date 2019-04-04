@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_DnD_Character_Creator.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -21,19 +22,18 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// <summary>
         /// gets a list of all playable races
         /// </summary>
-        public List<string> getRaces()
+        public List<Race> getRaces()
         {
-            List<string> raceList = new List<string>();
+            List<Race> raceList = new List<Race>();
+            Race currentRace = new Race();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT race FROM races " +
+                command.CommandText = "SELECT race, subrace, description, alignmentDescription, speed FROM races " +
                                       "INNER JOIN books ON races.book=books.bookid " +
-                                      "WHERE books.title IN (@UsedBooks) " +
-                                      "GROUP BY race";
-                //command.Parameters.AddWithValue("@UsedBooks", TempUsedBooks);
+                                      "WHERE books.title IN (@UsedBooks)";
                 SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
@@ -42,8 +42,21 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            raceList.Add(dbReader.GetString(0));
+                            if (dbReader.GetString(0) != currentRace.Name)
+                            {
+                                if (!string.IsNullOrEmpty(currentRace.Name))
+                                {
+                                    raceList.Add(currentRace);
+                                }
+                                currentRace = new Race(dbReader.GetString(0));
+                            }
+                            currentRace.addSubrace(new Subrace(dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3), dbReader.GetInt32(4), subraceHasProficiencyChoice(dbReader.GetString(1))));
                         }
+                    }
+
+                    if (!raceList.Contains(currentRace) && !string.IsNullOrEmpty(currentRace.Name))
+                    {
+                        raceList.Add(currentRace);
                     }
                 }
             }
@@ -52,84 +65,10 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// gets a list of all subrace options for the chosen race
-        /// </summary>
-        /// <param name="raceChoice">race for which to get subraces</param>
-        public List<string> getSubraces(string raceChoice)
-        {
-            List<string> subraceList = new List<string>();
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT subrace FROM races " +
-                                      "INNER JOIN books ON races.book=books.bookid " +
-                                      "WHERE books.title IN (@UsedBooks) " +
-                                      "AND race=@RaceChoice";
-                command.Parameters.AddWithValue("@RaceChoice", raceChoice);
-                SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            subraceList.Add(dbReader.GetString(0));
-                        }
-                    }
-                }
-            }
-
-            if (subraceList.Count == 0)
-            {
-                subraceList.Add("---");
-            }
-
-            return subraceList;
-        }
-
-        /// <summary>
-        /// gets the description for the chosen subrace
-        /// </summary>
-        /// <param name="subraceChoice">chosen subrace</param>
-        public string getSubraceDescription(string subraceChoice)
-        {
-            string description = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT description FROM races " +
-                                      "INNER JOIN books ON races.book=books.bookid " +
-                                      "WHERE books.title IN (@UsedBooks) " +
-                                      "AND subrace=@SubraceChoice";
-                command.Parameters.AddWithValue("@SubraceChoice", subraceChoice);
-                SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            description = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return description;
-        }
-
-
-        /// <summary>
         /// checks, if the chosen race has an extra choice attached to it
         /// </summary>
         /// <param name="subraceChoice">the race to be checked</param>
-        public bool subraceHasExtraChoice(string subraceChoice)
+        public bool subraceHasProficiencyChoice(string subraceChoice)
         {
             bool hasChoice = false;
 
@@ -192,37 +131,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
             }
 
             return proficiencyList;
-        }
-
-        /// <summary>
-        /// gets the description for general alignment of chosen subrace
-        /// </summary>
-        /// <param name="subraceChoice">chosen subrace</param>
-        public string getSubraceAlignmentDescription(string subraceChoice)
-        {
-            string description = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT alignmentDescription FROM races " +
-                                      "WHERE subrace=@SubraceChoice";
-                command.Parameters.AddWithValue("@SubraceChoice", subraceChoice);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            description = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return description;
         }
 
         /// <summary>

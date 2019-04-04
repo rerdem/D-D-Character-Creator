@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -37,7 +38,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             generalAlignmentLabel.Text = wm.DBManager.RaceData.getGeneralAlignmentDescription();
-            raceAlignmentLabel.Text = wm.DBManager.RaceData.getSubraceAlignmentDescription(wm.Choices.Subrace);
+            raceAlignmentLabel.Text = wm.Choices.RaceChoice.getSelectedSubrace().AlignmentDescription;
 
             //fill alignment listBoxes
             lawBox.BeginUpdate();
@@ -79,9 +80,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             Visited = true;
         }
 
-        public void updateRaceAlignmentDescription(string inputSubrace)
+        public void updateRaceAlignmentDescription(Subrace inputSubrace)
         {
-            raceAlignmentLabel.Text = wm.DBManager.RaceData.getSubraceAlignmentDescription(inputSubrace);
+            raceAlignmentLabel.Text = inputSubrace.AlignmentDescription;
         }
 
         public void saveContent()

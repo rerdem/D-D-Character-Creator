@@ -75,15 +75,15 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += $"select {missingSkills} more skill(s)";
             }
 
-            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
                         output += ", ";
                     }
-                    int missingChoices = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace) - extraSkillBox.SelectedItems.Count;
+                    int missingChoices = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name) - extraSkillBox.SelectedItems.Count;
                     output += $"select {missingChoices} more skill(s) from the list on the right side";
                 }
             }
@@ -103,9 +103,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+                if (extraSkillBox.SelectedItems.Count != wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                 {
                     return false;
                 }
@@ -139,7 +139,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 toggleChoiceBoxes();
 
                 // if applicable, fill in listbox
-                if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+                if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
                 {
                     foreach (string skill in wm.Choices.ExtraSkills)
                     {
@@ -166,7 +166,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
                 foreach (object obj in extraSkillBox.SelectedItems)
                 {
@@ -223,7 +223,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             choiceBoxes.Clear();
             classSkillCount = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class);
-            List<string> knownSkills = wm.DBManager.SkillData.getKnownSkills(wm.Choices.Subrace, wm.Choices.Background);
+            List<string> knownSkills = wm.DBManager.SkillData.getKnownSkills(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Background);
             List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.Class);
 
             foreach (CheckBox box in skillBoxes)
@@ -246,9 +246,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.Subrace))
+            if (wm.DBManager.SkillData.hasExtraSkillChoice(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                int choiceAmount = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace);
+                int choiceAmount = wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name);
                 extraSkillLabel.Text= $"Please choose {choiceAmount} additional skill(s):";
                 extraSkillLayout.Visible = true;
             }
@@ -295,12 +295,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setCharacterInfo()
         {
-            lastCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
         }
 
         private bool hasCharacterInfoChanged()
         {
-            string currentCharacterInfo = wm.Choices.Subrace + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
             return (currentCharacterInfo != lastCharacterInfo);
         }
 
@@ -314,9 +314,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void extraSkillBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (extraSkillBox.SelectedItems.Count > wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace))
+            if (extraSkillBox.SelectedItems.Count > wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name))
             {
-                extraSkillBox.SelectedItems.Remove(extraSkillBox.SelectedItems[wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.Subrace)]);
+                extraSkillBox.SelectedItems.Remove(extraSkillBox.SelectedItems[wm.DBManager.SkillData.getExtraSkillChoiceAmount(wm.Choices.RaceChoice.getSelectedSubrace().Name)]);
             }
 
             OnSkillChosen(null);

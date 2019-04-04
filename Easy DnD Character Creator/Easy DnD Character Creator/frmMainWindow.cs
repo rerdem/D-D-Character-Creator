@@ -404,9 +404,9 @@ namespace Easy_DnD_Character_Creator
             RaceControl incoming = sender as RaceControl;
             if (incoming != null)
             {
-                alignmentComponent.updateRaceAlignmentDescription(WM.Choices.Subrace);
-                ageComponent.updateRaceAgeDescription(WM.Choices.Subrace);
-                bodyComponent.updateMinMax(WM.Choices.Subrace);
+                alignmentComponent.updateRaceAlignmentDescription(WM.Choices.RaceChoice.getSelectedSubrace());
+                ageComponent.updateRaceAgeDescription(WM.Choices.RaceChoice.getSelectedSubrace().Name);
+                bodyComponent.updateMinMax(WM.Choices.RaceChoice.getSelectedSubrace().Name);
             }
         }
 

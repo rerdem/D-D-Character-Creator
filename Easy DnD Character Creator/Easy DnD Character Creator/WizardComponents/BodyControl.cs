@@ -79,11 +79,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void refreshHeightWeight()
         {
             //calculate height in imperial
-            int heightImperial = wm.DBManager.AppearanceData.getBaseHeight(false, wm.Choices.Subrace);
+            int heightImperial = wm.DBManager.AppearanceData.getBaseHeight(false, wm.Choices.RaceChoice.getSelectedSubrace().Name);
             heightImperial += (int)heightModifier.Value;
 
             //calculate weight in imperial
-            int weightImperial = wm.DBManager.AppearanceData.getBaseWeight(false, wm.Choices.Subrace);
+            int weightImperial = wm.DBManager.AppearanceData.getBaseWeight(false, wm.Choices.RaceChoice.getSelectedSubrace().Name);
             int weightModifierImperial = (int)heightModifier.Value * (int)weightModifier.Value;
             weightImperial += weightModifierImperial;
 

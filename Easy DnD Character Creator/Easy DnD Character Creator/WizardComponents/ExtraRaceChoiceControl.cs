@@ -121,7 +121,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void refreshActivationList()
         {
             subcomponentActivationList.Clear();
-            subcomponentActivationList.Add(wm.Choices.HasExtraRaceSpells);
+            subcomponentActivationList.Add(wm.Choices.RaceChoice.getSelectedSubrace().HasExtraSpells);
 
             //fail safe, in case someone forgets to add the appropriate variable to the activation list
             //this should not need to exist, rethink link in future update

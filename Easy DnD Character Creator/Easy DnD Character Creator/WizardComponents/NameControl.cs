@@ -86,7 +86,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 }
             }
 
-            lastSubrace = wm.Choices.Subrace;
+            lastSubrace = wm.Choices.RaceChoice.getSelectedSubrace().Name;
             Visited = true;
         }
 
@@ -113,7 +113,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private bool hasSubraceChanged()
         {
-            return (lastSubrace != wm.Choices.Subrace);
+            return (lastSubrace != wm.Choices.RaceChoice.getSelectedSubrace().Name);
         }
 
         private void randomNameButton_Click(object sender, EventArgs e)

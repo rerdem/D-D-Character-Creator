@@ -253,7 +253,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     choiceBoxes[i].BeginUpdate();
                     //choiceBoxes[i].Items.Clear();
                     equipmentOptions[i].Clear();
-                    equipmentOptions[i].AddRange(wm.DBManager.EquipmentData.getEquipmentChoices(wm.Choices.Subrace,
+                    equipmentOptions[i].AddRange(wm.DBManager.EquipmentData.getEquipmentChoices(wm.Choices.RaceChoice.getSelectedSubrace().Name,
                                                                                                  wm.Choices.Class,
                                                                                                  wm.Choices.Subclass,
                                                                                                  currentChoice,

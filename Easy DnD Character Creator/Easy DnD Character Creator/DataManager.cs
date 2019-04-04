@@ -84,6 +84,11 @@ namespace Easy_DnD_Character_Creator
             ExportData.UsedBooks = inputUsedBooks;
         }
 
+        public string getUsedBookString()
+        {
+            return string.Join(", ", UsedBooks);
+        }
+
         /// <summary>
         /// returns a list of all active books
         /// </summary>

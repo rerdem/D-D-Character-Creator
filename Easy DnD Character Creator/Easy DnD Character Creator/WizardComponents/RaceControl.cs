@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -15,12 +16,23 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private WizardManager wm;
         private bool visited;
 
+        private string lastUsedBooks;
+
+        private List<Race> raceSourceList;
+        private List<string> extraChoiceSource;
+
         public event EventHandler SubraceChanged;
 
         public RaceControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
             Visited = false;
+
+            lastUsedBooks = "";
+
+            raceSourceList = new List<Race>();
+            extraChoiceSource = new List<string>();
+
             InitializeComponent();
         }
 
@@ -36,118 +48,178 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
-        private void fillRaceListBox()
-        {
-            List<string> raceList = wm.DBManager.RaceData.getRaces();
-
-            raceListBox.BeginUpdate();
-            raceListBox.Items.Clear();
-            foreach (string race in raceList)
-            {
-                raceListBox.Items.Add(race);
-            }
-            raceListBox.EndUpdate();
-
-            if (raceListBox.Items.Contains(wm.Choices.Race))
-            {
-                raceListBox.SetSelected(raceListBox.Items.IndexOf(wm.Choices.Race), true);
-            }
-            else
-            {
-                if (raceListBox.Items.Count > 0)
-                {
-                    raceListBox.SetSelected(0, true);
-                }
-            }
-        }
-
-        private void fillSubraceListBox(string inputRace)
-        {
-            List<string> subraceList = wm.DBManager.RaceData.getSubraces(inputRace);
-
-            subraceListBox.BeginUpdate();
-            subraceListBox.Items.Clear();
-            foreach (string subrace in subraceList)
-            {
-                subraceListBox.Items.Add(subrace);
-            }
-            subraceListBox.EndUpdate();
-
-            if (subraceListBox.Items.Contains(wm.Choices.Subrace))
-            {
-                subraceListBox.SetSelected(subraceListBox.Items.IndexOf(wm.Choices.Subrace), true);
-            }
-            else
-            {
-                subraceListBox.SetSelected(0, true);
-            }
-        }
-
-        private void fillExtraChoiceListBox(string inputSubrace)
-        {
-            List<string> choiceList = wm.DBManager.RaceData.getExtraRaceProficiencies(subraceListBox.SelectedItem.ToString());
-
-            extraChoiceBox.BeginUpdate();
-            extraChoiceBox.Items.Clear();
-            foreach (string entry in choiceList)
-            {
-                extraChoiceBox.Items.Add(entry);
-            }
-            extraChoiceBox.EndUpdate();
-
-            if (extraChoiceBox.Items.Contains(wm.Choices.RaceProficiency))
-            {
-                extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(wm.Choices.RaceProficiency), true);
-            }
-            else
-            {
-                extraChoiceBox.SetSelected(0, true);
-            }
-        }
-
         public void populateForm()
         {
-            fillRaceListBox();
+            if (!Visited || haveUsedBooksChanged())
+            {
+                populateRaceListBox();
+            }
+
+            if (Visited && !haveUsedBooksChanged())
+            {
+                loadPreviousSelection();
+            }
+
+            lastUsedBooks = wm.DBManager.getUsedBookString();
             Visited = true;
         }
 
         public void saveContent()
         {
-            wm.Choices.Race = raceListBox.SelectedItem.ToString();
-            wm.Choices.Subrace = subraceListBox.SelectedItem.ToString();
+            Race currentRace = raceListBox.SelectedItem as Race;
+            Subrace currentSubrace = subraceListBox.SelectedItem as Subrace;
 
-            if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
+            if ((currentRace != null) && (currentSubrace != null))
             {
-                wm.Choices.RaceProficiency = extraChoiceBox.SelectedItem.ToString();
+                currentSubrace.HasExtraSpells = wm.DBManager.ExtraRaceChoiceData.hasExtraRaceCantripChoice(currentSubrace.Name);
+                currentRace.setSelectedSubrace(currentSubrace);
+                wm.Choices.RaceChoice = currentRace;
+
+                if (currentSubrace.HasProficiencyChoice)
+                {
+                    wm.Choices.RaceProficiency = extraChoiceBox.SelectedItem.ToString();
+                }
+                else
+                {
+                    wm.Choices.RaceProficiency = "";
+                }
             }
-            else
+        }
+
+        public bool isValid()
+        {
+            if (subraceListBox.SelectedItems.Count > 0)
             {
-                wm.Choices.RaceProficiency = "";
+                Subrace currentSubrace = subraceListBox.SelectedItem as Subrace;
+                if (currentSubrace != null)
+                {
+                    if (currentSubrace.HasProficiencyChoice)
+                    {
+                        return ((subraceListBox.SelectedItems.Count > 0) && (extraChoiceBox.SelectedItems.Count > 0));
+                    }
+                }
             }
 
-            wm.Choices.HasExtraRaceSpells = wm.DBManager.ExtraRaceChoiceData.hasExtraRaceCantripChoice(subraceListBox.SelectedItem.ToString());
-            wm.Choices.HasExtraRaceChoice = wm.Choices.HasExtraRaceSpells;
+            return (subraceListBox.SelectedItems.Count > 0);
+        }
+
+        public string getInvalidElements()
+        {
+            string output = "";
+
+            if (subraceListBox.SelectedItems.Count == 0)
+            {
+                output += raceBox.Text;
+            }
+
+            if (subraceListBox.SelectedItems.Count > 0)
+            {
+                Subrace currentSubrace = subraceListBox.SelectedItem as Subrace;
+                if (currentSubrace != null)
+                {
+                    if (currentSubrace.HasProficiencyChoice && (extraChoiceBox.SelectedItems.Count == 0))
+                    {
+                        if (!string.IsNullOrEmpty(output))
+                        {
+                            output += ", ";
+                        }
+                        output += "bonus race proficiency";
+                    }
+                }
+            }
+
+            return output;
+        }
+
+        private void loadPreviousSelection()
+        {
+            Subrace savedSubrace = wm.Choices.RaceChoice.getSelectedSubrace();
+            if (raceListBox.Items.Contains(wm.Choices.RaceChoice))
+            {
+                raceListBox.SetSelected(raceListBox.Items.IndexOf(wm.Choices.RaceChoice), true);
+            }
+
+            if (subraceListBox.Items.Contains(savedSubrace))
+            {
+                subraceListBox.SetSelected(subraceListBox.Items.IndexOf(savedSubrace), true);
+            }
+        }
+
+        private void populateRaceListBox()
+        {
+            raceSourceList = wm.DBManager.RaceData.getRaces();
+
+            raceListBox.BeginUpdate();
+            raceListBox.DataSource = null;
+            raceListBox.DataSource = raceSourceList;
+            raceListBox.DisplayMember = "Name";
+            raceListBox.EndUpdate();
+        }
+
+        private void populateSubraceListBox()
+        {
+            Race currentRace = raceListBox.SelectedItem as Race;
+            if (currentRace != null)
+            {
+                subraceListBox.BeginUpdate();
+                subraceListBox.DataSource = null;
+                subraceListBox.DataSource = currentRace.Subraces;
+                subraceListBox.DisplayMember = "Name";
+                subraceListBox.EndUpdate();
+            }
+        }
+
+        private void fillExtraChoiceListBox(string inputSubrace)
+        {
+            Subrace currentSubrace = subraceListBox.SelectedItem as Subrace;
+            if (currentSubrace != null)
+            {
+                extraChoiceSource = wm.DBManager.RaceData.getExtraRaceProficiencies(currentSubrace.Name);
+
+                extraChoiceBox.BeginUpdate();
+                extraChoiceBox.DataSource = null;
+                extraChoiceBox.DataSource = extraChoiceSource;
+                extraChoiceBox.EndUpdate();
+
+                if (extraChoiceBox.Items.Contains(wm.Choices.RaceProficiency))
+                {
+                    extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(wm.Choices.RaceProficiency), true);
+                }
+                //else
+                //{
+                //    extraChoiceBox.SetSelected(0, true);
+                //}
+            }
+        }
+
+        private bool haveUsedBooksChanged()
+        {
+            return (lastUsedBooks != wm.DBManager.getUsedBookString());
         }
 
         private void raceListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillSubraceListBox(raceListBox.SelectedItem.ToString());
+            populateSubraceListBox();
         }
 
         private void subraceListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            descriptionLabel.Text = wm.DBManager.RaceData.getSubraceDescription(subraceListBox.SelectedItem.ToString());
+            Subrace currentSubrace = subraceListBox.SelectedItem as Subrace;
+            if (currentSubrace != null)
+            {
+                descriptionLabel.Text = currentSubrace.Description;
 
-            if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
-            {
-                descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
-                extraChoiceLayout.Visible = true;
-                fillExtraChoiceListBox(subraceListBox.SelectedItem.ToString());
-            }
-            else
-            {
-                descriptionLabel.MaximumSize = new Size(650, descriptionLabel.MaximumSize.Height);
-                extraChoiceLayout.Visible = false;
+                if (currentSubrace.HasProficiencyChoice)
+                {
+                    descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
+                    extraChoiceLayout.Visible = true;
+                    fillExtraChoiceListBox(currentSubrace.Name);
+                }
+                else
+                {
+                    descriptionLabel.MaximumSize = new Size(650, descriptionLabel.MaximumSize.Height);
+                    extraChoiceLayout.Visible = false;
+                }
             }
 
             saveContent();
@@ -164,38 +236,5 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
-        public bool isValid()
-        {
-            if (subraceListBox.SelectedItems.Count > 0)
-            {
-                if (wm.DBManager.RaceData.subraceHasExtraChoice(subraceListBox.SelectedItem.ToString()))
-                {
-                    return ((subraceListBox.SelectedItems.Count > 0) && (extraChoiceBox.SelectedItems.Count > 0));
-                }
-            }
-
-            return (subraceListBox.SelectedItems.Count > 0);
-        }
-
-        public string getInvalidElements()
-        {
-            string output = "";
-
-            if (subraceListBox.SelectedItems.Count == 0)
-            {
-                output += raceBox.Text;
-            }
-
-            if (subraceListBox.SelectedItems.Count == 0)
-            {
-                if (!string.IsNullOrEmpty(output))
-                {
-                    output += ", ";
-                }
-                output += "bonus race proficiency";
-            }
-
-            return output;
-        }
     }
 }

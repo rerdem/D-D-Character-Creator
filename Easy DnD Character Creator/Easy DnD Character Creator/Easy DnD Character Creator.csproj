@@ -113,8 +113,10 @@
     <Compile Include="DataTypes\Metamagic.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
     <Compile Include="DataTypes\Pack.cs" />
+    <Compile Include="DataTypes\Race.cs" />
     <Compile Include="DataTypes\Skill.cs" />
     <Compile Include="DataTypes\Spell.cs" />
+    <Compile Include="DataTypes\Subrace.cs" />
     <Compile Include="DataTypes\Tool.cs" />
     <Compile Include="DataTypes\ChoiceFeature.cs" />
     <Compile Include="DataTypes\ChoiceFeatureOption.cs" />

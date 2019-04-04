@@ -15,12 +15,9 @@ namespace Easy_DnD_Character_Creator
         public bool AdjustStartingMoney { get; set; }
 
         //RaceControl
-        public string Race { get; set; }
-        public string Subrace { get; set; }
+        public Race RaceChoice { get; set; }
         public string RaceProficiency { get; set; }
-        public bool HasExtraRaceChoice { get; set; }
-        public bool HasExtraRaceSpells { get; set; }
-
+        
         //AlignmentControl
         public string LawAlignment { get; set; }
         public string MoralityAlignment { get; set; }
@@ -186,12 +183,9 @@ namespace Easy_DnD_Character_Creator
             Level = 1;
             AdjustStartingMoney = true;
 
-            Race = "";
-            Subrace = "";
+            RaceChoice = new Race();
             RaceProficiency = "";
-            HasExtraRaceChoice = false;
-            HasExtraRaceSpells = false;
-
+            
             LawAlignment = "";
             MoralityAlignment = "";
 

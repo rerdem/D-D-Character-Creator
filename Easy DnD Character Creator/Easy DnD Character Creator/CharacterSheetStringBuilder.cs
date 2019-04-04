@@ -180,7 +180,7 @@ namespace Easy_DnD_Character_Creator
         public string constructToolProficiencyString()
         {
             //general tool proficiencies
-            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.Subrace, Choices.Class, Choices.Subclass, Choices.Background);
+            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background);
     
             //race proficiencies
             if (!toolProficiencies.Contains(Choices.RaceProficiency))
@@ -214,12 +214,12 @@ namespace Easy_DnD_Character_Creator
 
         public string constructLanguageProficiencyString()
         {
-            if (DBManager.LanguageData.hasExtraLanguages(Choices.Subrace, Choices.Subclass, Choices.Background))
+            if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
             {
                 return string.Join(", ", Choices.Languages);
             }
     
-            return string.Join(", ", DBManager.LanguageData.getDefaultLanguages(Choices.Subrace, Choices.Class, Choices.Subclass));
+            return string.Join(", ", DBManager.LanguageData.getDefaultLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass));
         }
 
         public int calculateAC()
@@ -234,12 +234,14 @@ namespace Easy_DnD_Character_Creator
                 Armor bodyArmor = ownedArmor.FirstOrDefault(armor => armor.AC > 0);
                 if (bodyArmor != null)
                 {
+                    int armorModifier = 0;
+
                     AbilityScore armorModifierAbility = Choices.Abilities.FirstOrDefault(ability => ability.Name == bodyArmor.AdditionalModifier);
-    
-                    Console.WriteLine("calculating armoredAC, modifying ablility: " + armorModifierAbility.Name);
-    
-                    int armorModifier = armorModifierAbility.getModifier();
-    
+                    if (armorModifierAbility != null)
+                    {
+                        armorModifier = armorModifierAbility.getModifier();
+                    }
+
                     if (bodyArmor.AdditionalModifierLimit > 0)
                     {
                         if (armorModifier > bodyArmor.AdditionalModifierLimit)
@@ -257,9 +259,6 @@ namespace Easy_DnD_Character_Creator
             foreach (string ability in unarmoredAbilities)
             {
                 AbilityScore unarmoredModifierAbility = Choices.Abilities.FirstOrDefault(score => score.Name == ability);
-    
-                Console.WriteLine("calculating unarmoredAC, modifying ablility: " + unarmoredModifierAbility.Name);
-    
                 unarmoredAC += unarmoredModifierAbility.getModifier();
             }
     
@@ -535,6 +534,11 @@ namespace Easy_DnD_Character_Creator
 
         public string formatSpellcastingAbility()
         {
+            if (SpellcastingAbility.Length < 3)
+            {
+                return SpellcastingAbility.ToUpper();
+            }
+
             return SpellcastingAbility.Substring(0, 3).ToUpper();
         }
 
