@@ -31,6 +31,15 @@ namespace Easy_DnD_Character_Creator
             DBManager = inputDataManager;
             Choices = inputChoiceManager;
 
+            initializeHTMLSnippets();
+
+            ProficiencyBonus = 0;
+            WeaponProficiencies = "";
+            SpellcastingAbility = "";
+        }
+
+        private void initializeHTMLSnippets()
+        {
             HTMLRadioButton = "<input type=\"radio\" name=\"@name@\"@checked@>@text@<br>" + Environment.NewLine;
             HTMLRadioButtonChecked = " checked=\"checked\"";
             HTMLTableRow = "\t<tr>" + Environment.NewLine +
@@ -69,11 +78,6 @@ namespace Easy_DnD_Character_Creator
                                  "\t\t<td>@fly@</td>" + Environment.NewLine +
                                  "\t\t<td>@swim@</td>" + Environment.NewLine +
                                  "\t</tr>" + Environment.NewLine;
-
-
-            ProficiencyBonus = 0;
-            WeaponProficiencies = "";
-            SpellcastingAbility = "";
         }
 
         public string constructClassLevelString()
@@ -295,7 +299,7 @@ namespace Easy_DnD_Character_Creator
                 }
             }
     
-            //if there is no armor in the choices, check extra equipment
+            //check extra equipment
             foreach (string entry in Choices.ExtraEquipment.Split(',').ToList())
             {
                 Armor currentArmor = DBManager.EquipmentData.getArmor(entry);
@@ -308,7 +312,6 @@ namespace Easy_DnD_Character_Creator
                 }
             }
     
-            //if there is no armor, return empty armor
             return ownedArmor;
         }
 
@@ -319,7 +322,7 @@ namespace Easy_DnD_Character_Creator
             foreach (Weapon weapon in getOwnedWeapons())
             {
                 //name
-                string sanitizedWeaponName = Regex.Replace(weapon.Name, @"\s\([\d]+\)", "");
+                string sanitizedWeaponName = Regex.Replace(weapon.Name, @"\s\([\d]+\)", "").Trim();
                 string weaponEntry = HTMLTableRow.Replace("@name@", sanitizedWeaponName);
                 int attackModifier = 0;
     
@@ -435,13 +438,15 @@ namespace Easy_DnD_Character_Creator
                     }
                 }
             }
-    
+
             //get weapons from extra equipment
             foreach (string entry in Choices.ExtraEquipment.Split(',').ToList())
             {
-                Weapon currentWeapon = DBManager.EquipmentData.getWeapon(entry);
+                string sanitizedWeaponName = Regex.Replace(entry, @"\s\([\d]+\)", "").Trim();
+                Weapon currentWeapon = DBManager.EquipmentData.getWeapon(sanitizedWeaponName);
                 if (!string.IsNullOrEmpty(currentWeapon.Name))
                 {
+                    currentWeapon.Name = entry;
                     ownedWeapons.Add(currentWeapon);
                 }
             }
