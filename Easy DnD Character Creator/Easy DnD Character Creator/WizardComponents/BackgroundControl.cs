@@ -164,8 +164,6 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     backgroundDescription.MaximumSize = new Size(650, backgroundDescription.MaximumSize.Height);
                     extraProficiencyLayout.Visible = false;
                 }
-
-                //saveContent();
             }
         }
     }
