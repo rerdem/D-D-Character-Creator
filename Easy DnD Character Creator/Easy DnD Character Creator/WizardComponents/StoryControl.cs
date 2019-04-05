@@ -75,7 +75,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             storyLayout.Controls.Add(flawComponent);
             flawComponent.populateForm();
 
-            if (wm.Choices.HasWildShape)
+            if (wm.Choices.ClassChoice.HasWildShape)
             {
                 storyLayout.Controls.Add(wildShapeComponent);
                 wildShapeComponent.populateForm();
@@ -101,7 +101,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             flawComponent.saveContent();
             backstoryComponent.saveContent();
 
-            if (wm.Choices.HasWildShape)
+            if (wm.Choices.ClassChoice.HasWildShape)
             {
                 wildShapeComponent.saveContent();
             }
@@ -141,7 +141,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                             backstoryComponent.getInvalidElements()
                                 }.Where(s => !string.IsNullOrEmpty(s)));
 
-            if (wm.Choices.HasWildShape)
+            if (wm.Choices.ClassChoice.HasWildShape)
             {
                 if (!string.IsNullOrEmpty(output))
                 {

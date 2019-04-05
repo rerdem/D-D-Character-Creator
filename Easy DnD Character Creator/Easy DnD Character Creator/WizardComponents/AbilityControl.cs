@@ -145,7 +145,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             importSavedAbilityScores();
 
             //fill ability recommendation
-            recommendationLabel.Text = wm.DBManager.AbilityData.getAbilityRecommendation(wm.Choices.Class);
+            recommendationLabel.Text = wm.DBManager.AbilityData.getAbilityRecommendation(wm.Choices.ClassChoice.Name);
 
             //populate ability score bonus from subrace
             strBonusLabel.Text = "+" + wm.DBManager.AbilityData.getAbilityScoreBonus(wm.Choices.RaceChoice.getSelectedSubrace().Name, "Strength");
@@ -702,7 +702,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 int conModifier = calculateAbilityModifier(constitution);
 
                 //hp at level 1
-                health = wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.Class) + conModifier;
+                health = wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.ClassChoice.Name) + conModifier;
 
                 //separate check for subrace and subclass because bonus stacks
                 if (wm.DBManager.AbilityData.subraceHasBonusHP(wm.Choices.RaceChoice.getSelectedSubrace().Name))
@@ -710,7 +710,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     health++;
                 }
 
-                if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.Subclass))
+                if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.ClassChoice.getSelectedSubclass().Name))
                 {
                     health++;
                 }
@@ -723,14 +723,14 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 {
                     if (wm.Choices.Preset == 1)
                     {
-                        health += wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class);
+                        health += wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.ClassChoice.Name);
                     }
                     else
                     {
-                        int dieRoll = wm.getRandomNumber(1, wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.Class) + 1);
-                        if ((wm.Choices.Preset == 0) && (dieRoll < wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class)))
+                        int dieRoll = wm.getRandomNumber(1, wm.DBManager.AbilityData.getMaximumHitDieResult(wm.Choices.ClassChoice.Name) + 1);
+                        if ((wm.Choices.Preset == 0) && (dieRoll < wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.ClassChoice.Name)))
                         {
-                            dieRoll = wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.Class);
+                            dieRoll = wm.DBManager.AbilityData.getAverageHitDieResult(wm.Choices.ClassChoice.Name);
                         }
                         health += dieRoll;
                     }
@@ -743,7 +743,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                         health++;
                     }
 
-                    if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.Subclass))
+                    if (wm.DBManager.AbilityData.subclassHasBonusHP(wm.Choices.ClassChoice.getSelectedSubclass().Name))
                     {
                         health++;
                     }

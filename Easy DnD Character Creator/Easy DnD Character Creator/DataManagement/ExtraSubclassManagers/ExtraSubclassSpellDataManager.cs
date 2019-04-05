@@ -20,41 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, iof a given subclass chooses additional spells
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        public bool hasExtraSpellChoice(string subclass)
-        {
-            bool hasSpellChoice = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT amount FROM extraSubclassCantrips " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = extraSubclassCantrips.subclassId " +
-                                      "WHERE subclasses.name = @Subclass";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            if (dbReader.GetInt32(0) > 0)
-                            {
-                                hasSpellChoice = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return hasSpellChoice;
-        }
-
-        /// <summary>
         /// gets the amount of spells a given subclass may choose
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

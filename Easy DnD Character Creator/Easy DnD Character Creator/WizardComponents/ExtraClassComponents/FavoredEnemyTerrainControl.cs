@@ -99,20 +99,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         
         public void saveContent()
         {
-            wm.Choices.FavoredEnemies = string.Join(", ", enemyBox.Items
-                                                                  .OfType<object>()
-                                                                  .Select(item => item.ToString())
-                                                                  .ToArray());
-            wm.Choices.FavoredTerrains = string.Join(", ", terrainBox.Items
-                                                                     .OfType<object>()
-                                                                     .Select(item => item.ToString())
-                                                                     .ToArray());
+            wm.Choices.ClassChoice.FavoredEnemies = string.Join(", ", enemyBox.Items
+                                                                              .OfType<object>()
+                                                                              .Select(item => item.ToString())
+                                                                              .ToArray());
+            wm.Choices.ClassChoice.FavoredTerrains = string.Join(", ", terrainBox.Items
+                                                                                 .OfType<object>()
+                                                                                 .Select(item => item.ToString())
+                                                                                 .ToArray());
         }
 
         private void resetPage()
         {
-            favoredEnemyAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredEnemyAmount(wm.Choices.Class, wm.Choices.Level);
-            favoredTerrainAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredTerrainAmount(wm.Choices.Class, wm.Choices.Level);
+            favoredEnemyAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredEnemyAmount(wm.Choices.ClassChoice.Name, wm.Choices.Level);
+            favoredTerrainAmount = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.getFavoredTerrainAmount(wm.Choices.ClassChoice.Name, wm.Choices.Level);
 
             if (!Visited || hasLevelChanged())
             {
@@ -142,7 +142,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             //load enemy
             for (int i = 0; i < enemyBox.Items.Count; i++)
             {
-                if (wm.Choices.FavoredEnemies.Contains(enemyBox.Items[i].ToString()))
+                if (wm.Choices.ClassChoice.FavoredEnemies.Contains(enemyBox.Items[i].ToString()))
                 {
                     enemyBox.SetSelected(i, true);
                 }
@@ -155,7 +155,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             //load terrain
             for (int i = 0; i < terrainBox.Items.Count; i++)
             {
-                if (wm.Choices.FavoredTerrains.Contains(terrainBox.Items[i].ToString()))
+                if (wm.Choices.ClassChoice.FavoredTerrains.Contains(terrainBox.Items[i].ToString()))
                 {
                     terrainBox.SetSelected(i, true);
                 }

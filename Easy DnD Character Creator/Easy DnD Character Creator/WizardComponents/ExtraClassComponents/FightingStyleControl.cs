@@ -59,7 +59,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                 fightingStyleLabel.Text = "You adopt a particular style of fighting as your specialty. Choose one of the following options:";
             }
 
-            availableStyles = wm.DBManager.ExtraClassChoiceData.FightingStyleData.getFightingStyles(wm.Choices.Class, wm.Choices.Level);
+            availableStyles = wm.DBManager.ExtraClassChoiceData.FightingStyleData.getFightingStyles(wm.Choices.ClassChoice.Name, wm.Choices.Level);
             fightingStyleListBox.BeginUpdate();
             fightingStyleListBox.DataSource = null;
             fightingStyleListBox.DataSource = availableStyles;
@@ -70,7 +70,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             {
                 for (int i = 0; i < fightingStyleListBox.Items.Count; i++)
                 {
-                    if (wm.Choices.ClassFightingStyles.Contains(fightingStyleListBox.Items[i]))
+                    if (wm.Choices.ClassChoice.FightingStyles.Contains(fightingStyleListBox.Items[i]))
                     {
                         fightingStyleListBox.SetSelected(i, true);
                     }
@@ -82,10 +82,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void saveContent()
         {
-            wm.Choices.ClassFightingStyles.Clear();
+            wm.Choices.ClassChoice.FightingStyles.Clear();
             if (fightingStyleListBox.SelectedItems.Count > 0)
             {
-                wm.Choices.ClassFightingStyles.Add((FightingStyle)fightingStyleListBox.SelectedItem);
+                wm.Choices.ClassChoice.FightingStyles.Add((FightingStyle)fightingStyleListBox.SelectedItem);
             }
         }
 

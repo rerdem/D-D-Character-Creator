@@ -84,8 +84,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (!Visited || hasSubclassLevelChanged())
             {
-                totemFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.TotemData.totemFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
-                totemFeatures = wm.DBManager.ExtraSubclassChoiceData.TotemData.getTotemFeatures(wm.Choices.Subclass, wm.Choices.Level);
+                totemFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.TotemData.totemFeatureAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
+                totemFeatures = wm.DBManager.ExtraSubclassChoiceData.TotemData.getTotemFeatures(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
             }
 
             if (Visited && !hasSubclassLevelChanged())
@@ -93,21 +93,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
                 //load content
                 foreach (ChoiceFeature feature in totemFeatures)
                 {
-                    if (wm.Choices.TotemFeatures.Contains(feature))
+                    if (wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.Contains(feature))
                     {
-                        feature.selectOption(wm.Choices.TotemFeatures[wm.Choices.TotemFeatures.IndexOf(feature)].getSelectedOption());
+                        feature.selectOption(wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures[wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.IndexOf(feature)].getSelectedOption());
                     }
                 }
             }
             refreshContent();
 
-            lastSubclassLevel = wm.Choices.Subclass + wm.Choices.Level.ToString();
+            lastSubclassLevel = wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString();
             Visited = true;
         }
 
         public void saveContent()
         {
-            wm.Choices.TotemFeatures.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.Clear();
             foreach (TotemFeatureControl control in featureControls)
             {
                 control.saveContent();
@@ -130,7 +130,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         private bool hasSubclassLevelChanged()
         {
-            return (lastSubclassLevel != (wm.Choices.Subclass + wm.Choices.Level.ToString()));
+            return (lastSubclassLevel != (wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString()));
         }
 
         private void control_TotemOptionChosen(object sender, EventArgs e)

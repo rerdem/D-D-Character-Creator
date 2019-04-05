@@ -19,38 +19,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass chooses additional skills or skills to which more modifiers are applied
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        public bool hasSkillChoice(string subclass, int level)
-        {
-            bool hasSkillCoice = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT * FROM extraSubclassSkillChoice " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId=extraSubclassSkillChoice.subclassId " +
-                                      "WHERE subclasses.name=@Subclass AND extraSubclassSkillChoice.level BETWEEN 1 AND @Level " +
-                                      "ORDER BY level DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasSkillCoice = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasSkillCoice;
-        }
-
-        /// <summary>
         /// checks, if the extra skill choice doubles proficiency or gains new proficiencies
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

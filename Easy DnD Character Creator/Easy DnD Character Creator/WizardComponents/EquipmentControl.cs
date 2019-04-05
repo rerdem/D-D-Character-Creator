@@ -148,7 +148,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //set LastClass
-            LastClass = wm.Choices.Class;
+            LastClass = wm.Choices.ClassChoice.Name;
 
             Visited = true;
         }
@@ -189,12 +189,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //extra equipment
-            wm.Choices.ExtraEquipment = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.Class);
+            wm.Choices.ExtraEquipment = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.ClassChoice.Name);
         }
 
         private bool hasClassChanged()
         {
-            return (wm.Choices.Class != LastClass);
+            return (wm.Choices.ClassChoice.Name != LastClass);
         }
 
         private string constructEquipmentDescription(EquipmentItem input)
@@ -233,8 +233,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void resetEquipment()
         {
-            EquipmentChoiceAmount = wm.DBManager.EquipmentData.getEquipmentChoiceAmount(wm.Choices.Class);
-            Equipment2ndSelectionAmount = wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.Class);
+            EquipmentChoiceAmount = wm.DBManager.EquipmentData.getEquipmentChoiceAmount(wm.Choices.ClassChoice.Name);
+            Equipment2ndSelectionAmount = wm.DBManager.EquipmentData.getEquipment2ndSelectionAmount(wm.Choices.ClassChoice.Name);
             
             int currentChoice = 1;
             for (int i = 0; i < choiceBoxes.Count; i++)
@@ -254,8 +254,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                     //choiceBoxes[i].Items.Clear();
                     equipmentOptions[i].Clear();
                     equipmentOptions[i].AddRange(wm.DBManager.EquipmentData.getEquipmentChoices(wm.Choices.RaceChoice.getSelectedSubrace().Name,
-                                                                                                 wm.Choices.Class,
-                                                                                                 wm.Choices.Subclass,
+                                                                                                 wm.Choices.ClassChoice.Name,
+                                                                                                 wm.Choices.ClassChoice.getSelectedSubclass().Name,
                                                                                                  currentChoice,
                                                                                                  wm.Choices.Strength.getTotalValue()).ToArray());
                     choiceBoxes[i].DataSource = null;
@@ -284,7 +284,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 equipmentList2.SelectionMode = SelectionMode.One;
             }
 
-            inventoryLabel.Text = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.Class);
+            inventoryLabel.Text = wm.DBManager.EquipmentData.getExtraEquipment(wm.Choices.ClassChoice.Name);
         }
 
         private void initializeCarrierLists()

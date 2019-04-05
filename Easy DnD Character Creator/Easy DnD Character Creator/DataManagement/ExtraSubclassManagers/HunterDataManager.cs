@@ -20,17 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass has a hunter choice at the given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        /// <returns></returns>
-        public bool hasHunterFeatures(string subclass, int level)
-        {
-            return (hunterFeatureAmount(subclass, level) > 0);
-        }
-
-        /// <summary>
         /// gets the number of features available for a given subclass/level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

@@ -83,8 +83,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
                 feature.selectOption(currentOption);
             }
 
-            wm.Choices.TotemFeatures.Remove(feature);
-            wm.Choices.TotemFeatures.Add(feature);
+            wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.Remove(feature);
+            wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.Add(feature);
         }
 
         private int getCurrentlySelectedOptionIndex()

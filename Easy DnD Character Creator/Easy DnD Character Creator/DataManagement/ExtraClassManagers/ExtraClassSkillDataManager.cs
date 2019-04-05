@@ -56,38 +56,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         }
 
         /// <summary>
-        /// checks, if a given class chooses additional skills or skills to which more modifiers are applied
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasSkillChoice(string className, int level)
-        {
-            bool hasSkillCoice = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT * FROM extraClassSkillChoice " +
-                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoice.classId " +
-                                      "WHERE classes.name=@Class AND extraClassSkillChoice.level BETWEEN 1 AND @Level " +
-                                      "ORDER BY level DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Class", className);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasSkillCoice = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasSkillCoice;
-        }
-
-        /// <summary>
         /// checks, if the extra skill choice doubles proficiency or gains new proficiencies
         /// </summary>
         /// <param name="className">chosen class</param>

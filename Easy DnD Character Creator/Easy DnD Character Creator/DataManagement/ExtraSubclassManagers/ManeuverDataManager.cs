@@ -20,16 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass may choose maneuvers at the given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        public bool hasManeuvers(string subclass, int level)
-        {
-            return (getManeuverAmount(subclass, level) > 0);
-        }
-
-        /// <summary>
         /// gets the amount of maneuvers a given subclass may choose at the given level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

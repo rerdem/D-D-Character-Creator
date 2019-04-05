@@ -20,35 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass has draconic ancestry
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        public bool hasDraconicAncestry(string subclass)
-        {
-            bool hasAncestry = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT dragon FROM draconicAncestry " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = draconicAncestry.subclassId " +
-                                      "WHERE subclasses.name = @Subclass";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        hasAncestry = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasAncestry;
-        }
-
-        /// <summary>
         /// gets a list of all possible dragon ancestries
         /// </summary>
         public List<DraconicAncestry> getDraconicAncestries()

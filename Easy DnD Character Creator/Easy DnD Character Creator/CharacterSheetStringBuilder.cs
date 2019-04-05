@@ -82,15 +82,15 @@ namespace Easy_DnD_Character_Creator
 
         public string constructClassLevelString()
         {
-            string output = Choices.Class;
+            string output = Choices.ClassChoice.Name;
     
-            if (Choices.Subclass != "---")
+            if (Choices.ClassChoice.getSelectedSubclass().Name != "---")
             {
-                output += $" ({Choices.Subclass}";
+                output += $" ({Choices.ClassChoice.getSelectedSubclass().Name}";
     
-                if (Choices.HasDraconicAncestry)
+                if (Choices.ClassChoice.getSelectedSubclass().HasDraconicAncestry)
                 {
-                    output += $", {Choices.Ancestry.Color}";
+                    output += $", {Choices.ClassChoice.getSelectedSubclass().Ancestry.Color}";
                 }
                 output += ")";
             }
@@ -121,11 +121,11 @@ namespace Easy_DnD_Character_Creator
                 {
                     int proficientModifier = 0;
     
-                    if ((Choices.ClassSkills.Contains(skill.Name)) && Choices.ClassDoublesProficiency)
+                    if ((Choices.ClassChoice.ExtraSkills.Contains(skill.Name)) && Choices.ClassChoice.DoublesProficiency)
                     {
                         proficientModifier = currentSkillAbility.getModifier() + (ProficiencyBonus * 2);
                     }
-                    else if ((Choices.SubclassSkills.Contains(skill.Name)) && Choices.SubclassDoublesProficiency)
+                    else if ((Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Contains(skill.Name)) && Choices.ClassChoice.getSelectedSubclass().DoublesProficiency)
                     {
                         proficientModifier = currentSkillAbility.getModifier() + (ProficiencyBonus * 2);
                     }
@@ -158,11 +158,11 @@ namespace Easy_DnD_Character_Creator
             {
                 int proficientModifier = 0;
     
-                if ((Choices.ClassSkills.Contains("Perception")) && Choices.ClassDoublesProficiency)
+                if ((Choices.ClassChoice.ExtraSkills.Contains("Perception")) && Choices.ClassChoice.DoublesProficiency)
                 {
                     proficientModifier = modifier + (ProficiencyBonus * 2);
                 }
-                else if ((Choices.SubclassSkills.Contains("Perception")) && Choices.SubclassDoublesProficiency)
+                else if ((Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Contains("Perception")) && Choices.ClassChoice.getSelectedSubclass().DoublesProficiency)
                 {
                     proficientModifier = modifier + (ProficiencyBonus * 2);
                 }
@@ -184,7 +184,7 @@ namespace Easy_DnD_Character_Creator
         public string constructToolProficiencyString()
         {
             //general tool proficiencies
-            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name);
+            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name);
 
             //race proficiencies
             if (Choices.RaceChoice.getSelectedSubrace().HasProficiencyChoice)
@@ -196,9 +196,9 @@ namespace Easy_DnD_Character_Creator
             }
     
             //class proficiencies
-            if (Choices.ClassProficiencies.Count > 0)
+            if (Choices.ClassChoice.Proficiencies.Count > 0)
             {
-                foreach (string entry in Choices.ClassProficiencies)
+                foreach (string entry in Choices.ClassChoice.Proficiencies)
                 {
                     if (!toolProficiencies.Contains(entry))
                     {
@@ -208,11 +208,11 @@ namespace Easy_DnD_Character_Creator
             }
 
             //subclass proficiencies
-            if (Choices.HasExtraToolProficiencies)
+            if (Choices.ClassChoice.getSelectedSubclass().HasExtraToolProficiencies)
             {
-                if (!toolProficiencies.Contains(Choices.SubclassToolProficiency))
+                if (!toolProficiencies.Contains(Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency))
                 {
-                    toolProficiencies.Add(Choices.SubclassToolProficiency);
+                    toolProficiencies.Add(Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency);
                 }
             }
 
@@ -230,12 +230,12 @@ namespace Easy_DnD_Character_Creator
 
         public string constructLanguageProficiencyString()
         {
-            if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
+            if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name))
             {
                 return string.Join(", ", Choices.Languages);
             }
     
-            return string.Join(", ", DBManager.LanguageData.getDefaultLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass));
+            return string.Join(", ", DBManager.LanguageData.getDefaultLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name));
         }
 
         public int calculateAC()
@@ -270,7 +270,7 @@ namespace Easy_DnD_Character_Creator
             }
     
             //calculate unarmored AC
-            List<string> unarmoredAbilities = DBManager.ExportData.getUnarmoredDefenseAbilities(Choices.Class);
+            List<string> unarmoredAbilities = DBManager.ExportData.getUnarmoredDefenseAbilities(Choices.ClassChoice.Name);
     
             foreach (string ability in unarmoredAbilities)
             {
@@ -660,7 +660,7 @@ namespace Easy_DnD_Character_Creator
         {
             string output = "";
 
-            if (Choices.HasWildShape)
+            if (Choices.ClassChoice.HasWildShape)
             {
                 output = HTMLWildShapeList.Replace("@charactername@", Choices.CharacterName);
                 output = output.Replace("@terrain@", Choices.TerrainChoice.Name);

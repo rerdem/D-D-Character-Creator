@@ -20,37 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass must choose aa beast companion at a given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        public bool hasCompanion(string subclass, int level)
-        {
-            bool hasCompanion = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT rangerCompanions.name FROM rangerCompanions " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = rangerCompanions.subclassId " +
-                                      "WHERE subclasses.name = @Subclass AND rangerCompanions.level BETWEEN 1 AND @Level";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasCompanion = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasCompanion;
-        }
-
-        /// <summary>
         /// gets a list of beasts the given subclass can choose as a companion at a given level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

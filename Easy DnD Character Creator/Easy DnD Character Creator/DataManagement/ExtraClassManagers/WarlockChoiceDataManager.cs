@@ -20,26 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         }
 
         /// <summary>
-        /// checks, if a given class has warlock choices at a given level
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasWarlockChoices(string className, int level)
-        {
-            return hasWarlockPact(className, level) || hasEldritchInvocations(className, level);
-        }
-
-        /// <summary>
-        /// checks, if a given class may choose a warlock pact at the given level
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasWarlockPact(string className, int level)
-        {
-            return ((className == "Warlock") && (level == 3));
-        }
-
-        /// <summary>
         /// gets a list of available warlock pacts
         /// </summary>
         public List<WarlockPact> getWarlockPacts()
@@ -100,16 +80,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             }
 
             return pactSpells;
-        }
-
-        /// <summary>
-        /// checks, if a given class may choose eldritch invocations at the given level
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasEldritchInvocations(string className, int level)
-        {
-            return ((className == "Warlock") && (getEldritchInvocationAmount(level) > 0));
         }
 
         /// <summary>

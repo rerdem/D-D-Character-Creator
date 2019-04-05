@@ -77,24 +77,24 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void saveContent()
         {
-            wm.Choices.ChosenDisciplines.Clear();
-            wm.Choices.MandatoryDisciplines.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().MandatoryDisciplines.Clear();
 
             foreach (ElementalDiscipline discipline in disciplineListBox.SelectedItems)
             {
                 if (discipline != null)
                 {
-                    wm.Choices.ChosenDisciplines.Add(discipline);
+                    wm.Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines.Add(discipline);
                 }
             }
 
-            wm.Choices.MandatoryDisciplines = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.getMandatoryDisciplines(wm.Choices.Level);
+            wm.Choices.ClassChoice.getSelectedSubclass().MandatoryDisciplines = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.getMandatoryDisciplines(wm.Choices.Level);
         }
 
         private void loadPreviousSelections()
         {
             //load discipline choices
-            foreach (ElementalDiscipline discipline in wm.Choices.ChosenDisciplines)
+            foreach (ElementalDiscipline discipline in wm.Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines)
             {
                 if (disciplineListBox.Items.IndexOf(discipline) >= 0)
                 {
@@ -105,7 +105,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         private void resetContent()
         {
-            disciplinesKnown = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.getDisciplineAmount(wm.Choices.Subclass, wm.Choices.Level);
+            disciplinesKnown = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.getDisciplineAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
             introLabel.Text = $"Please choose {disciplinesKnown} elemental discipline(s) below. Some options are mandatory and cannot be deselected.";
 

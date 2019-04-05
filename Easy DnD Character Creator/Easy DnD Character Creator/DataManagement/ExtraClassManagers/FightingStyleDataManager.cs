@@ -20,37 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         }
 
         /// <summary>
-        /// checks, if the chosen class may choose a fighting style at the given level
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public bool hasFightingStyle(string className, int level)
-        {
-            bool hasFightingStyle = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT * FROM fightingStyleGain " +
-                                      "INNER JOIN classes ON fightingStyleGain.classId=classes.classid " +
-                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level";
-                command.Parameters.AddWithValue("@Class", className);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasFightingStyle = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasFightingStyle;
-        }
-
-        /// <summary>
         /// gets a list of fighting styles the class can choose from at the given level
         /// </summary>
         /// <param name="className">chosen class</param>

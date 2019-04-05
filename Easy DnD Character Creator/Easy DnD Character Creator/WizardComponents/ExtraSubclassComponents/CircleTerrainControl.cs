@@ -57,7 +57,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            circleTerrainComboSource = wm.DBManager.ExtraSubclassChoiceData.CircleTerrainData.getCircleTerrains(wm.Choices.Subclass, wm.Choices.Level);
+            circleTerrainComboSource = wm.DBManager.ExtraSubclassChoiceData.CircleTerrainData.getCircleTerrains(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
             circleTerrainComboBox.BeginUpdate();
             circleTerrainComboBox.DataSource = null;
@@ -67,9 +67,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
             if (Visited)
             {
-                if (circleTerrainComboBox.Items.Contains(wm.Choices.DruidCircleTerrain))
+                if (circleTerrainComboBox.Items.Contains(wm.Choices.ClassChoice.getSelectedSubclass().DruidCircleTerrain))
                 {
-                    circleTerrainComboBox.SelectedItem = wm.Choices.DruidCircleTerrain;
+                    circleTerrainComboBox.SelectedItem = wm.Choices.ClassChoice.getSelectedSubclass().DruidCircleTerrain;
                 }
             }
 
@@ -80,11 +80,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (circleTerrainComboBox.SelectedItem != null)
             {
-                wm.Choices.DruidCircleTerrain = (CircleTerrain)circleTerrainComboBox.SelectedItem;
+                wm.Choices.ClassChoice.getSelectedSubclass().DruidCircleTerrain = (CircleTerrain)circleTerrainComboBox.SelectedItem;
             }
             else
             {
-                wm.Choices.DruidCircleTerrain = new CircleTerrain();
+                wm.Choices.ClassChoice.getSelectedSubclass().DruidCircleTerrain = new CircleTerrain();
             }
         }
     }

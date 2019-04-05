@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator
             UsedBooks = inputUsedBooks;
             RaceData.UsedBooks = inputUsedBooks;
             AppearanceData.UsedBooks = inputUsedBooks;
-            ClassData.UsedBooks = inputUsedBooks;
+            ClassData.setUsedBooks(inputUsedBooks);
             BackgroundData.UsedBooks = inputUsedBooks;
             AbilityData.UsedBooks = inputUsedBooks;
             LanguageData.UsedBooks = inputUsedBooks;

@@ -84,7 +84,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
                 terrainComboBox.DisplayMember = "Name";
                 terrainComboBox.EndUpdate();
 
-                introLabel.Text = $"Please choose the terrain in which you became a {wm.Choices.Class}:";
+                introLabel.Text = $"Please choose the terrain in which you became a {wm.Choices.ClassChoice.Name}:";
             }
 
             if (Visited && !hasClassChanged())
@@ -95,13 +95,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
                 }
             }
 
-            lastClass = wm.Choices.Class;
+            lastClass = wm.Choices.ClassChoice.Name;
             Visited = true;
         }
 
         public void saveContent()
         {
-            if ((wm.Choices.HasWildShape) && (terrainComboBox.SelectedItem != null))
+            if ((wm.Choices.ClassChoice.HasWildShape) && (terrainComboBox.SelectedItem != null))
             {
                 wm.Choices.TerrainChoice = (WildShapeTerrain)terrainComboBox.SelectedItem;
             }
@@ -113,7 +113,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
         private bool hasClassChanged()
         {
-            return (lastClass != wm.Choices.Class);
+            return (lastClass != wm.Choices.ClassChoice.Name);
         }
 
         private void terrainComboBox_SelectedIndexChanged(object sender, EventArgs e)

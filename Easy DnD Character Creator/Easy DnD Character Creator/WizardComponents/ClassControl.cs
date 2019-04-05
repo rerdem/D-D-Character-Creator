@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -15,6 +16,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
     {
         private WizardManager wm;
         private bool visited;
+
+        private List<CharacterClass> classSourceList;
+        private List<int> extraChoiceOrderedSelection;
+
+        private string lastUsedBooks;
+        private int lastLevel;
 
         public event EventHandler ClassChanged;
         public event EventHandler ClassChoiceChanged;
@@ -25,6 +32,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm = inputWizardManager;
             Visited = false;
+
+            classSourceList = new List<CharacterClass>();
+            extraChoiceOrderedSelection = new List<int>();
+
+            lastUsedBooks = "";
+
             ChoiceAmount = 0;
             InitializeComponent();
         }
@@ -50,16 +63,20 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += classBox.Text;
             }
 
-            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            if (currentClass != null)
             {
-                if (extraChoiceBox.SelectedItems.Count != ChoiceAmount)
+                if (currentClass.HasProficiencyChoice)
                 {
-                    if (!string.IsNullOrEmpty(output))
+                    if (extraChoiceBox.SelectedItems.Count != ChoiceAmount)
                     {
-                        output += ", ";
-                    }
+                        if (!string.IsNullOrEmpty(output))
+                        {
+                            output += ", ";
+                        }
 
-                    output += "class tool proficiency amount";
+                        output += "class tool proficiency amount";
+                    }
                 }
             }
 
@@ -68,146 +85,93 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public bool isValid()
         {
-            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            if (currentClass != null)
             {
-                return (classListBox.SelectedItems.Count > 0) 
-                    && (subclassListBox.SelectedItems.Count > 0)
-                    && (extraChoiceBox.SelectedItems.Count == ChoiceAmount);
+                if (currentClass.HasProficiencyChoice)
+                {
+                    return (classListBox.SelectedItems.Count > 0)
+                        && (subclassListBox.SelectedItems.Count > 0)
+                        && (extraChoiceBox.SelectedItems.Count == ChoiceAmount);
+                }
+                return (classListBox.SelectedItems.Count > 0) && (subclassListBox.SelectedItems.Count > 0);
             }
-            return (classListBox.SelectedItems.Count > 0) && (subclassListBox.SelectedItems.Count > 0);
+
+            return false;
         }
 
         public void populateForm()
         {
-            fillClassListBox();
+            if (!Visited || haveUsedBooksChanged() || hasLevelChanged())
+            {
+                fillClassListBox();
+            }
+
+            if (Visited && !haveUsedBooksChanged() && !hasLevelChanged())
+            {
+                loadPreviousSelections();
+            }
+
+            lastUsedBooks = string.Join(", ", wm.DBManager.UsedBooks);
+            lastLevel = wm.Choices.Level;
             Visited = true;
         }
 
         public void saveContent()
         {
-            //save class/subclass
-            wm.Choices.Class = classListBox.SelectedItem.ToString();
-            wm.Choices.Subclass = subclassListBox.SelectedItem.ToString();
-
-            //save information about properties and additional choices to make
-            wm.Choices.HasFightingStyle = wm.DBManager.ExtraClassChoiceData.FightingStyleData.hasFightingStyle(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasFavoredEnemy = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredEnemy(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasFavoredTerrain = wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredTerrain(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasExtraClassSkills = wm.DBManager.ExtraClassChoiceData.ExtraClassSkillData.hasSkillChoice(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasWarlockPact = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockPact(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasEldritchInvocations = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasEldritchInvocations(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasWarlockChoices = wm.Choices.HasWarlockPact || wm.Choices.HasEldritchInvocations;
-            wm.Choices.HasMetamagic = wm.DBManager.ExtraClassChoiceData.MetamagicData.hasMetamagic(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasExtraClassChoice = wm.Choices.HasFightingStyle ||
-                                             wm.Choices.HasFavoredEnemy ||
-                                             wm.Choices.HasFavoredTerrain ||
-                                             wm.Choices.HasExtraClassSkills ||
-                                             wm.Choices.HasWarlockChoices ||
-                                             wm.Choices.HasMetamagic;
-
-            //wm.Choices.HasExtraClassChoice = wm.DBManager.ExtraClassChoiceData.hasExtraClassChoices(classListBox.SelectedItem.ToString(), wm.Choices.Level);
-            //wm.Choices.HasExtraSubclassChoice = wm.DBManager.ExtraSubclassChoiceData.hasExtraSubclassChoices(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.ChoosesSpells = wm.DBManager.SpellData.hasSpellcasting(classListBox.SelectedItem.ToString(), subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-
-            wm.Choices.HasExtraSubclassSkills = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.hasSkillChoice(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasTotems = wm.DBManager.ExtraSubclassChoiceData.TotemData.hasTotemFeatures(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasExtraSubclassSpells = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.hasExtraSpellChoice(subclassListBox.SelectedItem.ToString());
-            wm.Choices.HasExtraToolProficiencies = wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.hasToolProficiencyChoice(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasManeuvers = wm.DBManager.ExtraSubclassChoiceData.ManeuverData.hasManeuvers(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasDraconicAncestry = wm.DBManager.ExtraSubclassChoiceData.DraconicAncestryData.hasDraconicAncestry(subclassListBox.SelectedItem.ToString());
-            wm.Choices.HasElementalDisciplines = wm.DBManager.ExtraSubclassChoiceData.ElementalDisciplineData.hasDisciplines(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasHunterChoices = wm.DBManager.ExtraSubclassChoiceData.HunterData.hasHunterFeatures(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasCompanion = wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.hasCompanion(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasCircleTerrain = wm.DBManager.ExtraSubclassChoiceData.CircleTerrainData.hasCircleTerrain(subclassListBox.SelectedItem.ToString(), wm.Choices.Level);
-            wm.Choices.HasExtraSubclassChoice = wm.Choices.HasExtraSubclassSkills ||
-                                                wm.Choices.HasTotems ||
-                                                wm.Choices.HasExtraSubclassSpells ||
-                                                wm.Choices.HasExtraToolProficiencies ||
-                                                wm.Choices.HasManeuvers ||
-                                                wm.Choices.HasDraconicAncestry ||
-                                                wm.Choices.HasElementalDisciplines ||
-                                                wm.Choices.HasHunterChoices ||
-                                                wm.Choices.HasCompanion ||
-                                                wm.Choices.HasCircleTerrain;
-
-            wm.Choices.HasWildShape = wm.DBManager.StoryData.hasWildShape(classListBox.SelectedItem.ToString());
-
-            //save extra choices that did not require extre UserControls
-            wm.Choices.ClassProficiencies.Clear();
-            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            Subclass currentSubclass = subclassListBox.SelectedItem as Subclass;
+            if ((currentClass != null) && (currentSubclass != null))
             {
-                foreach (object obj in extraChoiceBox.SelectedItems)
+                currentClass.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(currentClass.Name, currentSubclass.Name, wm.Choices.Level);
+                currentClass.ChoosesSpells = wm.DBManager.SpellData.choosesSpells(currentClass.Name, currentSubclass.Name, wm.Choices.Level);
+
+                currentClass.setSelectedSubclass(currentSubclass);
+
+                //save extra choices that did not require extre UserControls
+                currentClass.Proficiencies.Clear();
+                if (currentClass.HasProficiencyChoice)
                 {
-                    if (!string.IsNullOrEmpty(obj.ToString()))
+                    foreach (string item in extraChoiceBox.SelectedItems)
                     {
-                        wm.Choices.ClassProficiencies.Add(obj.ToString());
+                        currentClass.Proficiencies.Add(item);
                     }
                 }
+
+                wm.Choices.ClassChoice = currentClass;
             }
         }
 
-        private void fillClassListBox()
+        private bool haveUsedBooksChanged()
         {
-            List<string> classList = wm.DBManager.ClassData.getClasses();
-
-            classListBox.BeginUpdate();
-            classListBox.Items.Clear();
-            foreach (string className in classList)
-            {
-                classListBox.Items.Add(className);
-            }
-            classListBox.EndUpdate();
-
-            if (classListBox.Items.Contains(wm.Choices.Class))
-            {
-                classListBox.SetSelected(classListBox.Items.IndexOf(wm.Choices.Class), true);
-            }
-            else
-            {
-                classListBox.SetSelected(0, true);
-            }
+            return (lastUsedBooks != string.Join(", ", wm.DBManager.UsedBooks));
         }
 
-        private void fillSubclassListBox(string inputClass)
+        private bool hasLevelChanged()
         {
-            List<string> subclassList = wm.DBManager.ClassData.getSubclasses(inputClass, wm.Choices.Level);
-
-            subclassListBox.BeginUpdate();
-            subclassListBox.Items.Clear();
-            foreach (string subrace in subclassList)
-            {
-                subclassListBox.Items.Add(subrace);
-            }
-            subclassListBox.EndUpdate();
-
-            if (subclassListBox.Items.Contains(wm.Choices.Subclass))
-            {
-                subclassListBox.SetSelected(subclassListBox.Items.IndexOf(wm.Choices.Subclass), true);
-            }
-            else
-            {
-                subclassListBox.SetSelected(0, true);
-            }
+            return (lastLevel != wm.Choices.Level);
         }
 
-        private void fillExtraChoiceBox(string classChoice)
+        private void loadPreviousSelections()
         {
-            List<string> choiceList = wm.DBManager.ClassData.getExtraClassProficiencies(classChoice);
-
-            extraChoiceBox.BeginUpdate();
-            extraChoiceBox.Items.Clear();
-            foreach (string entry in choiceList)
+            //class choice
+            if (classListBox.Items.Contains(wm.Choices.ClassChoice))
             {
-                extraChoiceBox.Items.Add(entry);
+                classListBox.SetSelected(classListBox.Items.IndexOf(wm.Choices.ClassChoice), true);
             }
-            extraChoiceBox.EndUpdate();
 
-            if (wm.Choices.ClassProficiencies.Count > 0)
+            //subclass choice
+            if (subclassListBox.Items.Contains(wm.Choices.ClassChoice.getSelectedSubclass()))
+            {
+                subclassListBox.SetSelected(subclassListBox.Items.IndexOf(wm.Choices.ClassChoice.getSelectedSubclass()), true);
+            }
+
+            //extra proficiencies
+            if (wm.Choices.ClassChoice.Proficiencies.Count > 0)
             {
                 for (int i = 0; i < extraChoiceBox.Items.Count; i++)
                 {
-                    if (wm.Choices.ClassProficiencies.Contains(extraChoiceBox.Items[i]))
+                    if (wm.Choices.ClassChoice.Proficiencies.Contains(extraChoiceBox.Items[i]))
                     {
                         extraChoiceBox.SetSelected(i, true);
                     }
@@ -215,37 +179,94 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
         }
 
+        private void fillClassListBox()
+        {
+            classSourceList = wm.DBManager.ClassData.getClasses(wm.Choices.Level);
+
+            classListBox.BeginUpdate();
+            classListBox.DataSource = null;
+            classListBox.DataSource = classSourceList;
+            classListBox.DisplayMember = "Name";
+            classListBox.EndUpdate();
+        }
+
+        private void fillSubclassListBox()
+        {
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            if (currentClass != null)
+            {
+                subclassListBox.BeginUpdate();
+                subclassListBox.DataSource = null;
+                subclassListBox.DataSource = currentClass.Subclasses;
+                subclassListBox.DisplayMember = "Name";
+                subclassListBox.EndUpdate();
+            }
+        }
+
+        private void fillExtraChoiceBox()
+        {
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            if (currentClass != null)
+            {
+                List<string> choiceList = wm.DBManager.ClassData.getExtraClassProficiencies(currentClass.Name);
+
+                extraChoiceBox.BeginUpdate();
+                extraChoiceBox.DataSource = null;
+                extraChoiceBox.DataSource = choiceList;
+                extraChoiceBox.EndUpdate();
+            }
+        }
+
         private void toggleExtraChoiceBox()
         {
-            if (wm.DBManager.ClassData.classHasExtraChoice(classListBox.SelectedItem.ToString()))
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            if (currentClass != null)
             {
-                descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
-                extraChoiceLayout.Visible = true;
-
-                ChoiceAmount = wm.DBManager.ClassData.getExtraClassProficiencyAmount(classListBox.SelectedItem.ToString());
-                extraChoiceLabel.Text = extraChoiceLabel.Text.ToString().Replace(Regex.Match(extraChoiceLabel.Text, @"\d+").Value, ChoiceAmount.ToString());
-                if (ChoiceAmount > 1)
+                if (currentClass.HasProficiencyChoice)
                 {
-                    extraChoiceBox.SelectionMode = SelectionMode.MultiSimple;
+                    descriptionLabel.MaximumSize = new Size(520, descriptionLabel.MaximumSize.Height);
+                    extraChoiceLayout.Visible = true;
+
+                    ChoiceAmount = currentClass.ProficiencyChoiceAmount;
+                    extraChoiceLabel.Text = extraChoiceLabel.Text.ToString().Replace(Regex.Match(extraChoiceLabel.Text, @"\d+").Value, ChoiceAmount.ToString());
+                    if (ChoiceAmount > 1)
+                    {
+                        extraChoiceBox.SelectionMode = SelectionMode.MultiSimple;
+                    }
+                    else
+                    {
+                        extraChoiceBox.SelectionMode = SelectionMode.One;
+                    }
+
+                    fillExtraChoiceBox();
                 }
                 else
                 {
-                    extraChoiceBox.SelectionMode = SelectionMode.One;
+                    descriptionLabel.MaximumSize = new Size(650, descriptionLabel.MaximumSize.Height);
+                    extraChoiceLayout.Visible = false;
+                    ChoiceAmount = 0;
                 }
+            }
+        }
 
-                fillExtraChoiceBox(classListBox.SelectedItem.ToString());
-            }
-            else
+        private void syncExtraChoiceSelectionOrder()
+        {
+            //add new selected items
+            foreach (int index in extraChoiceBox.SelectedIndices)
             {
-                descriptionLabel.MaximumSize = new Size(650, descriptionLabel.MaximumSize.Height);
-                extraChoiceLayout.Visible = false;
-                ChoiceAmount = 0;
+                if (!extraChoiceOrderedSelection.Contains(index))
+                {
+                    extraChoiceOrderedSelection.Add(index);
+                }
             }
+
+            //remove deselected items
+            extraChoiceOrderedSelection.RemoveAll(index => !extraChoiceBox.SelectedIndices.Contains(index));
         }
 
         private void classListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillSubclassListBox(classListBox.SelectedItem.ToString());
+            fillSubclassListBox();
 
             toggleExtraChoiceBox();
 
@@ -254,22 +275,35 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void subclassListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            descriptionLabel.Text = wm.DBManager.ClassData.getClassDescription(classListBox.SelectedItem.ToString());
-            descriptionLabel.Text += Environment.NewLine;
-            descriptionLabel.Text += wm.DBManager.ClassData.getSubclassDescription(subclassListBox.SelectedItem.ToString());
+            CharacterClass currentClass = classListBox.SelectedItem as CharacterClass;
+            Subclass currentSubclass = subclassListBox.SelectedItem as Subclass;
+            if ((currentClass != null) && (currentSubclass != null))
+            {
+                currentClass.setSelectedSubclass(currentSubclass);
 
-            saveContent();
+                descriptionLabel.Text = currentClass.Description;
+                descriptionLabel.Text += Environment.NewLine;
+                descriptionLabel.Text += currentSubclass.Description;
+
+                //saveContent();
+            }
         }
 
         private void extraChoiceBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (extraChoiceBox.SelectedItems.Count > ChoiceAmount)
+            syncExtraChoiceSelectionOrder();
+            if (extraChoiceBox.SelectedItems.Count > 0)
             {
-                extraChoiceBox.SelectedItems.Remove(extraChoiceBox.SelectedItems[ChoiceAmount]);
-            }
-            //saveContent();
+                if (extraChoiceBox.SelectedItems.Count > ChoiceAmount)
+                {
+                    int lastSelectedIndex = extraChoiceOrderedSelection.ElementAt(extraChoiceOrderedSelection.Count - 1);
+                    extraChoiceBox.SelectedIndices.Remove(lastSelectedIndex);
+                }
 
-            OnClassChoiceChanged(null);
+                //saveContent(); was already commented out
+
+                OnClassChoiceChanged(null);
+            }
         }
 
         protected virtual void OnClassChanged(EventArgs e)

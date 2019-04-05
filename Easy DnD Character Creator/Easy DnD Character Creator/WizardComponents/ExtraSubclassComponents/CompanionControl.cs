@@ -57,7 +57,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            companionComboSource = wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.getBeastCompanions(wm.Choices.Subclass, wm.Choices.Level);
+            companionComboSource = wm.DBManager.ExtraSubclassChoiceData.BeastCompanionData.getBeastCompanions(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
             companionComboBox.BeginUpdate();
             companionComboBox.DataSource = null;
@@ -67,9 +67,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
             if (Visited)
             {
-                if (companionComboBox.Items.Contains(wm.Choices.BeastCompanion))
+                if (companionComboBox.Items.Contains(wm.Choices.ClassChoice.getSelectedSubclass().BeastCompanion))
                 {
-                    companionComboBox.SelectedIndex = companionComboBox.Items.IndexOf(wm.Choices.BeastCompanion);
+                    companionComboBox.SelectedIndex = companionComboBox.Items.IndexOf(wm.Choices.ClassChoice.getSelectedSubclass().BeastCompanion);
                 }
             }
 
@@ -80,11 +80,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (companionComboBox.SelectedItem != null)
             {
-                wm.Choices.BeastCompanion = (Beast)companionComboBox.SelectedItem;
+                wm.Choices.ClassChoice.getSelectedSubclass().BeastCompanion = (Beast)companionComboBox.SelectedItem;
             }
             else
             {
-                wm.Choices.BeastCompanion = new Beast();
+                wm.Choices.ClassChoice.getSelectedSubclass().BeastCompanion = new Beast();
             }
         }
 

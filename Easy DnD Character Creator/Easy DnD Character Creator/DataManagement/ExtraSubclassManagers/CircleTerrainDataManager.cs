@@ -20,39 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass has a terrain choice at the given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        public bool hasCircleTerrain(string subclass, int level)
-        {
-            bool hasCircleTerrain = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT druidCircleTerrains.terrain, spells.name FROM druidCircleTerrains " +
-                                      "INNER JOIN subclasses ON subclasses.subclassId = druidCircleTerrains.subclassId " +
-                                      "INNER JOIN druidCircleTerrainSpells ON druidCircleTerrainSpells.terrainId = druidCircleTerrains.terrainId " +
-                                      "INNER JOIN spells ON spells.spellId = druidCircleTerrainSpells.spellId " +
-                                      "WHERE subclasses.name = @Subclass AND druidCircleTerrainSpells.level BETWEEN 1 AND @Level";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasCircleTerrain = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasCircleTerrain;
-        }
-
-        /// <summary>
         /// gets a list of all circle terrains for the given subclass/level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

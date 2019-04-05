@@ -222,9 +222,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void resetSkillBoxes()
         {
             choiceBoxes.Clear();
-            classSkillCount = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.Class);
+            classSkillCount = wm.DBManager.SkillData.getClassSkillCount(wm.Choices.ClassChoice.Name);
             List<string> knownSkills = wm.DBManager.SkillData.getKnownSkills(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.BackgroundChoice.Name);
-            List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.Class);
+            List<string> skillOptions = wm.DBManager.SkillData.getClassSkillOptions(wm.Choices.ClassChoice.Name);
 
             foreach (CheckBox box in skillBoxes)
             {
@@ -295,12 +295,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setCharacterInfo()
         {
-            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.BackgroundChoice.Name;
+            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.ClassChoice.Name + wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.BackgroundChoice.Name;
         }
 
         private bool hasCharacterInfoChanged()
         {
-            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.BackgroundChoice.Name;
+            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.ClassChoice.Name + wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.BackgroundChoice.Name;
             return (currentCharacterInfo != lastCharacterInfo);
         }
 

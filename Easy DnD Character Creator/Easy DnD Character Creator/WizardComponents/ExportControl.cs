@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             saveDialog.Filter = "html files (*.html, *.htm)|*.html;*.htm|All files (*.*)|*.*";
             saveDialog.FilterIndex = 1;
             saveDialog.CheckPathExists = true;
-            saveDialog.FileName = $"{wm.Choices.PlayerName} {wm.Choices.Class}.html";
+            saveDialog.FileName = $"{wm.Choices.PlayerName} {wm.Choices.ClassChoice.Name}.html";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 charSheet.fillCharacterSheet();

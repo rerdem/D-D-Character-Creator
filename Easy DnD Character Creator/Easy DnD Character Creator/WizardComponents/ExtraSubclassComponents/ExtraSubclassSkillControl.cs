@@ -103,31 +103,31 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
                 loadPreviousSelection();
             }
 
-            lastSubclass = wm.Choices.Subclass;
+            lastSubclass = wm.Choices.ClassChoice.getSelectedSubclass().Name;
             Visited = true;
         }
 
         public void saveContent()
         {
             //save skills
-            wm.Choices.SubclassSkills.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Clear();
             foreach (CheckBox box in choiceBoxes)
             {
                 if (box.Checked)
                 {
-                    wm.Choices.SubclassSkills.Add(box.Text);
+                    wm.Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Add(box.Text);
                 }
             }
 
             //save doubling proficiency
-            wm.Choices.SubclassDoublesProficiency = doublesProficiency;
+            wm.Choices.ClassChoice.getSelectedSubclass().DoublesProficiency = doublesProficiency;
         }
 
         private void loadPreviousSelection()
         {
             foreach (CheckBox box in choiceBoxes)
             {
-                if (wm.Choices.SubclassSkills.Contains(box.Text))
+                if (wm.Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Contains(box.Text))
                 {
                     box.Checked = true;
                 }
@@ -143,8 +143,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             choiceBoxes.Clear();
             if (hasSubclassChanged())
             {
-                doublesProficiency = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.SkillChoiceDoublesProficiency(wm.Choices.Subclass, wm.Choices.Level);
-                choiceAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceAmount(wm.Choices.Subclass, wm.Choices.Level);
+                doublesProficiency = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.SkillChoiceDoublesProficiency(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
+                choiceAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
             }
             
             //get choosable skills
@@ -154,9 +154,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             choosableSkills.RemoveAll(skill => wm.Choices.Skills.Exists(chosenSkill => skill == chosenSkill));
             choosableSkills.RemoveAll(skill => wm.Choices.ExtraSkills.Exists(chosenSkill => skill == chosenSkill));
 
-            if (wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.hasSkillChoiceRestrictions(wm.Choices.Subclass))
+            if (wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.hasSkillChoiceRestrictions(wm.Choices.ClassChoice.getSelectedSubclass().Name))
             {
-                List<string> restrictions = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceRestrictions(wm.Choices.Subclass);
+                List<string> restrictions = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSkillData.getSkillChoiceRestrictions(wm.Choices.ClassChoice.getSelectedSubclass().Name);
                 choosableSkills.RemoveAll(skill => !restrictions.Exists(restriction => skill == restriction));
             }
             
@@ -180,11 +180,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             //set box title
             if (doublesProficiency)
             {
-                extraSkillBox.Text = $"{wm.Choices.Subclass} Expertise";
+                extraSkillBox.Text = $"{wm.Choices.ClassChoice.getSelectedSubclass().Name} Expertise";
             }
             else
             {
-                extraSkillBox.Text = $"{wm.Choices.Subclass} Bonus Skills";
+                extraSkillBox.Text = $"{wm.Choices.ClassChoice.getSelectedSubclass().Name} Bonus Skills";
             }
 
             //set label text
@@ -201,7 +201,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         private bool hasSubclassChanged()
         {
-            return (lastSubclass != wm.Choices.Subclass);
+            return (lastSubclass != wm.Choices.ClassChoice.getSelectedSubclass().Name);
         }
 
         private void toggleChoiceBoxes()

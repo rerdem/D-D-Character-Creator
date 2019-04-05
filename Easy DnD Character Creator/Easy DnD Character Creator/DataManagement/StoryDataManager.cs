@@ -191,35 +191,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// checks, if a given class has the ability to wild shape
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        public bool hasWildShape(string className)
-        {
-            bool hasWildShape = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT terrain FROM wildShapeTerrains " +
-                                      "INNER JOIN classes ON classes.classid=wildShapeTerrains.classId " +
-                                      "WHERE classes.name=@Class";
-                command.Parameters.AddWithValue("@Class", className);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        hasWildShape = !dbReader.IsDBNull(0);
-                    }
-                }
-            }
-
-            return hasWildShape;
-        }
-
-        /// <summary>
         /// gets the list of availalbe wild shape terrains
         /// </summary>
         public List<WildShapeTerrain> getWildShapeTerrains()

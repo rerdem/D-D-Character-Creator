@@ -87,6 +87,7 @@
     <Compile Include="DataManagement\ExtraClassManagers\FightingStyleDataManager.cs" />
     <Compile Include="DataManagement\ExtraClassManagers\WarlockChoiceDataManager.cs" />
     <Compile Include="DataManagement\StoryDataManager.cs" />
+    <Compile Include="DataManagement\SubclassDataManager.cs" />
     <Compile Include="DataTypes\Armor.cs" />
     <Compile Include="DataManagement\AbilityDataManager.cs" />
     <Compile Include="DataManagement\AppearanceDataManager.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="DataTypes\BarbarianRage.cs" />
     <Compile Include="DataTypes\Beast.cs" />
     <Compile Include="DataTypes\BonusSpell.cs" />
+    <Compile Include="DataTypes\CharacterClass.cs" />
     <Compile Include="DataTypes\CircleTerrain.cs" />
     <Compile Include="DataTypes\DraconicAncestry.cs" />
     <Compile Include="DataTypes\EldritchInvocation.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="DataTypes\Race.cs" />
     <Compile Include="DataTypes\Skill.cs" />
     <Compile Include="DataTypes\Spell.cs" />
+    <Compile Include="DataTypes\Subclass.cs" />
     <Compile Include="DataTypes\Subrace.cs" />
     <Compile Include="DataTypes\Tool.cs" />
     <Compile Include="DataTypes\ChoiceFeature.cs" />

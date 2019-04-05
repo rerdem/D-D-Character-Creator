@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void populateForm()
         {
-            metamagicKnown = wm.DBManager.ExtraClassChoiceData.MetamagicData.getMetamagicAmount(wm.Choices.Class, wm.Choices.Level);
+            metamagicKnown = wm.DBManager.ExtraClassChoiceData.MetamagicData.getMetamagicAmount(wm.Choices.ClassChoice.Name, wm.Choices.Level);
             metamagicIntroLabel.Text = $"Please choose {metamagicKnown} metamagics from the list below:";
 
             refreshMetamagicList();
@@ -85,12 +85,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void saveContent()
         {
-            wm.Choices.SorcererMetamagic.Clear();
+            wm.Choices.ClassChoice.SorcererMetamagic.Clear();
             foreach (Metamagic magic in metamagicListBox.SelectedItems)
             {
                 if (magic != null)
                 {
-                    wm.Choices.SorcererMetamagic.Add(magic);
+                    wm.Choices.ClassChoice.SorcererMetamagic.Add(magic);
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         {
             for (int i = 0; i < metamagicSourceList.Count; i++)
             {
-                if (wm.Choices.SorcererMetamagic.Contains(metamagicSourceList[i]))
+                if (wm.Choices.ClassChoice.SorcererMetamagic.Contains(metamagicSourceList[i]))
                 {
                     metamagicListBox.SetSelected(i, true);
                 }

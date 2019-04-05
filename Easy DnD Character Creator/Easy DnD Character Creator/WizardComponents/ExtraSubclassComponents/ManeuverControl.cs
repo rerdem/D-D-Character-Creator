@@ -48,16 +48,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            maneuverAmount = wm.DBManager.ExtraSubclassChoiceData.ManeuverData.getManeuverAmount(wm.Choices.Subclass, wm.Choices.Level);
+            maneuverAmount = wm.DBManager.ExtraSubclassChoiceData.ManeuverData.getManeuverAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
             resetContent();
 
             //if there was a previous choice, load it
-            if (Visited && (wm.Choices.Maneuvers.Count > 0))
+            if (Visited && (wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Count > 0))
             {
                 for (int i = 0; i < maneuverListBox.Items.Count; i++)
                 {
-                    if (wm.Choices.Maneuvers.Contains(maneuverListBox.Items[i]))
+                    if (wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Contains(maneuverListBox.Items[i]))
                     {
                         maneuverListBox.SetSelected(i, true);
                     }
@@ -106,16 +106,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (maneuverListBox.SelectedItems.Count > 0)
             {
-                wm.Choices.Maneuvers.Clear();
+                wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Clear();
 
                 foreach (Maneuver maneuver in maneuverListBox.SelectedItems)
                 {
-                    wm.Choices.Maneuvers.Add(maneuver);
+                    wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Add(maneuver);
                 }
             }
             else
             {
-                wm.Choices.Maneuvers.Clear();
+                wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Clear();
             }
         }
 

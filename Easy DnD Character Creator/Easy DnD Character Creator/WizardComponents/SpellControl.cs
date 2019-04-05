@@ -170,16 +170,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void resetSpells()
         {
             //reset variables
-            HasSubclassSpellSchoolLimitations = wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.Subclass);
-            SubclassSpellSchoolLimitationExceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.Subclass, wm.Choices.Level);
-            SubclassSpellSchoolLimitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.Subclass);
+            HasSubclassSpellSchoolLimitations = wm.DBManager.SpellData.hasSubclassSpellSchoolLimitations(wm.Choices.ClassChoice.getSelectedSubclass().Name);
+            SubclassSpellSchoolLimitationExceptions = wm.DBManager.SpellData.getSubclassSpellSchoolLimitationExceptions(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
+            SubclassSpellSchoolLimitations = wm.DBManager.SpellData.getSubclassSpellSchoolLimitations(wm.Choices.ClassChoice.getSelectedSubclass().Name);
 
             //set number of cantrips and spells known
-            CantripsKnown = wm.DBManager.SpellData.getCantripsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
+            CantripsKnown = wm.DBManager.SpellData.getCantripsKnown(wm.Choices.ClassChoice.Name, wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
-            if (wm.DBManager.SpellData.areSpellsKnownStatic(wm.Choices.Class, wm.Choices.Subclass))
+            if (wm.DBManager.SpellData.areSpellsKnownStatic(wm.Choices.ClassChoice.Name, wm.Choices.ClassChoice.getSelectedSubclass().Name))
             {
-                SpellsKnown = wm.DBManager.SpellData.getSpellsKnown(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level);
+                SpellsKnown = wm.DBManager.SpellData.getSpellsKnown(wm.Choices.ClassChoice.Name, wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
             }
             else
             {
@@ -211,10 +211,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             chosenSpellsSource.Clear();
 
             //populate extra race and class spells
-            if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level)))
+            if ((wm.DBManager.SpellData.hasExtraRaceSpells(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Level)) || (wm.DBManager.SpellData.hasExtraSubclassSpells(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level)))
             {
                 List<Spell> raceClassSpells = wm.DBManager.SpellData.getExtraRaceSpells(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Level);
-                raceClassSpells.AddRange(wm.DBManager.SpellData.getExtraSubclassSpells(wm.Choices.Subclass, wm.Choices.Level));
+                raceClassSpells.AddRange(wm.DBManager.SpellData.getExtraSubclassSpells(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level));
 
                 foreach (Spell spell in raceClassSpells)
                 {
@@ -232,10 +232,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             
             //populate cantrips without extra race or class spells
-            availableCantripsSource = wm.DBManager.SpellData.getCantripOptions(wm.Choices.Class, wm.Choices.Subclass).Except(chosenCantripsSource).ToList();
+            availableCantripsSource = wm.DBManager.SpellData.getCantripOptions(wm.Choices.ClassChoice.Name, wm.Choices.ClassChoice.getSelectedSubclass().Name).Except(chosenCantripsSource).ToList();
 
             //populate spells without extra race or class spells
-            availableSpellsSource = wm.DBManager.SpellData.getSpellOptions(wm.Choices.Class, wm.Choices.Subclass, wm.Choices.Level).Except(chosenSpellsSource).ToList();
+            availableSpellsSource = wm.DBManager.SpellData.getSpellOptions(wm.Choices.ClassChoice.Name, wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level).Except(chosenSpellsSource).ToList();
 
             //refresh list boxes from source lists
             refreshListBoxes();
@@ -338,12 +338,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setCharacterInfo()
         {
-            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.ClassChoice.Name + wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString();
         }
 
         private bool hasCharacterInfoChanged()
         {
-            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Level.ToString();
+            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.ClassChoice.Name + wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString();
             return (currentCharacterInfo != lastCharacterInfo);
         }
 

@@ -166,35 +166,35 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             //setup subcontrols
             classChoiceLayout.Controls.Clear();
             //fighting style
-            if (wm.DBManager.ExtraClassChoiceData.FightingStyleData.hasFightingStyle(wm.Choices.Class, wm.Choices.Level))
+            if (wm.Choices.ClassChoice.HasFightingStyle)
             {
                 classChoiceLayout.Controls.Add(fightingStyleComponent);
             }
             fightingStyleComponent.populateForm();
 
             //favored enemy and terrain
-            if (wm.DBManager.ExtraClassChoiceData.FavoredEnemyTerrainData.hasFavoredEnemyTerrain(wm.Choices.Class, wm.Choices.Level))
+            if (wm.Choices.ClassChoice.HasFavoredEnemyTerrain)
             {
                 classChoiceLayout.Controls.Add(favoredEnemyTerrainComponent);
             }
             favoredEnemyTerrainComponent.populateForm();
 
             //additional skills
-            if (wm.DBManager.ExtraClassChoiceData.ExtraClassSkillData.hasSkillChoice(wm.Choices.Class, wm.Choices.Level))
+            if (wm.Choices.ClassChoice.HasExtraSkills)
             {
                 classChoiceLayout.Controls.Add(extraClassSkillsComponent);
             }
             extraClassSkillsComponent.populateForm();
 
             //warlock choices
-            if (wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.hasWarlockChoices(wm.Choices.Class, wm.Choices.Level))
+            if (wm.Choices.ClassChoice.HasWarlockChoices)
             {
                 classChoiceLayout.Controls.Add(warlockComponent);
             }
             warlockComponent.populateForm();
 
             //metamagic
-            if (wm.DBManager.ExtraClassChoiceData.MetamagicData.hasMetamagic(wm.Choices.Class, wm.Choices.Level))
+            if (wm.Choices.ClassChoice.HasMetamagic)
             {
                 classChoiceLayout.Controls.Add(metamagicComponent);
             }
@@ -211,7 +211,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                wm.Choices.ClassFightingStyles.Clear();
+                wm.Choices.ClassChoice.FightingStyles.Clear();
             }
 
             if (classChoiceLayout.Controls.Contains(favoredEnemyTerrainComponent))
@@ -220,8 +220,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                wm.Choices.FavoredEnemies = "";
-                wm.Choices.FavoredTerrains = "";
+                wm.Choices.ClassChoice.FavoredEnemies = "";
+                wm.Choices.ClassChoice.FavoredTerrains = "";
             }
 
             if (classChoiceLayout.Controls.Contains(extraClassSkillsComponent))
@@ -230,8 +230,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                wm.Choices.ClassSkills.Clear();
-                wm.Choices.ClassDoublesProficiency = false;
+                wm.Choices.ClassChoice.ExtraSkills.Clear();
+                wm.Choices.ClassChoice.DoublesProficiency = false;
             }
 
             if (classChoiceLayout.Controls.Contains(warlockComponent))
@@ -240,10 +240,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                wm.Choices.WarlockPactChoice = new WarlockPact();
-                wm.Choices.WarlockPactSpells.Clear();
-                wm.Choices.WarlockInvocations.Clear();
-                wm.Choices.WarlockInvocationSpells.Clear();
+                wm.Choices.ClassChoice.WarlockPactChoice = new WarlockPact();
+                wm.Choices.ClassChoice.WarlockPactSpells.Clear();
+                wm.Choices.ClassChoice.WarlockInvocations.Clear();
+                wm.Choices.ClassChoice.WarlockInvocationSpells.Clear();
             }
 
             if (classChoiceLayout.Controls.Contains(metamagicComponent))
@@ -252,7 +252,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                wm.Choices.SorcererMetamagic.Clear();
+                wm.Choices.ClassChoice.SorcererMetamagic.Clear();
             }
         }
 

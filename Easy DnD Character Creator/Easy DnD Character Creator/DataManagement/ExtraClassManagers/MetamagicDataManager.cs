@@ -20,13 +20,12 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
         }
 
         /// <summary>
-        /// checks, if a given class has access to metamagic at a given level
+        /// gets the amount of metamagic abilities a given class may choose at the given level
         /// </summary>
         /// <param name="className">chosen class</param>
         /// <param name="level">current level</param>
-        public bool hasMetamagic(string className, int level)
+        public int getMetamagicAmount(string className, int level)
         {
-            bool hasMetamagic = (className == "Sorcerer");
             int metamagicAmount = 0;
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
@@ -34,8 +33,10 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
             {
                 connection.Open();
                 command.CommandText = "SELECT metamagicAmount FROM sorcererFeatures " +
-                                      "WHERE level BETWEEN 1 AND @Level " +
+                                      "INNER JOIN classes ON classes.classid=sorcererFeatures.classId " +
+                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level " +
                                       "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
                 command.Parameters.AddWithValue("@Level", level.ToString());
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
@@ -45,42 +46,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraClassManagers
                         if (!dbReader.IsDBNull(0))
                         {
                             metamagicAmount = dbReader.GetInt32(0);
-                        }
-                    }
-                }
-            }
-
-            return hasMetamagic && (metamagicAmount > 0);
-        }
-
-        /// <summary>
-        /// gets the amount of metamagic abilities a given class may choose at the given level
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        /// <param name="level">current level</param>
-        public int getMetamagicAmount(string className, int level)
-        {
-            int metamagicAmount = 0;
-
-            if (className == "Sorcerer")
-            {
-                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-                using (SQLiteCommand command = new SQLiteCommand(connection))
-                {
-                    connection.Open();
-                    command.CommandText = "SELECT metamagicAmount FROM sorcererFeatures " +
-                                          "WHERE level BETWEEN 1 AND @Level " +
-                                          "ORDER BY level DESC LIMIT 1";
-                    command.Parameters.AddWithValue("@Level", level.ToString());
-
-                    using (SQLiteDataReader dbReader = command.ExecuteReader())
-                    {
-                        if (dbReader.Read())
-                        {
-                            if (!dbReader.IsDBNull(0))
-                            {
-                                metamagicAmount = dbReader.GetInt32(0);
-                            }
                         }
                     }
                 }

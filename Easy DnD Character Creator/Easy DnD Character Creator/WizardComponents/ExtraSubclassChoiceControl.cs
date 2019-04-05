@@ -115,17 +115,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void saveContent()
         {
-            wm.Choices.SubclassSkills.Clear();
-            wm.Choices.SubclassDoublesProficiency = false;
-            wm.Choices.TotemFeatures.Clear();
-            wm.Choices.SubclassSpells.Clear();
-            wm.Choices.SubclassToolProficiency = "";
-            wm.Choices.Maneuvers.Clear();
-            wm.Choices.Ancestry = new DraconicAncestry();
-            wm.Choices.ChosenDisciplines.Clear();
-            wm.Choices.MandatoryDisciplines.Clear();
-            wm.Choices.HunterFeatures.Clear();
-            wm.Choices.BeastCompanion = new Beast();
+            wm.Choices.ClassChoice.getSelectedSubclass().ExtraSkills.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().DoublesProficiency = false;
+            wm.Choices.ClassChoice.getSelectedSubclass().TotemFeatures.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency = "";
+            wm.Choices.ClassChoice.getSelectedSubclass().Maneuvers.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().Ancestry = new DraconicAncestry();
+            wm.Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().MandatoryDisciplines.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().HunterFeatures.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().BeastCompanion = new Beast();
 
             for (int i = 0; i < subcomponentList.Count; i++)
             {
@@ -139,16 +139,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void refreshActivationList()
         {
             subcomponentActivationList.Clear();
-            subcomponentActivationList.Add(wm.Choices.HasExtraSubclassSkills);
-            subcomponentActivationList.Add(wm.Choices.HasTotems);
-            subcomponentActivationList.Add(wm.Choices.HasExtraSubclassSpells);
-            subcomponentActivationList.Add(wm.Choices.HasExtraToolProficiencies);
-            subcomponentActivationList.Add(wm.Choices.HasManeuvers);
-            subcomponentActivationList.Add(wm.Choices.HasDraconicAncestry);
-            subcomponentActivationList.Add(wm.Choices.HasElementalDisciplines);
-            subcomponentActivationList.Add(wm.Choices.HasHunterChoices);
-            subcomponentActivationList.Add(wm.Choices.HasCompanion);
-            subcomponentActivationList.Add(wm.Choices.HasCircleTerrain);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasExtraSkills);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasTotems);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasExtraSpells);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasExtraToolProficiencies);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasManeuvers);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasDraconicAncestry);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasElementalDisciplines);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasHunterChoices);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasCompanion);
+            subcomponentActivationList.Add(wm.Choices.ClassChoice.getSelectedSubclass().HasCircleTerrain);
 
             //fail safe, in case someone forgets to add the appropriate variable to the activation list
             //this should not need to exist, rethink link in future update

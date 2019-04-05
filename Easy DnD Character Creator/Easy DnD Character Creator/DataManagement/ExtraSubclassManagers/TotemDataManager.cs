@@ -20,17 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if a given subclass has a totem choice at the given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        /// <returns></returns>
-        public bool hasTotemFeatures(string subclass, int level)
-        {
-            return (totemFeatureAmount(subclass, level) > 0);
-        }
-
-        /// <summary>
         /// gets the number of features available for a given subclass/level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

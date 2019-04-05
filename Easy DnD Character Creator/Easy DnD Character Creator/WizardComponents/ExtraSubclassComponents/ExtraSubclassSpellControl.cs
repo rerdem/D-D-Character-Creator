@@ -48,16 +48,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            spellAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.extraSpellChoiceAmount(wm.Choices.Subclass);
+            spellAmount = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.extraSpellChoiceAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name);
 
             resetContent();
 
             //if there was a previous choice, load it
-            if (wm.Choices.SubclassSpells.Count > 0)
+            if (wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Count > 0)
             {
                 for (int i = 0; i < spellListBox.Items.Count; i++)
                 {
-                    if (wm.Choices.SubclassSpells.Contains(spellListBox.Items[i]))
+                    if (wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Contains(spellListBox.Items[i]))
                     {
                         spellListBox.SetSelected(i, true);
                     }
@@ -80,7 +80,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
             introLabel.Text = $"Please choose {spellAmount} spell(s) below:";
 
             //fill choice list
-            spellSourceList = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.getExtraSubclassCantripOptions(wm.Choices.Subclass).Except(wm.Choices.Spells).ToList();
+            spellSourceList = wm.DBManager.ExtraSubclassChoiceData.ExtraSubclassSpellData.getExtraSubclassCantripOptions(wm.Choices.ClassChoice.getSelectedSubclass().Name).Except(wm.Choices.Spells).ToList();
             spellListBox.BeginUpdate();
             spellListBox.DataSource = null;
             spellListBox.DataSource = spellSourceList;
@@ -102,16 +102,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (spellListBox.SelectedItems.Count > 0)
             {
-                wm.Choices.SubclassSpells.Clear();
+                wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Clear();
 
                 foreach (Spell spell in spellListBox.SelectedItems)
                 {
-                    wm.Choices.SubclassSpells.Add(spell);
+                    wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Add(spell);
                 }
             }
             else
             {
-                wm.Choices.SubclassSpells.Clear();
+                wm.Choices.ClassChoice.getSelectedSubclass().ExtraSpells.Clear();
             }
         }
 

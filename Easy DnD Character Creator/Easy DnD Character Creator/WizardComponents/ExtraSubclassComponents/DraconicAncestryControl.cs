@@ -67,9 +67,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
             if (Visited)
             {
-                if (ancestryComboBox.Items.Contains(wm.Choices.Ancestry))
+                if (ancestryComboBox.Items.Contains(wm.Choices.ClassChoice.getSelectedSubclass().Ancestry))
                 {
-                    ancestryComboBox.SelectedItem = wm.Choices.Ancestry;
+                    ancestryComboBox.SelectedItem = wm.Choices.ClassChoice.getSelectedSubclass().Ancestry;
                 }
             }
 
@@ -80,11 +80,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (ancestryComboBox.SelectedItem != null)
             {
-                wm.Choices.Ancestry = (DraconicAncestry)ancestryComboBox.SelectedItem;
+                wm.Choices.ClassChoice.getSelectedSubclass().Ancestry = (DraconicAncestry)ancestryComboBox.SelectedItem;
             }
             else
             {
-                wm.Choices.Ancestry = new DraconicAncestry();
+                wm.Choices.ClassChoice.getSelectedSubclass().Ancestry = new DraconicAncestry();
             }
         }
     }

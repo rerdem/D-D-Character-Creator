@@ -36,36 +36,8 @@ namespace Easy_DnD_Character_Creator
         public string HairColor { get; set; }
 
         //ClassControl
-        public string Class { get; set; }
-        public string Subclass { get; set; }
-        public List<string> ClassProficiencies { get; set; }
-        public bool HasExtraClassChoice { get; set; }
-        public bool HasExtraSubclassChoice { get; set; }
-        public bool HasSpellcasting { get; set; }
-        public bool ChoosesSpells { get; set; }
-
-        public bool HasFightingStyle { get; set; }
-        public bool HasFavoredEnemy { get; set; }
-        public bool HasFavoredTerrain { get; set; }
-        public bool HasExtraClassSkills { get; set; }
-        public bool HasWarlockPact { get; set; }
-        public bool HasEldritchInvocations { get; set; }
-        public bool HasWarlockChoices { get; set; }
-        public bool HasMetamagic { get; set; }
-
-        public bool HasExtraSubclassSkills { get; set; }
-        public bool HasTotems { get; set; }
-        public bool HasExtraSubclassSpells { get; set; }
-        public bool HasExtraToolProficiencies { get; set; }
-        public bool HasManeuvers { get; set; }
-        public bool HasDraconicAncestry { get; set; }
-        public bool HasElementalDisciplines { get; set; }
-        public bool HasHunterChoices { get; set; }
-        public bool HasCompanion { get; set; }
-        public bool HasCircleTerrain { get; set; }
-
-        public bool HasWildShape { get; set; }
-
+        public CharacterClass ClassChoice { get; set; }
+        
         //BackgroundControl
         public Background BackgroundChoice { get; set; }
 
@@ -100,32 +72,9 @@ namespace Easy_DnD_Character_Creator
         public List<Spell> RaceSpells { get; set; }
 
         //ExtraClassChoiceControl
-        public List<FightingStyle> ClassFightingStyles { get; set; }
-        public string FavoredEnemies { get; set; }
-        public string FavoredTerrains { get; set; }
-        public List<string> ClassSkills { get; set; }
-        public bool ClassDoublesProficiency { get; set; }
-        public WarlockPact WarlockPactChoice { get; set; }
-        public List<Spell> WarlockPactSpells { get; set; }
-        public List<EldritchInvocation> WarlockInvocations { get; set; }
-        public List<Spell> WarlockInvocationSpells { get; set; }
-        public List<string> WarlockInvocationSkills { get; set; }
-        public List<Metamagic> SorcererMetamagic { get; set; }
-
+        
         //ExtraSubclassChoiceControl
-        public List<string> SubclassSkills { get; set; }
-        public bool SubclassDoublesProficiency { get; set; }
-        public List<ChoiceFeature> TotemFeatures { get; set; }
-        public List<Spell> SubclassSpells { get; set; }
-        public string SubclassToolProficiency { get; set; }
-        public List<Maneuver> Maneuvers { get; set; }
-        public List<ElementalDiscipline> MandatoryDisciplines { get; set; }
-        public List<ElementalDiscipline> ChosenDisciplines { get; set; }
-        public DraconicAncestry Ancestry { get; set; }
-        public List<ChoiceFeature> HunterFeatures { get; set; }
-        public Beast BeastCompanion { get; set; }
-        public CircleTerrain DruidCircleTerrain { get; set; }
-
+        
         //NameControl
         public string CharacterName { get; set; }
         public string PlayerName { get; set; }
@@ -152,9 +101,9 @@ namespace Easy_DnD_Character_Creator
                 allKnownSkills.Clear();
                 allKnownSkills.AddRange(Skills);
                 allKnownSkills.AddRange(ExtraSkills);
-                allKnownSkills.AddRange(ClassSkills);
-                allKnownSkills.AddRange(SubclassSkills);
-                allKnownSkills.AddRange(WarlockInvocationSkills);
+                allKnownSkills.AddRange(ClassChoice.ExtraSkills);
+                allKnownSkills.AddRange(ClassChoice.getSelectedSubclass().ExtraSkills);
+                allKnownSkills.AddRange(ClassChoice.WarlockInvocationSkills);
                 return allKnownSkills;
             }
         }
@@ -194,34 +143,8 @@ namespace Easy_DnD_Character_Creator
             SkinColor = "";
             HairColor = "";
 
-            Class = "";
-            Subclass = "";
-            ClassProficiencies = new List<string>();
-            HasExtraClassChoice = false;
-            HasExtraSubclassChoice = false;
-            HasSpellcasting = false;
-            ChoosesSpells = false;
-
-            HasFightingStyle = false;
-            HasFavoredEnemy = false;
-            HasFavoredTerrain = false;
-            HasExtraClassSkills = false;
-            HasWarlockPact = false;
-            HasEldritchInvocations = false;
-            HasWarlockChoices = false;
-            HasMetamagic = false;
-
-            HasExtraSubclassSkills = false;
-            HasTotems = false;
-            HasExtraSubclassSpells = false;
-            HasExtraToolProficiencies = false;
-            HasManeuvers = false;
-            HasDraconicAncestry = false;
-            HasElementalDisciplines = false;
-            HasHunterChoices = false;
-            HasCompanion = false;
-            HasCircleTerrain = false;
-
+            ClassChoice = new CharacterClass();
+            
             BackgroundChoice = new Background();
 
             Strength = new AbilityScore("Strength");
@@ -247,31 +170,6 @@ namespace Easy_DnD_Character_Creator
             Spells = new List<Spell>();
 
             RaceSpells = new List<Spell>();
-
-            ClassFightingStyles = new List<FightingStyle>();
-            FavoredEnemies = "";
-            FavoredTerrains = "";
-            ClassSkills = new List<string>();
-            ClassDoublesProficiency = false;
-            WarlockPactChoice = new WarlockPact();
-            WarlockPactSpells = new List<Spell>();
-            WarlockInvocations = new List<EldritchInvocation>();
-            WarlockInvocationSpells = new List<Spell>();
-            WarlockInvocationSkills = new List<string>();
-            SorcererMetamagic = new List<Metamagic>();
-
-            SubclassSkills = new List<string>();
-            SubclassDoublesProficiency = false;
-            TotemFeatures = new List<ChoiceFeature>();
-            SubclassSpells = new List<Spell>();
-            SubclassToolProficiency = "";
-            Maneuvers = new List<Maneuver>();
-            MandatoryDisciplines = new List<ElementalDiscipline>();
-            ChosenDisciplines = new List<ElementalDiscipline>();
-            Ancestry = new DraconicAncestry();
-            HunterFeatures = new List<ChoiceFeature>();
-            BeastCompanion = new Beast();
-            DruidCircleTerrain = new CircleTerrain();
 
             CharacterName = "";
             PlayerName = "";

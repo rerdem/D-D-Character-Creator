@@ -84,8 +84,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (!Visited || hasSubclassLevelChanged())
             {
-                hunterFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.HunterData.hunterFeatureAmount(wm.Choices.Subclass, wm.Choices.Level);
-                hunterFeatures = wm.DBManager.ExtraSubclassChoiceData.HunterData.getHunterFeatures(wm.Choices.Subclass, wm.Choices.Level);
+                hunterFeatureAmount = wm.DBManager.ExtraSubclassChoiceData.HunterData.hunterFeatureAmount(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
+                hunterFeatures = wm.DBManager.ExtraSubclassChoiceData.HunterData.getHunterFeatures(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
             }
 
             if (Visited && !hasSubclassLevelChanged())
@@ -93,21 +93,21 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
                 //load content
                 foreach (ChoiceFeature feature in hunterFeatures)
                 {
-                    if (wm.Choices.HunterFeatures.Contains(feature))
+                    if (wm.Choices.ClassChoice.getSelectedSubclass().HunterFeatures.Contains(feature))
                     {
-                        feature.selectOption(wm.Choices.HunterFeatures[wm.Choices.HunterFeatures.IndexOf(feature)].getSelectedOption());
+                        feature.selectOption(wm.Choices.ClassChoice.getSelectedSubclass().HunterFeatures[wm.Choices.ClassChoice.getSelectedSubclass().HunterFeatures.IndexOf(feature)].getSelectedOption());
                     }
                 }
             }
             refreshContent();
 
-            lastSubclassLevel = wm.Choices.Subclass + wm.Choices.Level.ToString();
+            lastSubclassLevel = wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString();
             Visited = true;
         }
 
         public void saveContent()
         {
-            wm.Choices.HunterFeatures.Clear();
+            wm.Choices.ClassChoice.getSelectedSubclass().HunterFeatures.Clear();
             foreach (HunterFeatureControl control in featureControls)
             {
                 control.saveContent();
@@ -130,7 +130,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         private bool hasSubclassLevelChanged()
         {
-            return (lastSubclassLevel != (wm.Choices.Subclass + wm.Choices.Level.ToString()));
+            return (lastSubclassLevel != (wm.Choices.ClassChoice.getSelectedSubclass().Name + wm.Choices.Level.ToString()));
         }
 
         private void control_HunterOptionChosen(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_DnD_Character_Creator.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -12,24 +13,35 @@ namespace Easy_DnD_Character_Creator.DataManagement
         private string ConnectionString { get; }
         public List<string> UsedBooks { get; set; }
 
+        public SubclassDataManager SubclassData { get; }
+
         public ClassDataManager(string inputConnectionString, List<string> inputUsedBooks)
         {
             ConnectionString = inputConnectionString;
             UsedBooks = inputUsedBooks;
+
+            SubclassData = new SubclassDataManager(inputConnectionString, inputUsedBooks);
+        }
+
+        public void setUsedBooks(List<string> inputUsedBooks)
+        {
+            UsedBooks = inputUsedBooks;
+            SubclassData.UsedBooks = inputUsedBooks;
         }
 
         /// <summary>
         /// gets a list of all playable classes
         /// </summary>
-        public List<string> getClasses()
+        public List<CharacterClass> getClasses(int level)
         {
-            List<string> classList = new List<string>();
+            List<CharacterClass> classList = new List<CharacterClass>();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name FROM classes " +
+                command.CommandText = "SELECT name, description, dieType, extraToolProficiencies FROM classes " +
+                                      "INNER JOIN hitDice ON hitDice.classId=classes.classid " +
                                       "INNER JOIN books ON classes.book=books.bookid " +
                                       "WHERE books.title IN (@UsedBooks)";
                 SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
@@ -40,152 +52,28 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            classList.Add(dbReader.GetString(0));
+                            CharacterClass newClass = new CharacterClass(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetBoolean(3), getProficiencyChoiceAmount(dbReader.GetString(0)));
+
+                            //add subclasses
+                            newClass.Subclasses = SubclassData.getSubclasses(newClass.Name, level);
+
+                            //set bools
+                            newClass.HasFightingStyle = hasFightingStyle(newClass.Name, level);
+                            newClass.HasFavoredEnemy = hasFavoredEnemy(newClass.Name, level);
+                            newClass.HasFavoredTerrain = hasFavoredEnemy(newClass.Name, level);
+                            newClass.HasExtraSkills = hasClassSkillChoice(newClass.Name, level);
+                            newClass.HasWarlockPact = hasWarlockPact(newClass.Name, level);
+                            newClass.HasEldritchInvocations = hasEldritchInvocations(newClass.Name, level);
+                            newClass.HasMetamagic = hasMetamagic(newClass.Name, level);
+                            newClass.HasWildShape = hasWildShape(newClass.Name);
+
+                            classList.Add(newClass);
                         }
                     }
                 }
             }
 
             return classList;
-        }
-
-        /// <summary>
-        /// gets a list of all subclass options for the chosen class
-        /// </summary>
-        /// <param name="className">class for which to get subclasses</param>
-        /// <param name="level">player level</param>
-        public List<string> getSubclasses(string className, int level)
-        {
-            List<string> subclassList = new List<string>();
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT subclasses.name FROM subclasses " +
-                                      "INNER JOIN books ON subclasses.book=books.bookid " +
-                                      "INNER JOIN classes ON subclasses.parentclass=classes.classid " +
-                                      "WHERE books.title IN (@UsedBooks) AND classes.name=@Class " +
-                                      "AND classes.subclasslevel<=@Level";
-                command.Parameters.AddWithValue("@Class", className);
-                command.Parameters.AddWithValue("@Level", level.ToString());
-                SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            subclassList.Add(dbReader.GetString(0));
-                        }
-                    }
-                }
-            }
-
-            if (subclassList.Count == 0)
-            {
-                subclassList.Add("---");
-            }
-
-            return subclassList;
-        }
-
-        /// <summary>
-        /// gets the description for the chosen class
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        public string getClassDescription(string className)
-        {
-            string description = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT description FROM classes " +
-                                      "INNER JOIN books ON classes.book=books.bookid " +
-                                      "WHERE books.title IN (@UsedBooks) AND name=@Class";
-                command.Parameters.AddWithValue("@Class", className);
-                SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            description = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return description;
-        }
-
-        /// <summary>
-        /// gets the description for the chosen subclass
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        public string getSubclassDescription(string subclass)
-        {
-            string description = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT description FROM subclasses " +
-                                      "INNER JOIN books ON subclasses.book=books.bookid " +
-                                      "WHERE books.title IN (@UsedBooks) AND name=@Subclass";
-                command.Parameters.AddWithValue("@Subclass", subclass);
-                SQLiteCommandExtensions.AddParametersWithValues(command, "@UsedBooks", UsedBooks);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            description = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return description;
-        }
-
-        /// <summary>
-        /// checks, if the chosen class has extra tool proficiencies
-        /// </summary>
-        /// <param name="className">chosen class</param>
-        public bool classHasExtraChoice(string className)
-        {
-            bool hasChoice = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT extraToolProficiencies FROM classes " +
-                                      "WHERE name=@Class";
-                command.Parameters.AddWithValue("@Class", className);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            hasChoice = dbReader.GetBoolean(0);
-                        }
-                    }
-                }
-            }
-
-            return hasChoice;
         }
 
         /// <summary>
@@ -231,7 +119,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// gets the amount of proficiencies the class is allowed to choose
         /// </summary>
         /// <param name="className">chosen class</param>
-        public int getExtraClassProficiencyAmount(string className)
+        public int getProficiencyChoiceAmount(string className)
         {
             int amount = 0;
 
@@ -260,35 +148,265 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// gets the type of hit dice the given class uses
+        /// checks, if the chosen class may choose a fighting style at the given level
         /// </summary>
         /// <param name="className">chosen class</param>
-        public string getHitDieType(string className)
+        /// <param name="level">current level</param>
+        public bool hasFightingStyle(string className, int level)
         {
-            string dieType = "";
+            bool hasFightingStyle = false;
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT dieType FROM hitDice " +
-                                      "INNER JOIN classes ON hitDice.classId=classes.classid " +
-                                      "WHERE classes.name=@Class";
+                command.CommandText = "SELECT * FROM fightingStyleGain " +
+                                      "INNER JOIN classes ON fightingStyleGain.classId=classes.classid " +
+                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level";
                 command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
                 {
-                    while (dbReader.Read())
+                    if (dbReader.Read())
+                    {
+                        hasFightingStyle = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasFightingStyle;
+        }
+
+        /// <summary>
+        /// checks, if a given class may choose a favored enemy at the given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasFavoredEnemy(string className, int level)
+        {
+            bool hasFavoredEnemy = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT amount FROM favoredEnemyAmount " +
+                                      "INNER JOIN classes ON classes.classid=favoredEnemyAmount.classId " +
+                                      "WHERE classes.name=@Class AND favoredEnemyAmount.level BETWEEN 1 AND @Level " +
+                                      "ORDER BY amount DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        hasFavoredEnemy = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasFavoredEnemy;
+        }
+
+        /// <summary>
+        /// checks, if a given class may choose a favored terrain at the given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasFavoredTerrain(string className, int level)
+        {
+            bool hasFavoredTerrain = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT amount FROM favoredTerrainAmount " +
+                                      "INNER JOIN classes ON classes.classid=favoredTerrainAmount.classId " +
+                                      "WHERE classes.name=@Class AND favoredTerrainAmount.level BETWEEN 1 AND @Level " +
+                                      "ORDER BY amount DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        hasFavoredTerrain = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasFavoredTerrain;
+        }
+
+        /// <summary>
+        /// checks, if a given class chooses additional skills or skills to which more modifiers are applied
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasClassSkillChoice(string className, int level)
+        {
+            bool hasClassSkillCoice = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT * FROM extraClassSkillChoice " +
+                                      "INNER JOIN classes ON classes.classid=extraClassSkillChoice.classId " +
+                                      "WHERE classes.name=@Class AND extraClassSkillChoice.level BETWEEN 1 AND @Level " +
+                                      "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        hasClassSkillCoice = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasClassSkillCoice;
+        }
+
+        /// <summary>
+        /// checks, if a given class may choose a warlock pact at the given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasWarlockPact(string className, int level)
+        {
+            bool hasWarlockPact = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT hasWarlockPact FROM warlockFeatures " +
+                                      "INNER JOIN classes ON classes.classid=warlockFeatures.classId " +
+                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level " +
+                                      "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            dieType = dbReader.GetString(0);
+                            hasWarlockPact = dbReader.GetBoolean(0);
                         }
                     }
                 }
             }
 
-            return dieType;
+            return hasWarlockPact;
         }
+
+        /// <summary>
+        /// checks, if a given class may choose eldritch invocations at the given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasEldritchInvocations(string className, int level)
+        {
+            bool hasEldritchInvocations = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT hasEldritchInvocations FROM warlockFeatures " +
+                                      "INNER JOIN classes ON classes.classid=warlockFeatures.classId " +
+                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level " +
+                                      "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            hasEldritchInvocations = dbReader.GetBoolean(0);
+                        }
+                    }
+                }
+            }
+
+            return hasEldritchInvocations;
+        }
+
+        /// <summary>
+        /// checks, if a given class has access to metamagic at a given level
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        /// <param name="level">current level</param>
+        public bool hasMetamagic(string className, int level)
+        {
+            bool hasMetamagic = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT metamagicAmount FROM sorcererFeatures " +
+                                      "INNER JOIN classes ON classes.classid=sorcererFeatures.classId " +
+                                      "WHERE classes.name=@Class AND level BETWEEN 1 AND @Level " +
+                                      "ORDER BY level DESC LIMIT 1";
+                command.Parameters.AddWithValue("@Class", className);
+                command.Parameters.AddWithValue("@Level", level.ToString());
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        if (!dbReader.IsDBNull(0))
+                        {
+                            hasMetamagic = (dbReader.GetInt32(0) > 0);
+                        }
+                    }
+                }
+            }
+
+            return hasMetamagic;
+        }
+
+        /// <summary>
+        /// checks, if a given class has the ability to wild shape
+        /// </summary>
+        /// <param name="className">chosen class</param>
+        public bool hasWildShape(string className)
+        {
+            bool hasWildShape = false;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                command.CommandText = "SELECT terrain FROM wildShapeTerrains " +
+                                      "INNER JOIN classes ON classes.classid=wildShapeTerrains.classId " +
+                                      "WHERE classes.name=@Class";
+                command.Parameters.AddWithValue("@Class", className);
+
+                using (SQLiteDataReader dbReader = command.ExecuteReader())
+                {
+                    if (dbReader.Read())
+                    {
+                        hasWildShape = !dbReader.IsDBNull(0);
+                    }
+                }
+            }
+
+            return hasWildShape;
+        }
+
     }
 }

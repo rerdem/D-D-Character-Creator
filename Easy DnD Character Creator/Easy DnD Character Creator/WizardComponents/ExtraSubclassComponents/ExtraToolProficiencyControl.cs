@@ -56,7 +56,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
         public void populateForm()
         {
-            toolComboSource = wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.getToolProficiencyChoices(wm.Choices.Subclass, wm.Choices.Level);
+            toolComboSource = wm.DBManager.ExtraSubclassChoiceData.ExtraToolProficiencyData.getToolProficiencyChoices(wm.Choices.ClassChoice.getSelectedSubclass().Name, wm.Choices.Level);
 
             toolComboBox.BeginUpdate();
             toolComboBox.DataSource = null;
@@ -65,9 +65,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
 
             if (Visited)
             {
-                if (toolComboBox.Items.Contains(wm.Choices.SubclassToolProficiency))
+                if (toolComboBox.Items.Contains(wm.Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency))
                 {
-                    toolComboBox.SelectedIndex = toolComboBox.Items.IndexOf(wm.Choices.SubclassToolProficiency);
+                    toolComboBox.SelectedIndex = toolComboBox.Items.IndexOf(wm.Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency);
                 }
             }
 
@@ -78,11 +78,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraSubclassComponents
         {
             if (toolComboBox.SelectedItem != null)
             {
-                wm.Choices.SubclassToolProficiency = toolComboBox.SelectedItem.ToString();
+                wm.Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency = toolComboBox.SelectedItem.ToString();
             }
             else
             {
-                wm.Choices.SubclassToolProficiency = "";
+                wm.Choices.ClassChoice.getSelectedSubclass().ExtraToolProficiency = "";
             }
         }
     }

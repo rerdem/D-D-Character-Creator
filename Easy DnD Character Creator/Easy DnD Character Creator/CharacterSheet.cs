@@ -59,8 +59,8 @@ namespace Easy_DnD_Character_Creator
             //get information necessary for final calculations
             allKnownSpells = constructSpellList();
             CharSheetStrings.ProficiencyBonus = DBManager.ExportData.getProficiencyBonus(Choices.Level);
-            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name));
-            CharSheetStrings.SpellcastingAbility = DBManager.SpellData.getSpellcastingAbility(Choices.Class, Choices.Subclass);
+            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name));
+            CharSheetStrings.SpellcastingAbility = DBManager.SpellData.getSpellcastingAbility(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name);
 
             //fill template with information
 
@@ -86,7 +86,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@xp@", DBManager.ExportData.getXpForLevel(Choices.Level).ToString());
 
             //stats, saving throws
-            List<string> saveProficiencies = DBManager.ExportData.getSaveProficiencies(Choices.Class);
+            List<string> saveProficiencies = DBManager.ExportData.getSaveProficiencies(Choices.ClassChoice.Name);
             foreach (AbilityScore score in Choices.Abilities)
             {
                 template = template.Replace("@" + score.getShortName() + "@", score.getTotalValue().ToString());
@@ -120,8 +120,8 @@ namespace Easy_DnD_Character_Creator
             //proficiencies
             //armor
             template = template.Replace("@armorproficiencies@", string.Join(", ", DBManager.ExportData.getArmorProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, 
-                                                                                                                             Choices.Class, 
-                                                                                                                             Choices.Subclass, 
+                                                                                                                             Choices.ClassChoice.Name, 
+                                                                                                                             Choices.ClassChoice.getSelectedSubclass().Name, 
                                                                                                                              Choices.BackgroundChoice.Name)));
 
             //weapons
@@ -143,7 +143,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@hp@", Choices.HP.ToString());
 
             //hit dice
-            template = template.Replace("@hitdice@", Choices.Level.ToString() + DBManager.ClassData.getHitDieType(Choices.Class));
+            template = template.Replace("@hitdice@", Choices.Level.ToString() + Choices.ClassChoice.HitDie);
 
             //weapons & attacks
             template = template.Replace("@attacktableentries@", CharSheetStrings.constructAttackTableString());
@@ -199,7 +199,7 @@ namespace Easy_DnD_Character_Creator
             //number of spell slots
             for (int i = 1; i < 10; i++)
             {
-                template = template.Replace($"@slot{i}@", DBManager.SpellData.getSpellSlots(Choices.Class, Choices.Subclass, Choices.Level, i).ToString());
+                template = template.Replace($"@slot{i}@", DBManager.SpellData.getSpellSlots(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level, i).ToString());
             }
 
             //cantrips and spells
@@ -231,43 +231,43 @@ namespace Easy_DnD_Character_Creator
 
         private List<Feature> constructFeatureList()
         {
-            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name, Choices.Level);
+            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name, Choices.Level);
 
             //add additional feature
             //fighting style
-            if (Choices.HasFightingStyle)
+            if (Choices.ClassChoice.HasFightingStyle)
             {
-                foreach (FightingStyle style in Choices.ClassFightingStyles)
+                foreach (FightingStyle style in Choices.ClassChoice.FightingStyles)
                 {
                     featureList.Add(new Feature(style.Name, style.Description));
                 }
             }
 
             ////Rogue Thieves' Tools exptertise
-            //if (!string.IsNullOrEmpty(DBManager.ExtraClassChoiceData.ExtraClassSkillData.getExtraSkillCheckbox(Choices.Class)))
+            //if (!string.IsNullOrEmpty(DBManager.ExtraClassChoiceData.ExtraClassSkillData.getExtraSkillCheckbox(Choices.ClassChoice.Name)))
             //{
-            //    if (Choices.ClassSkills.Contains(DBManager.ExtraClassChoiceData.ExtraClassSkillData.getExtraSkillCheckbox(Choices.Class)))
+            //    if (Choices.ClassChoice.NameSkills.Contains(DBManager.ExtraClassChoiceData.ExtraClassSkillData.getExtraSkillCheckbox(Choices.ClassChoice.Name)))
             //    {
             //        featureList.Add(DBManager.ExportData.getFeatureById(60));
             //    }
             //}
 
             //class/subclass expertise
-            if (Choices.HasExtraClassSkills)
+            if (Choices.ClassChoice.HasExtraSkills)
             {
-                if (Choices.ClassDoublesProficiency)
+                if (Choices.ClassChoice.DoublesProficiency)
                 {
-                    string description = $"Your proficiency bonus is doubled for any ability check using {Choices.ClassSkills}.";
-                    featureList.Add(new Feature($"{Choices.Class} Expertise", description));
+                    string description = $"Your proficiency bonus is doubled for any ability check using {Choices.ClassChoice.ExtraSkills}.";
+                    featureList.Add(new Feature($"{Choices.ClassChoice.Name} Expertise", description));
                 }
             }
 
-            if (Choices.HasExtraSubclassSkills)
+            if (Choices.ClassChoice.getSelectedSubclass().HasExtraSkills)
             {
-                if (Choices.SubclassDoublesProficiency)
+                if (Choices.ClassChoice.getSelectedSubclass().DoublesProficiency)
                 {
-                    string description = $"Your proficiency bonus is doubled for any ability check using {Choices.SubclassSkills}.";
-                    featureList.Add(new Feature($"{Choices.Subclass} Expertise", description));
+                    string description = $"Your proficiency bonus is doubled for any ability check using {Choices.ClassChoice.getSelectedSubclass().ExtraSkills}.";
+                    featureList.Add(new Feature($"{Choices.ClassChoice.getSelectedSubclass().Name} Expertise", description));
                 }
             }
 
@@ -279,10 +279,10 @@ namespace Easy_DnD_Character_Creator
             }
 
             //elemental disciplines
-            if (Choices.HasElementalDisciplines)
+            if (Choices.ClassChoice.getSelectedSubclass().HasElementalDisciplines)
             {
-                foreach (ElementalDiscipline discipline in new List<ElementalDiscipline>().Concat(Choices.MandatoryDisciplines)
-                                                                                          .Concat(Choices.ChosenDisciplines)
+                foreach (ElementalDiscipline discipline in new List<ElementalDiscipline>().Concat(Choices.ClassChoice.getSelectedSubclass().MandatoryDisciplines)
+                                                                                          .Concat(Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines)
                                                                                           .ToList())
                 {
                     featureList.Add(new Feature(discipline.Name, discipline.Description));
@@ -291,22 +291,22 @@ namespace Easy_DnD_Character_Creator
 
 
             //warlock pact & invocations
-            if (Choices.HasWarlockChoices)
+            if (Choices.ClassChoice.HasWarlockChoices)
             {
                 //pact
-                featureList.Add(new Feature(Choices.WarlockPactChoice.Name, Choices.WarlockPactChoice.Description));
+                featureList.Add(new Feature(Choices.ClassChoice.WarlockPactChoice.Name, Choices.ClassChoice.WarlockPactChoice.Description));
 
                 //invocations
-                foreach (EldritchInvocation invocation in Choices.WarlockInvocations)
+                foreach (EldritchInvocation invocation in Choices.ClassChoice.WarlockInvocations)
                 {
                     featureList.Add(new Feature(invocation.Name, invocation.Description));
                 }
             }
 
             //hunter features
-            if (Choices.HasHunterChoices)
+            if (Choices.ClassChoice.getSelectedSubclass().HasHunterChoices)
             {
-                foreach (ChoiceFeature feature in Choices.HunterFeatures)
+                foreach (ChoiceFeature feature in Choices.ClassChoice.getSelectedSubclass().HunterFeatures)
                 {
                     string featureTitle = feature.Name + " (" + feature.getSelectedOption().Name + ")";
                     featureList.Add(new Feature(featureTitle, feature.getSelectedOption().Description));
@@ -314,18 +314,18 @@ namespace Easy_DnD_Character_Creator
             }
 
             //metamagic
-            if (Choices.HasMetamagic)
+            if (Choices.ClassChoice.HasMetamagic)
             {
-                foreach (Metamagic entry in Choices.SorcererMetamagic)
+                foreach (Metamagic entry in Choices.ClassChoice.SorcererMetamagic)
                 {
                     featureList.Add(new Feature(entry.Name, entry.Description));
                 }
             }
 
             //totem features
-            if (Choices.HasTotems)
+            if (Choices.ClassChoice.getSelectedSubclass().HasTotems)
             {
-                foreach (ChoiceFeature totem in Choices.TotemFeatures)
+                foreach (ChoiceFeature totem in Choices.ClassChoice.getSelectedSubclass().TotemFeatures)
                 {
                     string featureTitle = totem.Name + " (" + totem.getSelectedOption().Name + ")";
                     featureList.Add(new Feature(featureTitle, totem.getSelectedOption().Description));
@@ -333,38 +333,38 @@ namespace Easy_DnD_Character_Creator
             }
 
             //maneuvers
-            if (Choices.HasManeuvers)
+            if (Choices.ClassChoice.getSelectedSubclass().HasManeuvers)
             {
-                foreach (Maneuver maneuver in Choices.Maneuvers)
+                foreach (Maneuver maneuver in Choices.ClassChoice.getSelectedSubclass().Maneuvers)
                 {
                     featureList.Add(new Feature(maneuver.Name, maneuver.Description));
                 }
             }
 
             //favored enemy
-            if (Choices.HasFavoredEnemy)
+            if (Choices.ClassChoice.HasFavoredEnemy)
             {
                 foreach (Feature feature in featureList.Where(entry => entry.Name == "Favored Enemy"))
                 {
-                    feature.Description = $"({Choices.FavoredEnemies}) {feature.Description}";
+                    feature.Description = $"({Choices.ClassChoice.FavoredEnemies}) {feature.Description}";
                 }
             }
 
             //favored terrain
-            if (Choices.HasFavoredTerrain)
+            if (Choices.ClassChoice.HasFavoredTerrain)
             {
                 foreach (Feature feature in featureList.Where(entry => entry.Name == "Natural Explorer"))
                 {
-                    feature.Description = $"({Choices.FavoredTerrains}) {feature.Description}";
+                    feature.Description = $"({Choices.ClassChoice.FavoredTerrains}) {feature.Description}";
                 }
             }
 
             //Beast Compantion
-            if (Choices.HasCompanion)
+            if (Choices.ClassChoice.getSelectedSubclass().HasCompanion)
             {
                 foreach (Feature feature in featureList.Where(entry => entry.Name == "Ranger's Companion"))
                 {
-                    string compantionString = $"{Choices.BeastCompanion.Name} -> {Choices.BeastCompanion.Book} p.{Choices.BeastCompanion.Page}";
+                    string compantionString = $"{Choices.ClassChoice.getSelectedSubclass().BeastCompanion.Name} -> {Choices.ClassChoice.getSelectedSubclass().BeastCompanion.Book} p.{Choices.ClassChoice.getSelectedSubclass().BeastCompanion.Page}";
                     feature.Description = $"({compantionString }) {feature.Description}";
                 }
             }
@@ -414,17 +414,17 @@ namespace Easy_DnD_Character_Creator
             List<Spell> spellList = new List<Spell>();
 
             //spellcasting
-            if (Choices.HasSpellcasting)
+            if (Choices.ClassChoice.HasSpellcasting)
             {
-                if (Choices.ChoosesSpells)
+                if (Choices.ClassChoice.ChoosesSpells)
                 {
                     spellList.AddRange(Choices.Spells);
                 }
                 else
                 {
                     //so far Paladin is the only spellcaster that doesn't choose spells, but knows them all
-                    spellList.AddRange(DBManager.SpellData.getCantripOptions(Choices.Class, Choices.Subclass));
-                    spellList.AddRange(DBManager.SpellData.getSpellOptions(Choices.Class, Choices.Subclass, Choices.Level));
+                    spellList.AddRange(DBManager.SpellData.getCantripOptions(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name));
+                    spellList.AddRange(DBManager.SpellData.getSpellOptions(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level));
                 }
             }
 
@@ -435,18 +435,18 @@ namespace Easy_DnD_Character_Creator
             }
 
             //subclass spell
-            if (Choices.HasExtraSubclassSpells)
+            if (Choices.ClassChoice.getSelectedSubclass().HasExtraSpells)
             {
-                spellList.AddRange(Choices.SubclassSpells);
+                spellList.AddRange(Choices.ClassChoice.getSelectedSubclass().ExtraSpells);
             }
 
             //warlock spells (pact/invocations)
-            if (Choices.HasWarlockChoices)
+            if (Choices.ClassChoice.HasWarlockChoices)
             {
-                spellList.AddRange(Choices.WarlockPactSpells);
-                spellList.AddRange(Choices.WarlockInvocationSpells);
+                spellList.AddRange(Choices.ClassChoice.WarlockPactSpells);
+                spellList.AddRange(Choices.ClassChoice.WarlockInvocationSpells);
 
-                foreach (EldritchInvocation invocation in Choices.WarlockInvocations)
+                foreach (EldritchInvocation invocation in Choices.ClassChoice.WarlockInvocations)
                 {
                     if (!string.IsNullOrEmpty(invocation.GainedSpell.Name))
                     {
@@ -456,9 +456,9 @@ namespace Easy_DnD_Character_Creator
             }
 
             //elemental disciplines
-            if (Choices.HasElementalDisciplines)
+            if (Choices.ClassChoice.getSelectedSubclass().HasElementalDisciplines)
             {
-                foreach (ElementalDiscipline discipline in Choices.MandatoryDisciplines)
+                foreach (ElementalDiscipline discipline in Choices.ClassChoice.getSelectedSubclass().MandatoryDisciplines)
                 {
                     if (!string.IsNullOrEmpty(discipline.GainedSpell.Name))
                     {
@@ -466,7 +466,7 @@ namespace Easy_DnD_Character_Creator
                     }
                 }
 
-                foreach (ElementalDiscipline discipline in Choices.ChosenDisciplines)
+                foreach (ElementalDiscipline discipline in Choices.ClassChoice.getSelectedSubclass().ChosenDisciplines)
                 {
                     if (!string.IsNullOrEmpty(discipline.GainedSpell.Name))
                     {
@@ -476,13 +476,13 @@ namespace Easy_DnD_Character_Creator
             }
 
             //druid circle spells
-            if (Choices.HasCircleTerrain)
+            if (Choices.ClassChoice.getSelectedSubclass().HasCircleTerrain)
             {
-                spellList.AddRange(Choices.DruidCircleTerrain.Spells);
+                spellList.AddRange(Choices.ClassChoice.getSelectedSubclass().DruidCircleTerrain.Spells);
             }
 
             //bonus spells (Shadow arts, totem warrior)
-            spellList.AddRange(DBManager.SpellData.getSubclasBonusSpells(Choices.Subclass));
+            spellList.AddRange(DBManager.SpellData.getSubclasBonusSpells(Choices.ClassChoice.getSelectedSubclass().Name));
 
             return spellList;
         }

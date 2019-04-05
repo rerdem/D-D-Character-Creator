@@ -43,7 +43,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -56,7 +56,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.skillEquipment:
-                    if (Choices.HasSpellcasting && Choices.ChoosesSpells)
+                    if (Choices.ClassChoice.HasSpellcasting && Choices.ClassChoice.ChoosesSpells)
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -66,11 +66,11 @@ namespace Easy_DnD_Character_Creator
                         {
                             CurrentState = WizardState.extraRaceChoices;
                         }
-                        else if (Choices.HasExtraClassChoice)
+                        else if (Choices.ClassChoice.HasExtraClassChoice)
                         {
                             CurrentState = WizardState.extraClassChoices;
                         }
-                        else if (Choices.HasExtraSubclassChoice)
+                        else if (Choices.ClassChoice.getSelectedSubclass().HasExtraSubclassChoice)
                         {
                             CurrentState = WizardState.extraSubclassChoices;
                         }
@@ -85,11 +85,11 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if (Choices.HasExtraClassChoice)
+                    else if (Choices.ClassChoice.HasExtraClassChoice)
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (Choices.HasExtraSubclassChoice)
+                    else if (Choices.ClassChoice.getSelectedSubclass().HasExtraSubclassChoice)
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -99,11 +99,11 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraRaceChoices:
-                    if (Choices.HasExtraClassChoice)
+                    if (Choices.ClassChoice.HasExtraClassChoice)
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
-                    else if (Choices.HasExtraSubclassChoice)
+                    else if (Choices.ClassChoice.getSelectedSubclass().HasExtraSubclassChoice)
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -113,7 +113,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraClassChoices:
-                    if (Choices.HasExtraSubclassChoice)
+                    if (Choices.ClassChoice.getSelectedSubclass().HasExtraSubclassChoice)
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
@@ -157,7 +157,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skillEquipment:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.BackgroundChoice.Name))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -170,7 +170,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.skillEquipment;
                     break;
                 case WizardState.extraRaceChoices:
-                    if (Choices.HasSpellcasting && Choices.ChoosesSpells)
+                    if (Choices.ClassChoice.HasSpellcasting && Choices.ClassChoice.ChoosesSpells)
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -184,7 +184,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -194,7 +194,7 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.extraSubclassChoices:
-                    if (Choices.HasExtraClassChoice)
+                    if (Choices.ClassChoice.HasExtraClassChoice)
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
@@ -202,7 +202,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }
@@ -212,11 +212,11 @@ namespace Easy_DnD_Character_Creator
                     }
                     break;
                 case WizardState.story:
-                    if (Choices.HasExtraSubclassChoice)
+                    if (Choices.ClassChoice.getSelectedSubclass().HasExtraSubclassChoice)
                     {
                         CurrentState = WizardState.extraSubclassChoices;
                     }
-                    else if (Choices.HasExtraClassChoice)
+                    else if (Choices.ClassChoice.HasExtraClassChoice)
                     {
                         CurrentState = WizardState.extraClassChoices;
                     }
@@ -224,7 +224,7 @@ namespace Easy_DnD_Character_Creator
                     {
                         CurrentState = WizardState.extraRaceChoices;
                     }
-                    else if ((DBManager.SpellData.hasSpellcasting(Choices.Class, Choices.Subclass, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.Class, Choices.Subclass, Choices.Level)))
+                    else if ((DBManager.SpellData.hasSpellcasting(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)) && (DBManager.SpellData.choosesSpells(Choices.ClassChoice.Name, Choices.ClassChoice.getSelectedSubclass().Name, Choices.Level)))
                     {
                         CurrentState = WizardState.spells;
                     }

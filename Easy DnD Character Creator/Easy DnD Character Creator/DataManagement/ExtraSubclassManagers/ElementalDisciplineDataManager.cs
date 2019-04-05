@@ -20,16 +20,6 @@ namespace Easy_DnD_Character_Creator.DataManagement.ExtraSubclassManagers
         }
 
         /// <summary>
-        /// checks, if the given subclass may choose elemental disciplines at the given level
-        /// </summary>
-        /// <param name="subclass">chosen subclass</param>
-        /// <param name="level">current level</param>
-        public bool hasDisciplines(string subclass, int level)
-        {
-            return (getDisciplineAmount(subclass, level) > 0);
-        }
-
-        /// <summary>
         /// gets the amount of elemental disciplines the given subclass may choose at the given level
         /// </summary>
         /// <param name="subclass">chosen subclass</param>

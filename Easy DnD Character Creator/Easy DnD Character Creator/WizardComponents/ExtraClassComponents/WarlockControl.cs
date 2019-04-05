@@ -74,7 +74,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             string missingElements = "";
 
             //warlock pact
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 if (!string.IsNullOrEmpty(missingElements))
                 {
@@ -99,7 +99,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             }
             
             //warlock invocations
-            if (wm.Choices.HasEldritchInvocations)
+            if (wm.Choices.ClassChoice.HasEldritchInvocations)
             {
                 if (!string.IsNullOrEmpty(missingElements))
                 {
@@ -134,7 +134,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             bool isInvocationValid = false;
 
             //warlock pact
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 if (pactListBox.SelectedItems.Count > 0)
                 {
@@ -158,7 +158,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             }
 
             //warlock invocations
-            if (wm.Choices.HasEldritchInvocations)
+            if (wm.Choices.ClassChoice.HasEldritchInvocations)
             {
                 if (hasInvocationSelectionSpellChoice())
                 {
@@ -182,7 +182,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             warlockLayout.Controls.Clear();
             
             //add and populate warlock pacts
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 warlockLayout.Controls.Add(pactBox);
                 refreshPactList();
@@ -193,7 +193,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             }
             
             //add and populate eldritch invocations
-            if (wm.Choices.HasEldritchInvocations)
+            if (wm.Choices.ClassChoice.HasEldritchInvocations)
             {
                 warlockLayout.Controls.Add(invocationBox);
                 invocationsKnown = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getEldritchInvocationAmount(wm.Choices.Level);
@@ -220,47 +220,47 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
         public void saveContent()
         {
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 //save chosen pact
                 WarlockPact currentPact = (WarlockPact)pactListBox.SelectedItem;
-                wm.Choices.WarlockPactChoice = currentPact;
+                wm.Choices.ClassChoice.WarlockPactChoice = currentPact;
 
                 //save pact spells, if applicable
-                wm.Choices.WarlockPactSpells.Clear();
+                wm.Choices.ClassChoice.WarlockPactSpells.Clear();
                 if (currentPact.SpellAmount > 0)
                 {
                     foreach (Spell spell in pactSpellListBox.SelectedItems)
                     {
                         if (spell != null)
                         {
-                            wm.Choices.WarlockPactSpells.Add(spell);
+                            wm.Choices.ClassChoice.WarlockPactSpells.Add(spell);
                         }
                     }
                 }
             }
             else
             {
-                wm.Choices.WarlockPactChoice = new WarlockPact();
-                wm.Choices.WarlockPactSpells.Clear();
+                wm.Choices.ClassChoice.WarlockPactChoice = new WarlockPact();
+                wm.Choices.ClassChoice.WarlockPactSpells.Clear();
             }
 
-            if (wm.Choices.HasEldritchInvocations)
+            if (wm.Choices.ClassChoice.HasEldritchInvocations)
             {
-                wm.Choices.WarlockInvocations.Clear();
-                wm.Choices.WarlockInvocationSkills.Clear();
-                wm.Choices.WarlockInvocationSpells.Clear();
+                wm.Choices.ClassChoice.WarlockInvocations.Clear();
+                wm.Choices.ClassChoice.WarlockInvocationSkills.Clear();
+                wm.Choices.ClassChoice.WarlockInvocationSpells.Clear();
 
                 //save chosen invocations and possibly gained skills
                 foreach (EldritchInvocation invocation in invocationListBox.SelectedItems)
                 {
                     if (invocation != null)
                     {
-                        wm.Choices.WarlockInvocations.Add(invocation);
+                        wm.Choices.ClassChoice.WarlockInvocations.Add(invocation);
 
                         if (invocation.HasSkillGain)
                         {
-                            wm.Choices.WarlockInvocationSkills.AddRange(wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getInvocationGainedSkills(invocation));
+                            wm.Choices.ClassChoice.WarlockInvocationSkills.AddRange(wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getInvocationGainedSkills(invocation));
                         }
                     }
                 }
@@ -272,31 +272,31 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                     {
                         if (spell != null)
                         {
-                            wm.Choices.WarlockInvocationSpells.Add(spell);
+                            wm.Choices.ClassChoice.WarlockInvocationSpells.Add(spell);
                         }
                     }
                 }
             }
             else
             {
-                wm.Choices.WarlockInvocations.Clear();
-                wm.Choices.WarlockInvocationSpells.Clear();
-                wm.Choices.WarlockInvocationSkills.Clear();
+                wm.Choices.ClassChoice.WarlockInvocations.Clear();
+                wm.Choices.ClassChoice.WarlockInvocationSpells.Clear();
+                wm.Choices.ClassChoice.WarlockInvocationSkills.Clear();
             }
         }
 
         private void loadPreviousPactSelections()
         {
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 //load pact choice
-                if (pactListBox.Items.IndexOf(wm.Choices.WarlockPactChoice) >= 0)
+                if (pactListBox.Items.IndexOf(wm.Choices.ClassChoice.WarlockPactChoice) >= 0)
                 {
-                    pactListBox.SetSelected(pactListBox.Items.IndexOf(wm.Choices.WarlockPactChoice), true);
+                    pactListBox.SetSelected(pactListBox.Items.IndexOf(wm.Choices.ClassChoice.WarlockPactChoice), true);
                 }
 
                 //load pact spells
-                foreach (Spell spell in wm.Choices.WarlockPactSpells)
+                foreach (Spell spell in wm.Choices.ClassChoice.WarlockPactSpells)
                 {
                     if (pactSpellListBox.Items.IndexOf(spell) >= 0)
                     {
@@ -309,7 +309,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
         private void loadPreviousInvocationSelections()
         {
             //load invocation choices
-            foreach (EldritchInvocation invocation in wm.Choices.WarlockInvocations)
+            foreach (EldritchInvocation invocation in wm.Choices.ClassChoice.WarlockInvocations)
             {
                 if (invocationListBox.Items.IndexOf(invocation) >= 0)
                 {
@@ -318,7 +318,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
             }
 
             //load invocation spells
-            foreach (Spell spell in wm.Choices.WarlockInvocationSpells)
+            foreach (Spell spell in wm.Choices.ClassChoice.WarlockInvocationSpells)
             {
                 if (invocationSpellListBox.Items.IndexOf(spell) >= 0)
                 {
@@ -382,7 +382,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
                     knownSpells.Add(spell);
                 }
             }
-            if (wm.Choices.HasWarlockPact)
+            if (wm.Choices.ClassChoice.HasWarlockPact)
             {
                 foreach (Spell spell in pactSpellListBox.SelectedItems)
                 {
@@ -395,7 +395,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.ExtraClassComponents
 
             //refresh list
             WarlockPact currentPact = (WarlockPact)pactListBox.SelectedItem;
-            if ((currentPact != null) && (wm.Choices.HasWarlockPact))
+            if ((currentPact != null) && (wm.Choices.ClassChoice.HasWarlockPact))
             {
                 invocationSource = wm.DBManager.ExtraClassChoiceData.WarlockChoiceData.getEldritchInvocations(knownSpells, currentPact, wm.Choices.Level);
             }
