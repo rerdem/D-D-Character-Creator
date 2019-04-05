@@ -185,32 +185,44 @@ namespace Easy_DnD_Character_Creator
         {
             //general tool proficiencies
             List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name);
-    
+
             //race proficiencies
-            if (!toolProficiencies.Contains(Choices.RaceChoice.getSelectedSubrace().Proficiency))
+            if (Choices.RaceChoice.getSelectedSubrace().HasProficiencyChoice)
             {
-                toolProficiencies.Add(Choices.RaceChoice.getSelectedSubrace().Proficiency);
+                if (!toolProficiencies.Contains(Choices.RaceChoice.getSelectedSubrace().Proficiency))
+                {
+                    toolProficiencies.Add(Choices.RaceChoice.getSelectedSubrace().Proficiency);
+                }
             }
     
             //class proficiencies
-            foreach (string entry in Choices.ClassProficiencies)
+            if (Choices.ClassProficiencies.Count > 0)
             {
-                if (!toolProficiencies.Contains(entry))
+                foreach (string entry in Choices.ClassProficiencies)
                 {
-                    toolProficiencies.Add(entry);
+                    if (!toolProficiencies.Contains(entry))
+                    {
+                        toolProficiencies.Add(entry);
+                    }
                 }
             }
 
             //subclass proficiencies
-            if (!toolProficiencies.Contains(Choices.SubclassToolProficiency))
+            if (Choices.HasExtraToolProficiencies)
             {
-                toolProficiencies.Add(Choices.SubclassToolProficiency);
+                if (!toolProficiencies.Contains(Choices.SubclassToolProficiency))
+                {
+                    toolProficiencies.Add(Choices.SubclassToolProficiency);
+                }
             }
 
             //background proficiencies
-            if (!toolProficiencies.Contains(Choices.BackgroundChoice.Proficiency))
+            if (Choices.BackgroundChoice.HasProficiencyChoice)
             {
-                toolProficiencies.Add(Choices.BackgroundChoice.Proficiency);
+                if (!toolProficiencies.Contains(Choices.BackgroundChoice.Proficiency))
+                {
+                    toolProficiencies.Add(Choices.BackgroundChoice.Proficiency);
+                }
             }
     
             return string.Join(", ", toolProficiencies);
