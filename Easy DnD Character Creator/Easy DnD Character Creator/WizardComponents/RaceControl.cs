@@ -71,18 +71,18 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             if ((currentRace != null) && (currentSubrace != null))
             {
-                currentSubrace.HasExtraSpells = wm.DBManager.ExtraRaceChoiceData.hasExtraRaceCantripChoice(currentSubrace.Name);
-                currentRace.setSelectedSubrace(currentSubrace);
-                wm.Choices.RaceChoice = currentRace;
-
                 if (currentSubrace.HasProficiencyChoice)
                 {
-                    wm.Choices.RaceProficiency = extraChoiceBox.SelectedItem.ToString();
+                    currentSubrace.Proficiency = extraChoiceBox.SelectedItem.ToString();
                 }
                 else
                 {
-                    wm.Choices.RaceProficiency = "";
+                    currentSubrace.Proficiency = "";
                 }
+
+                currentSubrace.HasExtraSpells = wm.DBManager.ExtraRaceChoiceData.hasExtraRaceCantripChoice(currentSubrace.Name);
+                currentRace.setSelectedSubrace(currentSubrace);
+                wm.Choices.RaceChoice = currentRace;
             }
         }
 
@@ -181,9 +181,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 extraChoiceBox.DataSource = extraChoiceSource;
                 extraChoiceBox.EndUpdate();
 
-                if (extraChoiceBox.Items.Contains(wm.Choices.RaceProficiency))
+                if (extraChoiceBox.Items.Contains(wm.Choices.RaceChoice.getSelectedSubrace().Proficiency))
                 {
-                    extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(wm.Choices.RaceProficiency), true);
+                    extraChoiceBox.SetSelected(extraChoiceBox.Items.IndexOf(wm.Choices.RaceChoice.getSelectedSubrace().Proficiency), true);
                 }
                 //else
                 //{

@@ -13,6 +13,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
         public string AlignmentDescription { get; }
         public int Speed { get; }
         public bool HasProficiencyChoice { get; }
+        public string Proficiency { get; set; }
         public bool HasExtraRaceChoice
         {
             get
@@ -29,6 +30,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
             AlignmentDescription = "";
             Speed = 0;
             HasProficiencyChoice = false;
+            Proficiency = "";
             HasExtraSpells = false;
         }
 
@@ -39,6 +41,7 @@ namespace Easy_DnD_Character_Creator.DataTypes
             AlignmentDescription = inputAlignmentDescription;
             Speed = inputSpeed;
             HasProficiencyChoice = inputProficiencyChoice;
+            Proficiency = "";
             HasExtraSpells = false;
         }
 

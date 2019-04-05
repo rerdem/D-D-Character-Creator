@@ -16,7 +16,6 @@ namespace Easy_DnD_Character_Creator
 
         //RaceControl
         public Race RaceChoice { get; set; }
-        public string RaceProficiency { get; set; }
         
         //AlignmentControl
         public string LawAlignment { get; set; }
@@ -184,7 +183,6 @@ namespace Easy_DnD_Character_Creator
             AdjustStartingMoney = true;
 
             RaceChoice = new Race();
-            RaceProficiency = "";
             
             LawAlignment = "";
             MoralityAlignment = "";

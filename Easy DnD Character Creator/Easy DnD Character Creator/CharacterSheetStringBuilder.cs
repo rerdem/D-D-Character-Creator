@@ -187,9 +187,9 @@ namespace Easy_DnD_Character_Creator
             List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background);
     
             //race proficiencies
-            if (!toolProficiencies.Contains(Choices.RaceProficiency))
+            if (!toolProficiencies.Contains(Choices.RaceChoice.getSelectedSubrace().Proficiency))
             {
-                toolProficiencies.Add(Choices.RaceProficiency);
+                toolProficiencies.Add(Choices.RaceChoice.getSelectedSubrace().Proficiency);
             }
     
             //class proficiencies
