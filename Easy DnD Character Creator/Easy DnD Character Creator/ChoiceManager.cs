@@ -67,10 +67,7 @@ namespace Easy_DnD_Character_Creator
         public bool HasWildShape { get; set; }
 
         //BackgroundControl
-        public string Background { get; set; }
-        public bool HasBackgroundProficiencyChoice { get; set; }
-        public string BackgroundProficiency { get; set; }
-        public bool HasBackgroundStoryChoice { get; set; }
+        public Background BackgroundChoice { get; set; }
 
         //AbilityControl
         public List<AbilityScore> Abilities { get; set; }
@@ -144,7 +141,6 @@ namespace Easy_DnD_Character_Creator
         public bool CustomBond { get; set; }
         public bool CustomFlaw { get; set; }
         public WildShapeTerrain TerrainChoice { get; set; }
-        public BackgroundStoryChoice BackgroundChoice { get; set; }
         public string Backstory { get; set; }
 
         //ExportControl
@@ -226,10 +222,7 @@ namespace Easy_DnD_Character_Creator
             HasCompanion = false;
             HasCircleTerrain = false;
 
-            Background = "";
-            HasBackgroundProficiencyChoice = false;
-            BackgroundProficiency = "";
-            HasBackgroundStoryChoice = false;
+            BackgroundChoice = new Background();
 
             Strength = new AbilityScore("Strength");
             Dexterity = new AbilityScore("Dexterity");
@@ -293,7 +286,6 @@ namespace Easy_DnD_Character_Creator
             CustomBond = false;
             CustomFlaw = false;
             TerrainChoice = new WildShapeTerrain();
-            BackgroundChoice = new BackgroundStoryChoice();
             Backstory = "";
 
             allKnownSkills = new List<string>();

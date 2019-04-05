@@ -68,7 +68,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
                 loadPreviousSelection();
             }
 
-            lastBackground = wm.Choices.Background;
+            lastBackground = wm.Choices.BackgroundChoice.Name;
             Visited = true;
         }
 
@@ -100,16 +100,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
             switch (currentComponent)
             {
                 case PersonalityComponent.ideal:
-                    choices = wm.DBManager.StoryData.getIdeals(wm.Choices.Background);
+                    choices = wm.DBManager.StoryData.getIdeals(wm.Choices.BackgroundChoice.Name);
                     break;
                 case PersonalityComponent.bond:
-                    choices = wm.DBManager.StoryData.getBonds(wm.Choices.Background);
+                    choices = wm.DBManager.StoryData.getBonds(wm.Choices.BackgroundChoice.Name);
                     break;
                 case PersonalityComponent.flaw:
-                    choices = wm.DBManager.StoryData.getFlaws(wm.Choices.Background);
+                    choices = wm.DBManager.StoryData.getFlaws(wm.Choices.BackgroundChoice.Name);
                     break;
                 default://trait
-                    choices = wm.DBManager.StoryData.getTraits(wm.Choices.Background);
+                    choices = wm.DBManager.StoryData.getTraits(wm.Choices.BackgroundChoice.Name);
                     break;
             }
             customCheckBox.Checked = false;
@@ -179,7 +179,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents.StoryComponents
 
         private bool hasBackgroundChanged()
         {
-            return (lastBackground != wm.Choices.Background);
+            return (lastBackground != wm.Choices.BackgroundChoice.Name);
         }
 
         private void initializeContent()

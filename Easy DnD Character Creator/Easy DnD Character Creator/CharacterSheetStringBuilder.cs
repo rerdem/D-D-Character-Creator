@@ -184,7 +184,7 @@ namespace Easy_DnD_Character_Creator
         public string constructToolProficiencyString()
         {
             //general tool proficiencies
-            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background);
+            List<string> toolProficiencies = DBManager.ExportData.getToolProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name);
     
             //race proficiencies
             if (!toolProficiencies.Contains(Choices.RaceChoice.getSelectedSubrace().Proficiency))
@@ -208,9 +208,9 @@ namespace Easy_DnD_Character_Creator
             }
 
             //background proficiencies
-            if (!toolProficiencies.Contains(Choices.BackgroundProficiency))
+            if (!toolProficiencies.Contains(Choices.BackgroundChoice.Proficiency))
             {
-                toolProficiencies.Add(Choices.BackgroundProficiency);
+                toolProficiencies.Add(Choices.BackgroundChoice.Proficiency);
             }
     
             return string.Join(", ", toolProficiencies);
@@ -218,7 +218,7 @@ namespace Easy_DnD_Character_Creator
 
         public string constructLanguageProficiencyString()
         {
-            if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
+            if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
             {
                 return string.Join(", ", Choices.Languages);
             }
@@ -486,11 +486,11 @@ namespace Easy_DnD_Character_Creator
             output += $", {Choices.ExtraEquipment}";
 
             //background equipment
-            if (Choices.HasBackgroundProficiencyChoice)
+            if (Choices.BackgroundChoice.HasProficiencyChoice)
             {
-                output += $", {Choices.BackgroundProficiency}";
+                output += $", {Choices.BackgroundChoice.Proficiency}";
             }
-            output += $", {DBManager.BackgroundData.getBackgroundEquipment(Choices.Background)}";
+            output += $", {Choices.BackgroundChoice.Equipment}";
 
             //substitute pack for pack content
             if (output.Contains("pack"))

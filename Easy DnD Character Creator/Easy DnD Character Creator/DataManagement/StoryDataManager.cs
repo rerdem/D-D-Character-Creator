@@ -152,37 +152,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
         }
 
         /// <summary>
-        /// checks, if a given background has an extra story choice to make
-        /// </summary>
-        /// <param name="background">chosen background</param>
-        public bool hasBackgroundStoryChoice(string background)
-        {
-            bool hasChoice = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT extraFeatureChoice FROM backgrounds " +
-                                      "WHERE name=@Background";
-                command.Parameters.AddWithValue("@Background", background);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            hasChoice = dbReader.GetBoolean(0);
-                        }
-                    }
-                }
-            }
-
-            return hasChoice;
-        }
-
-        /// <summary>
         /// gets the story choice for a given background
         /// </summary>
         /// <param name="background">chosen background</param>

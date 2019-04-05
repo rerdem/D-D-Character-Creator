@@ -81,7 +81,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wildShapeComponent.populateForm();
             }
 
-            if (wm.Choices.HasBackgroundStoryChoice)
+            if (wm.Choices.BackgroundChoice.HasStoryChoice)
             {
                 storyLayout.Controls.Add(backgroundStoryComponent);
                 backgroundStoryComponent.populateForm();
@@ -110,13 +110,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 wm.Choices.TerrainChoice = new WildShapeTerrain();
             }
 
-            if (wm.Choices.HasBackgroundStoryChoice)
+            if (wm.Choices.BackgroundChoice.HasStoryChoice)
             {
                 backgroundStoryComponent.saveContent();
             }
             else
             {
-                wm.Choices.BackgroundChoice = new BackgroundStoryChoice();
+                wm.Choices.BackgroundChoice.StoryChoice = new BackgroundStoryChoice();
             }
         }
 
@@ -150,7 +150,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 output += wildShapeComponent.getInvalidElements();
             }
 
-            if (wm.Choices.HasBackgroundStoryChoice)
+            if (wm.Choices.BackgroundChoice.HasStoryChoice)
             {
                 if (!string.IsNullOrEmpty(output))
                 {

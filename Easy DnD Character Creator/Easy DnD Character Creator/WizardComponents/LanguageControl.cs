@@ -69,7 +69,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             //number of maximum possible selected languages
             int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.Background);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.BackgroundChoice.Name);
 
             if (currentlySelectedLanguages != maximumLanguages)
             {
@@ -101,7 +101,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             //number of maximum possible selected languages
             int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.Background);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.BackgroundChoice.Name);
 
             return (currentlySelectedLanguages == maximumLanguages);
         }
@@ -142,12 +142,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         private void setCharacterInfo()
         {
-            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+            lastCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.BackgroundChoice.Name;
         }
 
         private bool hasCharacterInfoChanged()
         {
-            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.Background;
+            string currentCharacterInfo = wm.Choices.RaceChoice.getSelectedSubrace().Name + wm.Choices.Class + wm.Choices.Subclass + wm.Choices.BackgroundChoice.Name;
             return (currentCharacterInfo != lastCharacterInfo);
         }
 
@@ -172,7 +172,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             
             //number of maximum possible selected languages
             int maximumLanguages = wm.DBManager.LanguageData.getDefaultLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Class, wm.Choices.Subclass);
-            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.Background);
+            maximumLanguages += wm.DBManager.LanguageData.getExtraLanguageCount(wm.Choices.RaceChoice.getSelectedSubrace().Name, wm.Choices.Subclass, wm.Choices.BackgroundChoice.Name);
             
             //change box status
             if (currentlySelectedLanguages >= maximumLanguages)

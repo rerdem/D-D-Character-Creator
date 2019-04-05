@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -44,13 +45,17 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
             else
             {
-                if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                Background currentBackground = backgroundListBox.SelectedItem as Background;
+                if (currentBackground != null)
                 {
-                    if (!string.IsNullOrEmpty(output))
+                    if (currentBackground.HasProficiencyChoice)
                     {
-                        output += ", ";
+                        if (!string.IsNullOrEmpty(output))
+                        {
+                            output += ", ";
+                        }
+                        output += "extra background tool proficiency";
                     }
-                    output += "extra background tool proficiency";
                 }
             }
 
@@ -61,9 +66,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             if (backgroundListBox.SelectedItem != null)
             {
-                if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+                Background currentBackground = backgroundListBox.SelectedItem as Background;
+                if (currentBackground != null)
                 {
-                    return ((backgroundListBox.SelectedItems.Count == 1) && (extraProficiencyBox.SelectedItems.Count == 1));
+                    if (currentBackground.HasProficiencyChoice)
+                    {
+                        return ((backgroundListBox.SelectedItems.Count == 1) && (extraProficiencyBox.SelectedItems.Count == 1));
+                    }
                 }
 
                 return (backgroundListBox.SelectedItems.Count == 1);
@@ -76,86 +85,88 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             fillBackgroundList();
 
+            if (Visited)
+            {
+                loadPreviousSelections();
+            }
+
             Visited = true;
         }
 
         public void saveContent()
         {
-            wm.Choices.Background = backgroundListBox.SelectedItem.ToString();
-            wm.Choices.HasBackgroundProficiencyChoice = wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString());
-            wm.Choices.HasBackgroundStoryChoice = wm.DBManager.StoryData.hasBackgroundStoryChoice(backgroundListBox.SelectedItem.ToString());
-
-            if (wm.Choices.HasBackgroundProficiencyChoice)
+            Background currentBackground = backgroundListBox.SelectedItem as Background;
+            if (currentBackground != null)
             {
-                wm.Choices.BackgroundProficiency = extraProficiencyBox.SelectedItem.ToString();
-            }
-            else
-            {
-                wm.Choices.BackgroundProficiency = "";
+                if (currentBackground.HasProficiencyChoice)
+                {
+                    currentBackground.Proficiency = extraProficiencyBox.SelectedItem.ToString();
+                }
+                else
+                {
+                    currentBackground.Proficiency = "";
+                }
+                wm.Choices.BackgroundChoice = currentBackground;
             }
         }
 
         private void fillBackgroundList()
         {
-            List<string> backgrounds = wm.DBManager.BackgroundData.getBackgrounds();
+            List<Background> backgrounds = wm.DBManager.BackgroundData.getBackgrounds();
 
             backgroundListBox.BeginUpdate();
-            backgroundListBox.Items.Clear();
-            foreach (string entry in backgrounds)
-            {
-                backgroundListBox.Items.Add(entry);
-            }
+            backgroundListBox.DataSource = null;
+            backgroundListBox.DataSource = backgrounds;
+            backgroundListBox.DisplayMember = "Name";
             backgroundListBox.EndUpdate();
-
-            if (backgroundListBox.Items.Contains(wm.Choices.Background))
-            {
-                backgroundListBox.SetSelected(backgroundListBox.Items.IndexOf(wm.Choices.Background), true);
-            }
-            else
-            {
-                backgroundListBox.SetSelected(0, true);
-            }
         }
 
         private void fillExtraChoiceListBox(string backgroundChoice)
         {
-            List<string> choiceList = wm.DBManager.BackgroundData.getExtraBackgroundProficiencies(backgroundListBox.SelectedItem.ToString());
+            List<string> choiceList = wm.DBManager.BackgroundData.getExtraBackgroundProficiencies(backgroundChoice);
 
             extraProficiencyBox.BeginUpdate();
-            extraProficiencyBox.Items.Clear();
-            foreach (string entry in choiceList)
-            {
-                extraProficiencyBox.Items.Add(entry);
-            }
+            extraProficiencyBox.DataSource = null;
+            extraProficiencyBox.DataSource = choiceList;
             extraProficiencyBox.EndUpdate();
+        }
 
-            if (extraProficiencyBox.Items.Contains(wm.Choices.BackgroundProficiency))
+        private void loadPreviousSelections()
+        {
+            //background
+            if (backgroundListBox.Items.Contains(wm.Choices.BackgroundChoice))
             {
-                extraProficiencyBox.SetSelected(extraProficiencyBox.Items.IndexOf(wm.Choices.BackgroundProficiency), true);
+                backgroundListBox.SetSelected(backgroundListBox.Items.IndexOf(wm.Choices.BackgroundChoice), true);
             }
-            else
+
+            //background tool proficiency
+            if (extraProficiencyBox.Items.Contains(wm.Choices.BackgroundChoice.Proficiency))
             {
-                extraProficiencyBox.SetSelected(0, true);
+                extraProficiencyBox.SetSelected(extraProficiencyBox.Items.IndexOf(wm.Choices.BackgroundChoice.Proficiency), true);
             }
         }
 
         private void backgroundListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            backgroundDescription.Text = wm.DBManager.BackgroundData.getBackgroundDescription(backgroundListBox.SelectedItem.ToString());
-            
-            if (wm.DBManager.BackgroundData.backgroundHasExtraChoice(backgroundListBox.SelectedItem.ToString()))
+            Background currentBackground = backgroundListBox.SelectedItem as Background;
+            if (currentBackground != null)
             {
-                backgroundDescription.MaximumSize = new Size(520, backgroundDescription.MaximumSize.Height);
-                extraProficiencyLayout.Visible = true;
-                fillExtraChoiceListBox(backgroundListBox.SelectedItem.ToString());
-            }
-            else
-            {
-                backgroundDescription.MaximumSize = new Size(650, backgroundDescription.MaximumSize.Height);
-                extraProficiencyLayout.Visible = false;
-            }
+                backgroundDescription.Text = currentBackground.Description;
 
-            saveContent();
+                if (currentBackground.HasProficiencyChoice)
+                {
+                    backgroundDescription.MaximumSize = new Size(520, backgroundDescription.MaximumSize.Height);
+                    extraProficiencyLayout.Visible = true;
+                    fillExtraChoiceListBox(currentBackground.Name);
+                }
+                else
+                {
+                    backgroundDescription.MaximumSize = new Size(650, backgroundDescription.MaximumSize.Height);
+                    extraProficiencyLayout.Visible = false;
+                }
+
+                //saveContent();
+            }
         }
     }
 }

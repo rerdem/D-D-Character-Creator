@@ -59,7 +59,7 @@ namespace Easy_DnD_Character_Creator
             //get information necessary for final calculations
             allKnownSpells = constructSpellList();
             CharSheetStrings.ProficiencyBonus = DBManager.ExportData.getProficiencyBonus(Choices.Level);
-            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background));
+            CharSheetStrings.WeaponProficiencies = string.Join(", ", DBManager.ExportData.getWeaponProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name));
             CharSheetStrings.SpellcastingAbility = DBManager.SpellData.getSpellcastingAbility(Choices.Class, Choices.Subclass);
 
             //fill template with information
@@ -71,7 +71,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@classlevel@", CharSheetStrings.constructClassLevelString());
 
             //background
-            template = template.Replace("@background@", Choices.Background);
+            template = template.Replace("@background@", Choices.BackgroundChoice.Name);
 
             //playername
             template = template.Replace("@playername@", Choices.PlayerName);
@@ -122,7 +122,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@armorproficiencies@", string.Join(", ", DBManager.ExportData.getArmorProficiencies(Choices.RaceChoice.getSelectedSubrace().Name, 
                                                                                                                              Choices.Class, 
                                                                                                                              Choices.Subclass, 
-                                                                                                                             Choices.Background)));
+                                                                                                                             Choices.BackgroundChoice.Name)));
 
             //weapons
             template = template.Replace("@weaponproficiencies@", CharSheetStrings.WeaponProficiencies);
@@ -160,11 +160,11 @@ namespace Easy_DnD_Character_Creator
 
             if (Choices.AdjustStartingMoney)
             {
-                template = template.Replace("@gp@", DBManager.getStartingGold(Choices.Level, Choices.Background).ToString());
+                template = template.Replace("@gp@", Choices.BackgroundChoice.Gold + DBManager.getStartingGoldAdjustment(Choices.Level).ToString());
             }
             else
             {
-                template = template.Replace("@gp@", DBManager.getStartingGold(1, Choices.Background).ToString());
+                template = template.Replace("@gp@", Choices.BackgroundChoice.Gold.ToString());
             }
 
             //personality traits, ideals, bonds, flaws, backstory
@@ -231,7 +231,7 @@ namespace Easy_DnD_Character_Creator
 
         private List<Feature> constructFeatureList()
         {
-            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.Background, Choices.Level);
+            List<Feature> featureList = DBManager.ExportData.getFeatures(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Class, Choices.Subclass, Choices.BackgroundChoice.Name, Choices.Level);
 
             //add additional feature
             //fighting style
@@ -272,10 +272,10 @@ namespace Easy_DnD_Character_Creator
             }
 
             //background choices
-            if (Choices.HasBackgroundStoryChoice)
+            if (Choices.BackgroundChoice.HasStoryChoice)
             {
-                string featureTitle = Choices.BackgroundChoice.Name + " (" + Choices.BackgroundChoice.getSelectedOption() + ")";
-                featureList.Add(new Feature(featureTitle, Choices.BackgroundChoice.Description));
+                string featureTitle = $"{Choices.BackgroundChoice.StoryChoice.Name} ({Choices.BackgroundChoice.StoryChoice.getSelectedOption()})";
+                featureList.Add(new Feature(featureTitle, Choices.BackgroundChoice.StoryChoice.Description));
             }
 
             //elemental disciplines

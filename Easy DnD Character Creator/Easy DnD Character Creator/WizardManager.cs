@@ -43,7 +43,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.stats:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
                     {
                         CurrentState = WizardState.languages;
                     }
@@ -157,7 +157,7 @@ namespace Easy_DnD_Character_Creator
                     CurrentState = WizardState.stats;
                     break;
                 case WizardState.skillEquipment:
-                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.Background))
+                    if (DBManager.LanguageData.hasExtraLanguages(Choices.RaceChoice.getSelectedSubrace().Name, Choices.Subclass, Choices.BackgroundChoice.Name))
                     {
                         CurrentState = WizardState.languages;
                     }

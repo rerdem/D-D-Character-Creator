@@ -118,13 +118,12 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// gets the amount of starting gold adjusted by level for a given background
+        /// gets the amount of gold adjustment by level
         /// </summary>
         /// <param name="level">current level</param>
-        /// <param name="background">chosen background</param>
-        public int getStartingGold(int level, string background)
+        public int getStartingGoldAdjustment(int level)
         {
-            int startingGold = 0;
+            int goldAdjustment = 0;
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
@@ -141,14 +140,14 @@ namespace Easy_DnD_Character_Creator
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            startingGold = dbReader.GetInt32(0);
-                            startingGold += random.Next(1, dbReader.GetInt32(1) * dbReader.GetInt32(2));
+                            goldAdjustment = dbReader.GetInt32(0);
+                            goldAdjustment += random.Next(1, dbReader.GetInt32(1) * dbReader.GetInt32(2));
                         }
                     }
                 }
             }
 
-            return startingGold + BackgroundData.getBackgroundGold(background);
+            return goldAdjustment;
         }
     }
 }

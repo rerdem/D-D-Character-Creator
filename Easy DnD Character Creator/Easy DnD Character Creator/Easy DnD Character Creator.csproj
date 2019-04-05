@@ -97,6 +97,7 @@
     <Compile Include="DataManagement\RaceDataManager.cs" />
     <Compile Include="DataManagement\SkillDataManager.cs" />
     <Compile Include="DataManagement\SQLiteCommandExtensions.cs" />
+    <Compile Include="DataTypes\Background.cs" />
     <Compile Include="DataTypes\BackgroundStoryChoice.cs" />
     <Compile Include="DataTypes\BarbarianRage.cs" />
     <Compile Include="DataTypes\Beast.cs" />
