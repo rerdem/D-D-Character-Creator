@@ -24,6 +24,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             Visited = false;
 
             charSheet = new CharacterSheet(wm.DBManager, wm.Choices);
+            charSheet.ExportCompleted += new EventHandler(charSheet_ExportCompleted);
 
             InitializeComponent();
         }
@@ -75,6 +76,11 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 charSheet.fillCharacterSheet();
                 charSheet.saveToHTML(saveDialog.FileName);
             }
+        }
+
+        private void charSheet_ExportCompleted(object sender, EventArgs e)
+        {
+            MessageBox.Show("Your character sheet was successfully exported.", "Export successful!");
         }
     }
 }

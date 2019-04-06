@@ -22,6 +22,7 @@ namespace Easy_DnD_Character_Creator
         private string HTMLRadioButtonChecked;
         private List<Spell> allKnownSpells;
 
+        public event EventHandler ExportCompleted;
 
         public CharacterSheet(DataManager inputDataManager, ChoiceManager inputChoiceManager)
         {
@@ -46,6 +47,8 @@ namespace Easy_DnD_Character_Creator
             FileInfo file = new FileInfo(path.Substring(0, indexOfLastBackslash));
             file.Directory.Create();
             File.WriteAllText(path, template);
+
+            OnExportCompleted(null);
         }
 
         /// <summary>
@@ -487,6 +490,13 @@ namespace Easy_DnD_Character_Creator
             return spellList;
         }
 
-
+        protected virtual void OnExportCompleted(EventArgs e)
+        {
+            EventHandler handler = ExportCompleted;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }
