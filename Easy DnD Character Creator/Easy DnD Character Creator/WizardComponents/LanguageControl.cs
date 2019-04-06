@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Easy_DnD_Character_Creator.DataTypes;
 
 namespace Easy_DnD_Character_Creator.WizardComponents
 {
@@ -16,7 +17,8 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private bool visited;
 
         private string lastCharacterInfo;
-        
+
+        private List<Language> languages;
         private ToolTip toolTips;
 
         private List<CheckBox> standardExoticBoxes;
@@ -29,6 +31,9 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         {
             wm = inputWizardManager;
             Visited = false;
+
+            languages = new List<Language>();
+
             InitializeComponent();
             initializeCheckboxes();
             initializeToolTips();
@@ -108,10 +113,13 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
         public void populateForm()
         {
-            resetAllBoxes();
-            setDefaultLanguages();
+            if (!Visited && hasCharacterInfoChanged())
+            {
+                resetAllBoxes();
+                setDefaultLanguages();
+            }
 
-            if ((Visited) && !hasCharacterInfoChanged())
+            if (Visited && !hasCharacterInfoChanged())
             {
                 foreach (CheckBox box in standardExoticBoxes)
                 {
@@ -251,8 +259,10 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             uncheckedDisabledBoxes = new List<CheckBox>();
             classBoxes = new List<CheckBox>();
 
+            languages = wm.DBManager.LanguageData.getLanguages();
+            
             //standard languages
-            List<string> standardLanguages = wm.DBManager.LanguageData.getLanguages("Standard");
+            List<string> standardLanguages = languages.Where(language => language.Type=="Standard").Select(language => language.Name).ToList();
 
             foreach (string language in standardLanguages)
             {
@@ -265,7 +275,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //exotic languages
-            List<string> exoticLanguages = wm.DBManager.LanguageData.getLanguages("Exotic");
+            List<string> exoticLanguages = languages.Where(language => language.Type == "Exotic").Select(language => language.Name).ToList();
 
             foreach (string language in exoticLanguages)
             {
@@ -278,7 +288,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             }
 
             //class langauges
-            List<string> classLanguages = wm.DBManager.LanguageData.getLanguages("Class");
+            List<string> classLanguages = languages.Where(language => language.Type == "Class").Select(language => language.Name).ToList();
 
             foreach (string language in classLanguages)
             {
@@ -298,15 +308,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
             foreach (CheckBox box in standardExoticBoxes)
             {
-                string tipText = "Typical Speakers: " + wm.DBManager.LanguageData.getLanguageSpeakers(box.Text) + Environment.NewLine;
-                tipText += "Script: " + wm.DBManager.LanguageData.getLanguageScript(box.Text);
+                Language currentLanguage = languages.First(language => language.Name == box.Text);
+
+                string tipText = $"Typical Speakers: {currentLanguage.Speakers}{Environment.NewLine}Script: {currentLanguage.Script}";
                 toolTips.SetToolTip(box, tipText);
             }
 
             foreach (CheckBox box in classBoxes)
             {
-                string tipText = "Typical Speakers: " + wm.DBManager.LanguageData.getLanguageSpeakers(box.Text) + Environment.NewLine;
-                tipText += "Script: " + wm.DBManager.LanguageData.getLanguageScript(box.Text);
+                Language currentLanguage = languages.First(language => language.Name == box.Text);
+                string tipText = $"Typical Speakers: {currentLanguage.Speakers}{Environment.NewLine}Script: {currentLanguage.Script}";
                 toolTips.SetToolTip(box, tipText);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_DnD_Character_Creator.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -21,46 +22,15 @@ namespace Easy_DnD_Character_Creator.DataManagement
         /// <summary>
         /// gets a list of all available languages
         /// </summary>
-        public List<string> getLanguages()
+        public List<Language> getLanguages()
         {
-            List<string> languages = new List<string>();
+            List<Language> languages = new List<Language>();
 
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
                 connection.Open();
-                command.CommandText = "SELECT name FROM languages";
-                
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            languages.Add(dbReader.GetString(0));
-                        }
-                    }
-                }
-            }
-
-            return languages;
-        }
-
-        /// <summary>
-        /// gets a list of languages of the specified type
-        /// </summary>
-        /// <param name="type">language type (Standard, Exotic, Class)</param>
-        public List<string> getLanguages(string type)
-        {
-            List<string> languages = new List<string>();
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT name FROM languages " +
-                                      "WHERE type=@Type";
-                command.Parameters.AddWithValue("@Type", type);
+                command.CommandText = "SELECT name, type, speakers, script FROM languages";
 
                 using (SQLiteDataReader dbReader = command.ExecuteReader())
                 {
@@ -68,7 +38,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            languages.Add(dbReader.GetString(0));
+                            languages.Add(new Language(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetString(3)));
                         }
                     }
                 }
@@ -188,68 +158,6 @@ namespace Easy_DnD_Character_Creator.DataManagement
             defaultLanguages.AddRange(getDefaultClassLanguages(className));
             defaultLanguages.AddRange(getDefaultSubclassLanguages(subclass));
             return defaultLanguages;
-        }
-
-        /// <summary>
-        /// gets information about the speakers of the chosen language
-        /// </summary>
-        /// <param name="language">chosen language</param>
-        public string getLanguageSpeakers(string language)
-        {
-            string languageSpeakers = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT speakers FROM languages " +
-                                      "WHERE name=@Language";
-                command.Parameters.AddWithValue("@Language", language);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            languageSpeakers = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return languageSpeakers;
-        }
-
-        /// <summary>
-        /// gets information about the script of the chosen language
-        /// </summary>
-        /// <param name="language">chosen language</param>
-        public string getLanguageScript(string language)
-        {
-            string languageScript = "";
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            using (SQLiteCommand command = new SQLiteCommand(connection))
-            {
-                connection.Open();
-                command.CommandText = "SELECT script FROM languages " +
-                                      "WHERE name=@Language";
-                command.Parameters.AddWithValue("@Language", language);
-
-                using (SQLiteDataReader dbReader = command.ExecuteReader())
-                {
-                    if (dbReader.Read())
-                    {
-                        if (!dbReader.IsDBNull(0))
-                        {
-                            languageScript = dbReader.GetString(0);
-                        }
-                    }
-                }
-            }
-
-            return languageScript;
         }
 
         /// <summary>

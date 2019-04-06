@@ -112,6 +112,7 @@
     <Compile Include="DataTypes\ExtraRaceSpell.cs" />
     <Compile Include="DataTypes\Feature.cs" />
     <Compile Include="DataTypes\FightingStyle.cs" />
+    <Compile Include="DataTypes\Language.cs" />
     <Compile Include="DataTypes\Maneuver.cs" />
     <Compile Include="DataTypes\Metamagic.cs" />
     <Compile Include="DataTypes\MultiItem.cs" />
