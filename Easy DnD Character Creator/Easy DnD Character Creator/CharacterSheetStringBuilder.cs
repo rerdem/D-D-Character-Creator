@@ -17,10 +17,14 @@ namespace Easy_DnD_Character_Creator
         private string HTMLRadioButton;
         private string HTMLRadioButtonChecked;
         private string HTMLTableRow;
+        private string HTMLFeaturePage;
         private string HTMLSpellbook;
         private string HTMLSpellbookEntry;
         private string HTMLWildShapeList;
         private string HTMLWildShapeEntry;
+
+        //character limits for feature boxes in HTML template
+        private int HTMLFeatureBoxCharacterLimit;
 
         public int ProficiencyBonus { get; set; }
         public string WeaponProficiencies { get; set; }
@@ -32,6 +36,8 @@ namespace Easy_DnD_Character_Creator
             Choices = inputChoiceManager;
 
             initializeHTMLSnippets();
+
+            HTMLFeatureBoxCharacterLimit = 1500;
 
             ProficiencyBonus = 0;
             WeaponProficiencies = "";
@@ -47,6 +53,19 @@ namespace Easy_DnD_Character_Creator
                            "\t\t<td>@atkmodifier@</td>" + Environment.NewLine +
                            "\t\t<td>@damage@</td>" + Environment.NewLine +
                            "\t</tr>" + Environment.NewLine;
+            HTMLFeaturePage = "<div class=\"header\">" + Environment.NewLine +
+                            "\t<div class=\"charname\">" + Environment.NewLine +
+                            "\t\t@charactername@ - Features" + Environment.NewLine +
+                            "\t</div>" + Environment.NewLine +
+                            "</div>" + Environment.NewLine + Environment.NewLine +
+                            "<div class=\"main\">" + Environment.NewLine +
+                            "\t<div class=\"labelbox\">" + Environment.NewLine +
+                            "\t\t@features2@" + Environment.NewLine +
+                            "\t\t<div class=\"label\">" + Environment.NewLine +
+							"\t\t\tAdditional Features & Traits" + Environment.NewLine +
+                            "\t\t</div>" + Environment.NewLine +
+					        "\t</div>" + Environment.NewLine +
+                            "</div>" + Environment.NewLine;
             HTMLSpellbook = "<div class=\"header\">" + Environment.NewLine +
                             "\t<div class=\"charname\">" + Environment.NewLine +
                             "\t\t@charactername@ - Spellbook" + Environment.NewLine +
@@ -518,21 +537,21 @@ namespace Easy_DnD_Character_Creator
         }
 
         /// <summary>
-        /// splits the feature list after the given percent and formats them to HTML strings
+        /// splits the feature list after the predetermined character limits and formats them to HTML strings
         /// </summary>
         /// <param name="featureList">list of features to process</param>
-        /// <param name="splitPercent">percentage of features in the first string</param>
         /// <returns>a list of strings of HTML formatted features</returns>
-        public List<string> constructFeatureString(List<Feature> featureList, float splitPercent)
+        public List<string> constructFeatureString(List<Feature> featureList)
         {
             string firstFeatureString = "";
             string secondFeatureString = "";
+            string featurePage = HTMLFeaturePage.Replace("@charactername@", Choices.CharacterName);
 
             for (int i = 0; i < featureList.Count; i++)
             {
                 string featureString = $"<b>{featureList[i].Name}.</b> {featureList[i].Description}<br><br>";
 
-                if (i < (featureList.Count * splitPercent))
+                if ((firstFeatureString.Length + featureString.Length) < HTMLFeatureBoxCharacterLimit)
                 {
                     firstFeatureString += featureString + Environment.NewLine + Environment.NewLine;
                 }
@@ -544,7 +563,7 @@ namespace Easy_DnD_Character_Creator
 
             List<string> outputList = new List<string>();
             outputList.Add(firstFeatureString);
-            outputList.Add(secondFeatureString);
+            outputList.Add(featurePage.Replace("@features2@", secondFeatureString));
 
             return outputList;
         }

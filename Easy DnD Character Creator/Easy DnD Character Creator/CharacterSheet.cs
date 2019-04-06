@@ -183,7 +183,7 @@ namespace Easy_DnD_Character_Creator
             template = template.Replace("@hair@", Choices.HairColor);
 
             //features
-            List<string> featureStrings = CharSheetStrings.constructFeatureString(constructFeatureList(), 0.5f);
+            List<string> featureStrings = CharSheetStrings.constructFeatureString(constructFeatureList());
             template = template.Replace("@features1@", featureStrings[0]);
             template = template.Replace("@features2@", featureStrings[1]);
 
