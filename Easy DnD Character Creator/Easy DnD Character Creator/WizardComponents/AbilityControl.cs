@@ -32,7 +32,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public AbilityControl(WizardManager inputWizardManager)
         {
             wm = inputWizardManager;
-            visited = false;
+            Visited = false;
 
             toolTips = new ToolTip();
             
@@ -117,7 +117,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         public void populateForm()
         {
             //roll values, reroll only when preset changed
-            if ((!visited) || hasPresetChanged())
+            if (!Visited || hasPresetChanged())
             {
                 if (wm.Choices.Preset == 1)
                 {
@@ -134,15 +134,16 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                         choice.Text = rollAbility().ToString();
                     }
                 }
-
-                LastPreset = wm.Choices.Preset;
             }
 
             //reset current assignments
             resetAbilityAssignments();
 
             //import saved ability scores
-            importSavedAbilityScores();
+            if (Visited && !hasPresetChanged())
+            {
+                importSavedAbilityScores();
+            }
 
             //fill ability recommendation
             recommendationLabel.Text = wm.DBManager.AbilityData.getAbilityRecommendation(wm.Choices.ClassChoice.Name);
@@ -169,6 +170,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
                 rerollButton.Visible = false;
             }
 
+            LastPreset = wm.Choices.Preset;
             Visited = true;
         }
 

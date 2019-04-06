@@ -156,7 +156,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            averageScores.Add(dbReader.GetString(0));
+                            averageScores.Add(dbReader.GetInt32(0).ToString());
                         }
                     }
                 }
