@@ -123,12 +123,12 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             Subclass currentSubclass = subclassListBox.SelectedItem as Subclass;
             if ((currentClass != null) && (currentSubclass != null))
             {
-                currentClass.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(currentClass.Name, currentSubclass.Name, wm.Choices.Level);
-                currentClass.ChoosesSpells = wm.DBManager.SpellData.choosesSpells(currentClass.Name, currentSubclass.Name, wm.Choices.Level);
-
+                currentSubclass = setSubclassFlags(currentSubclass);
                 currentClass.setSelectedSubclass(currentSubclass);
 
-                //save extra choices that did not require extre UserControls
+                currentClass = setClassFlags(currentClass);
+                
+                //save extra choices that did not require extra UserControls
                 currentClass.Proficiencies.Clear();
                 if (currentClass.HasProficiencyChoice)
                 {
@@ -140,6 +140,39 @@ namespace Easy_DnD_Character_Creator.WizardComponents
 
                 wm.Choices.ClassChoice = currentClass;
             }
+        }
+
+        private CharacterClass setClassFlags(CharacterClass selectedClass)
+        {
+            selectedClass.HasSpellcasting = wm.DBManager.SpellData.hasSpellcasting(selectedClass.Name, selectedClass.getSelectedSubclass().Name, wm.Choices.Level);
+            selectedClass.ChoosesSpells = wm.DBManager.SpellData.choosesSpells(selectedClass.Name, selectedClass.getSelectedSubclass().Name, wm.Choices.Level);
+
+            selectedClass.HasFightingStyle = wm.DBManager.ClassData.hasFightingStyle(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasFavoredEnemy = wm.DBManager.ClassData.hasFavoredEnemy(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasFavoredTerrain = wm.DBManager.ClassData.hasFavoredEnemy(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasExtraSkills = wm.DBManager.ClassData.hasClassSkillChoice(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasWarlockPact = wm.DBManager.ClassData.hasWarlockPact(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasEldritchInvocations = wm.DBManager.ClassData.hasEldritchInvocations(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasMetamagic = wm.DBManager.ClassData.hasMetamagic(selectedClass.Name, wm.Choices.Level);
+            selectedClass.HasWildShape = wm.DBManager.ClassData.hasWildShape(selectedClass.Name);
+
+            return selectedClass;
+        }
+
+        private Subclass setSubclassFlags(Subclass selectedSubclass)
+        {
+            selectedSubclass.HasExtraSkills = wm.DBManager.ClassData.SubclassData.hasSubclassSkillChoice(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasTotems = wm.DBManager.ClassData.SubclassData.hasTotemFeatures(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasExtraSpells = wm.DBManager.ClassData.SubclassData.hasExtraSubclassSpellChoice(selectedSubclass.Name);
+            selectedSubclass.HasExtraToolProficiencies = wm.DBManager.ClassData.SubclassData.hasSubclassToolProficiencyChoice(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasManeuvers = wm.DBManager.ClassData.SubclassData.hasManeuvers(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasDraconicAncestry = wm.DBManager.ClassData.SubclassData.hasDraconicAncestry(selectedSubclass.Name);
+            selectedSubclass.HasElementalDisciplines = wm.DBManager.ClassData.SubclassData.hasDisciplines(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasHunterChoices = wm.DBManager.ClassData.SubclassData.hasHunterFeatures(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasCompanion = wm.DBManager.ClassData.SubclassData.hasCompanion(selectedSubclass.Name, wm.Choices.Level);
+            selectedSubclass.HasCircleTerrain = wm.DBManager.ClassData.SubclassData.hasCircleTerrain(selectedSubclass.Name, wm.Choices.Level);
+
+            return selectedSubclass;
         }
 
         private bool haveUsedBooksChanged()

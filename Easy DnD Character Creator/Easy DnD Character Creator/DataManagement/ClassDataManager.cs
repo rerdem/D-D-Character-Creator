@@ -53,20 +53,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                         if (!dbReader.IsDBNull(0))
                         {
                             CharacterClass newClass = new CharacterClass(dbReader.GetString(0), dbReader.GetString(1), dbReader.GetString(2), dbReader.GetBoolean(3), getProficiencyChoiceAmount(dbReader.GetString(0)));
-
-                            //add subclasses
                             newClass.Subclasses = SubclassData.getSubclasses(newClass.Name, level);
-
-                            //set bools
-                            newClass.HasFightingStyle = hasFightingStyle(newClass.Name, level);
-                            newClass.HasFavoredEnemy = hasFavoredEnemy(newClass.Name, level);
-                            newClass.HasFavoredTerrain = hasFavoredEnemy(newClass.Name, level);
-                            newClass.HasExtraSkills = hasClassSkillChoice(newClass.Name, level);
-                            newClass.HasWarlockPact = hasWarlockPact(newClass.Name, level);
-                            newClass.HasEldritchInvocations = hasEldritchInvocations(newClass.Name, level);
-                            newClass.HasMetamagic = hasMetamagic(newClass.Name, level);
-                            newClass.HasWildShape = hasWildShape(newClass.Name);
-
                             classList.Add(newClass);
                         }
                     }

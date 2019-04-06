@@ -47,21 +47,7 @@ namespace Easy_DnD_Character_Creator.DataManagement
                     {
                         if (!dbReader.IsDBNull(0))
                         {
-                            Subclass newSubclass = new Subclass(dbReader.GetString(0), dbReader.GetString(1));
-
-                            //set bools
-                            newSubclass.HasExtraSkills = hasSubclassSkillChoice(newSubclass.Name, level);
-                            newSubclass.HasTotems = hasTotemFeatures(newSubclass.Name, level);
-                            newSubclass.HasExtraSpells = hasExtraSubclassSpellChoice(newSubclass.Name);
-                            newSubclass.HasExtraToolProficiencies = hasSubclassToolProficiencyChoice(newSubclass.Name, level);
-                            newSubclass.HasManeuvers = hasManeuvers(newSubclass.Name, level);
-                            newSubclass.HasDraconicAncestry = hasDraconicAncestry(newSubclass.Name);
-                            newSubclass.HasElementalDisciplines = hasDisciplines(newSubclass.Name, level);
-                            newSubclass.HasHunterChoices = hasHunterFeatures(newSubclass.Name, level);
-                            newSubclass.HasCompanion = hasCompanion(newSubclass.Name, level);
-                            newSubclass.HasCircleTerrain = hasCircleTerrain(newSubclass.Name, level);
-
-                            subclassList.Add(newSubclass);
+                            subclassList.Add(new Subclass(dbReader.GetString(0), dbReader.GetString(1)));
                         }
                     }
                 }
