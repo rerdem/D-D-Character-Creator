@@ -124,6 +124,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
         private void fillExtraChoiceListBox(string backgroundChoice)
         {
             List<string> choiceList = wm.DBManager.BackgroundData.getExtraBackgroundProficiencies(backgroundChoice);
+            choiceList.Remove(wm.Choices.RaceChoice.getSelectedSubrace().Proficiency);
 
             extraProficiencyBox.BeginUpdate();
             extraProficiencyBox.DataSource = null;

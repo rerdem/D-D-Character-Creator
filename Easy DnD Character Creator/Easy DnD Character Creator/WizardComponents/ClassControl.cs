@@ -242,6 +242,7 @@ namespace Easy_DnD_Character_Creator.WizardComponents
             if (currentClass != null)
             {
                 List<string> choiceList = wm.DBManager.ClassData.getExtraClassProficiencies(currentClass.Name);
+                choiceList.Remove(wm.Choices.RaceChoice.getSelectedSubrace().Proficiency);
 
                 extraChoiceBox.BeginUpdate();
                 extraChoiceBox.DataSource = null;

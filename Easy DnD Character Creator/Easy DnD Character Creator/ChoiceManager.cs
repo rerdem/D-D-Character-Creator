@@ -113,7 +113,8 @@ namespace Easy_DnD_Character_Creator
             get
             {
                 chosenEquipment.Clear();
-                chosenEquipment = Equipment1;
+                //chosenEquipment = Equipment1;
+                chosenEquipment.AddRange(Equipment1);
                 chosenEquipment.AddRange(Equipment2);
                 chosenEquipment.AddRange(Equipment3);
                 chosenEquipment.AddRange(Equipment4);
