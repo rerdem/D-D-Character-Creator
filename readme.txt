@@ -1,1 +1,0 @@
-This is the D&D Character Creator. Its main goal is to offer an easy way for anybody who wants to try out D&D to quickly create a character. It was originally written in C++/Qt and this is a port to C#/.NET.
